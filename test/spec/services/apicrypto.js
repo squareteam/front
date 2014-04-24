@@ -8,8 +8,8 @@ describe('Service: ApiCrypto', function () {
 
   // instantiate service
   var ApiCrypto, data = {};
-  beforeEach(inject(function (_ApiCrypto_, _Currentuser_) {
-    ApiCrypto = _ApiCrypto_;
+  beforeEach(inject(function ($injector) {
+    ApiCrypto = $injector.get('ApiCrypto');
 
     data.auth = {
       identifier  : 'test@example.com',
@@ -28,7 +28,7 @@ describe('Service: ApiCrypto', function () {
 
     data.token = 'a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1';
 
-    _Currentuser_.setAuth({
+    $injector.get('Currentuser').setAuth({
       identifier : data.auth.identifier,
       token      : CryptoJS.enc.Hex.parse(data.token)
     });
