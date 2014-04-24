@@ -1,6 +1,6 @@
 // Karma configuration
 // http://karma-runner.github.io/0.10/config/configuration-file.html
-
+'use strict';
 module.exports = function(config) {
   config.set({
     // base path, that will be used to resolve files and exclude
@@ -8,6 +8,22 @@ module.exports = function(config) {
 
     // testing framework to use (jasmine/mocha/qunit/...)
     frameworks: ['jasmine'],
+
+    // coverage reporter generates the coverage
+    reporters: ['progress', 'coverage'],
+
+    preprocessors: {
+      // source files, that you wanna generate coverage for
+      // do not include tests or libraries
+      // (these files will be instrumented by Istanbul)
+      'app/scripts/**/*.js': ['coverage']
+    },
+
+    // optionally, configure the reporter
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/'
+    },
 
     // list of files / patterns to load in the browser
     files: [
@@ -17,6 +33,9 @@ module.exports = function(config) {
       'app/bower_components/angular-cookies/angular-cookies.js',
       'app/bower_components/angular-sanitize/angular-sanitize.js',
       'app/bower_components/angular-route/angular-route.js',
+      'app/bower_components/cryptojslib/rollups/hmac-sha256.js',
+      'app/bower_components/cryptojslib/rollups/pbkdf2.js',
+      'app/bower_components/cryptojslib/rollups/md5.js',
       'app/scripts/*.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
