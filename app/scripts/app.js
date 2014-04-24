@@ -1,9 +1,17 @@
 'use strict';
 
+angular.module('squareteam.ressources', ['ngResource']);
+
+angular.module('squareteam.api', [])
+  .config(function($httpProvider) {
+    $httpProvider.interceptors.push('ApiHttpInterceptors');
+  });
+
 angular
-  .module('squareteamApp', [
+  .module('squareteam.app', [
+    'squareteam.api',
+    'squareteam.ressources',
     'ngCookies',
-    'ngResource',
     'ngSanitize',
     'ngRoute'
   ])
@@ -16,4 +24,11 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+
   });
+
+angular.module('squareteam.app').value('appConfig', {
+  api : {
+    url : 'http://localhost:1551/api/'
+  }
+});
