@@ -51,7 +51,7 @@ describe('Service: ApiCrypto', function () {
     expect(ApiCrypto.generateToken(data.auth.identifier, data.auth.password, data.auth.salt1, data.auth.salt2).toString()).toBe(data.token);
   });
 
-  it('should generate correct hash', function () {
+  it('should generate correct hash (/w no data)', function () {
     var headers = ApiCrypto.transformRequest(data.request).headers;
 
     expect(headers['St-Timestamp']).toBe(1393369116);
@@ -60,6 +60,14 @@ describe('Service: ApiCrypto', function () {
 
   });
 
-  // TODO : test with data payload !
+  it('should generate correct hash (/w data)', function () {
+    data.request.data = {test : 1};
+    var headers = ApiCrypto.transformRequest(data.request).headers;
+
+    expect(headers['St-Timestamp']).toBe(1393369116);
+    expect(headers['St-Identifier']).toBe(data.auth.identifier);
+    expect(headers['St-Hash']).toBe('f0036e0d6e2791030db39410edfbc8fd31fd59360a5c7fabf177e1f5a70fcac3');
+
+  });
 
 });
