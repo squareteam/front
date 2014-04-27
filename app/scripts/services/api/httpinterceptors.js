@@ -3,8 +3,8 @@
 angular.module('squareteam.api')
   .factory('ApiHttpInterceptors', function(ApiCrypto, appConfig) {
 
-    var apiProtocolRegex        = /^(api|apis):\/\//,
-        apiSecureProtocolRegex  = /^(apis):\/\//;
+    var apiProtocolRegex        = /^apis?:\/\//,
+        apiSecureProtocolRegex  = /^apis:\/\//;
 
     return {
       'request' : function(config) {
