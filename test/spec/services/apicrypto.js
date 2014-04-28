@@ -7,9 +7,10 @@ describe('Service: ApiCrypto', function () {
   beforeEach(module('squareteam.app'));
 
   // instantiate service
-  var ApiCrypto, data = {};
+  var ApiCrypto, ApiAuth, data = {};
   beforeEach(inject(function ($injector) {
     ApiCrypto = $injector.get('ApiCrypto');
+    ApiAuth   = $injector.get('ApiAuth');
 
     data.auth = {
       identifier  : 'test@example.com',
@@ -28,10 +29,7 @@ describe('Service: ApiCrypto', function () {
 
     data.token = 'a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1';
 
-    $injector.get('Currentuser').setAuth({
-      identifier : data.auth.identifier,
-      token      : CryptoJS.enc.Hex.parse(data.token)
-    });
+    $injector.get('Currentuser').setAuth(new ApiAuth(data.auth.identifier,CryptoJS.enc.Hex.parse(data.token)));
 
 
     // hack the Date.now to return correct timestamp..
@@ -45,6 +43,7 @@ describe('Service: ApiCrypto', function () {
   it('should expose API', function () {
     expect(!!ApiCrypto.generateToken).toBe(true);
     expect(!!ApiCrypto.transformRequest).toBe(true);
+    expect(!!ApiCrypto.generateHeaders).toBe(true);
   });
 
   it('should generate correct pbkdf', function () {

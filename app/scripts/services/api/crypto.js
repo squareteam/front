@@ -2,26 +2,28 @@
 'use strict';
 
 angular.module('squareteam.api')
-.service('ApiCrypto', function Apicrypto(Currentuser, appConfig, $log) {
-  return {
-    generateToken     : function(login, password, salt1, salt2) {
+  .service('ApiCrypto', function Apicrypto(Currentuser, appConfig) {
+
+    this.generateToken = function(login, password, salt1, salt2) {
       var pbkdf2  = CryptoJS.PBKDF2(password, salt1, { keySize: 256/32, iterations: 1000, hasher : CryptoJS.algo.SHA256 }),
           hmac    = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, salt2.concat(pbkdf2));
 
       hmac.update(login);
       return hmac.finalize(); // return token as WordArray
-    },
-    transformRequest  : function(config) {
-      $log.info('Preparing request', config);
+    };
+      /**
+       * Return secure headers
+       * @param  {ApiAuth} auth
+       * @param  {Object}  request
+       * @return {Object}
+       */
+    this.generateHeaders = function(auth, url, method, data) {
+      var headers,
+          hmac,
+          path,
+          blob = [];
 
-      var currentUser = Currentuser.getAuth(),
-      headers,
-      hmac,
-      path,
-      data = config.data,
-      blob = [];
-
-      path = config.url.replace(appConfig.api.url, '');
+      path = url.replace(appConfig.api.url, '');
 
       if (path[0] !== '/') {
         path = '/' + path;
@@ -36,27 +38,32 @@ angular.module('squareteam.api')
       }
 
       headers = {
-        'St-Identifier' : currentUser.identifier,
+        'St-Identifier' : auth.identifier,
         'St-Timestamp'  : Math.round(Date.now() / 1000)
       };
 
       hmac = CryptoJS.algo.HMAC.create(
        CryptoJS.algo.SHA256,
-       currentUser.token
+       auth.token
       );
 
-      hmac.update(config.method + ':');
+      hmac.update(method + ':');
       hmac.update(path + ':');
       hmac.update(headers['St-Timestamp'] + ':');
       hmac.update(blob.join('&'));
 
       headers['St-Hash'] = hmac.finalize().toString();
 
-      angular.extend(config.headers, headers);
+      return headers;
+    };
 
-      $log.info('AFTER', config);
+    this.transformRequest = function(config) {
+
+      var auth = Currentuser.getAuth();
+
+      angular.extend(config.headers, this.generateHeaders(auth, config.url, config.method, config.data));
 
       return config;
-    }
-  };
-});
+    };
+
+  });
