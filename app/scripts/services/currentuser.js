@@ -1,11 +1,8 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .factory('Currentuser', function Currentuser() {
-    var currentUser = null, currentAuth = {
-      'identifier'  : 'anonymous',
-      'token'       : ''
-    };
+  .factory('Currentuser', function Currentuser(ApiAuth) {
+    var currentUser = null, currentAuth = new ApiAuth();
 
     return {
       getUser : function() {
@@ -22,13 +19,6 @@ angular.module('squareteam.app')
 
       getAuth : function() {
         return currentAuth;
-      },
-
-      getAll  : function() {
-        return {
-          auth : currentAuth,
-          user : currentUser
-        };
       }
     };
   });

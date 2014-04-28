@@ -1,3 +1,4 @@
+/*global CryptoJS*/
 'use strict';
 
 describe('Service: CurrentUserProvider', function () {
@@ -6,9 +7,10 @@ describe('Service: CurrentUserProvider', function () {
   beforeEach(module('squareteam.app'));
 
   // instantiate service
-  var Currentuser;
+  var Currentuser, ApiAuth;
   beforeEach(inject(function ($injector) {
     Currentuser = $injector.get('Currentuser');
+    ApiAuth     = $injector.get('ApiAuth');
   }));
 
   it('should return user', function () {
@@ -16,20 +18,7 @@ describe('Service: CurrentUserProvider', function () {
   });
 
   it('should return auth', function () {
-    expect(Currentuser.getAuth()).toEqual({
-      'identifier'  : 'anonymous',
-      'token'       : ''
-    });
-  });
-
-  it('should return user and auth', function () {
-    expect(Currentuser.getAll()).toEqual({
-      user : null,
-      auth : {
-        'identifier'  : 'anonymous',
-        'token'       : ''
-      }
-    });
+    expect(Currentuser.getAuth().isValid()).toBe(false);
   });
 
   it('should set user', function () {
@@ -38,14 +27,12 @@ describe('Service: CurrentUserProvider', function () {
   });
 
   it('should set auth', function () {
-    Currentuser.setAuth({
-      'identifier'  : 'Charly',
-      'token'       : 'a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1'
-    });
-    expect(Currentuser.getAuth()).toEqual({
-      'identifier'  : 'Charly',
-      'token'       : 'a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1'
-    });
+    Currentuser.setAuth(new ApiAuth('Charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
+    
+    var auth = Currentuser.getAuth();
+
+    expect(auth.identifier).toBe('Charly');
+    expect(auth.token.toString()).toBe('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1');
   });
 
 });
