@@ -28,7 +28,7 @@ describe('Service: ApiHttpInterceptors', function () {
     $httpBackend.verifyNoOutstandingRequest();
   });
 
-  it('should do nothing', function () {
+  it('should do not change request url', function () {
     $httpBackend.expectGET('/auth.py').respond(200, '');
     $http.get('/auth.py').success(function(/*data, status, headers*/) {
     });

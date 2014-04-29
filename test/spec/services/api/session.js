@@ -58,208 +58,220 @@ describe('Service: ApiSession', function () {
     expect(!!ApiSession.ackAuth).toBe(true);
   });
 
-  it('should have a anonymous by default', function() {
+  it('should have a anonymous user by default', function() {
 
     expect(ApiSession.isAnonymous()).toBe(true);
     expect(Currentuser.getAuth().isValid()).toBe(false);
 
   });
 
-  it('should fail to login cause login is incorrect', function() {
-    $httpBackend.expectGET(apiURL + 'login').respond(404, '');
-
-    ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
-
-    $httpBackend.flush();
-
-    expect(successCallback.calls.any()).toEqual(false);
-    expect(errorCallback.calls.count()).toEqual(1);
+  describe('ApiSession.login', function() {
     
-    expect(errorCallback.calls.argsFor(0)[0]).toEqual('auth.bad_login');
-  });
+    it('should fail to login cause login is incorrect', function() {
+      $httpBackend.expectGET(apiURL + 'login').respond(404, '');
 
-  it('should fail to login cause password is incorrect', function() {
-    $httpBackend.expectGET(apiURL + 'login').respond(200, '{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}');
-    $httpBackend.expectGET(apiURL + 'user/me').respond(401, '');
+      ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
 
-    ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
+      $httpBackend.flush();
 
-    $httpBackend.flush();
+      expect(successCallback.calls.any()).toEqual(false);
+      expect(errorCallback.calls.count()).toEqual(1);
+      
+      expect(errorCallback.calls.argsFor(0)[0]).toEqual('auth.bad_login');
+    });
 
-    expect(errorCallback.calls.count()).toEqual(1);
-    expect(successCallback.calls.any()).toEqual(false);
+    it('should fail to login cause password is incorrect', function() {
+      $httpBackend.expectGET(apiURL + 'login').respond(200, '{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}');
+      $httpBackend.expectGET(apiURL + 'user/me').respond(401, '');
 
-    expect(errorCallback.calls.argsFor(0)[0]).toEqual('auth.bad_password');
-  });
+      ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
 
-  it('should fail to login cause salts returned by server is incorrect', function() {
-    $httpBackend.expectGET(apiURL + 'login').respond(200, '{"salt1":"z","salt2":""}');
+      $httpBackend.flush();
 
-    ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
+      expect(errorCallback.calls.count()).toEqual(1);
+      expect(successCallback.calls.any()).toEqual(false);
 
-    $httpBackend.flush();
+      expect(errorCallback.calls.argsFor(0)[0]).toEqual('auth.bad_password');
+    });
 
-    expect(errorCallback.calls.count()).toEqual(1);
-    expect(successCallback.calls.any()).toEqual(false);
+    it('should fail to login cause salts returned by server is incorrect', function() {
+      $httpBackend.expectGET(apiURL + 'login').respond(200, '{"salt1":"z","salt2":""}');
 
-    expect(errorCallback.calls.argsFor(0)[0]).toEqual('api.response_malformed');
-  });
+      ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
 
-  it('should fail to login cause API is down', function() {
+      $httpBackend.flush();
 
+      expect(errorCallback.calls.count()).toEqual(1);
+      expect(successCallback.calls.any()).toEqual(false);
 
-    $httpBackend.expectGET(apiURL + 'login').respond(503, '{"salt1":"z","salt2":""}');
+      expect(errorCallback.calls.argsFor(0)[0]).toEqual('api.response_malformed');
+    });
 
-    ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
-
-    $httpBackend.flush();
-
-    expect(errorCallback.calls.count()).toEqual(1);
-    expect(successCallback.calls.any()).toEqual(false);
-
-    expect(errorCallback.calls.argsFor(0)[0]).toEqual('api.not_available');
-
-  });
-
-  it('should fails to logout when anonymous', function() {
-
-    ApiSession.logout().then(successCallback, errorCallback);
-
-    $rootScope.$digest(); // force deferred resolution
-
-    expect(errorCallback.calls.count()).toEqual(1);
-    expect(successCallback.calls.count()).toEqual(0);
-
-    expect(errorCallback.calls.argsFor(0)[0]).toEqual('session.invalid');
-
-  });
-
-  it('should fails to logout when api is down', function() {
-
-    Currentuser.setUser({ name : 'charly'});
-    Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
+    it('should fail to login cause API is down', function() {
 
 
-    $httpBackend.expectGET(apiURL + 'logout').respond(500, '');
+      $httpBackend.expectGET(apiURL + 'login').respond(503, '{"salt1":"z","salt2":""}');
 
-    ApiSession.logout().then(successCallback, errorCallback);
+      ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
 
-    $rootScope.$digest(); // force deferred resolution
+      $httpBackend.flush();
 
-    $httpBackend.flush();
+      expect(errorCallback.calls.count()).toEqual(1);
+      expect(successCallback.calls.any()).toEqual(false);
 
-    expect(errorCallback.calls.count()).toEqual(1);
-    expect(successCallback.calls.count()).toEqual(0);
+      expect(errorCallback.calls.argsFor(0)[0]).toEqual('api.not_available');
 
-    expect(errorCallback.calls.argsFor(0)[0]).toEqual('api.not_available');
+    });
 
   });
 
-  it('should logout', function() {
+  describe('ApiSession.logout', function() {
+    
+    it('should fails to logout when anonymous', function() {
 
-    spyOn($rootScope, '$broadcast');
-    spyOn(ApiSessionStorageCookies, 'destroy');
+      ApiSession.logout().then(successCallback, errorCallback);
 
-    Currentuser.setUser({ name : 'charly'});
-    Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
+      $rootScope.$digest(); // force deferred resolution
 
+      expect(errorCallback.calls.count()).toEqual(1);
+      expect(successCallback.calls.count()).toEqual(0);
 
-    $httpBackend.expectGET(apiURL + 'logout').respond(200, '');
+      expect(errorCallback.calls.argsFor(0)[0]).toEqual('session.invalid');
 
-    ApiSession.logout().then(successCallback, errorCallback);
+    });
 
-    $rootScope.$digest(); // first force deferred to settle
+    it('should fails to logout when api is down', function() {
 
-    $httpBackend.flush(); // then force http request to complete
-
-    expect($rootScope.$broadcast).toHaveBeenCalledWith('user:disconnected');
-    expect(ApiSessionStorageCookies.destroy.calls.count()).toBe(1);
+      Currentuser.setUser({ name : 'charly'});
+      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
 
 
+      $httpBackend.expectGET(apiURL + 'logout').respond(500, '');
 
-    expect(successCallback.calls.count()).toEqual(1);
-    expect(errorCallback.calls.count()).toEqual(0);
+      ApiSession.logout().then(successCallback, errorCallback);
 
+      $rootScope.$digest(); // force deferred resolution
+
+      $httpBackend.flush();
+
+      expect(errorCallback.calls.count()).toEqual(1);
+      expect(successCallback.calls.count()).toEqual(0);
+
+      expect(errorCallback.calls.argsFor(0)[0]).toEqual('api.not_available');
+
+    });
+
+    it('should logout', function() {
+
+      spyOn($rootScope, '$broadcast');
+      spyOn(ApiSessionStorageCookies, 'destroy');
+
+      Currentuser.setUser({ name : 'charly'});
+      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
+
+
+      $httpBackend.expectGET(apiURL + 'logout').respond(200, '');
+
+      ApiSession.logout().then(successCallback, errorCallback);
+
+      $rootScope.$digest(); // first force deferred to settle
+
+      $httpBackend.flush(); // then force http request to complete
+
+      expect($rootScope.$broadcast).toHaveBeenCalledWith('user:disconnected');
+      expect(ApiSessionStorageCookies.destroy.calls.count()).toBe(1);
+
+
+
+      expect(successCallback.calls.count()).toEqual(1);
+      expect(errorCallback.calls.count()).toEqual(0);
+
+
+    });
+
+    it('should logout without destroy from storage', function() {
+
+      spyOn($rootScope, '$broadcast');
+      spyOn(ApiSessionStorageCookies, 'destroy');
+
+      Currentuser.setUser({ name : 'charly'});
+      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
+
+
+      $httpBackend.expectGET(apiURL + 'logout').respond(200, '');
+
+      ApiSession.logout(false).then(successCallback, errorCallback);
+
+      $rootScope.$digest(); // first force deferred to settle
+
+      $httpBackend.flush(); // then force http request to complete
+
+      expect($rootScope.$broadcast).toHaveBeenCalledWith('user:disconnected');
+      expect(ApiSessionStorageCookies.destroy.calls.count()).toBe(0);
+
+      expect(successCallback.calls.count()).toEqual(1);
+      expect(errorCallback.calls.count()).toEqual(0);
+
+
+    });
 
   });
 
-  it('should logout without destroy from storage', function() {
+  describe('ApiSession.save', function() {
+    
+    it('should fails to save when anonymous', function() {
 
-    spyOn($rootScope, '$broadcast');
-    spyOn(ApiSessionStorageCookies, 'destroy');
+      ApiSession.save().then(successCallback, errorCallback);
 
-    Currentuser.setUser({ name : 'charly'});
-    Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
+      $rootScope.$digest(); // force deferred resolution
 
+      expect(errorCallback.calls.count()).toEqual(1);
+      expect(successCallback.calls.count()).toEqual(0);
 
-    $httpBackend.expectGET(apiURL + 'logout').respond(200, '');
+      expect(errorCallback.calls.argsFor(0)[0]).toEqual('session.invalid');
 
-    ApiSession.logout(false).then(successCallback, errorCallback);
+    });
 
-    $rootScope.$digest(); // first force deferred to settle
+    it('should save', function() {
 
-    $httpBackend.flush(); // then force http request to complete
+      Currentuser.setUser({ name : 'charly'});
+      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
 
-    expect($rootScope.$broadcast).toHaveBeenCalledWith('user:disconnected');
-    expect(ApiSessionStorageCookies.destroy.calls.count()).toBe(0);
+      spyOn(ApiSessionStorageCookies, 'store').and.returnValue(true);
 
-    expect(successCallback.calls.count()).toEqual(1);
-    expect(errorCallback.calls.count()).toEqual(0);
+      ApiSession.save().then(successCallback, errorCallback);
 
+      $rootScope.$digest(); // force deferred resolution
 
-  });
+      expect(successCallback.calls.count()).toEqual(1);
+      expect(errorCallback.calls.count()).toEqual(0);
 
-  it('should fails to save when anonymous', function() {
-
-    ApiSession.save().then(successCallback, errorCallback);
-
-    $rootScope.$digest(); // force deferred resolution
-
-    expect(errorCallback.calls.count()).toEqual(1);
-    expect(successCallback.calls.count()).toEqual(0);
-
-    expect(errorCallback.calls.argsFor(0)[0]).toEqual('session.invalid');
-
-  });
-
-  it('should save', function() {
-
-    Currentuser.setUser({ name : 'charly'});
-    Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
-
-    spyOn(ApiSessionStorageCookies, 'store').and.returnValue(true);
-
-    ApiSession.save().then(successCallback, errorCallback);
-
-    $rootScope.$digest(); // force deferred resolution
-
-    expect(successCallback.calls.count()).toEqual(1);
-    expect(errorCallback.calls.count()).toEqual(0);
-
-    expect(ApiSessionStorageCookies.store.calls.count()).toBe(1);
+      expect(ApiSessionStorageCookies.store.calls.count()).toBe(1);
 
 
-  });
+    });
 
-  it('should not save cause ApiSessionStorageCookies.restore failed', function() {
+    it('should not save cause ApiSessionStorageCookies.restore failed', function() {
 
-    Currentuser.setUser({ name : 'charly'});
-    Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
+      Currentuser.setUser({ name : 'charly'});
+      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
 
-    spyOn(ApiSessionStorageCookies, 'store').and.returnValue(false);
+      spyOn(ApiSessionStorageCookies, 'store').and.returnValue(false);
 
-    ApiSession.save().then(successCallback, errorCallback);
+      ApiSession.save().then(successCallback, errorCallback);
 
-    $rootScope.$digest(); // force deferred resolution
+      $rootScope.$digest(); // force deferred resolution
 
-    expect(errorCallback.calls.count()).toEqual(1);
-    expect(successCallback.calls.count()).toEqual(0);
+      expect(errorCallback.calls.count()).toEqual(1);
+      expect(successCallback.calls.count()).toEqual(0);
 
-    expect(errorCallback.calls.argsFor(0)[0]).toBe('session.storage.unable_to_store');
+      expect(errorCallback.calls.argsFor(0)[0]).toBe('session.storage.unable_to_store');
 
-    expect(ApiSessionStorageCookies.store.calls.count()).toBe(1);
+      expect(ApiSessionStorageCookies.store.calls.count()).toBe(1);
 
 
+    });
+    
   });
 
   describe('ApiSession.login', function() {
