@@ -222,12 +222,12 @@ describe('Service: ApiSession', function () {
 
   });
 
-  xit('should save', function() {
+  it('should save', function() {
 
     Currentuser.setUser({ name : 'charly'});
     Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
 
-    spyOn(ApiSessionStorageCookies, 'store');
+    spyOn(ApiSessionStorageCookies, 'store').and.returnValue(true);
 
     ApiSession.save().then(successCallback, errorCallback);
 
@@ -236,7 +236,26 @@ describe('Service: ApiSession', function () {
     expect(successCallback.calls.count()).toEqual(1);
     expect(errorCallback.calls.count()).toEqual(0);
 
-    console.log(errorCallback.calls.argsFor(0));
+    expect(ApiSessionStorageCookies.store.calls.count()).toBe(1);
+
+
+  });
+
+  it('should not save cause ApiSessionStorageCookies.restore failed', function() {
+
+    Currentuser.setUser({ name : 'charly'});
+    Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
+
+    spyOn(ApiSessionStorageCookies, 'store').and.returnValue(false);
+
+    ApiSession.save().then(successCallback, errorCallback);
+
+    $rootScope.$digest(); // force deferred resolution
+
+    expect(errorCallback.calls.count()).toEqual(1);
+    expect(successCallback.calls.count()).toEqual(0);
+
+    expect(errorCallback.calls.argsFor(0)[0]).toBe('session.storage.unable_to_store');
 
     expect(ApiSessionStorageCookies.store.calls.count()).toBe(1);
 
@@ -320,6 +339,25 @@ describe('Service: ApiSession', function () {
       });
 
       expect(Currentuser.getAuth().isValid()).toBe(true);
+
+    });
+
+    it('should failed silently to restore session from cookies storage', function() {
+
+      spyOn(ApiSessionStorageCookies, 'retrieve').and.returnValue(false);
+
+      ApiSession.restore().then(successCallback, errorCallback);
+
+      $rootScope.$digest();
+
+      expect(errorCallback.calls.any()).toEqual(false);
+      expect(successCallback.calls.count()).toEqual(1);
+
+      expect(successCallback.calls.argsFor(0)[0]).toBe('session.storage.no_session');
+
+      expect(Currentuser.getUser()).toEqual(null);
+
+      expect(Currentuser.getAuth().isValid()).toBe(false);
 
     });
 
