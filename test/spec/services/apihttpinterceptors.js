@@ -37,8 +37,8 @@ describe('Service: ApiHttpInterceptors', function () {
   });
 
   it('should change url with api url', function () {
-    $httpBackend.expectGET(apiURL + 'logout').respond(200, '');
-    $http.get('api://logout').success(function(/*data, status, headers*/) {
+    $httpBackend.expectGET(apiURL + 'login').respond(200, '');
+    $http.get('api://login').success(function(/*data, status, headers*/) {
     });
 
     $httpBackend.flush();
