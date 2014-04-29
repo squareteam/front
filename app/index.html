@@ -58,5 +58,16 @@
         <script src="scripts/services/api/auth.js"></script>
         <script src="scripts/services/api/session.js"></script>
         <!-- endbuild -->
+
+    <script type="text/javascript">
+        angular.module('squareteam.app').run(function(ApiSession) {
+          ApiSession.restore().then(function(errorIfAny) {
+            if (errorIfAny && errorIfAny === 'auth.invalid') {
+              // redirect to login page with flash message
+            }
+            // Launch notifications services, etc..
+          });
+        });
+    </script>
 </body>
 </html>
