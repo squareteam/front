@@ -1,6 +1,9 @@
 'use strict';
 
-angular.module('squareteam.ressources', ['ngResource']);
+angular.module('squareteam.ressources', [
+  'ngCookies',
+  'ngResource'
+]);
 
 angular.module('squareteam.api', [])
   .config(function($httpProvider) {
@@ -11,7 +14,6 @@ angular
   .module('squareteam.app', [
     'squareteam.api',
     'squareteam.ressources',
-    'ngCookies',
     'ngSanitize',
     'ngRoute'
   ])
@@ -29,6 +31,7 @@ angular
 
 angular.module('squareteam.app').value('appConfig', {
   api : {
-    url : 'http://localhost:1551/api/'
+    url       : 'http://localhost:1551/api/',
+    storageNS : 'ST_SESSION'
   }
 });
