@@ -61,6 +61,10 @@ angular.module('squareteam.api')
 
       var auth = Currentuser.getAuth();
 
+      if (!auth.isValid()) {
+        throw new Error('Cannot load ' + config.url + ' without being logged in !');
+      }
+
       angular.extend(config.headers, this.generateHeaders(auth, config.url, config.method, config.data));
 
       return config;

@@ -7,10 +7,13 @@ describe('Service: ApiCrypto', function () {
   beforeEach(module('squareteam.app'));
 
   // instantiate service
-  var ApiCrypto, ApiAuth, data = {};
+  var ApiCrypto, ApiAuth, Currentuser,
+      data = {};
+  
   beforeEach(inject(function ($injector) {
-    ApiCrypto = $injector.get('ApiCrypto');
-    ApiAuth   = $injector.get('ApiAuth');
+    ApiCrypto     = $injector.get('ApiCrypto');
+    ApiAuth       = $injector.get('ApiAuth');
+    Currentuser   = $injector.get('Currentuser');
 
     data.auth = {
       identifier  : 'test@example.com',
@@ -29,7 +32,7 @@ describe('Service: ApiCrypto', function () {
 
     data.token = 'a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1';
 
-    $injector.get('Currentuser').setAuth(new ApiAuth(data.auth.identifier,CryptoJS.enc.Hex.parse(data.token)));
+    Currentuser.setAuth(new ApiAuth(data.auth.identifier,CryptoJS.enc.Hex.parse(data.token)));
 
 
     // hack the Date.now to return correct timestamp..
@@ -67,6 +70,14 @@ describe('Service: ApiCrypto', function () {
     expect(headers['St-Identifier']).toBe(data.auth.identifier);
     expect(headers['St-Hash']).toBe('f0036e0d6e2791030db39410edfbc8fd31fd59360a5c7fabf177e1f5a70fcac3');
 
+  });
+
+  it('should fails to generateHeaders when Currentuser is anonymous', function() {
+    Currentuser.setAuth(new ApiAuth());
+
+    expect(function() {
+      ApiCrypto.transformRequest(data.request);
+    }).toThrowError();
   });
 
 });
