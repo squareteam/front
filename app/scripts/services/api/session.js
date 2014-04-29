@@ -15,31 +15,44 @@ angular.module('squareteam.api')
           authToValidate  = new ApiAuth(),
           self            = this;
 
-      $http.get('api://login', {
-        login : login
-      }).then(function(response) {
-        
-        if (response && response.data &&
-            response.data.salt1 && response.data.salt1.length > 0 &&
-            response.data.salt2 && response.data.salt2.length > 0) {
 
-          authToValidate.identifier = login;
-          authToValidate.token      = ApiCrypto.generateToken(login, password, CryptoJS.enc.Hex.parse(response.data.salt1), CryptoJS.enc.Hex.parse(response.data.salt2));
+      function _login () {
+        $http.get('api://login', {
+          login : login
+        }).then(function(response) {
+          
+          if (response && response.data &&
+              response.data.salt1 && response.data.salt1.length > 0 &&
+              response.data.salt2 && response.data.salt2.length > 0) {
 
-          self.ackAuth(authToValidate).then(function(user) {
-            Currentuser.setAuth(authToValidate);
-            Currentuser.setUser(user);
-            $rootScope.$broadcast('user:connected');
-            deferred.resolve();
-          }, function() {
-            deferred.reject('auth.bad_password');
-          });
-        } else {
-          deferred.reject('api.response_malformed');
-        }
-      }, function() {
-        deferred.reject('auth.bad_login');
-      });
+            authToValidate.identifier = login;
+            authToValidate.token      = ApiCrypto.generateToken(login, password, CryptoJS.enc.Hex.parse(response.data.salt1), CryptoJS.enc.Hex.parse(response.data.salt2));
+
+            self.ackAuth(authToValidate).then(function(user) {
+              Currentuser.setAuth(authToValidate);
+              Currentuser.setUser(user);
+              $rootScope.$broadcast('user:connected');
+              deferred.resolve();
+            }, function() {
+              deferred.reject('auth.bad_password');
+            });
+          } else {
+            deferred.reject('api.response_malformed');
+          }
+        }, function(response) {
+          if (response.status >= 500) {
+            deferred.reject('api.not_available');
+          } else {
+            deferred.reject('auth.bad_login');
+          }
+        });
+      }
+
+      if (!this.isAnonymous()) {
+        this.logout().then(_login, deferred.reject);
+      } else {
+        _login();
+      }
 
       return deferred.promise;
     };
@@ -47,19 +60,18 @@ angular.module('squareteam.api')
     this.logout = function(destroyFromStorageToo) {
       var deferred = $q.defer();
 
-      destroyFromStorageToo = destroyFromStorageToo || true;
+      destroyFromStorageToo = angular.isDefined(destroyFromStorageToo) ? destroyFromStorageToo : true;
 
       if (!this.isAnonymous()) {
-        $http('apis://logout').then(function() {
+        $http.get('apis://logout').then(function() {
           // success
           if (destroyFromStorageToo) {
             ApiSessionStorageCookies.destroy();
           }
           deferred.resolve();
           $rootScope.$broadcast('user:disconnected');
-        }, function(error) {
-          // error
-          deferred.reject(error);
+        }, function() {
+          deferred.reject('api.not_available');
         });
       } else {
         deferred.reject('session.invalid');
@@ -73,7 +85,11 @@ angular.module('squareteam.api')
       var deferred = $q.defer();
 
       if (!this.isAnonymous()) {
-        
+        if (ApiSessionStorageCookies.store()) {
+          deferred.resolve();
+        } else {
+          deferred.reject('session.storage.unable_to_store');
+        }
       } else {
         deferred.reject('session.invalid');
       }
@@ -82,6 +98,7 @@ angular.module('squareteam.api')
 
     };
 
+    // TODO : logout current user if any ??
     this.restore = function() {
       var deferred  = $q.defer(),
           auth      = ApiSessionStorageCookies.retrieve();
