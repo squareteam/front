@@ -111,7 +111,7 @@ angular.module('squareteam.api')
           deferred.resolve();
         }, deferred.resolve);
       } else {
-        deferred.resolve();
+        deferred.resolve('session.storage.no_session');
       }
 
       return deferred.promise;
