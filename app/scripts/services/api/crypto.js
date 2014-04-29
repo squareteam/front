@@ -25,15 +25,13 @@ angular.module('squareteam.api')
 
       path = url.replace(appConfig.api.url, '');
 
-      if (path[0] !== '/') {
+      if (path[0] !== '/') { // FIXME : remove ? better patch ?
         path = '/' + path;
       }
 
       if (data && angular.isObject(data)) {
         angular.forEach(Object.keys(data).sort(), function(key) {
-          if (data.hasOwnProperty(key)) {
-            blob.push( key + '=' + encodeURIComponent(data[key]) );
-          }
+          blob.push( key + '=' + encodeURIComponent(data[key]) );
         });
       }
 
