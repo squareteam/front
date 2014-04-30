@@ -1,6 +1,6 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .controller('MainCtrl', function ($scope, ApiSession) {
+  .controller('LoginCtrl', function ($scope, ApiSession) {
     $scope.session = ApiSession;
   });
