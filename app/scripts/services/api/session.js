@@ -17,7 +17,7 @@ angular.module('squareteam.api')
 
 
       function _login () {
-        $http.get('api://login', {
+        $http.put('api://login', {
           login : login
         }).then(function(response) {
           

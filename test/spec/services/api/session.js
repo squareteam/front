@@ -68,7 +68,7 @@ describe('Service: ApiSession', function () {
   describe('ApiSession.login', function() {
     
     it('should fail to login cause login is incorrect', function() {
-      $httpBackend.expectGET(apiURL + 'login').respond(404, '');
+      $httpBackend.expectPUT(apiURL + 'login').respond(404, '');
 
       ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
 
@@ -81,7 +81,7 @@ describe('Service: ApiSession', function () {
     });
 
     it('should fail to login cause password is incorrect', function() {
-      $httpBackend.expectGET(apiURL + 'login').respond(200, '{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}');
+      $httpBackend.expectPUT(apiURL + 'login').respond(200, '{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}');
       $httpBackend.expectGET(apiURL + 'user/me').respond(401, '');
 
       ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
@@ -95,7 +95,7 @@ describe('Service: ApiSession', function () {
     });
 
     it('should fail to login cause salts returned by server is incorrect', function() {
-      $httpBackend.expectGET(apiURL + 'login').respond(200, '{"salt1":"z","salt2":""}');
+      $httpBackend.expectPUT(apiURL + 'login').respond(200, '{"salt1":"z","salt2":""}');
 
       ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
 
@@ -110,7 +110,7 @@ describe('Service: ApiSession', function () {
     it('should fail to login cause API is down', function() {
 
 
-      $httpBackend.expectGET(apiURL + 'login').respond(503, '{"salt1":"z","salt2":""}');
+      $httpBackend.expectPUT(apiURL + 'login').respond(503, '{"salt1":"z","salt2":""}');
 
       ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
 
@@ -280,7 +280,7 @@ describe('Service: ApiSession', function () {
     it('should login', function() {
       spyOn($rootScope, '$broadcast');
 
-      $httpBackend.expectGET(apiURL + 'login')  .respond(200, '{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}');
+      $httpBackend.expectPUT(apiURL + 'login')  .respond(200, '{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}');
       $httpBackend.expectGET(apiURL + 'user/me').respond(200, '{"user":{"name":"Charly"}}');
 
       ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
@@ -308,7 +308,7 @@ describe('Service: ApiSession', function () {
 
 
       $httpBackend.expectGET(apiURL + 'logout') .respond(200, '');
-      $httpBackend.expectGET(apiURL + 'login')  .respond(200, '{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}');
+      $httpBackend.expectPUT(apiURL + 'login')  .respond(200, '{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}');
       $httpBackend.expectGET(apiURL + 'user/me').respond(200, '{"user":{"name":"Charly"}}');
 
       ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
