@@ -8,22 +8,25 @@ angular.module('squareteam.app')
       scope : {
         redirectUrl : '@'
       },
-      // replace : true,
+      replace : true,
       controller: function($scope, $element, $attrs, $location, ApiSession) {
         $scope.session = ApiSession;
 
         $scope.login = function() {
-          console.log($scope);
-
+          
+          $scope.loginForm.$setValidity('incorrect', true, 'email');
+          $scope.loginForm.$setValidity('incorrect', true, 'password');
+          $scope.serverBusy = false;
+          
           ApiSession.login($scope.user.login, $scope.user.password).then(function() {
             $location.path($scope.redirectUrl || '/home');
           }, function(error) {
             if (error === 'auth.bad_login') {
-              $scope.errors = 'Le login n\'est pas valide';
+              $scope.loginForm.$setValidity('incorrect', false, 'email');
             } else if (error === 'auth.bad_password') {
-              $scope.errors = 'Le mot de passe n\'est pas valide';
+              $scope.loginForm.$setValidity('incorrect', false, 'password');
             } else {
-              $scope.errors = 'Le serveur est indisponible';
+              $scope.serverBusy = true;
             }
           });
         };
