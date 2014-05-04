@@ -34,11 +34,3 @@ angular
       });
 
   });
-
-// TODO : not include config in git repo..
-angular.module('squareteam.app').value('appConfig', {
-  api : {
-    url       : 'http://localhost:1551/api/',
-    storageNS : 'ST_SESSION'
-  }
-});

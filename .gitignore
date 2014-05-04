@@ -4,3 +4,4 @@ dist
 .sass-cache
 coverage/
 app/bower_components
+app/scripts/config.js
