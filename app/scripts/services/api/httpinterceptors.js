@@ -39,8 +39,6 @@ angular.module('squareteam.api')
         return config;
       },
 
-      // TODO : Error classes ?
-      // FIXME : tests !
       response : function(response) {
         if (apiResponseRegex.test(response.config.url)) {
           if (!response.data.errors && response.status <= 201) {
