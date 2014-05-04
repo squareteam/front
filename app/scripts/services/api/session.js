@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('squareteam.api')
-  .service('ApiSession', function Apisession($rootScope, $http, $q, appConfig, Currentuser, ApiSessionStorageCookies, ApiAuth, ApiCrypto) {
+  .service('ApiSession', function Apisession($rootScope, $http, $q, appConfig, Currentuser, ApiSessionStorageCookies, ApiAuth, ApiCrypto, ApiErrors) {
     
     this.apiAuth = new ApiAuth(); // invalid ApiAuth by default == anonymous
 
@@ -16,11 +16,11 @@ angular.module('squareteam.api')
           self            = this;
 
 
-      function _login () {
+      function $$login () {
         $http.put('api://login', {
-          login : login
+          identifier : login
         }).then(function(response) {
-          
+
           if (response && response.data &&
               response.data.salt1 && response.data.salt1.length > 0 &&
               response.data.salt2 && response.data.salt2.length > 0) {
@@ -32,6 +32,7 @@ angular.module('squareteam.api')
               Currentuser.setAuth(authToValidate);
               Currentuser.setUser(user);
               $rootScope.$broadcast('user:connected');
+              self.save();
               deferred.resolve();
             }, function() {
               deferred.reject('auth.bad_password');
@@ -40,7 +41,7 @@ angular.module('squareteam.api')
             deferred.reject('api.response_malformed');
           }
         }, function(response) {
-          if (response.status >= 500) {
+          if (response.error instanceof ApiErrors.Http) {
             deferred.reject('api.not_available');
           } else {
             deferred.reject('auth.bad_login');
@@ -49,9 +50,9 @@ angular.module('squareteam.api')
       }
 
       if (!this.isAnonymous()) {
-        this.logout().then(_login, deferred.reject);
+        this.logout().then($$login, deferred.reject);
       } else {
-        _login();
+        $$login();
       }
 
       return deferred.promise;
@@ -85,7 +86,7 @@ angular.module('squareteam.api')
       var deferred = $q.defer();
 
       if (!this.isAnonymous()) {
-        if (ApiSessionStorageCookies.store()) {
+        if (ApiSessionStorageCookies.store(Currentuser.getAuth())) {
           deferred.resolve();
         } else {
           deferred.reject('session.storage.unable_to_store');
@@ -123,11 +124,15 @@ angular.module('squareteam.api')
       $http({
         method  : 'GET',
         url     : appConfig.api.url + 'user/me',
-        headers : ApiCrypto.generateHeaders(auth, appConfig.api.url + 'user/me', 'GET', {})
+        headers : angular.extend({'X-Requested-With': 'XMLHttpRequest'}, ApiCrypto.generateHeaders(auth, appConfig.api.url + 'user/me', 'GET', {}))
       }).then(function(response) {
-        deferred.resolve(response.data.user);
-      }, function() {
-        deferred.reject('auth.invalid');
+        deferred.resolve(response.data);
+      }, function(response) {
+        if (response.error instanceof ApiErrors.Http) {
+          deferred.reject('api.not_available');
+        } else {
+          deferred.reject('auth.invalid');
+        }
       });
       
       return deferred.promise;

@@ -8,12 +8,14 @@ describe('Service: ApiCrypto', function () {
 
   // instantiate service
   var ApiCrypto, ApiAuth, Currentuser,
+      appConfig,
       data = {};
   
   beforeEach(inject(function ($injector) {
     ApiCrypto     = $injector.get('ApiCrypto');
     ApiAuth       = $injector.get('ApiAuth');
     Currentuser   = $injector.get('Currentuser');
+    appConfig     = $injector.get('appConfig');
 
     data.auth = {
       identifier  : 'test@example.com',
@@ -24,8 +26,8 @@ describe('Service: ApiCrypto', function () {
 
     data.request = {
       method    : 'GET',
-      url       : 'http://localhost:1551/api/users/me',
-      data      : {},
+      url       : appConfig.api.url + 'users/me',
+      data      : '',
       timestamp : '1393369116',
       headers   : {}
     };
