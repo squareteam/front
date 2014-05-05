@@ -23,7 +23,7 @@ angular.module('squareteam.api')
           path,
           blob = [];
 
-      path = url.replace(appConfig.api.url, '');
+      path = url.replace(appConfig.api.host, '');
 
       if (path[0] !== '/') { // FIXME : remove ? better patch ?
         path = '/' + path;
@@ -45,16 +45,16 @@ angular.module('squareteam.api')
        auth.token
       );
 
-      console.group('-- generateHeaders --');
+      // console.group('-- generateHeaders --');
 
-      console.log('method',     method);
-      console.log('path',       path);
-      console.log('headers',    headers);
-      console.log('blob',       blob);
-      console.log('token',      auth.token.toString());
-      console.log('identifier', auth.identifier);
+      // console.log('method',     method);
+      // console.log('path',       path);
+      // console.log('headers',    headers);
+      // console.log('blob',       blob);
+      // console.log('token',      auth.token.toString());
+      // console.log('identifier', auth.identifier);
 
-      console.groupEnd();
+      // console.groupEnd();
 
       hmac.update(method + ':');
       hmac.update(path + ':');
