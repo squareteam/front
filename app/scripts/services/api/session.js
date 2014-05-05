@@ -69,6 +69,8 @@ angular.module('squareteam.api')
           if (destroyFromStorageToo) {
             ApiSessionStorageCookies.destroy();
           }
+          Currentuser.setAuth(new ApiAuth());
+          Currentuser.setUser(null);
           deferred.resolve();
           $rootScope.$broadcast('user:disconnected');
         }, function() {
@@ -99,7 +101,6 @@ angular.module('squareteam.api')
 
     };
 
-    // TODO : logout current user if any ??
     this.restore = function() {
       var deferred  = $q.defer(),
           auth      = ApiSessionStorageCookies.retrieve();
@@ -124,6 +125,7 @@ angular.module('squareteam.api')
       $http({
         method  : 'GET',
         url     : appConfig.api.url + 'user/me',
+        // FIXME : Use $httpProvider.defaults.headers.common instead
         headers : angular.extend({'X-Requested-With': 'XMLHttpRequest'}, ApiCrypto.generateHeaders(auth, appConfig.api.url + 'user/me', 'GET', {}))
       }).then(function(response) {
         deferred.resolve(response.data);
