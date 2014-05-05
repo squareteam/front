@@ -4,7 +4,17 @@
 describe('Service: ApiHttpInterceptors', function () {
 
   // load the service's module
-  beforeEach(module('squareteam.app'));
+  beforeEach(module('squareteam.app', function($provide) {
+    $provide.value('appConfig', {
+      api : {
+        host : 'http://127.0.0.1:1551/api/',
+        path : '',
+        url  : 'http://127.0.0.1:1551/api/',
+        storageNS : 'ST_SESSION'
+      }
+    });
+    // override value to match ST ruby API spec
+  }));
 
   // instantiate service
   var ApiHttpInterceptors, ApiAuth,
