@@ -1,5 +1,22 @@
 <p>Welcome  {{ name }}</p>
 
+<h3>
+   Organizations
+</h3>
+
+<ul>
+   <li ng-repeat="organization in organizations">
+      {{ organization.name }}
+   </li>
+   <li ng-show="!organizations.length">
+      No result
+   </li>
+</ul>
+
+<p>
+   <hr>
+</p>
+
 
 <a href="#" ng-click="logout()" class="btn btn-primary">
    Logout
