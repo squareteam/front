@@ -18,7 +18,7 @@ angular.module('squareteam.app')
           $scope.loginForm.$setValidity('incorrect', true, 'password');
           $scope.serverBusy = false;
           
-          ApiSession.login($scope.user.login, $scope.user.password).then(function() {
+          ApiSession.login($scope.user.email, $scope.user.password).then(function() {
             $location.path($scope.redirectUrl || '/home');
           }, function(error) {
             if (error === 'auth.bad_login') {
