@@ -24,6 +24,11 @@ angular
         controller: 'LoginCtrl',
         anonymous: true
       })
+      .when('/register', {
+        templateUrl: 'views/register.html',
+        // controller: 'RegisterCtrl',
+        anonymous: true
+      })
       .when('/home', {
         templateUrl: 'views/home.html',
         controller: 'HomeCtrl',

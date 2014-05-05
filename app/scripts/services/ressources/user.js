@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('squareteam.ressources')
-  .factory('User', function($resource) {
+  .factory('UserRessource', function($resource, $http) {
     var userRessource;
 
     userRessource = $resource('apis://users/:id', {
@@ -9,16 +9,21 @@ angular.module('squareteam.ressources')
     }, {
       update: {
         method: 'PUT'
+      },
+      create : {
+
       }
     });
 
 
-    userRessource.anonymous = function() {
-      return {
-        'identifier'  : 'anonymous',
-        'token'       : ''
-      };
+    userRessource.me = function() {
+      return $http.get('apis://users/me');
     };
+
+    userRessource.create = function(data) {
+      return $http.post('api://user', data);
+    };
+
 
     return userRessource;
   });
