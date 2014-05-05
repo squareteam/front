@@ -9,12 +9,8 @@ angular.module('squareteam.ressources')
     }, {
       update: {
         method: 'PUT'
-      },
-      create : {
-
       }
     });
-
 
     userRessource.me = function() {
       return $http.get('apis://users/me');
