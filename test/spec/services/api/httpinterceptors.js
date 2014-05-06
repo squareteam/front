@@ -55,7 +55,7 @@ describe('Service: ApiHttpInterceptors', function () {
   });
 
   it('should change url with api url and add headers', function () {
-    $httpBackend.expectGET(apiURL + 'users', {'Accept':'application/json, text/plain, */*','St-Identifier':'charly','St-Timestamp':1393369116,'St-Hash':'6a45267d89bf7ec8f068356e571656f9e64de0803bba2e5d8f2ee268182c0ab7'}).respond(200, '');
+    $httpBackend.expectGET(apiURL + 'users', {'Accept':'application/json, text/plain, */*','St-Identifier':'charly','St-Timestamp':1393369116,'St-Hash':'6a45267d89bf7ec8f068356e571656f9e64de0803bba2e5d8f2ee268182c0ab7', 'X-Requested-With':'XMLHttpRequest'}).respond(200, '');
     $http.get('apis://users').success(function(/*data, status, headers*/) {
     });
 
