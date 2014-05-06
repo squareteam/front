@@ -1,11 +1,9 @@
 <form action="" name="loginForm" class="form-horizontal">
-  <div class="alert alert-danger" ng-show="!!loginForm.$error.incorrect">
-    <p ng-show="loginForm.$error.incorrect.indexOf('email') !== -1">
+  <div class="alert alert-danger" ng-show="!!loginForm.email.$error.valid">
       L'email n'est pas valide
-    </p>
-    <p ng-show="loginForm.$error.incorrect.indexOf('password') !== -1">
+  </div>
+  <div class="alert alert-danger" ng-show="!!loginForm.password.$error.valid">
       Le mot de passe n'est pas valide
-    </p>
   </div>
   <div class="alert alert-danger" ng-show="!!serverBusy">
     <p>
@@ -23,7 +21,6 @@
   <p>
     &nbsp;
   </p>
-
 
   <div class="form-group">
     <label for="email" class="col-sm-2 control-label">

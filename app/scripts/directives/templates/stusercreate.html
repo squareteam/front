@@ -1,5 +1,5 @@
 <form action="" name="registerForm" class="form-horizontal">
-  <div class="alert alert-danger" ng-show="registerForm.$error.unique && registerForm.$error.unique.indexOf('email') !== -1">
+  <div class="alert alert-danger" ng-show="!!registerForm.email.$error.unique">
       Cet email est déjà pris
   </div>
   <div class="alert alert-danger" ng-show="!!serverBusy">

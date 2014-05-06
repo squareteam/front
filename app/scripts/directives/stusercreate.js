@@ -10,7 +10,7 @@ angular.module('squareteam.app')
         
         $scope.register = function() {
 
-          $scope.registerForm.$setValidity('unique', true, 'email');
+          $scope.registerForm.email.$setValidity('unique', true);
           $scope.serverBusy = false;
 
           UserRessource.create({
@@ -24,7 +24,7 @@ angular.module('squareteam.app')
               angular.forEach(response.error.getErrors(), function(errorText) {
                 console.log(errorText);
                 if (errorText === 'Email has already been taken') {
-                  $scope.registerForm.$setValidity('unique', false, 'email');
+                  $scope.registerForm.email.$setValidity('unique', false, 'email');
                 }
               }.bind(this));
             } else {
