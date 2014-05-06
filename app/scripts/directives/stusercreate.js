@@ -22,7 +22,6 @@ angular.module('squareteam.app')
           }, function(response) {
             if (response.error instanceof ApiErrors.Api) {
               angular.forEach(response.error.getErrors(), function(errorText) {
-                console.log(errorText);
                 if (errorText === 'Email has already been taken') {
                   $scope.registerForm.email.$setValidity('unique', false, 'email');
                 }
