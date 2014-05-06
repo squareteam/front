@@ -1,25 +1,31 @@
 'use strict';
 
-angular.module('squareteam.app').run(function($rootScope, $location, ApiSession) {
+angular.module('squareteam.app').run(function($rootScope, $state, $urlRouter, ApiSession) {
+  
+  var preventRoutingBeforeSessionLoaded = $rootScope.$on('$stateChangeStart', function(evt) { evt.preventDefault(); });
+
+  function setupRoutingACL () {
+    $rootScope.$on('$stateChangeStart', function(evt, next) {
+      if ( (!next.data || !next.data.acl) && !ApiSession.isAuthenticated() ) {
+        console.log('redirect to login (default)');
+        evt.preventDefault();
+        $state.go('login');
+      } else if (next.data && next.data.acl['public'] === false  && !ApiSession.isAuthenticated() ) {
+        console.log('redirect to login (public set to false)');
+        evt.preventDefault();
+        $state.go('login');
+      }
+
+    });
+  }
+
   ApiSession.restore().then(function(errorIfAny) {
     if (errorIfAny && errorIfAny === 'auth.invalid') {
       // redirect to login page with flash message
     }
-  });
+    preventRoutingBeforeSessionLoaded();
+    setupRoutingACL();
+    $urlRouter.sync();
+  }.bind(this));
 
-  // TODO : find a way to prevent routing before Session restore
-
-  $rootScope.$on('$routeChangeStart', function(evt, next) {
-    // If no rules, route is protected by default
-
-    if (((typeof next.$$route === 'undefined' || typeof next.$$route.anonymous === 'undefined') && !ApiSession.isAuthenticated()) ||
-          typeof next.$$route !== 'undefined' && !next.$$route.anonymous && !ApiSession.isAuthenticated()) {
-      $location.path('/login');
-    // If authenticated can't access, redirect to /home
-    } else if (typeof next.$$route !== 'undefined' && next.$$route.anonymous && ApiSession.isAuthenticated()) {
-
-      $location.path('/home');
-
-    }
-  });
 });

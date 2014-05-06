@@ -15,27 +15,38 @@ angular
     'squareteam.api',
     'squareteam.ressources',
     'ngSanitize',
-    'ngRoute'
+    'ui.router'
   ])
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/login', {
+  .config(function ($stateProvider/*, $urlRouterProvider*/) {
+    $stateProvider
+      .state('login', {
+        url : '/login',
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
-        anonymous: true
+        data : {
+          acl : {
+            'public' : true
+          }
+        }
       })
-      .when('/register', {
+      .state('register', {
+        url : '/register',
         templateUrl: 'views/register.html',
-        // controller: 'RegisterCtrl',
-        anonymous: true
+        data : {
+          acl : {
+            'public' : true
+          }
+        }
       })
-      .when('/home', {
+      .state('home', {
+        url : '/home',
         templateUrl: 'views/home.html',
-        controller: 'HomeCtrl',
-        anonymous: false
-      })
-      .otherwise({
-        redirectTo: '/home'
+        controller: 'HomeCtrl'
       });
+
+    // $urlRouterProvider
+    //   .otherwise({
+    //     redirectTo: '/home'
+    //   });
 
   });
