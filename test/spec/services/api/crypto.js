@@ -44,7 +44,7 @@ describe('Service: ApiCrypto', function () {
 
     data.token = 'a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1';
 
-    Currentuser.setAuth(new ApiAuth(data.auth.identifier,CryptoJS.enc.Hex.parse(data.token)));
+    Currentuser.setAuth(new ApiAuth(data.auth.identifier,CryptoJS.enc.Hex.parse(data.token)), true);
 
 
     // hack the Date.now to return correct timestamp..

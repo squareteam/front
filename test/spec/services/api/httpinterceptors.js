@@ -30,7 +30,7 @@ describe('Service: ApiHttpInterceptors', function () {
 
     apiURL              = $injector.get('appConfig').api.url;
 
-    $injector.get('Currentuser').setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
+    $injector.get('Currentuser').setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')), true);
   }));
 
   afterEach(function() {

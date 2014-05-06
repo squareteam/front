@@ -52,7 +52,7 @@ describe('Service: ApiSession', function () {
   });
 
   it('should provide correct API', function () {
-    expect(!!ApiSession.isAnonymous).toBe(true);
+    expect(!!ApiSession.isAuthenticated).toBe(true);
     expect(!!ApiSession.login).toBe(true);
     expect(!!ApiSession.logout).toBe(true);
     expect(!!ApiSession.save).toBe(true);
@@ -62,8 +62,8 @@ describe('Service: ApiSession', function () {
 
   it('should have a anonymous user by default', function() {
 
-    expect(ApiSession.isAnonymous()).toBe(true);
-    expect(Currentuser.getAuth().isValid()).toBe(false);
+    expect(ApiSession.isAuthenticated()).toBe(false);
+    expect(Currentuser.getAuth().isValidatedFromServer()).toBe(false);
 
   });
 
@@ -145,7 +145,7 @@ describe('Service: ApiSession', function () {
     it('should fails to logout when api is down', function() {
 
       Currentuser.setUser({ name : 'charly'});
-      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
+      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')), true);
 
 
       $httpBackend.expectGET(apiURL + 'logout').respond(500, '');
@@ -169,7 +169,7 @@ describe('Service: ApiSession', function () {
       spyOn(ApiSessionStorageCookies, 'destroy');
 
       Currentuser.setUser({ name : 'charly'});
-      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
+      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')), true);
 
 
       $httpBackend.expectGET(apiURL + 'logout').respond(200, '');
@@ -197,7 +197,7 @@ describe('Service: ApiSession', function () {
       spyOn(ApiSessionStorageCookies, 'destroy');
 
       Currentuser.setUser({ name : 'charly'});
-      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
+      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')), true);
 
 
       $httpBackend.expectGET(apiURL + 'logout').respond(200, '');
@@ -237,7 +237,7 @@ describe('Service: ApiSession', function () {
     it('should save', function() {
 
       Currentuser.setUser({ name : 'charly'});
-      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
+      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')), true);
 
       spyOn(ApiSessionStorageCookies, 'store').and.returnValue(true);
 
@@ -256,7 +256,7 @@ describe('Service: ApiSession', function () {
     it('should not save cause ApiSessionStorageCookies.restore failed', function() {
 
       Currentuser.setUser({ name : 'charly'});
-      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
+      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')), true);
 
       spyOn(ApiSessionStorageCookies, 'store').and.returnValue(false);
 
@@ -298,7 +298,7 @@ describe('Service: ApiSession', function () {
         name : 'Charly'
       });
 
-      expect(Currentuser.getAuth().isValid()).toBe(true);
+      expect(Currentuser.getAuth().isValidatedFromServer()).toBe(true);
 
     });
 
@@ -306,7 +306,7 @@ describe('Service: ApiSession', function () {
       spyOn($rootScope, '$broadcast');
 
       Currentuser.setUser({ name : 'charly'});
-      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
+      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')), true);
 
 
       $httpBackend.expectGET(apiURL + 'logout') .respond(200, '');
@@ -327,7 +327,7 @@ describe('Service: ApiSession', function () {
         name : 'Charly'
       });
 
-      expect(Currentuser.getAuth().isValid()).toBe(true);
+      expect(Currentuser.getAuth().isValidatedFromServer()).toBe(true);
 
     });
   });
@@ -352,7 +352,7 @@ describe('Service: ApiSession', function () {
         name : 'Charly'
       });
 
-      expect(Currentuser.getAuth().isValid()).toBe(true);
+      expect(Currentuser.getAuth().isValidatedFromServer()).toBe(true);
 
     });
 
@@ -371,7 +371,7 @@ describe('Service: ApiSession', function () {
 
       expect(Currentuser.getUser()).toEqual(null);
 
-      expect(Currentuser.getAuth().isValid()).toBe(false);
+      expect(Currentuser.getAuth().isValidatedFromServer()).toBe(false);
 
     });
 

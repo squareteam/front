@@ -12,11 +12,11 @@ angular.module('squareteam.app').run(function($rootScope, $location, ApiSession)
   $rootScope.$on('$routeChangeStart', function(evt, next) {
     // If no rules, route is protected by default
 
-    if (((typeof next.$$route === 'undefined' || typeof next.$$route.anonymous === 'undefined') && ApiSession.isAnonymous()) ||
-          typeof next.$$route !== 'undefined' && !next.$$route.anonymous && ApiSession.isAnonymous()) {
+    if (((typeof next.$$route === 'undefined' || typeof next.$$route.anonymous === 'undefined') && !ApiSession.isAuthenticated()) ||
+          typeof next.$$route !== 'undefined' && !next.$$route.anonymous && !ApiSession.isAuthenticated()) {
       $location.path('/login');
     // If authenticated can't access, redirect to /home
-    } else if (typeof next.$$route !== 'undefined' && next.$$route.anonymous && !ApiSession.isAnonymous()) {
+    } else if (typeof next.$$route !== 'undefined' && next.$$route.anonymous && ApiSession.isAuthenticated()) {
 
       $location.path('/home');
 

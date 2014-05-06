@@ -18,7 +18,7 @@ describe('Service: CurrentUserProvider', function () {
   });
 
   it('should return auth', function () {
-    expect(Currentuser.getAuth().isValid()).toBe(false);
+    expect(Currentuser.getAuth().isValidatedFromServer()).toBe(false);
   });
 
   it('should set user', function () {

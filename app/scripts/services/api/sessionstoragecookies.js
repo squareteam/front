@@ -5,7 +5,7 @@ angular.module('squareteam.api')
   .service('ApiSessionStorageCookies', function ApiSessionStorageCookies($cookies, ApiAuth, appConfig) {
 
     this.store =  function(apiAuth) {
-      if (apiAuth.isValid()) {
+      if (apiAuth.isValidatedFromServer()) {
         $cookies[appConfig.api.storageNS] = [apiAuth.identifier, apiAuth.token.toString()].join(':');
       } else {
         return false;

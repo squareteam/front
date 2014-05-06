@@ -3,11 +3,11 @@
 
 angular.module('squareteam.api')
   .service('ApiSession', function Apisession($rootScope, $http, $q, appConfig, Currentuser, ApiSessionStorageCookies, ApiAuth, ApiCrypto, ApiErrors) {
-    
-    this.apiAuth = new ApiAuth(); // invalid ApiAuth by default == anonymous
 
-    this.isAnonymous = function() {
-      return !Currentuser.getAuth().isValid();
+    this.$pristine = true;
+
+    this.isAuthenticated = function() {
+      return Currentuser.isAuthenticated();
     };
 
     this.login = function(login, password) {
@@ -17,6 +17,7 @@ angular.module('squareteam.api')
 
 
       function $$login () {
+        self.$pristine = false;
         $http.put('api://login', {
           identifier : login
         }).then(function(response) {
@@ -26,10 +27,15 @@ angular.module('squareteam.api')
               response.data.salt2 && response.data.salt2.length > 0) {
 
             authToValidate.identifier = login;
-            authToValidate.token      = ApiCrypto.generateToken(login, password, CryptoJS.enc.Hex.parse(response.data.salt1), CryptoJS.enc.Hex.parse(response.data.salt2));
+            authToValidate.token      = ApiCrypto.generateToken(
+                                          login,
+                                          password,
+                                          CryptoJS.enc.Hex.parse(response.data.salt1),
+                                          CryptoJS.enc.Hex.parse(response.data.salt2)
+                                        );
 
             self.ackAuth(authToValidate).then(function(user) {
-              Currentuser.setAuth(authToValidate);
+              Currentuser.setAuth(authToValidate, true);
               Currentuser.setUser(user);
               $rootScope.$broadcast('user:connected');
               self.save();
@@ -49,7 +55,7 @@ angular.module('squareteam.api')
         });
       }
 
-      if (!this.isAnonymous()) {
+      if (this.isAuthenticated()) {
         this.logout().then($$login, deferred.reject);
       } else {
         $$login();
@@ -63,7 +69,7 @@ angular.module('squareteam.api')
 
       destroyFromStorageToo = angular.isDefined(destroyFromStorageToo) ? destroyFromStorageToo : true;
 
-      if (!this.isAnonymous()) {
+      if (this.isAuthenticated()) {
         $http.get('apis://logout').then(function() {
           // success
           if (destroyFromStorageToo) {
@@ -87,7 +93,7 @@ angular.module('squareteam.api')
 
       var deferred = $q.defer();
 
-      if (!this.isAnonymous()) {
+      if (this.isAuthenticated()) {
         if (ApiSessionStorageCookies.store(Currentuser.getAuth())) {
           deferred.resolve();
         } else {
@@ -105,9 +111,11 @@ angular.module('squareteam.api')
       var deferred  = $q.defer(),
           auth      = ApiSessionStorageCookies.retrieve();
 
+      this.$pristine = false;
+
       if (auth) {
         this.ackAuth(auth).then(function(user) {
-          Currentuser.setAuth(auth);
+          Currentuser.setAuth(auth, true);
           Currentuser.setUser(user);
           $rootScope.$broadcast('user:connected');
           deferred.resolve();

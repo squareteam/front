@@ -5,6 +5,10 @@ angular.module('squareteam.app')
     var currentUser = null, currentAuth = new ApiAuth();
 
     return {
+      isAuthenticated : function() {
+        return currentAuth.isValidatedFromServer();
+      },
+
       getUser : function() {
         return currentUser;
       },
@@ -13,8 +17,13 @@ angular.module('squareteam.app')
         currentUser = user;
       },
 
-      setAuth : function(auth) {
+      // Setting `validatedFromServer` to `true` ensure that provided auth
+      // has been validated by the api
+      setAuth : function(auth, validatedFromServer) {
         currentAuth = auth;
+        if (validatedFromServer === true) {
+          currentAuth.$$validatedFromServer = true;
+        }
       },
 
       getAuth : function() {
