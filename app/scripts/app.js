@@ -17,30 +17,36 @@ angular
     'ngSanitize',
     'ui.router'
   ])
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, ApiSessionRoutingHelpersProvider) {
 
-    var sessionCheck = ['ApiSession', '$q', '$location', function(ApiSession, $q, $location) {
-      var defer = $q.defer();
+    ///////////////////////////////////////////
+    // Define custom state decorator for ACL //
+    ///////////////////////////////////////////
 
-      function isUserAuthenticated() {
-        if (ApiSession.isAuthenticated()) {
-          defer.resolve();
-        } else {
-          defer.reject();
-          $location.path('/login');
+    $stateProvider.decorator('authenticated', function(state) {
+      var isAuthenticated = false,
+          ptr = state;
+
+      // try to find the closest parent /w auth needed
+      while (!!ptr && !isAuthenticated) {
+        isAuthenticated = !!ptr.authenticated;
+        ptr = ptr.parent;
+      }
+
+      if (isAuthenticated && !state.abstract) {
+        if (!!state.resolve) {
+          state.resolve = {};
         }
+
+        state.resolve.authenticated = ApiSessionRoutingHelpersProvider.checkAuthenticated;
       }
 
-      if (ApiSession.$pristine) {
-        ApiSession.restore().then(function() {
-          isUserAuthenticated();
-        }.bind(this));
-      } else {
-        isUserAuthenticated();
-      }
+      return state.authenticated;
+    });
 
-      return $q.promise;
-    }];
+    ///////////////////
+    // Define states //
+    ///////////////////
 
     $stateProvider
       .state('login', {
@@ -51,14 +57,18 @@ angular
       .state('register', {
         url : '/register',
         templateUrl: 'views/register.html'
+      });
+
+    $stateProvider
+      .state('app', {
+        abstract : true,
+        template: '<ui-view/>',
+        authenticated : true
       })
-      .state('home', {
+      .state('app.home', {
         url : '/home',
         templateUrl: 'views/home.html',
-        controller: 'HomeCtrl',
-        resolve : {
-          access : sessionCheck
-        }
+        controller: 'HomeCtrl'
       });
 
     $urlRouterProvider
