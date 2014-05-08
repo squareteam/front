@@ -16,10 +16,15 @@ angular.module('squareteam.ressources')
       return $http.get('apis://users/me');
     };
 
+    // Creating user is a public route
     userRessource.create = function(data) {
       return $http.post('api://user', data);
     };
 
+    ////////////////////////
+    // User Organizations //
+    ////////////////////////
+    userRessource.organizations = $resource('apis://users/:userId/organizations', {});
 
     return userRessource;
   });

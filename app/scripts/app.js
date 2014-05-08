@@ -23,9 +23,10 @@ angular
     // Define custom state decorator for ACL //
     ///////////////////////////////////////////
 
-    $stateProvider.decorator('authenticated', function(state) {
-      var isAuthenticated = false,
-          ptr = state;
+    $stateProvider.decorator('resolve', function(state) {
+      var resolve         = state.resolve,
+          isAuthenticated = false,
+          ptr             = state;
 
       // try to find the closest parent /w auth needed
       while (!!ptr && !isAuthenticated) {
@@ -34,14 +35,14 @@ angular
       }
 
       if (isAuthenticated && !state.abstract) {
-        if (!!state.resolve) {
-          state.resolve = {};
+        if (!!resolve) {
+          resolve = {};
         }
 
-        state.resolve.authenticated = ApiSessionRoutingHelpersProvider.checkAuthenticated;
+        resolve.authenticated = ApiSessionRoutingHelpersProvider.checkAuthenticated;
       }
 
-      return state.authenticated;
+      return resolve;
     });
 
     ///////////////////
@@ -57,6 +58,10 @@ angular
       .state('register', {
         url : '/register',
         templateUrl: 'views/register.html'
+      })
+      .state('register_organization', {
+        url : '/register/organization',
+        templateUrl : 'views/register_organization.html'
       });
 
     $stateProvider

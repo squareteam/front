@@ -17,11 +17,10 @@ angular.module('squareteam.api')
 
 
       function $$login () {
-        self.$pristine = false;
         $http.put('api://login', {
           identifier : login
         }).then(function(response) {
-
+          self.$pristine = false;
           if (response && response.data &&
               response.data.salt1 && response.data.salt1.length > 0 &&
               response.data.salt2 && response.data.salt2.length > 0) {
@@ -47,6 +46,7 @@ angular.module('squareteam.api')
             deferred.reject('api.response_malformed');
           }
         }, function(response) {
+          self.$pristine = false;
           if (response.error instanceof ApiErrors.Http) {
             deferred.reject('api.not_available');
           } else {
@@ -109,18 +109,22 @@ angular.module('squareteam.api')
 
     this.restore = function() {
       var deferred  = $q.defer(),
-          auth      = ApiSessionStorageCookies.retrieve();
-
-      this.$pristine = false;
+          auth      = ApiSessionStorageCookies.retrieve(),
+          self      = this;
 
       if (auth) {
         this.ackAuth(auth).then(function(user) {
+          self.$pristine = false;
           Currentuser.setAuth(auth, true);
           Currentuser.setUser(user);
           $rootScope.$broadcast('user:connected');
           deferred.resolve();
-        }, deferred.resolve);
+        }, function() {
+          self.$pristine = false;
+          deferred.resolve();
+        });
       } else {
+        this.$pristine = false;
         deferred.resolve('session.storage.no_session');
       }
 

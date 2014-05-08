@@ -12,5 +12,7 @@ angular.module('squareteam.ressources')
       }
     });
 
+    organizationRessource.members = $resource('apis://organizations/:org_id/members/:id', {});
+
     return organizationRessource;
   });
