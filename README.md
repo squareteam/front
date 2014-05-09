@@ -6,4 +6,14 @@ To build the production version, use :
 
 
 To develop, use : `grunt watch` or `grunt serve`
+
 But ensure your env is setup by doing `npm install && bower install`
+
+
+#### Change front version
+
+Do the following :
+
+* `grunt bump:[patch|minor|major]`
+* `grunt version:update`
+* commit && push
