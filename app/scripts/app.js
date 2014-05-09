@@ -66,13 +66,18 @@ angular
     $stateProvider
       .state('app', {
         abstract : true,
-        template: '<ui-view/>',
+        templateUrl: 'views/private_layout.html',
         authenticated : true
       })
       .state('app.home', {
         url : '/home',
         templateUrl: 'views/home.html',
         controller: 'HomeCtrl'
+      });
+
+    $stateProvider
+      .state('app.admin', {
+        url : '/manage'
       });
 
     $urlRouterProvider
