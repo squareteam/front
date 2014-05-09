@@ -1,0 +1,33 @@
+<h2>
+   {{ organization.name }}
+</h2>
+<br>
+<div>
+   <h4>
+      Members
+      <a ui-sref="app.admin.members({ id : organization.id })" class="btn btn-default btn-xs">
+         manage
+      </a>
+   </h4>
+   <ul>
+      <li ng-repeat='member in organization.members'>
+         <img src="http://retroavatar.appspot.com/api?name={{ member.id }}&amp;alpha=true" width="30" alt="" title="id : {{ member.id }}">
+         {{ member.name || "No name found" }}
+      </li>
+   </ul>
+
+</div>
+<br>
+<div>
+   <h4>
+      Teams
+      <a ui-sref="app.admin.teams({ id : organization.id })" class="btn btn-default btn-xs">
+         manage
+      </a>
+   </h4>
+   <ul>
+      <li>
+         ...
+      </li>
+   </ul>
+</div>

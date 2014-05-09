@@ -1,3 +1,4 @@
+/* global $ */
 'use strict';
 
 angular.module('squareteam.ressources', [
@@ -66,8 +67,11 @@ angular
     $stateProvider
       .state('app', {
         abstract : true,
-        templateUrl: 'views/private_layout.html',
-        authenticated : true
+        templateUrl: 'views/app/layout.html',
+        authenticated : true,
+        controller : function($scope) {
+          $scope.currentOrganization = $scope.currentUser.getCurrentOrganization().id;
+        }
       })
       .state('app.home', {
         url : '/home',
@@ -77,7 +81,21 @@ angular
 
     $stateProvider
       .state('app.admin', {
-        url : '/manage'
+        url : '/manage/:id',
+        controller : function($scope, $stateParams) {
+          $scope.organization = $.grep($scope.currentUser.getOrganizations(), function(organization) {
+            return organization.id === parseInt($stateParams.id, 10);
+          })[0];
+        },
+        templateUrl: 'views/app/admin/index.html'
+      })
+      .state('app.admin.teams', {
+        url : '/teams',
+        templateUrl: 'views/app/admin/teams.html'
+      })
+      .state('app.admin.members', {
+        url : '/members',
+        templateUrl: 'views/app/admin/members.html'
       });
 
     $urlRouterProvider

@@ -1,0 +1,19 @@
+<ul class="nav nav-pills">
+  <li ui-sref-active="active"><a ui-sref="app.home">Home</a></li>
+  <li ui-sref-active="active"><a ui-sref="app.admin({ id : currentOrganization })">Admin</a></li>
+
+
+  <a href="#" ng-click="logout()" class="btn btn-primary pull-right">
+     Logout
+  </a>
+  <div class="col-xs-2 pull-right">
+     <select name="currentOrganization" id="" ng-model="currentOrganization" class="form-control">
+        <option ng-repeat="organization in currentUser.getOrganizations()" value="{{organization.id}}">{{organization.name}}</option>
+     </select>
+  </div>
+</ul>
+
+<br>
+<br>
+
+<ui-view></ui-view>
