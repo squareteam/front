@@ -1,5 +1,5 @@
-<form action="" name="createOrganization" class="form-horizontal" ng-submit="create()">
-  <div class="alert alert-danger" ng-show="!!createOrganization.name.$error.unique">
+<form action="" name="createOrganizationForm" class="form-horizontal" ng-submit="create()">
+  <div class="alert alert-danger" ng-show="!!createOrganizationForm.name.$error.unique">
       Ce nom d'organization est déjà pris
   </div>
   <div class="alert alert-danger" ng-show="!!serverBusy">
