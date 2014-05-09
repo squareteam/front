@@ -1,13 +1,11 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .controller('HomeCtrl', function ($scope, $location, Currentuser, ApiSession, UserRessource) {
+  .controller('HomeCtrl', function ($scope, $location, Currentuser, ApiSession) {
 
-    var organizations = UserRessource.organizations.query({
-      userId : $scope.currentUser.getUser().id
-    }, function() {
-      $scope.organizations = organizations;
-    }.bind(this));
+
+    $scope.organizations = $scope.currentUser.getUser().organizations;
+
 
     $scope.logout = function() {
       ApiSession.logout().then(function() {
