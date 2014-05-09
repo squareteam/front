@@ -1,12 +1,12 @@
-<p>Welcome  {{ name }}</p>
+<p>Welcome  {{ currentUser.getUser().name }}</p>
 
 <h3>
-   Organizations
+   My Organizations
 </h3>
 
 <ul>
    <li ng-repeat="organization in organizations">
-      {{ organization.name }}
+      {{ organization.name }} ({{ organization.members.length }} members)
    </li>
    <li ng-show="!organizations.length">
       No result
