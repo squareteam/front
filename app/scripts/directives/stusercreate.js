@@ -18,12 +18,13 @@ angular.module('squareteam.app')
             email     : $scope.user.email,
             password  : $scope.user.password
           }).then(function() {
+            // TODO : register will return salts so we can login
             $location.path('/login');
           }, function(response) {
             if (response.error instanceof ApiErrors.Api) {
               angular.forEach(response.error.getErrors(), function(errorText) {
                 if (errorText === 'Email has already been taken') {
-                  $scope.registerForm.email.$setValidity('unique', false, 'email');
+                  $scope.registerForm.email.$setValidity('unique', false);
                 }
               }.bind(this));
             } else {
