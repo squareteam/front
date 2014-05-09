@@ -16,9 +16,7 @@ angular.module('squareteam.api')
         {}, // data
         function() {
           if (organizations.length) {
-            var user = Currentuser.getUser();
-            user.organizations = organizations;
-            Currentuser.setUser(user);
+            Currentuser.setOrganizations(organizations);
             deferred.resolve();
           } else {
             deferred.reject();

@@ -4,9 +4,28 @@ angular.module('squareteam.app')
   .factory('Currentuser', function Currentuser(ApiAuth) {
     var currentUser = null, currentAuth = new ApiAuth();
 
+    this.$$currentOrganization = null;
+
     return {
       isAuthenticated : function() {
         return currentAuth.isValidatedFromServer();
+      },
+
+      getCurrentOrganization : function() {
+        return this.$$currentOrganization;
+      },
+
+      setCurrentOrganization : function(organization) {
+        this.$$currentOrganization = organization;
+      },
+
+      setOrganizations : function(organizations) {
+        this.$$organizations = organizations;
+        this.setCurrentOrganization(organizations[0]);
+      },
+
+      getOrganizations : function() {
+        return this.$$organizations;
       },
 
       getUser : function() {
