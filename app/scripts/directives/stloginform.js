@@ -6,10 +6,10 @@ angular.module('squareteam.app')
       templateUrl: 'scripts/directives/templates/stloginform.html',
       restrict: 'E',
       scope : {
-        redirectUrl : '@'
+        redirectPath : '@'
       },
       replace : true,
-      controller: function($scope, $element, $attrs, $location, ApiSession) {
+      controller: function($scope, $element, $attrs, $state, ApiSession) {
         $scope.session = ApiSession;
 
         $scope.login = function() {
@@ -19,7 +19,7 @@ angular.module('squareteam.app')
           $scope.serverBusy = false;
           
           ApiSession.login($scope.user.email, $scope.user.password).then(function() {
-            $location.path($scope.redirectUrl || '/home');
+            $state.go($scope.redirectPath || 'app.home');
           }, function(error) {
             if (error === 'auth.bad_login') {
               $scope.loginForm.email.$setValidity('valid', false);
