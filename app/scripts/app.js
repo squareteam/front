@@ -102,3 +102,7 @@ angular
       .otherwise('/home');
 
   });
+/*ignore jslint start*/
+var version = "0.0.4";
+window.VERSION = version;
+/*ignore jslint end*/

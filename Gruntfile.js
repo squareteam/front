@@ -16,6 +16,7 @@ module.exports = function (grunt) {
   require('time-grunt')(grunt);
 
   grunt.loadNpmTasks('grunt-bump');
+  grunt.loadNpmTasks('grunt-version');
 
   // Define the configuration for all the tasks
   grunt.initConfig({
@@ -25,6 +26,18 @@ module.exports = function (grunt) {
       // configurable paths
       app: require('./bower.json').appPath || 'app',
       dist: 'dist'
+    },
+
+    version: {
+      options: {
+        pkg: 'package.json'
+      },
+      update: {
+        options: {
+          prefix: 'var version\\s+=\\s+[\'"]'
+        },
+        src: ['app/scripts/app.js']
+      },
     },
 
     bump: {
