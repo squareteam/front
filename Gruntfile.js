@@ -15,6 +15,8 @@ module.exports = function (grunt) {
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
+  grunt.loadNpmTasks('grunt-bump');
+
   // Define the configuration for all the tasks
   grunt.initConfig({
 
@@ -23,6 +25,23 @@ module.exports = function (grunt) {
       // configurable paths
       app: require('./bower.json').appPath || 'app',
       dist: 'dist'
+    },
+
+    bump: {
+      options: {
+        files: ['package.json'],
+        updateConfigs: [],
+        commit: false,
+        push: false//,
+        // commitMessage: 'Release v%VERSION%',
+        // commitFiles: ['package.json'], // '-a' for all files
+        // createTag: true,
+        // tagName: 'v%VERSION%',
+        // tagMessage: 'Version %VERSION%',
+        // push: true,
+        // pushTo: 'upstream',
+        // gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d' // options to use with '$ git describe'
+      }
     },
 
     // Watches files for changes and runs tasks based on the changed files
