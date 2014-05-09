@@ -3,9 +3,12 @@
 angular.module('squareteam.api')
   .provider('ApiSessionRoutingHelpers', function Apisessionroutinghelpers() {
 
-    this.checkAuthenticated =  ['Currentuser', 'ApiSession', 'UserRessource', '$q', '$location', function(Currentuser, ApiSession, UserRessource, $q, $location) {
+    this.checkAuthenticated =  ['Currentuser', 'ApiSession', 'UserRessource', '$q', '$state', '$rootScope',
+      function(Currentuser, ApiSession, UserRessource, $q, $state, $rootScope) {
       var deferred = $q.defer();
       
+      console.log('ApiSessionRoutingHelpers.checkAuthenticated');
+
       function configureUser (userId) {
         var organizations = UserRessource.organizations.query({
           userId : userId
@@ -14,25 +17,34 @@ angular.module('squareteam.api')
         function() {
           if (organizations.length) {
             var user = Currentuser.getUser();
-            
             user.organizations = organizations;
             Currentuser.setUser(user);
             deferred.resolve();
           } else {
             deferred.reject();
-            $location.path('/register/organization');
+            console.log('redirect to organization creation');
+            $rootScope.$eval(function() {
+              $state.go('register_organization');
+            });
           }
         });
       }
 
       function isUserAuthenticated() {
+        console.log('isUserAuthenticated?', ApiSession.isAuthenticated());
         if (ApiSession.isAuthenticated()) {
-          configureUser(Currentuser.getUser().id);
+          if (!!Currentuser.getUser().organizations && Currentuser.getUser().organizations.length) {
+            deferred.resolve();
+          } else {
+            configureUser(Currentuser.getUser().id);
+          }
         } else {
           deferred.reject();
-          $location.path('/login');
+          $state.go('login');
         }
       }
+
+      console.log('ApiSession.$pristine?', ApiSession.$pristine);
 
       if (ApiSession.$pristine) {
         ApiSession.restore().then(function() {
