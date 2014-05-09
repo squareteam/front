@@ -6,17 +6,41 @@ $icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/
 @import "../bower_components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss";
 // endbower
 
-
-/* Space out content a bit */
-body {
-    padding-top: 20px;
-    padding-bottom: 20px;
+.container {
+  padding-top: 20px;
 }
 
 .container .title {
     padding-left: 40px;
+    margin-top: 0;
     margin-bottom: 60px;
     background: url('/images/favicon.png') left center no-repeat transparent scroll;
+}
+
+.user_block div {
+    line-height: 39px;
+    padding-right:10px;
+    font-weight: bold;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  font-weight: bold;
+  font-size: 60%;
 }
 
 /* Responsive: Portrait tablets and up */

@@ -23,22 +23,22 @@
     <div class="container" ng-controller="ApplicationCtrl">
 
         <header>
-            <h1 class="title left">
+            <h1 class="title pull-left">
                 Squareteam
             </h1>
-            <div class="right user_block" ng-if="session.isAuthenticated()">
-                <div class="left">
+            <div class="pull-right user_block" ng-if="session.isAuthenticated()">
+                <div class="pull-left">
                     {{ currentUser.getUser().email }}
                 </div>
-                <img src="http://placekitten.com/g/39/39" class="img-circle right" alt="">
+                <img src="http://placekitten.com/g/39/39" class="img-circle pull-right" alt="">
             </div>
-             <div style="clear:both;"></div>
+             <div class="clearfix"></div>
         </header>
 
         <!-- Add your site or application content here -->
         <section ui-view></section>
 
-        <footer>
+        <footer id="footer">
             &copy; Squareteam 2013-2014
         </footer>
 
