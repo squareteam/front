@@ -31,7 +31,9 @@ angular.module('squareteam.api')
 
       if (data && angular.isObject(data)) {
         angular.forEach(Object.keys(data).sort(), function(key) {
-          blob.push( key + '=' + encodeURIComponent(data[key]) );
+          // see http://apidock.com/rails/v2.3.2/Rack/Utils/escape
+          // escape called on key/value by Rack::Utils.build_query, used in our API
+          blob.push( encodeURIComponent(key).replace('%20', '+') + '=' + encodeURIComponent(data[key]).replace('%20', '+') );
         });
       }
 
