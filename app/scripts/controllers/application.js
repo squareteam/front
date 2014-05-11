@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .controller('ApplicationCtrl', function ($rootScope, $scope, $state, ApiSession, Currentuser) {
+  .controller('ApplicationCtrl', function ($rootScope, $scope, $state, ApiSession, Currentuser, VERSION) {
     $scope.session      = ApiSession;
     $scope.currentUser  = Currentuser;
+    $scope.version       = VERSION;
 
     $scope.logout = function() {
       ApiSession.logout().then(function() {
