@@ -45,12 +45,12 @@ module.exports = function (grunt) {
         files: ['package.json'],
         updateConfigs: [],
         commit: false,
-        push: false//,
+        push: false,
         // commitMessage: 'Release v%VERSION%',
         // commitFiles: ['package.json'], // '-a' for all files
-        // createTag: true,
-        // tagName: 'v%VERSION%',
-        // tagMessage: 'Version %VERSION%',
+        createTag: true,
+        tagName: 'v%VERSION%',
+        tagMessage: 'Version %VERSION%'
         // push: true,
         // pushTo: 'upstream',
         // gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d' // options to use with '$ git describe'
@@ -338,9 +338,9 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
-            'views/{,*/}*.html',
-            'scripts/directives/templates/{,*/}*.html',
-            'images/{,*/}*.{webp}',
+            'views/{,**/}*.html',
+            'scripts/directives/templates/{,**/}*.html',
+            'images/{,**/}*.{webp}',
             'fonts/*'
           ]
         }, {
