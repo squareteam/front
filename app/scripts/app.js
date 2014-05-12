@@ -103,5 +103,5 @@ angular
 
   });
 
-var version = '0.0.4';
+var version = '0.0.5';
 angular.module('squareteam.app').value('VERSION', version);
