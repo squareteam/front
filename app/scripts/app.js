@@ -69,9 +69,9 @@ angular
         abstract : true,
         templateUrl: 'views/app/layout.html',
         authenticated : true,
-        controller : function($scope) {
+        controller : ['$scope', function($scope) {
           $scope.currentOrganization = $scope.currentUser.getCurrentOrganization().id;
-        }
+        }]
       })
       .state('app.home', {
         url : '/home',
@@ -82,11 +82,11 @@ angular
     $stateProvider
       .state('app.admin', {
         url : '/manage/:id',
-        controller : function($scope, $stateParams) {
+        controller : ['$scope', '$stateParams', function($scope, $stateParams) {
           $scope.organization = $.grep($scope.currentUser.getOrganizations(), function(organization) {
             return organization.id === parseInt($stateParams.id, 10);
           })[0];
-        },
+        }],
         templateUrl: 'views/app/admin/index.html'
       })
       .state('app.admin.teams', {
