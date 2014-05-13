@@ -11,6 +11,8 @@ angular.module('squareteam.api', [])
     $httpProvider.interceptors.push('ApiHttpInterceptors');
   });
 
+// TODO : split this files into many
+
 angular
   .module('squareteam.app', [
     'squareteam.api',
@@ -18,38 +20,48 @@ angular
     'ngSanitize',
     'ui.router'
   ])
-  .config(function ($stateProvider, $urlRouterProvider, ApiSessionRoutingHelpersProvider) {
+  .config(function ($stateProvider, $urlRouterProvider) {
 
-    ///////////////////////////////////////////
-    // Define custom state decorator for ACL //
-    ///////////////////////////////////////////
+    var routingHelpers = {
+      checkAuthenticated : function(Currentuser, ApiSession, UserRessource, $q) {
 
-    $stateProvider.decorator('resolve', function(state) {
-      var resolve         = state.resolve,
-          isAuthenticated = false,
-          ptr             = state;
+          function isUserAuthenticated() {
+            console.log('isUserAuthenticated?', ApiSession.isAuthenticated());
+            if (ApiSession.isAuthenticated()) {
+              deferred.resolve();
+            } else {
+              console.log('redirect to login');
+              deferred.reject({
+                redirectToState : 'login'
+              });
+            }
+          }
 
-      // try to find the closest parent /w auth needed
-      while (!!ptr && !isAuthenticated) {
-        isAuthenticated = !!ptr.authenticated;
-        ptr = ptr.parent;
-      }
+          var deferred = $q.defer();
 
-      if (isAuthenticated && !state.abstract) {
-        if (!!resolve) {
-          resolve = {};
+          console.log('ApiSession.$pristine?', ApiSession.$pristine);
+
+          if (ApiSession.$pristine) {
+            ApiSession.restore().then(function() {
+              isUserAuthenticated();
+            }.bind(this));
+          } else {
+            isUserAuthenticated();
+          }
+
+          return deferred.promise;
         }
+    };
 
-        resolve.authenticated = ApiSessionRoutingHelpersProvider.checkAuthenticated;
-      }
+    routingHelpers.checkAuthenticated.$inject = ['Currentuser', 'ApiSession', 'UserRessource', '$q'];
 
-      return resolve;
-    });
 
     ///////////////////
     // Define states //
     ///////////////////
 
+
+    // Public routes
     $stateProvider
       .state('login', {
         url : '/login',
@@ -58,28 +70,68 @@ angular
       .state('register', {
         url : '/register',
         templateUrl: 'views/register.html'
-      })
-      .state('register_organization', {
-        url : '/register/organization',
-        templateUrl : 'views/register_organization.html'
       });
 
     $stateProvider
+      // App namespace
+      //  Used for authenticated zone restriction
       .state('app', {
         abstract : true,
+        resolve : {
+          configure : ['$injector','$q', 'Currentuser', 'UserRessource', function($injector, $q, Currentuser, UserRessource) {
+            
+            function checkUserConfiguration () {
+              var organizations = UserRessource.organizations.query({
+                  userId : Currentuser.getUser().id
+                },
+                {}, // data
+                function() {
+                  if (organizations.length) {
+                    Currentuser.setOrganizations(organizations);
+                    deferred.resolve();
+                  } else {
+                    console.log('redirect to organization creation');
+                    // $state.go('register_organization');
+                    deferred.reject({
+                      redirectToState : 'register_organization'
+                    });
+                  }
+                }
+              );
+            }
+
+            var deferred = $q.defer();
+
+            $injector.invoke(routingHelpers.checkAuthenticated).then(function() {
+              checkUserConfiguration();
+            }, deferred.reject);
+
+            return deferred.promise;
+          }]
+        },
         templateUrl: 'views/app/layout.html',
-        authenticated : true,
         controller : ['$scope', function($scope) {
           $scope.currentOrganization = $scope.currentUser.getCurrentOrganization().id;
         }]
       })
+
+      // register a new organization
+      .state('register_organization', {
+        url : '/register/organization',
+        resolve : {
+          authenticated : routingHelpers.checkAuthenticated
+        },
+        templateUrl : 'views/register_organization.html'
+      })
+
+      // Home page for authenticated users
       .state('app.home', {
         url : '/home',
         templateUrl: 'views/home.html',
         controller: 'HomeCtrl'
-      });
+      })
 
-    $stateProvider
+      // Admin namespace
       .state('app.admin', {
         url : '/manage/:id',
         controller : ['$scope', '$stateParams', function($scope, $stateParams) {
@@ -89,10 +141,12 @@ angular
         }],
         templateUrl: 'views/app/admin/index.html'
       })
+
       .state('app.admin.teams', {
         url : '/teams',
         templateUrl: 'views/app/admin/teams.html'
       })
+
       .state('app.admin.members', {
         url : '/members',
         templateUrl: 'views/app/admin/members.html'
@@ -103,5 +157,7 @@ angular
 
   });
 
+// DO NOT EDIT LINE BELOW
+//  open README.md for more explaination
 var version = '0.0.5';
 angular.module('squareteam.app').value('VERSION', version);
