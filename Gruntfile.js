@@ -36,7 +36,7 @@ module.exports = function (grunt) {
         options: {
           prefix: 'var version\\s+=\\s+[\'"]'
         },
-        src: ['app/scripts/app.js']
+        src: ['scripts/initializers/modules.js']
       },
     },
 

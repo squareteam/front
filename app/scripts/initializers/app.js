@@ -1,25 +1,9 @@
-/* global $ */
+/*global $*/
+
 'use strict';
 
-angular.module('squareteam.ressources', [
-  'ngCookies',
-  'ngResource'
-]);
-
-angular.module('squareteam.api', [])
-  .config(function($httpProvider) {
-    $httpProvider.interceptors.push('ApiHttpInterceptors');
-  });
-
-// TODO : split this files into many
-
 angular
-  .module('squareteam.app', [
-    'squareteam.api',
-    'squareteam.ressources',
-    'ngSanitize',
-    'ui.router'
-  ])
+  .module('squareteam.app')
   .config(function ($stateProvider, $urlRouterProvider) {
 
     var routingHelpers = {
@@ -156,8 +140,3 @@ angular
       .otherwise('/home');
 
   });
-
-// DO NOT EDIT LINE BELOW
-//  open README.md for more explaination
-var version = '0.0.7';
-angular.module('squareteam.app').value('VERSION', version);
