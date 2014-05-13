@@ -159,5 +159,5 @@ angular
 
 // DO NOT EDIT LINE BELOW
 //  open README.md for more explaination
-var version = '0.0.5';
+var version = '0.0.7';
 angular.module('squareteam.app').value('VERSION', version);
