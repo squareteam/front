@@ -36,7 +36,7 @@ module.exports = function (grunt) {
         options: {
           prefix: 'var version\\s+=\\s+[\'"]'
         },
-        src: ['scripts/initializers/modules.js']
+        src: ['app/scripts/initializers/modules.js']
       },
     },
 
@@ -45,14 +45,13 @@ module.exports = function (grunt) {
         files: ['package.json'],
         updateConfigs: [],
         commit: true,
-        push: false,
+        push: true,
         commitMessage: 'Release v%VERSION%',
-        commitFiles: ['package.json'], // '-a' for all files
+        commitFiles: ['package.json', 'app/scripts/initializers/modules.js'], // '-a' for all files
         createTag: true,
         tagName: 'v%VERSION%',
-        tagMessage: 'Version %VERSION%'
-        // push: true,
-        // pushTo: 'upstream',
+        tagMessage: 'Version %VERSION%',
+        pushTo: 'origin'
         // gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d' // options to use with '$ git describe'
       }
     },
@@ -435,6 +434,24 @@ module.exports = function (grunt) {
     'autoprefixer',
     'connect:test',
     'karma'
+  ]);
+
+  grunt.registerTask('patch', [
+    'bump-only:patch',
+    'version:update',
+    'bump-commit'
+  ]);
+
+  grunt.registerTask('minor', [
+    'bump-only:minor',
+    'version:update',
+    'bump-commit'
+  ]);
+
+  grunt.registerTask('major', [
+    'bump-only:major',
+    'version:update',
+    'bump-commit'
   ]);
 
   grunt.registerTask('build', [
