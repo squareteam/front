@@ -3,8 +3,8 @@
 angular.module('squareteam.api')
   .provider('ApiSessionRoutingHelpers', function Apisessionroutinghelpers() {
 
-    this.checkAuthenticated =  ['Currentuser', 'ApiSession', 'UserRessource', '$q', '$state', '$location',
-      function(Currentuser, ApiSession, UserRessource, $q, $state, $location) {
+    this.checkAuthenticated =  ['Currentuser', 'ApiSession', 'UserRessource', '$q',
+      function(Currentuser, ApiSession, UserRessource, $q) {
 
         function configureUser (userId) {
           var organizations = UserRessource.organizations.query({
@@ -16,9 +16,11 @@ angular.module('squareteam.api')
                 Currentuser.setOrganizations(organizations);
                 deferred.resolve();
               } else {
-                deferred.reject();
                 console.log('redirect to organization creation');
-                $state.go('register_organization');
+                // $state.go('register_organization');
+                deferred.reject({
+                  redirectToState : 'register_organization'
+                });
               }
             }
           );
@@ -33,10 +35,12 @@ angular.module('squareteam.api')
               configureUser(Currentuser.getUser().id);
             }
           } else {
-            deferred.reject();
             console.log('redirect to login');
             // $state.go('login');
-            $location.path('/login');
+            // $location.path('/login');
+            deferred.reject({
+              redirectToState : 'login'
+            });
           }
         }
 
