@@ -12,7 +12,7 @@ angular.module('squareteam.app')
 
     angular.extend(ApiErrors.prototype, {
       toString    : function() {
-        return 'ApiError : ' + this.errors;
+        return 'ApiError : ' + this.errors.join(', ');
       },
 
       getErrors   : function() {

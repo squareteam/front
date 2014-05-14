@@ -23,6 +23,8 @@ describe('Service: ApiErrors', function () {
         'user.name should be filled',
         'user.password should be filled'
       ]);
+
+      expect(error.toString()).toEqual('ApiError : user.name should be filled, user.password should be filled');
     });
 
   });
