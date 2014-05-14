@@ -10,7 +10,7 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
 
     // coverage reporter generates the coverage
-    reporters: ['progress', 'coverage'],
+    reporters: ['coverage', 'story'],
 
     preprocessors: {
       // source files, that you wanna generate coverage for
