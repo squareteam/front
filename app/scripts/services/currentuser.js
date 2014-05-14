@@ -1,52 +1,58 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .factory('Currentuser', function Currentuser(ApiAuth) {
-    var currentUser = null, currentAuth = new ApiAuth();
+  .service('Currentuser', function Currentuser(ApiAuth) {
+    this.$$user                 = null;
+    this.$$auth                 = new ApiAuth();
+    this.$$currentOrganization  = null;
+    this.$$organizations        = [];
 
-    this.$$currentOrganization = null;
 
-    return {
-      isAuthenticated : function() {
-        return currentAuth.isValidatedFromServer();
-      },
+    // TODO :
+    // - `currentUser` should be an Angular.Ressource instance
+    // - `getOrganizations()` should return currentUser.organizations.query ?
 
-      getCurrentOrganization : function() {
-        return this.$$currentOrganization;
-      },
+    
+    this.isAuthenticated = function() {
+      return this.$$auth.isValidatedFromServer();
+    };
 
-      setCurrentOrganization : function(organization) {
-        this.$$currentOrganization = organization;
-      },
+    this.getCurrentOrganization = function() {
+      return this.$$currentOrganization;
+    };
 
-      setOrganizations : function(organizations) {
-        this.$$organizations = organizations;
-        this.setCurrentOrganization(organizations[0]);
-      },
+    this.setCurrentOrganization = function(organization) {
+      this.$$currentOrganization = organization;
+    };
 
-      getOrganizations : function() {
-        return this.$$organizations;
-      },
+    this.setOrganizations = function(organizations) {
+      this.$$organizations = organizations;
+      this.setCurrentOrganization(organizations[0]);
+    };
 
-      getUser : function() {
-        return currentUser;
-      },
+    this.getOrganizations = function() {
+      return this.$$organizations;
+    };
 
-      setUser : function(user) {
-        currentUser = user;
-      },
+    this.getUser = function() {
+      return this.$$user;
+    };
+
+    this.setUser = function(user) {
+      this.$$user = user;
+    };
 
       // Setting `validatedFromServer` to `true` ensure that provided auth
       // has been validated by the api
-      setAuth : function(auth, validatedFromServer) {
-        currentAuth = auth;
-        if (validatedFromServer === true) {
-          currentAuth.$$validatedFromServer = true;
-        }
-      },
-
-      getAuth : function() {
-        return currentAuth;
+    this.setAuth = function(auth, validatedFromServer) {
+      this.$$auth = auth;
+      if (validatedFromServer === true) {
+        this.$$auth.$$validatedFromServer = true;
       }
     };
+
+    this.getAuth = function() {
+      return this.$$auth;
+    };
+
   });
