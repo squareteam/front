@@ -58,6 +58,7 @@ describe('Service: ApiSession', function () {
     expect(!!ApiSession.save).toBe(true);
     expect(!!ApiSession.restore).toBe(true);
     expect(!!ApiSession.ackAuth).toBe(true);
+    expect(ApiSession.$pristine).toBe(true);
   });
 
   it('should have a anonymous user by default', function() {
@@ -78,6 +79,8 @@ describe('Service: ApiSession', function () {
 
       expect(successCallback.calls.any()).toEqual(false);
       expect(errorCallback.calls.count()).toEqual(1);
+
+      expect(ApiSession.$pristine).toBe(false);
       
       expect(errorCallback.calls.argsFor(0)[0]).toEqual('auth.bad_login');
     });
@@ -93,6 +96,8 @@ describe('Service: ApiSession', function () {
       expect(errorCallback.calls.count()).toEqual(1);
       expect(successCallback.calls.any()).toEqual(false);
 
+      expect(ApiSession.$pristine).toBe(false);
+
       expect(errorCallback.calls.argsFor(0)[0]).toEqual('auth.bad_password');
     });
 
@@ -105,6 +110,8 @@ describe('Service: ApiSession', function () {
 
       expect(errorCallback.calls.count()).toEqual(1);
       expect(successCallback.calls.any()).toEqual(false);
+
+      expect(ApiSession.$pristine).toBe(false);
 
       expect(errorCallback.calls.argsFor(0)[0]).toEqual('api.response_malformed');
     });
@@ -121,7 +128,65 @@ describe('Service: ApiSession', function () {
       expect(errorCallback.calls.count()).toEqual(1);
       expect(successCallback.calls.any()).toEqual(false);
 
+      expect(ApiSession.$pristine).toBe(false);
+
       expect(errorCallback.calls.argsFor(0)[0]).toEqual('api.not_available');
+
+    });
+
+    it('should login', function() {
+      spyOn($rootScope, '$broadcast');
+
+      $httpBackend.expectPUT(apiURL + 'login')  .respond(200, '{"data":{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}}');
+      $httpBackend.expectGET(apiURL + 'user/me').respond(200, '{"data":{"name":"Charly"}}');
+
+      ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
+
+      $httpBackend.flush();
+
+      expect($rootScope.$broadcast).toHaveBeenCalledWith('user:connected');
+
+      expect(errorCallback.calls.any()).toEqual(false);
+      expect(successCallback.calls.count()).toEqual(1);
+
+      expect(ApiSession.$pristine).toBe(false);
+
+      expect(Currentuser.getUser()).toEqual({
+        name : 'Charly'
+      });
+
+      expect(Currentuser.getAuth().isValidatedFromServer()).toBe(true);
+
+    });
+
+    it('if already and connected, it should logout and login', function() {
+      spyOn($rootScope, '$broadcast');
+
+      Currentuser.setUser({ name : 'charly'});
+      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')), true);
+
+
+      $httpBackend.expectGET(apiURL + 'logout') .respond(200, '');
+      $httpBackend.expectPUT(apiURL + 'login')  .respond(200, '{"data":{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}}');
+      $httpBackend.expectGET(apiURL + 'user/me').respond(200, '{"data":{"name":"Charly"}}');
+
+      ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
+
+      $httpBackend.flush();
+
+      expect($rootScope.$broadcast).toHaveBeenCalledWith('user:disconnected');
+      expect($rootScope.$broadcast).toHaveBeenCalledWith('user:connected');
+
+      expect(errorCallback.calls.any()).toEqual(false);
+      expect(successCallback.calls.count()).toEqual(1);
+
+      expect(ApiSession.$pristine).toBe(false);
+
+      expect(Currentuser.getUser()).toEqual({
+        name : 'Charly'
+      });
+
+      expect(Currentuser.getAuth().isValidatedFromServer()).toBe(true);
 
     });
 
@@ -276,62 +341,6 @@ describe('Service: ApiSession', function () {
     
   });
 
-  describe('ApiSession.login', function() {
-
-
-    it('should login', function() {
-      spyOn($rootScope, '$broadcast');
-
-      $httpBackend.expectPUT(apiURL + 'login')  .respond(200, '{"data":{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}}');
-      $httpBackend.expectGET(apiURL + 'user/me').respond(200, '{"data":{"name":"Charly"}}');
-
-      ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
-
-      $httpBackend.flush();
-
-      expect($rootScope.$broadcast).toHaveBeenCalledWith('user:connected');
-
-      expect(errorCallback.calls.any()).toEqual(false);
-      expect(successCallback.calls.count()).toEqual(1);
-
-      expect(Currentuser.getUser()).toEqual({
-        name : 'Charly'
-      });
-
-      expect(Currentuser.getAuth().isValidatedFromServer()).toBe(true);
-
-    });
-
-    it('if already and connected, it should logout and login', function() {
-      spyOn($rootScope, '$broadcast');
-
-      Currentuser.setUser({ name : 'charly'});
-      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')), true);
-
-
-      $httpBackend.expectGET(apiURL + 'logout') .respond(200, '');
-      $httpBackend.expectPUT(apiURL + 'login')  .respond(200, '{"data":{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}}');
-      $httpBackend.expectGET(apiURL + 'user/me').respond(200, '{"data":{"name":"Charly"}}');
-
-      ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
-
-      $httpBackend.flush();
-
-      expect($rootScope.$broadcast).toHaveBeenCalledWith('user:disconnected');
-      expect($rootScope.$broadcast).toHaveBeenCalledWith('user:connected');
-
-      expect(errorCallback.calls.any()).toEqual(false);
-      expect(successCallback.calls.count()).toEqual(1);
-
-      expect(Currentuser.getUser()).toEqual({
-        name : 'Charly'
-      });
-
-      expect(Currentuser.getAuth().isValidatedFromServer()).toBe(true);
-
-    });
-  });
-
   describe('ApiSession.restore', function() {
 
     it('should restore session from cookies storage', function() {
@@ -347,6 +356,8 @@ describe('Service: ApiSession', function () {
 
       expect(errorCallback.calls.any()).toEqual(false);
       expect(successCallback.calls.count()).toEqual(1);
+
+      expect(ApiSession.$pristine).toBe(false);
 
       expect(Currentuser.getUser()).toEqual({
         name : 'Charly'
@@ -367,7 +378,32 @@ describe('Service: ApiSession', function () {
       expect(errorCallback.calls.any()).toEqual(false);
       expect(successCallback.calls.count()).toEqual(1);
 
+      expect(ApiSession.$pristine).toBe(false);
+
       expect(successCallback.calls.argsFor(0)[0]).toBe('session.storage.no_session');
+
+      expect(Currentuser.getUser()).toEqual(null);
+
+      expect(Currentuser.getAuth().isValidatedFromServer()).toBe(false);
+
+    });
+
+    it('should failed silently to restore session from cookies storage', function() {
+
+      spyOn(ApiSessionStorageCookies, 'retrieve').and.returnValue(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
+      $httpBackend.expectGET(apiURL + 'user/me').respond(401, '{"data":null,"errors":["api.not_authorized"]}');
+
+      ApiSession.restore().then(successCallback, errorCallback);
+
+      $rootScope.$digest();
+      $httpBackend.flush();
+
+      expect(errorCallback.calls.any()).toEqual(false);
+      expect(successCallback.calls.count()).toEqual(1);
+
+      expect(ApiSession.$pristine).toBe(false);
+
+      expect(successCallback.calls.argsFor(0)[0]).toBe('auth.invalid');
 
       expect(Currentuser.getUser()).toEqual(null);
 

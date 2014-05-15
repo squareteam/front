@@ -119,9 +119,9 @@ angular.module('squareteam.api')
           Currentuser.setUser(user);
           $rootScope.$broadcast('user:connected');
           deferred.resolve();
-        }, function() {
+        }, function(error) {
           self.$pristine = false;
-          deferred.resolve();
+          deferred.resolve(error);
         });
       } else {
         this.$pristine = false;
