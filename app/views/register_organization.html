@@ -5,4 +5,4 @@
 <p>
    <em>Be part of an organization is mandatory, please fill the form below.</em>
 </p>
-<st-organization-create for-user="{{ currentUser.getUser().id }}" member-chooser="false" redirect-to="/home"></st-organization-create>
+<st-organization-create for-users="[currentUser.getUser().id]" redirect-to="/home"></st-organization-create>
