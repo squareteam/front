@@ -11,7 +11,10 @@ describe('Directive: st-organization-create', function () {
 
   // load the directive's module
   beforeEach(module('scripts/directives/templates/storganizationcreate.html'));
-  beforeEach(module('squareteam.app'));
+  beforeEach(module('squareteam.app', function($urlRouterProvider) {
+    $urlRouterProvider
+      .otherwise('/');
+  }));
 
   var appConfig, ApiAuth,
       $httpBackend, $rootScope, $location,
