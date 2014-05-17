@@ -87,7 +87,7 @@ describe('Service: ApiSession', function () {
 
     it('should fail to login cause password is incorrect', function() {
       $httpBackend.expectPUT(apiURL + 'login').respond(200, '{"data":{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}}');
-      $httpBackend.expectGET(apiURL + 'user/me').respond(401, '{"data":{"errors":["auth is not valid"]}}');
+      $httpBackend.expectGET(apiURL + 'user/me').respond(401, '{"data":null,"errors":["auth is not valid"]}');
 
       ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
 

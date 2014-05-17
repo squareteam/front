@@ -39,8 +39,12 @@ angular.module('squareteam.api')
               $rootScope.$broadcast('user:connected');
               self.save();
               deferred.resolve();
-            }, function() {
-              deferred.reject('auth.bad_password');
+            }, function(error) {
+              if (error === 'auth.invalid') {
+                deferred.reject('auth.bad_password');
+              } else {
+                deferred.reject('api.not_available');
+              }
             });
           } else {
             deferred.reject('api.response_malformed');
