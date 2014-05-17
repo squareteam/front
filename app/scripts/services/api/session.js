@@ -125,6 +125,8 @@ angular.module('squareteam.api')
           deferred.resolve();
         }, function(error) {
           self.$pristine = false;
+          // remove invalid auth from cookies
+          ApiSessionStorageCookies.destroy();
           deferred.resolve(error);
         });
       } else {
