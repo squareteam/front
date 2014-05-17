@@ -109,8 +109,7 @@ angular.module('squareteam.api')
 
     this.restore = function() {
       var deferred  = $q.defer(),
-          auth      = ApiSessionStorageCookies.retrieve(),
-          self      = this;
+          auth      = ApiSessionStorageCookies.retrieve();
 
       if (auth) {
         this.ackAuth(auth).then(function(user) {
