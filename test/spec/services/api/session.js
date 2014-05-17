@@ -203,6 +203,8 @@ describe('Service: ApiSession', function () {
       expect(errorCallback.calls.count()).toEqual(1);
       expect(successCallback.calls.count()).toEqual(0);
 
+      expect(Currentuser.isAuthenticated()).toBe(false);
+
       expect(errorCallback.calls.argsFor(0)[0]).toEqual('session.invalid');
 
     });
@@ -223,6 +225,8 @@ describe('Service: ApiSession', function () {
 
       expect(errorCallback.calls.count()).toEqual(1);
       expect(successCallback.calls.count()).toEqual(0);
+
+      expect(Currentuser.isAuthenticated()).toBe(true);
 
       expect(errorCallback.calls.argsFor(0)[0]).toEqual('api.not_available');
 
@@ -248,7 +252,7 @@ describe('Service: ApiSession', function () {
       expect($rootScope.$broadcast).toHaveBeenCalledWith('user:disconnected');
       expect(ApiSessionStorageCookies.destroy.calls.count()).toBe(1);
 
-
+      expect(Currentuser.isAuthenticated()).toBe(false);
 
       expect(successCallback.calls.count()).toEqual(1);
       expect(errorCallback.calls.count()).toEqual(0);
@@ -275,6 +279,8 @@ describe('Service: ApiSession', function () {
 
       expect($rootScope.$broadcast).toHaveBeenCalledWith('user:disconnected');
       expect(ApiSessionStorageCookies.destroy.calls.count()).toBe(0);
+
+      expect(Currentuser.isAuthenticated()).toBe(false);
 
       expect(successCallback.calls.count()).toEqual(1);
       expect(errorCallback.calls.count()).toEqual(0);
