@@ -10,7 +10,6 @@ angular.module('squareteam.app')
       },
       replace : true,
       controller: function($scope, $element, $attrs, $state, ApiSession) {
-        $scope.session = ApiSession;
 
         $scope.login = function() {
           
