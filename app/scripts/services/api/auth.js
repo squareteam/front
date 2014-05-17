@@ -14,7 +14,7 @@ angular.module('squareteam.api')
       };
 
       this.isValidatedFromServer = function() {
-        return this.$$validatedFromServer;
+        return this.$$isValid && this.$$validatedFromServer;
       };
 
     };
