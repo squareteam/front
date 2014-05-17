@@ -6,12 +6,6 @@ angular.module('squareteam.app')
     this.$$auth                 = new ApiAuth();
     this.$$currentOrganization  = null;
     this.$$organizations        = [];
-
-
-    // TODO :
-    // - `currentUser` should be an Angular.Ressource instance
-    // - `getOrganizations()` should return currentUser.organizations.query ?
-
     
     this.isAuthenticated = function() {
       return this.$$auth.isValidatedFromServer();
