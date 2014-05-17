@@ -58,7 +58,6 @@ describe('Service: ApiSession', function () {
     expect(!!ApiSession.save).toBe(true);
     expect(!!ApiSession.restore).toBe(true);
     expect(!!ApiSession.ackAuth).toBe(true);
-    expect(ApiSession.$pristine).toBe(true);
   });
 
   it('should have a anonymous user by default', function() {
@@ -80,8 +79,6 @@ describe('Service: ApiSession', function () {
       expect(successCallback.calls.any()).toEqual(false);
       expect(errorCallback.calls.count()).toEqual(1);
 
-      expect(ApiSession.$pristine).toBe(false);
-      
       expect(errorCallback.calls.argsFor(0)[0]).toEqual('auth.bad_login');
     });
 
@@ -96,8 +93,6 @@ describe('Service: ApiSession', function () {
       expect(errorCallback.calls.count()).toEqual(1);
       expect(successCallback.calls.any()).toEqual(false);
 
-      expect(ApiSession.$pristine).toBe(false);
-
       expect(errorCallback.calls.argsFor(0)[0]).toEqual('auth.bad_password');
     });
 
@@ -110,8 +105,6 @@ describe('Service: ApiSession', function () {
 
       expect(errorCallback.calls.count()).toEqual(1);
       expect(successCallback.calls.any()).toEqual(false);
-
-      expect(ApiSession.$pristine).toBe(false);
 
       expect(errorCallback.calls.argsFor(0)[0]).toEqual('api.response_malformed');
     });
@@ -127,8 +120,6 @@ describe('Service: ApiSession', function () {
 
       expect(errorCallback.calls.count()).toEqual(1);
       expect(successCallback.calls.any()).toEqual(false);
-
-      expect(ApiSession.$pristine).toBe(false);
 
       expect(errorCallback.calls.argsFor(0)[0]).toEqual('api.not_available');
 
@@ -148,8 +139,6 @@ describe('Service: ApiSession', function () {
 
       expect(errorCallback.calls.any()).toEqual(false);
       expect(successCallback.calls.count()).toEqual(1);
-
-      expect(ApiSession.$pristine).toBe(false);
 
       expect(Currentuser.getUser()).toEqual({
         name : 'Charly'
@@ -179,8 +168,6 @@ describe('Service: ApiSession', function () {
 
       expect(errorCallback.calls.any()).toEqual(false);
       expect(successCallback.calls.count()).toEqual(1);
-
-      expect(ApiSession.$pristine).toBe(false);
 
       expect(Currentuser.getUser()).toEqual({
         name : 'Charly'
@@ -363,8 +350,6 @@ describe('Service: ApiSession', function () {
       expect(errorCallback.calls.any()).toEqual(false);
       expect(successCallback.calls.count()).toEqual(1);
 
-      expect(ApiSession.$pristine).toBe(false);
-
       expect(Currentuser.getUser()).toEqual({
         name : 'Charly'
       });
@@ -383,8 +368,6 @@ describe('Service: ApiSession', function () {
 
       expect(errorCallback.calls.any()).toEqual(false);
       expect(successCallback.calls.count()).toEqual(1);
-
-      expect(ApiSession.$pristine).toBe(false);
 
       expect(successCallback.calls.argsFor(0)[0]).toBe('session.storage.no_session');
 
@@ -407,9 +390,9 @@ describe('Service: ApiSession', function () {
       expect(errorCallback.calls.any()).toEqual(false);
       expect(successCallback.calls.count()).toEqual(1);
 
-      expect(ApiSession.$pristine).toBe(false);
-
       expect(successCallback.calls.argsFor(0)[0]).toBe('auth.invalid');
+
+      // FIXME : check cookie has been deleted
 
       expect(Currentuser.getUser()).toEqual(null);
 

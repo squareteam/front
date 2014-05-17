@@ -9,28 +9,23 @@ angular
     var routingHelpers = {
       checkAuthenticated : function(Currentuser, ApiSession, UserRessource, $q) {
 
-          function isUserAuthenticated() {
-            console.log('isUserAuthenticated?', ApiSession.isAuthenticated());
-            if (ApiSession.isAuthenticated()) {
-              deferred.resolve();
-            } else {
-              console.log('redirect to login');
-              deferred.reject({
-                redirectToState : 'login'
-              });
-            }
-          }
-
           var deferred = $q.defer();
 
           console.log('ApiSession.$pristine?', ApiSession.$pristine);
 
-          if (ApiSession.$pristine) {
+          if (!ApiSession.isAuthenticated()) {
             ApiSession.restore().then(function() {
-              isUserAuthenticated();
+              if (ApiSession.isAuthenticated()) {
+                deferred.resolve();
+              } else {
+                console.log('redirect to login');
+                deferred.reject({
+                  redirectToState : 'login'
+                });
+              }
             }.bind(this));
           } else {
-            isUserAuthenticated();
+            deferred.resolve();
           }
 
           return deferred.promise;

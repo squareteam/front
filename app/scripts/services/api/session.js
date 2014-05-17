@@ -4,8 +4,6 @@
 angular.module('squareteam.api')
   .service('ApiSession', function Apisession($rootScope, $http, $q, appConfig, Currentuser, ApiSessionStorageCookies, ApiAuth, ApiCrypto, ApiErrors) {
 
-    this.$pristine = true;
-
     this.isAuthenticated = function() {
       return Currentuser.isAuthenticated();
     };
@@ -20,7 +18,6 @@ angular.module('squareteam.api')
         $http.put('api://login', {
           identifier : login
         }).then(function(response) {
-          self.$pristine = false;
           if (response && response.data &&
               response.data.salt1 && response.data.salt1.length > 0 &&
               response.data.salt2 && response.data.salt2.length > 0) {
@@ -50,7 +47,6 @@ angular.module('squareteam.api')
             deferred.reject('api.response_malformed');
           }
         }, function(response) {
-          self.$pristine = false;
           if (response.error instanceof ApiErrors.Http) {
             deferred.reject('api.not_available');
           } else {
@@ -118,19 +114,16 @@ angular.module('squareteam.api')
 
       if (auth) {
         this.ackAuth(auth).then(function(user) {
-          self.$pristine = false;
           Currentuser.setAuth(auth, true);
           Currentuser.setUser(user);
           $rootScope.$broadcast('user:connected');
           deferred.resolve();
         }, function(error) {
-          self.$pristine = false;
           // remove invalid auth from cookies
           ApiSessionStorageCookies.destroy();
           deferred.resolve(error);
         });
       } else {
-        this.$pristine = false;
         deferred.resolve('session.storage.no_session');
       }
 
