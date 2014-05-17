@@ -116,13 +116,20 @@ angular
       })
 
       // Admin namespace
+      
       .state('app.admin', {
         url : '/manage/:id',
+        abstract : true,
+        template : '<ui-view></ui-view>',
         controller : ['$scope', '$stateParams', function($scope, $stateParams) {
           $scope.organization = $.grep($scope.currentUser.getOrganizations(), function(organization) {
             return organization.id === parseInt($stateParams.id, 10);
           })[0];
-        }],
+        }]
+      })
+
+      .state('app.admin.general', {
+        url : '/general',
         templateUrl: 'views/app/admin/index.html'
       })
 
