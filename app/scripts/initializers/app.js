@@ -44,6 +44,7 @@ angular
     $stateProvider
       .state('login', {
         url : '/login',
+        controller : 'LoginCtrl',
         templateUrl: 'views/login.html'
       })
       .state('register', {
