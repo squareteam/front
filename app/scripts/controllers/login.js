@@ -2,8 +2,8 @@
 
 angular.module('squareteam.app')
 .controller('LoginCtrl', function ($scope, $cookies, $location, $state, ApiSession, appConfig) {
-  var login = $location.search().email;
-  $scope.login = login;
+  var login = $location.search() && $location.search().email;
+  $scope.login = login || '';
   $scope.oauthAuthenticating = false;
 
   if ($cookies[appConfig.api.oauth.cookieNS]) {
