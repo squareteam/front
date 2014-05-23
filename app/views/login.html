@@ -1,7 +1,19 @@
-<st-login-form></st-login-form>
+<div ng-hide="oauthAuthenticating">
+   <st-login-form github-login="true"></st-login-form>
+   <p>
+      <a ui-sref="register">
+         Want a account ?
+      </a>
+   </p>
+</div>
 
-<p>
-   <a ui-sref="register">
-      Want a account ?
-   </a>
-</p>
+<div ng-show="oauthAuthenticating">
+   <br>
+   <h3>
+      Connexion via Github
+   </h3>
+   <p>
+      Vérification de votre identité en cours...
+   </p>
+   <br>
+</div>

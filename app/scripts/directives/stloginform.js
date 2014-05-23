@@ -6,10 +6,13 @@ angular.module('squareteam.app')
       templateUrl: 'scripts/directives/templates/stloginform.html',
       restrict: 'E',
       scope : {
-        redirectPath : '@'
+        redirectPath  : '@',
+        githubLogin   : '@'
       },
       replace : true,
-      controller: function($scope, $element, $attrs, $state, ApiSession) {
+      controller: function($scope, $element, $attrs, $state, ApiSession, appConfig) {
+
+        $scope.githubLoginUrl = appConfig.api.oauth.github.loginUrl;
 
         $scope.login = function() {
           
