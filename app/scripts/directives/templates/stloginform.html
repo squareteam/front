@@ -47,6 +47,10 @@
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button ng-click="(!loginForm.$error || !loginForm.$error.required) && login()" class="btn btn-primary">Connexion</button>
+      &nbsp;
+      <a href="{{ githubLoginUrl }}" ng-show="!!githubLogin">
+        <img src="/images/GitHub-Mark-32px.png" alt="">
+      </a>
     </div>
   </div>
 
