@@ -155,8 +155,6 @@ describe('Directive: st-organization-create', function () {
 
     it('should save organization but fail to add members (500)', function() {
 
-      console.log(element);
-
       $httpBackend.expectPOST(appConfig.api.url + 'organizations').respond(201, '{"data": {"id":1,"name":"test","members":[]},"errors":null');
       $httpBackend.expectPOST(appConfig.api.url + 'members').respond(500, '');
 
