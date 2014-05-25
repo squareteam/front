@@ -7,18 +7,16 @@ angular
   .config(function ($stateProvider, $urlRouterProvider) {
 
     var routingHelpers = {
-      checkAuthenticated : function(Currentuser, ApiSession, UserRessource, $q) {
+      checkAuthenticated : function(Currentuser, ApiSession, UserRessource, $q, $log) {
 
           var deferred = $q.defer();
-
-          console.log('ApiSession.$pristine?', ApiSession.$pristine);
 
           if (!ApiSession.isAuthenticated()) {
             ApiSession.restore().then(function() {
               if (ApiSession.isAuthenticated()) {
                 deferred.resolve();
               } else {
-                console.log('redirect to login');
+                $log.info('redirect to login');
                 deferred.reject({
                   redirectToState : 'login'
                 });
@@ -32,7 +30,7 @@ angular
         }
     };
 
-    routingHelpers.checkAuthenticated.$inject = ['Currentuser', 'ApiSession', 'UserRessource', '$q'];
+    routingHelpers.checkAuthenticated.$inject = ['Currentuser', 'ApiSession', 'UserRessource', '$q', '$log'];
 
 
     ///////////////////
@@ -70,8 +68,6 @@ angular
                     Currentuser.setOrganizations(organizations);
                     deferred.resolve();
                   } else {
-                    console.log('redirect to organization creation');
-                    // $state.go('register_organization');
                     deferred.reject({
                       redirectToState : 'register_organization'
                     });
