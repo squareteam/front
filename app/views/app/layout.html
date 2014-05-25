@@ -1,10 +1,10 @@
 <ul class="nav nav-pills" ng-cloak>
-  <li ui-sref-active="active"><a ui-sref="app.home">Home</a></li>
-  <li><a ui-sref="app.admin.general({ id : currentOrganization })">Admin</a></li>
+  <li ui-sref-active="active"><a ui-sref="app.home">{{ 'header.menu.home' | translate }}</a></li>
+  <li><a ui-sref="app.admin.general({ id : currentOrganization })">{{ 'header.menu.admin' | translate }}</a></li>
 
 
   <a href="#" ng-click="logout()" class="btn btn-primary pull-right">
-     Logout
+     {{ 'header.logout' | translate }}
   </a>
   <div class="col-xs-2 pull-right">
      <select name="currentOrganization" id="" ng-model="currentOrganization" class="form-control">

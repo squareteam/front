@@ -1,14 +1,14 @@
 <a href="#" ng-click="logout()" class="btn btn-primary pull-right">
-   Logout
+   {{ 'header.logout' | translate }}
 </a>
 <p>
    &nbsp;
 </p>
 <h2>
-   Create an organization
+   {{ 'registerOrganization.title' | translate }}
 </h2>
 <!-- Flash messages ? -->
 <p>
-   <em>Be part of an organization is mandatory, please fill the form below.</em>
+   <em>{{ 'registerOrganization.info' | translate }}</em>
 </p>
 <st-organization-create for-users="[currentUser.getUser().id]" redirect-to="/home"></st-organization-create>

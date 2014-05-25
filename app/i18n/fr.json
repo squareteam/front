@@ -1,0 +1,68 @@
+{
+
+   "header" : {
+      "logout" : "Deconnexion",
+
+      "menu"   : {
+         "home"   : "Accueil",
+         "admin"  : "Admin"
+      }
+   },
+
+   "api" : {
+      "serverBusy" : "Nos serveurs sont momentanéments indisponibles"
+   },
+
+   "login" : {
+      "wantAnAccount"   : "S'inscrire ?",
+      "authenticating"  : "Nous vérifions votre identité...",
+
+      "github" : {
+         "authenticating"  : "Authentification avec Github",
+         "tooltipBtn"      : "Se connecter avec Github"
+      },
+      "behance" : {
+         "authenticating"  : "Authentification avec Behance",
+         "tooltipBtn"      : "Se connecter avec Behance"
+      }
+   },
+
+   "register" : {
+      "title"                 : "Vous y êtes presque.",
+      "alreadyHaveAnAccount"  : "Vous possédez déjà un compte ?"
+   },
+
+   "registerOrganization" : {
+      "title"  : "Créer une organisation",
+      "info"   : "Être membre d'une organisation est obligatoire, merci de remplir le formulaire ci dessous"
+   },
+
+
+   "directives" : {
+      "stLoginForm" : {
+         "title"           : "Veuillez vous connecter",
+         "passwordInvalid" : "Le mot de passe n'est pas valide",
+         "emailInvalid"    : "L'e-mail n'est pas valide",
+         "passwordLabel"   : "Mot de passe",
+         "emailLabel"      : "E-mail",
+         "loginBtn"        : "Se connecter"
+      },
+
+      "stOrganizationCreate" : {
+         "emailTaken"            : "Cet e-mail est déjà pris",
+         "loginLabel"            : "Identifiant",
+         "emailLabel"            : "E-mail",
+         "passwordLabel"         : "Mot de passe",
+         "passwordConfirmLabel"  : "Confirmation du mot de passe",
+         "passwordNotMatch"      : "La confirmation de mot de passe n'est pas correcte",
+         "CGULabel"              : "Accepter les conditions d'utilisation",
+         "createAccountBtn"      : "Créer un compte"
+      },
+
+      "stOrganizationCreate" : {
+         "nameTaken"    : "Nom d'organisation déjà pris",
+         "nameLabel"    : "Nom",
+         "createBtn"    : "Créer l'organisation"
+      }
+   }
+}

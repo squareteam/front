@@ -2,7 +2,7 @@
    <st-login-form github-login="true"></st-login-form>
    <p>
       <a ui-sref="register">
-         Want a account ?
+         {{ 'login.wantAnAccount' | translate }}
       </a>
    </p>
 </div>
@@ -10,10 +10,10 @@
 <div ng-show="oauthAuthenticating">
    <br>
    <h3>
-      Connexion via Github
+      {{ 'login.github.authenticating' | translate }}
    </h3>
    <p>
-      Vérification de votre identité en cours...
+      {{ 'login.authenticating' | translate }}
    </p>
    <br>
 </div>

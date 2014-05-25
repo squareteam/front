@@ -4,7 +4,23 @@
 
 angular
   .module('squareteam.app')
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
+
+
+    ///////////////
+    // Translate //
+    ///////////////
+
+    $translateProvider.useStaticFilesLoader({
+      prefix: 'i18n/',
+      suffix: '.json'
+    });
+    $translateProvider.preferredLanguage('en');
+
+
+    /////////////////////
+    // Routing Helpers //
+    /////////////////////
 
     var routingHelpers = {
       checkAuthenticated : function(Currentuser, ApiSession, UserRessource, $q, $log) {

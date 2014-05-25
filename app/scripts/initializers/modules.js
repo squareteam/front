@@ -5,14 +5,15 @@ angular.module('squareteam.ressources', [
   'ngResource'
 ]);
 
-angular.module('squareteam.api', []);
+angular.module('squareteam.api', ['pascalprecht.translate']);
 
 angular
   .module('squareteam.app', [
     'squareteam.api',
     'squareteam.ressources',
     'ngSanitize',
-    'ui.router'
+    'ui.router',
+    'pascalprecht.translate'
   ]);
 
 
