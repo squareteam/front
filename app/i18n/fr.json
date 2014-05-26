@@ -10,7 +10,8 @@
    },
 
    "api" : {
-      "serverBusy" : "Nos serveurs sont momentanéments indisponibles"
+      "serverBusy" : "Nos serveurs sont momentanéments indisponibles",
+      "no_results" : "Aucun résultats"
    },
 
    "login" : {
@@ -57,6 +58,12 @@
          "passwordNotMatch"      : "La confirmation de mot de passe n'est pas correcte",
          "CGULabel"              : "Accepter les conditions d'utilisation",
          "createAccountBtn"      : "Créer un compte"
+      },
+
+      "stUserProfile" : {
+         "email"                 : "E-mail",
+         "organizations"         : "Membres des organisations :",
+         "organization_create"   : "créer"
       },
 
       "stOrganizationCreate" : {

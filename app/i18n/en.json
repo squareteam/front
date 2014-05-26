@@ -10,7 +10,8 @@
    },
 
    "api" : {
-      "serverBusy" : "Server are busy for now, please try later"
+      "serverBusy" : "Server are busy for now, please try later",
+      "no_results" : "No results"
    },
 
    "login" : {
@@ -57,6 +58,12 @@
          "passwordNotMatch"      : "Passwords does not match!",
          "CGULabel"              : "Accept CGU",
          "createAccountBtn"      : "Create Account"
+      },
+
+      "stUserProfile" : {
+         "email"                 : "Email",
+         "organizations"         : "Member of following organizations :",
+         "organization_create"   : "create"
       },
 
       "stOrganizationCreate" : {
