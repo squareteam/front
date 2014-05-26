@@ -48,7 +48,7 @@
          "loginBtn"        : "Login"
       },
 
-      "stOrganizationCreate" : {
+      "stUserCreate" : {
          "emailTaken"            : "Email already taken",
          "loginLabel"            : "Login",
          "emailLabel"            : "Email",
