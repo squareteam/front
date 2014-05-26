@@ -72,35 +72,38 @@ angular
       .state('app', {
         abstract : true,
         resolve : {
-          configure : ['$injector','$q', 'Currentuser', 'UserRessource', function($injector, $q, Currentuser, UserRessource) {
-            
-            function checkUserConfiguration () {
-              var organizations = UserRessource.organizations.query({
-                  userId : Currentuser.getUser().id
-                },
-                {}, // data
-                function() {
-                  if (organizations.length) {
-                    Currentuser.setOrganizations(organizations);
-                    deferred.resolve();
-                  } else {
-                    deferred.reject({
-                      redirectToState : 'register_organization'
-                    });
-                  }
-                }
-              );
-            }
-
-            var deferred = $q.defer();
-
-            $injector.invoke(routingHelpers.checkAuthenticated).then(function() {
-              checkUserConfiguration();
-            }, deferred.reject);
-
-            return deferred.promise;
-          }]
+          authenticated : routingHelpers.checkAuthenticated
         },
+        // resolve : {
+        //   configure : ['$injector','$q', 'Currentuser', 'UserRessource', function($injector, $q, Currentuser, UserRessource) {
+            
+        //     function checkUserConfiguration () {
+        //       var organizations = UserRessource.organizations.query({
+        //           userId : Currentuser.getUser().id
+        //         },
+        //         {}, // data
+        //         function() {
+        //           if (organizations.length) {
+        //             Currentuser.setOrganizations(organizations);
+        //             deferred.resolve();
+        //           } else {
+        //             deferred.reject({
+        //               redirectToState : 'register_organization'
+        //             });
+        //           }
+        //         }
+        //       );
+        //     }
+
+        //     var deferred = $q.defer();
+
+        //     $injector.invoke(routingHelpers.checkAuthenticated).then(function() {
+        //       checkUserConfiguration();
+        //     }, deferred.reject);
+
+        //     return deferred.promise;
+        //   }]
+        // },
         templateUrl: 'views/app/layout.html',
         controller : ['$scope', function($scope) {
           $scope.currentOrganization = $scope.currentUser.getCurrentOrganization().id;
