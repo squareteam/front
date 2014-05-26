@@ -83,7 +83,7 @@ describe('Directive: st-organization-create', function () {
 
 
       expect($(element.find('.alert')[0]).hasClass('ng-hide')).toBe(false);
-      expect($(element.find('.alert')[0]).text().trim()).toBe('Ce nom d\'organization est déjà pris');
+      expect($(element.find('.alert')[0]).text().trim()).toBe('directives.stOrganizationCreate.nameTaken');
 
     });
         

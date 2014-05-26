@@ -95,7 +95,7 @@ describe('Directive: st-user-create', function () {
 
 
       expect(alertEmailTakenElt.hasClass('ng-hide')).toBe(false);
-      expect(alertEmailTakenElt.text().trim()).toBe('Cet email est déjà pris');
+      expect(alertEmailTakenElt.text().trim()).toBe('directives.stUserCreate.emailTaken');
 
     });
 

@@ -96,7 +96,7 @@ describe('Directive: st-login-form', function () {
 
 
       expect(alertLoginElt.hasClass('ng-hide')).toBe(false);
-      expect(alertLoginElt.text().trim()).toBe('L\'email n\'est pas valide');
+      expect(alertLoginElt.text().trim()).toBe('directives.stLoginForm.emailInvalid');
 
     });
 
@@ -125,7 +125,7 @@ describe('Directive: st-login-form', function () {
 
 
       expect(alertPasswordElt.hasClass('ng-hide')).toBe(false);
-      expect(alertPasswordElt.text().trim()).toBe('Le mot de passe n\'est pas valide');
+      expect(alertPasswordElt.text().trim()).toBe('directives.stLoginForm.passwordInvalid');
 
     });
 

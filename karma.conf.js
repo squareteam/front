@@ -44,9 +44,10 @@ module.exports = function(config) {
       'app/bower_components/cryptojslib/rollups/hmac-sha256.js',
       'app/bower_components/cryptojslib/rollups/pbkdf2.js',
       'app/bower_components/cryptojslib/rollups/md5.js',
+      'app/bower_components/angular-translate/angular-translate.js',
+      'app/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
       'app/scripts/initializers/modules.js',
       'app/scripts/initializers/api.js',
-      'app/scripts/initializers/app.js',
       'app/scripts/*.js',
       'app/scripts/**/*.js',
       'app/scripts/directives/templates/*.html',
@@ -56,7 +57,7 @@ module.exports = function(config) {
 
     // list of files / patterns to exclude
     exclude: [
-      'app/scripts/bootstrap.js',
+      'app/scripts/initializers/app.js',
       'app/scripts/config_sample.js'
     ],
 

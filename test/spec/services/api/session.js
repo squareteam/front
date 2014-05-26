@@ -126,7 +126,7 @@ describe('Service: ApiSession', function () {
     });
 
     it('should login', function() {
-      spyOn($rootScope, '$broadcast');
+      spyOn($rootScope, '$broadcast').and.callThrough();
 
       $httpBackend.expectPUT(apiURL + 'login')  .respond(200, '{"data":{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}}');
       $httpBackend.expectGET(apiURL + 'user/me').respond(200, '{"data":{"name":"Charly"}}');
@@ -149,7 +149,7 @@ describe('Service: ApiSession', function () {
     });
 
     it('if already and connected, it should logout and login', function() {
-      spyOn($rootScope, '$broadcast');
+      spyOn($rootScope, '$broadcast').and.callThrough();
 
       Currentuser.setUser({ name : 'charly'});
       Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')), true);
@@ -221,7 +221,7 @@ describe('Service: ApiSession', function () {
 
     it('should logout', function() {
 
-      spyOn($rootScope, '$broadcast');
+      spyOn($rootScope, '$broadcast').and.callThrough();
       spyOn(ApiSessionStorageCookies, 'destroy');
 
       Currentuser.setUser({ name : 'charly'});
@@ -249,7 +249,7 @@ describe('Service: ApiSession', function () {
 
     it('should logout without destroy from storage', function() {
 
-      spyOn($rootScope, '$broadcast');
+      spyOn($rootScope, '$broadcast').and.callThrough();
       spyOn(ApiSessionStorageCookies, 'destroy');
 
       Currentuser.setUser({ name : 'charly'});
@@ -337,7 +337,7 @@ describe('Service: ApiSession', function () {
   describe('ApiSession.restore', function() {
 
     it('should restore session from cookies storage', function() {
-      spyOn($rootScope, '$broadcast');
+      spyOn($rootScope, '$broadcast').and.callThrough();
 
       $httpBackend.expectGET(apiURL + 'user/me').respond(200, '{"data":{"name":"Charly"}}');
 
