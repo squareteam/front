@@ -104,10 +104,10 @@ angular
         //     return deferred.promise;
         //   }]
         // },
-        templateUrl: 'views/app/layout.html',
-        controller : ['$scope', function($scope) {
-          $scope.currentOrganization = $scope.currentUser.getCurrentOrganization().id;
-        }]
+        templateUrl: 'views/app/layout.html'//,
+        // controller : ['$scope', function($scope) {
+        //   $scope.currentOrganization = $scope.currentUser.getCurrentOrganization().id;
+        // }]
       })
 
       // register a new organization
@@ -124,6 +124,14 @@ angular
         url : '/home',
         templateUrl: 'views/home.html',
         controller: 'HomeCtrl'
+      })
+
+
+      // Account Management
+
+      .state('app.account', {
+        url : '/account',
+        templateUrl: 'views/app/account.html',
       })
 
       // Admin namespace
