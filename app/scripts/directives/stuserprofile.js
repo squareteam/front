@@ -12,7 +12,7 @@ angular.module('squareteam.app')
         editable  : '@'
       },
       replace : true,
-      compile : function(tElement, tAttrs, transclude) {
+      compile : function(tElement, tAttrs) {
         if (typeof tAttrs.editable === 'undefined') {
           tElement.find('input').each(function(index, input) {
             var $input  = $(input),
