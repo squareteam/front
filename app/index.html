@@ -22,6 +22,11 @@
 
     <div class="container" ng-controller="ApplicationCtrl">
 
+        <select name="" id="locale-selector" ng-init="currentLocale = 'en'" ng-model="currentLocale" ng-change="$translate.use(currentLocale)">
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+        </select>
+
         <header>
             <h1 class="title pull-left">
                 Squareteam
