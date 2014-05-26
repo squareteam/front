@@ -4,40 +4,49 @@
 
 angular
   .module('squareteam.app')
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
+
+
+    ///////////////
+    // Translate //
+    ///////////////
+
+    $translateProvider.useStaticFilesLoader({
+      prefix: 'i18n/',
+      suffix: '.json'
+    });
+    $translateProvider.preferredLanguage('en');
+
+
+    /////////////////////
+    // Routing Helpers //
+    /////////////////////
 
     var routingHelpers = {
-      checkAuthenticated : function(Currentuser, ApiSession, UserRessource, $q) {
-
-          function isUserAuthenticated() {
-            console.log('isUserAuthenticated?', ApiSession.isAuthenticated());
-            if (ApiSession.isAuthenticated()) {
-              deferred.resolve();
-            } else {
-              console.log('redirect to login');
-              deferred.reject({
-                redirectToState : 'login'
-              });
-            }
-          }
+      checkAuthenticated : function(Currentuser, ApiSession, UserRessource, $q, $log) {
 
           var deferred = $q.defer();
 
-          console.log('ApiSession.$pristine?', ApiSession.$pristine);
-
-          if (ApiSession.$pristine) {
+          if (!ApiSession.isAuthenticated()) {
             ApiSession.restore().then(function() {
-              isUserAuthenticated();
+              if (ApiSession.isAuthenticated()) {
+                deferred.resolve();
+              } else {
+                $log.info('redirect to login');
+                deferred.reject({
+                  redirectToState : 'login'
+                });
+              }
             }.bind(this));
           } else {
-            isUserAuthenticated();
+            deferred.resolve();
           }
 
           return deferred.promise;
         }
     };
 
-    routingHelpers.checkAuthenticated.$inject = ['Currentuser', 'ApiSession', 'UserRessource', '$q'];
+    routingHelpers.checkAuthenticated.$inject = ['Currentuser', 'ApiSession', 'UserRessource', '$q', '$log'];
 
 
     ///////////////////
@@ -49,6 +58,7 @@ angular
     $stateProvider
       .state('login', {
         url : '/login',
+        controller : 'LoginCtrl',
         templateUrl: 'views/login.html'
       })
       .state('register', {
@@ -62,41 +72,42 @@ angular
       .state('app', {
         abstract : true,
         resolve : {
-          configure : ['$injector','$q', 'Currentuser', 'UserRessource', function($injector, $q, Currentuser, UserRessource) {
-            
-            function checkUserConfiguration () {
-              var organizations = UserRessource.organizations.query({
-                  userId : Currentuser.getUser().id
-                },
-                {}, // data
-                function() {
-                  if (organizations.length) {
-                    Currentuser.setOrganizations(organizations);
-                    deferred.resolve();
-                  } else {
-                    console.log('redirect to organization creation');
-                    // $state.go('register_organization');
-                    deferred.reject({
-                      redirectToState : 'register_organization'
-                    });
-                  }
-                }
-              );
-            }
-
-            var deferred = $q.defer();
-
-            $injector.invoke(routingHelpers.checkAuthenticated).then(function() {
-              checkUserConfiguration();
-            }, deferred.reject);
-
-            return deferred.promise;
-          }]
+          authenticated : routingHelpers.checkAuthenticated
         },
-        templateUrl: 'views/app/layout.html',
-        controller : ['$scope', function($scope) {
-          $scope.currentOrganization = $scope.currentUser.getCurrentOrganization().id;
-        }]
+        // resolve : {
+        //   configure : ['$injector','$q', 'Currentuser', 'UserRessource', function($injector, $q, Currentuser, UserRessource) {
+            
+        //     function checkUserConfiguration () {
+        //       var organizations = UserRessource.organizations.query({
+        //           userId : Currentuser.getUser().id
+        //         },
+        //         {}, // data
+        //         function() {
+        //           if (organizations.length) {
+        //             Currentuser.setOrganizations(organizations);
+        //             deferred.resolve();
+        //           } else {
+        //             deferred.reject({
+        //               redirectToState : 'register_organization'
+        //             });
+        //           }
+        //         }
+        //       );
+        //     }
+
+        //     var deferred = $q.defer();
+
+        //     $injector.invoke(routingHelpers.checkAuthenticated).then(function() {
+        //       checkUserConfiguration();
+        //     }, deferred.reject);
+
+        //     return deferred.promise;
+        //   }]
+        // },
+        templateUrl: 'views/app/layout.html'//,
+        // controller : ['$scope', function($scope) {
+        //   $scope.currentOrganization = $scope.currentUser.getCurrentOrganization().id;
+        // }]
       })
 
       // register a new organization
@@ -115,14 +126,29 @@ angular
         controller: 'HomeCtrl'
       })
 
+
+      // Account Management
+
+      .state('app.account', {
+        url : '/account',
+        templateUrl: 'views/app/account.html',
+      })
+
       // Admin namespace
+      
       .state('app.admin', {
         url : '/manage/:id',
+        abstract : true,
+        template : '<ui-view></ui-view>',
         controller : ['$scope', '$stateParams', function($scope, $stateParams) {
           $scope.organization = $.grep($scope.currentUser.getOrganizations(), function(organization) {
             return organization.id === parseInt($stateParams.id, 10);
           })[0];
-        }],
+        }]
+      })
+
+      .state('app.admin.general', {
+        url : '/general',
         templateUrl: 'views/app/admin/index.html'
       })
 

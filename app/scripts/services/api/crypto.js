@@ -47,18 +47,6 @@ angular.module('squareteam.api')
        auth.token
       );
 
-      console.group('-- generateHeaders --');
-
-      console.log('(url',       url + ')');
-      console.log('method',     method);
-      console.log('path',       path);
-      console.log('headers',    headers);
-      console.log('blob',       blob);
-      console.log('token',      auth.token.toString());
-      console.log('identifier', auth.identifier);
-
-      console.groupEnd();
-
       hmac.update(method + ':');
       hmac.update(path + ':');
       hmac.update(headers['St-Timestamp'] + ':');

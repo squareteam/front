@@ -1,5 +1,5 @@
 <h2>
-   One step closer.
+   {{ 'register.title' | translate }}
 </h2>
 
 <st-user-create redirect-to="/home/welcome"></st-user-create>
@@ -7,6 +7,6 @@
 
 <p>
    <a ui-sref="login">
-      Already have a account ?
+      {{ 'register.alreadyHaveAnAccount' | translate }}
    </a>
 </p>

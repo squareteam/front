@@ -1,21 +1,16 @@
 <form action="" name="loginForm" class="form-horizontal">
   <div class="alert alert-danger" ng-show="!!loginForm.email.$error.valid">
-      L'email n'est pas valide
+      {{ 'directives.stLoginForm.emailInvalid' | translate }}
   </div>
   <div class="alert alert-danger" ng-show="!!loginForm.password.$error.valid">
-      Le mot de passe n'est pas valide
+      {{ 'directives.stLoginForm.passwordInvalid' | translate }}
   </div>
   <div class="alert alert-danger" ng-show="!!serverBusy">
-    <p>
-      Nos serveurs sont momentanément indisponibles.
-    </p>
-    <p>
-      Veuillez réessayer dans quelques instants.
-    </p>
+    {{ 'api.serverBusy' | translate }}
   </div>
 
   <h2>
-    Please login
+    {{ 'directives.stLoginForm.title' | translate }}
   </h2>
 
   <p>
@@ -24,7 +19,7 @@
 
   <div class="form-group">
     <label for="email" class="col-sm-2 control-label">
-      Email
+      {{ 'directives.stLoginForm.emailLabel' | translate }}
     </label>
     <div class="col-sm-10">
       <input type="email" name="email" ng-model="user.email" class="form-control" required autofocus />
@@ -33,7 +28,7 @@
   
   <div class="form-group">
     <label for="password" class="col-sm-2 control-label">
-      Password
+      {{ 'directives.stLoginForm.passwordLabel' | translate }}
     </label>
     <div class="col-sm-10">
       <input type="password" name="password" ng-model="user.password" class="form-control" required />
@@ -46,7 +41,13 @@
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button ng-click="(!loginForm.$error || !loginForm.$error.required) && login()" class="btn btn-primary">Connexion</button>
+      <button ng-click="(!loginForm.$error || !loginForm.$error.required) && login()" class="btn btn-primary">
+        {{ 'directives.stLoginForm.loginBtn' | translate }}
+      </button>
+      &nbsp;
+      <a href="{{ githubLoginUrl }}" ng-show="!!githubLogin">
+        <img src="/images/GitHub-Mark-32px.png" alt="" title="{{ 'directives.stLoginForm.github.tooltipBtn' | translate }}">
+      </a>
     </div>
   </div>
 

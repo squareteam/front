@@ -1,14 +1,9 @@
 <form action="" name="createOrganizationForm" class="form-horizontal" ng-submit="create()">
   <div class="alert alert-danger" ng-show="!!createOrganizationForm.name.$error.unique">
-      Ce nom d'organization est déjà pris
+      {{ 'directives.stOrganizationCreate.nameTaken' | translate }}
   </div>
   <div class="alert alert-danger" ng-show="!!serverBusy">
-    <p>
-      Nos serveurs sont momentanément indisponibles.
-    </p>
-    <p>
-      Veuillez réessayer dans quelques instants.
-    </p>
+    {{ 'api.serverBusy' | translate }}
   </div>
 
   <p>
@@ -17,7 +12,7 @@
 
   <div class="form-group">
     <label for="name" class="col-sm-2 control-label">
-      Name
+      {{ 'directives.stOrganizationCreate.nameLabel' | translate }}
     </label>
     <div class="col-sm-10">
       <input type="text" name="name" ng-model="organization.name" class="form-control" required autofocus />
@@ -30,7 +25,7 @@
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <input type="submit" class="btn btn-primary" value="Créer" />
+      <input type="submit" class="btn btn-primary" value="{{ 'directives.stOrganizationCreate.createBtn' | translate }}" />
     </div>
   </div>
 

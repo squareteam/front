@@ -1,0 +1,33 @@
+<div>
+   <h2 style="line-height:70px;">
+      <img src="/images/user.png" height="70" class="img-circle pull-left" alt="">
+      <span style="padding-left:10px;">
+         <input type="text" ng-model="user.name">
+      </span>
+   </h2>
+   <br>
+   <p>
+      <span>
+         {{ 'directives.stUserProfile.email' | translate }}
+      </span>
+      <input type="text" ng-model="user.email">
+   </p>
+
+   <hr>
+
+   <h3>
+      {{ 'directives.stUserProfile.organizations' | translate }}
+      <a ui-sref="register_organization" class="btn btn-default btn-xs">
+         {{ 'directives.stUserProfile.organization_create' | translate }}
+      </a>
+   </h3>
+
+   <ul>
+      <li ng-hide="organizations.length > 0">
+         {{ 'api.no_results' | translate }}
+      </li>
+      <li ng-repeat="organization in organizations">
+         {{ organization.name }}
+      </li>
+   </ul>
+</div>

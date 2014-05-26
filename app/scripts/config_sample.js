@@ -3,12 +3,19 @@
 'use strict';
 angular.module('squareteam.app').factory('appConfig', function () {
   var api = {
-    host      : 'http://127.0.0.1:1551',
+    host      : 'http://localhost:8000',
     path      : '/api/',
-    storageNS : 'ST_SESSION'
+    storageNS : 'st.session'
   };
 
-  api.url = api.host + api.path;
+  api.url             = api.host + api.path;
+  api.oauth = {
+    cookieNS  : 'st.oauth'
+  };
+  api.oauth.github = {
+    loginUrl  : api.url + 'auth/github'
+  };
+
 
   return {
     api : api

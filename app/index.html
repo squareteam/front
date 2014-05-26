@@ -28,9 +28,11 @@
             </h1>
             <div class="pull-right user_block" ng-if="session.isAuthenticated()" ng-cloak>
                 <div class="pull-left">
-                    {{ currentUser.getUser().email }}
+                    <a href ui-sref="app.account">
+                        {{ currentUser.getUser().email }}
+                    </a>
                 </div>
-                <img src="http://placekitten.com/g/39/39" class="img-circle pull-right" alt="">
+                <img src="/images/user.png" width="39" class="img-circle pull-right" alt="">
             </div>
              <div class="clearfix"></div>
         </header>
@@ -42,8 +44,12 @@
             <span class="pull-left">
                 &copy; Squareteam 2013-2014
             </span>
+            <select name="" id="locale-selector" class="pull-right" ng-init="currentLocale = 'en'" ng-model="currentLocale" ng-change="$translate.use(currentLocale)">
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+            </select>
             <span class="pull-right">
-                version {{ version }}
+                version {{ version }}  &nbsp;|&nbsp;
             </span>
         </footer>
 
@@ -63,6 +69,8 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
     <!-- endbower -->
     <!-- put CryptoJS after bower but in build block -->
     <script src="bower_components/cryptojslib/rollups/hmac-sha256.js"></script>
@@ -86,6 +94,7 @@
         <script src="scripts/services/api/auth.js"></script>
         <script src="scripts/services/api/session.js"></script>
         <script src="scripts/controllers/home.js"></script>
+        <script src="scripts/directives/input-match.js"></script>
         <script src="scripts/directives/stloginform.js"></script>
         <script src="scripts/services/api/errors.js"></script>
         <script src="scripts/bootstrap.js"></script>
@@ -93,6 +102,8 @@
         <script src="scripts/services/ressources/organization.js"></script>
         <script src="scripts/controllers/application.js"></script>
         <script src="scripts/directives/storganizationcreate.js"></script>
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/directives/stuserprofile.js"></script>
         <!-- endbuild -->
 </body>
 </html>

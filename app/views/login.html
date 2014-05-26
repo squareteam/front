@@ -1,7 +1,19 @@
-<st-login-form></st-login-form>
+<div ng-hide="oauthAuthenticating">
+   <st-login-form github-login="true"></st-login-form>
+   <p>
+      <a ui-sref="register">
+         {{ 'login.wantAnAccount' | translate }}
+      </a>
+   </p>
+</div>
 
-<p>
-   <a ui-sref="register">
-      Want a account ?
-   </a>
-</p>
+<div ng-show="oauthAuthenticating">
+   <br>
+   <h3>
+      {{ 'login.github.authenticating' | translate }}
+   </h3>
+   <p>
+      {{ 'login.authenticating' | translate }}
+   </p>
+   <br>
+</div>

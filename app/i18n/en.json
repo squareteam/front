@@ -1,0 +1,75 @@
+{
+
+   "header" : {
+      "logout" : "Logout",
+
+      "menu"   : {
+         "home"   : "Home",
+         "admin"  : "Admin"
+      }
+   },
+
+   "api" : {
+      "serverBusy" : "Server are busy for now, please try later",
+      "no_results" : "No results"
+   },
+
+   "login" : {
+      "wantAnAccount"   : "Want an account ?",
+      "authenticating"  : "We are checking your identity..",
+
+      "github" : {
+         "authenticating"  : "Authenticating with Github",
+         "tooltipBtn"      : "Login with Github"
+      },
+      "behance" : {
+         "authenticating"  : "Authenticating with Behance",
+         "tooltipBtn"      : "Login with Behance"
+      }
+   },
+
+   "register" : {
+      "title"                 : "One step closer.",
+      "alreadyHaveAnAccount"  : "Already have an account ?"
+   },
+
+   "registerOrganization" : {
+      "title"  : "Create Organization",
+      "info"   : "An organization represent a group of teams and people working together."
+   },
+
+
+   "directives" : {
+      "stLoginForm" : {
+         "title"           : "Please login",
+         "passwordInvalid" : "Password is not valid",
+         "emailInvalid"    : "Email is not valid",
+         "passwordLabel"   : "Password",
+         "emailLabel"      : "Email",
+         "loginBtn"        : "Login"
+      },
+
+      "stUserCreate" : {
+         "emailTaken"            : "Email already taken",
+         "loginLabel"            : "Login",
+         "emailLabel"            : "Email",
+         "passwordLabel"         : "Password",
+         "passwordConfirmLabel"  : "Confirm password",
+         "passwordNotMatch"      : "Passwords does not match!",
+         "CGULabel"              : "Accept CGU",
+         "createAccountBtn"      : "Create Account"
+      },
+
+      "stUserProfile" : {
+         "email"                 : "Email",
+         "organizations"         : "Member of following organizations :",
+         "organization_create"   : "create"
+      },
+
+      "stOrganizationCreate" : {
+         "nameTaken"    : "Organization name already taken",
+         "nameLabel"    : "Name",
+         "createBtn"    : "Create Organization"
+      }
+   }
+}

@@ -1,0 +1,75 @@
+{
+
+   "header" : {
+      "logout" : "Deconnexion",
+
+      "menu"   : {
+         "home"   : "Accueil",
+         "admin"  : "Admin"
+      }
+   },
+
+   "api" : {
+      "serverBusy" : "Nos serveurs sont momentanéments indisponibles",
+      "no_results" : "Aucun résultats"
+   },
+
+   "login" : {
+      "wantAnAccount"   : "S'inscrire ?",
+      "authenticating"  : "Nous vérifions votre identité...",
+
+      "github" : {
+         "authenticating"  : "Authentification avec Github",
+         "tooltipBtn"      : "Se connecter avec Github"
+      },
+      "behance" : {
+         "authenticating"  : "Authentification avec Behance",
+         "tooltipBtn"      : "Se connecter avec Behance"
+      }
+   },
+
+   "register" : {
+      "title"                 : "Vous y êtes presque.",
+      "alreadyHaveAnAccount"  : "Vous possédez déjà un compte ?"
+   },
+
+   "registerOrganization" : {
+      "title"  : "Créer une organisation",
+      "info"   : "Une organisation représente un ensemble d'équipes et de personnes travaillant ensemble."
+   },
+
+
+   "directives" : {
+      "stLoginForm" : {
+         "title"           : "Veuillez vous connecter",
+         "passwordInvalid" : "Le mot de passe n'est pas valide",
+         "emailInvalid"    : "L'e-mail n'est pas valide",
+         "passwordLabel"   : "Mot de passe",
+         "emailLabel"      : "E-mail",
+         "loginBtn"        : "Se connecter"
+      },
+
+      "stUserCreate" : {
+         "emailTaken"            : "Cet e-mail est déjà pris",
+         "loginLabel"            : "Identifiant",
+         "emailLabel"            : "E-mail",
+         "passwordLabel"         : "Mot de passe",
+         "passwordConfirmLabel"  : "Confirmation du mot de passe",
+         "passwordNotMatch"      : "La confirmation de mot de passe n'est pas correcte",
+         "CGULabel"              : "Accepter les conditions d'utilisation",
+         "createAccountBtn"      : "Créer un compte"
+      },
+
+      "stUserProfile" : {
+         "email"                 : "E-mail",
+         "organizations"         : "Membres des organisations :",
+         "organization_create"   : "créer"
+      },
+
+      "stOrganizationCreate" : {
+         "nameTaken"    : "Nom d'organisation déjà pris",
+         "nameLabel"    : "Nom",
+         "createBtn"    : "Créer l'organisation"
+      }
+   }
+}

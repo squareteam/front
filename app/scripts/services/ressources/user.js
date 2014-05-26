@@ -12,10 +12,6 @@ angular.module('squareteam.ressources')
       }
     });
 
-    userRessource.me = function() {
-      return $http.get('apis://users/me');
-    };
-
     // Creating user is a public route
     userRessource.create = function(data) {
       return $http.post('api://user', data);

@@ -1,14 +1,9 @@
 <form action="" name="registerForm" class="form-horizontal" ng-submit="register()">
   <div class="alert alert-danger" ng-show="!!registerForm.email.$error.unique">
-      Cet email est déjà pris
+      {{ 'directives.stUserCreate.emailTaken' | translate }}
   </div>
   <div class="alert alert-danger" ng-show="!!serverBusy">
-    <p>
-      Nos serveurs sont momentanément indisponibles.
-    </p>
-    <p>
-      Veuillez réessayer dans quelques instants.
-    </p>
+    {{ 'api.serverBusy' | translate }}
   </div>
 
   <p>
@@ -17,15 +12,16 @@
 
   <div class="form-group">
     <label for="login" class="col-sm-2 control-label">
-      Login
+      {{ 'directives.stUserCreate.loginLabel' | translate }}
     </label>
     <div class="col-sm-10">
       <input type="text" name="login" ng-model="user.login" class="form-control" required autofocus />
     </div>
   </div>
+
   <div class="form-group">
     <label for="email" class="col-sm-2 control-label">
-      Email
+      {{ 'directives.stUserCreate.emailLabel' | translate }}
     </label>
     <div class="col-sm-10">
       <input type="email" name="email" ng-model="user.email" class="form-control" required />
@@ -34,12 +30,26 @@
   
   <div class="form-group">
     <label for="password" class="col-sm-2 control-label">
-      Password
+      {{ 'directives.stUserCreate.passwordLabel' | translate }}
     </label>
     <div class="col-sm-10">
       <input type="password" name="password" ng-model="user.password" class="form-control" required title="at least eight symbols containing at least one number, one lower, and one upper letter" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
     </div>
-  <div>
+  </div>
+
+  <div class="form-group">
+    <label for="email" class="col-sm-2 control-label">
+      {{ 'directives.stUserCreate.passwordConfirmLabel' | translate }}
+    </label>
+    <div class="col-sm-10">
+      <input ng-model="user.passwordConfirm" type="password" data-match="user.password" name="confirmPassword" class="form-control" required />
+    </div>
+
+    <div data-ng-show="registerForm.confirmPassword.$error.match" style="color: #a94442;" class="col-sm-offset-2 col-sm-10">
+      {{ 'directives.stUserCreate.passwordNotMatch' | translate }}
+    </div>
+  </div>
+
   
   <p>
     &nbsp;
@@ -49,7 +59,7 @@
     <div class="col-sm-offset-2 col-sm-10">
       <input type="checkbox" id="cgu_accept" name="cgu_accept" ng-model="user.cgu_accept" required />
       <label for="cgu_accept">
-        &nbsp; Accepter les conditions d'utilisations
+        &nbsp; {{ 'directives.stUserCreate.CGULabel' | translate }}
       </label>
     </div>
   <div>
@@ -60,7 +70,7 @@
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <input type="submit" class="btn btn-primary" value="Créer mon compte" />
+      <input type="submit" class="btn btn-primary" value="{{ 'directives.stUserCreate.createAccountBtn' | translate }}" />
     </div>
   </div>
 

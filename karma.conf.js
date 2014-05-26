@@ -16,7 +16,13 @@ module.exports = function(config) {
       // source files, that you wanna generate coverage for
       // do not include tests or libraries
       // (these files will be instrumented by Istanbul)
-      'app/scripts/**/*.js': ['coverage']
+      'app/scripts/**/*.js': ['coverage'],
+      'app/scripts/directives/templates/*.html': ['ng-html2js']
+    },
+
+    ngHtml2JsPreprocessor: {
+      // strip this from the file path
+      stripPrefix: 'app/'
     },
 
     // optionally, configure the reporter
@@ -38,17 +44,22 @@ module.exports = function(config) {
       'app/bower_components/cryptojslib/rollups/hmac-sha256.js',
       'app/bower_components/cryptojslib/rollups/pbkdf2.js',
       'app/bower_components/cryptojslib/rollups/md5.js',
+      'app/bower_components/angular-translate/angular-translate.js',
+      'app/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
       'app/scripts/initializers/modules.js',
       'app/scripts/initializers/api.js',
-      'app/scripts/initializers/app.js',
       'app/scripts/*.js',
       'app/scripts/**/*.js',
+      'app/scripts/directives/templates/*.html',
       'test/mock/**/*.js',
       'test/spec/**/*.js'
     ],
 
     // list of files / patterns to exclude
-    exclude: ['app/scripts/bootstrap.js'],
+    exclude: [
+      'app/scripts/initializers/app.js',
+      'app/scripts/config_sample.js'
+    ],
 
     // web server port
     port: 8080,

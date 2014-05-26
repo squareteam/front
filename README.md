@@ -14,6 +14,4 @@ But ensure your env is setup by doing `npm install && bower install`
 
 Do the following :
 
-* `grunt bump:[patch|minor|major]`
-* `grunt version:update`
-* commit && push
+* `grunt [patch|minor|major]`
