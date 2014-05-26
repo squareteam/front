@@ -34,7 +34,7 @@
 
    "registerOrganization" : {
       "title"  : "Create Organization",
-      "info"   : "Be part of an organization is mandatory, please fill the form below."
+      "info"   : "An organization represent a group of teams and people working together."
    },
 
 

@@ -34,7 +34,7 @@
 
    "registerOrganization" : {
       "title"  : "Créer une organisation",
-      "info"   : "Être membre d'une organisation est obligatoire, merci de remplir le formulaire ci dessous"
+      "info"   : "Une organisation représente un ensemble d'équipes et de personnes travaillant ensemble."
    },
 
 
