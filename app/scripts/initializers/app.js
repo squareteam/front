@@ -110,12 +110,14 @@ angular
         // }]
       })
 
+      .state('app.organization', {
+        abstract: true,
+        template : '<ui-view></ui-view>'
+      })
+
       // register a new organization
-      .state('register_organization', {
-        url : '/register/organization',
-        resolve : {
-          authenticated : routingHelpers.checkAuthenticated
-        },
+      .state('app.organization.create', {
+        url : '/organization/create',
         templateUrl : 'views/register_organization.html'
       })
 
