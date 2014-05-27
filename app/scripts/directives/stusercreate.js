@@ -1,12 +1,14 @@
 'use strict';
 
+/*global CryptoJS*/
+
 angular.module('squareteam.app')
   .directive('stUserCreate', function () {
     return {
       templateUrl: 'scripts/directives/templates/stusercreate.html',
       restrict: 'E',
       replace: true,
-      controller: function($scope, $element, $attrs, $location, UserRessource, ApiErrors) {
+      controller: function($scope, $element, $attrs, $location, UserRessource, ApiErrors, ApiSession, ApiCrypto, ApiAuth) {
         
         $scope.register = function() {
 
@@ -17,9 +19,19 @@ angular.module('squareteam.app')
             name      : $scope.user.login,
             email     : $scope.user.email,
             password  : $scope.user.password
-          }).then(function() {
-            // TODO : register will return salts so we can login
-            $location.path('/login');
+          }).then(function(response) {
+            var token = ApiCrypto.generateToken(
+                          $scope.user.email,
+                          $scope.user.password,
+                          CryptoJS.enc.Hex.parse(response.data.salt1),
+                          CryptoJS.enc.Hex.parse(response.data.salt2)
+                        );
+            ApiSession.$register(new ApiAuth($scope.user.email, token)).then(function() {
+              ApiSession.save();
+              $location.path('/home');
+            }, function() {
+              $scope.serverBusy = true;
+            });
           }, function(response) {
             if (response.error instanceof ApiErrors.Api) {
               angular.forEach(response.error.getErrors(), function(errorText) {

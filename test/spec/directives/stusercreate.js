@@ -129,7 +129,8 @@ describe('Directive: st-user-create', function () {
     it('should register', function() {
       spyOn($location, 'path');
 
-      $httpBackend.expectPOST(appConfig.api.url + 'user', 'name=charly&email=charly%40live.fr&password=test').respond(201, '{"data":{"id":1},"errors":null}');
+      $httpBackend.expectPOST(appConfig.api.url + 'user', 'name=charly&email=charly%40live.fr&password=test').respond(201, '{"data":{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}}');
+      $httpBackend.expectGET(appConfig.api.url + 'user/me').respond(200, '{"data":{"id":1},"errors":null}');
 
       scope.user = {
         login         : 'charly',
@@ -149,7 +150,7 @@ describe('Directive: st-user-create', function () {
       $rootScope.$digest();
 
 
-      expect($location.path).toHaveBeenCalledWith('/login');
+      expect($location.path).toHaveBeenCalledWith('/home');
       expect(element.find('.alert').hasClass('ng-hide')).toBe(true);
 
     });
