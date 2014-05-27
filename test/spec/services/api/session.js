@@ -57,7 +57,8 @@ describe('Service: ApiSession', function () {
     expect(!!ApiSession.logout).toBe(true);
     expect(!!ApiSession.save).toBe(true);
     expect(!!ApiSession.restore).toBe(true);
-    expect(!!ApiSession.ackAuth).toBe(true);
+    expect(!!ApiSession.$register).toBe(true);
+    expect(!!ApiSession.$unregister).toBe(true);
   });
 
   it('should have a anonymous user by default', function() {
