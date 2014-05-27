@@ -84,8 +84,7 @@ describe('Service: ApiSessionStorageCookies', function () {
     it('should retrieve auth stored in cookies', function() {
       $cookies[appConfig.api.storageNS] = 'charly:a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1';
 
-      expect(ApiSessionStorageCookies.retrieve().$$isValid()).toBe(true);
-      expect(ApiSessionStorageCookies.retrieve().isValidatedFromServer()).toBe(false);
+      expect(ApiSessionStorageCookies.retrieve().$isValid()).toBe(true);
       expect(ApiSessionStorageCookies.retrieve().identifier).toBe('charly');
       expect(ApiSessionStorageCookies.retrieve().token).toEqual(CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1'));
 

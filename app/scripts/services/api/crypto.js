@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('squareteam.api')
-  .service('ApiCrypto', function Apicrypto(Currentuser, appConfig) {
+  .service('ApiCrypto', function Apicrypto($injector, appConfig) {
 
     this.generateToken = function(login, password, salt1, salt2) {
       var pbkdf2  = CryptoJS.PBKDF2(password, salt1, { keySize: 256/32, iterations: 1000, hasher : CryptoJS.algo.SHA256 }),
@@ -61,9 +61,10 @@ angular.module('squareteam.api')
 
     this.transformRequest = function(config) {
 
-      var auth = Currentuser.getAuth();
+      var current = $injector.get('CurrentSession'),
+          auth    = current.getAuth();
 
-      if (!auth.isValidatedFromServer()) {
+      if (!current.isAuthenticated()) {
         throw new Error('Cannot load ' + config.url + ' without being authenticated !');
       }
 

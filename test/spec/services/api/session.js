@@ -24,13 +24,13 @@ describe('Service: ApiSession', function () {
   }));
 
   // instantiate service
-  var ApiSession, Currentuser, ApiAuth, ApiSessionStorageCookies,
+  var ApiSession, CurrentSession, ApiAuth, ApiSessionStorageCookies,
       $http, $httpBackend, $rootScope,
       apiURL, successCallback, errorCallback;
 
   beforeEach(inject(function ($injector) {
     ApiSession                = $injector.get('ApiSession');
-    Currentuser               = $injector.get('Currentuser');
+    CurrentSession            = $injector.get('CurrentSession');
     ApiAuth                   = $injector.get('ApiAuth');
     ApiSessionStorageCookies  = $injector.get('ApiSessionStorageCookies');
 
@@ -57,13 +57,11 @@ describe('Service: ApiSession', function () {
     expect(!!ApiSession.logout).toBe(true);
     expect(!!ApiSession.save).toBe(true);
     expect(!!ApiSession.restore).toBe(true);
-    expect(!!ApiSession.ackAuth).toBe(true);
   });
 
   it('should have a anonymous user by default', function() {
 
     expect(ApiSession.isAuthenticated()).toBe(false);
-    expect(Currentuser.getAuth().isValidatedFromServer()).toBe(false);
 
   });
 
@@ -140,19 +138,19 @@ describe('Service: ApiSession', function () {
       expect(errorCallback.calls.any()).toEqual(false);
       expect(successCallback.calls.count()).toEqual(1);
 
-      expect(Currentuser.getUser()).toEqual({
+      expect(CurrentSession.getUser()).toEqual({
         name : 'Charly'
       });
 
-      expect(Currentuser.getAuth().isValidatedFromServer()).toBe(true);
+      expect(CurrentSession.isAuthenticated()).toBe(true);
 
     });
 
     it('if already and connected, it should logout and login', function() {
       spyOn($rootScope, '$broadcast').and.callThrough();
 
-      Currentuser.setUser({ name : 'charly'});
-      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')), true);
+      CurrentSession.$$user = { name : 'charly'};
+      CurrentSession.$$auth = new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1'));
 
 
       $httpBackend.expectGET(apiURL + 'logout') .respond(200, '');
@@ -169,11 +167,11 @@ describe('Service: ApiSession', function () {
       expect(errorCallback.calls.any()).toEqual(false);
       expect(successCallback.calls.count()).toEqual(1);
 
-      expect(Currentuser.getUser()).toEqual({
+      expect(CurrentSession.getUser()).toEqual({
         name : 'Charly'
       });
 
-      expect(Currentuser.getAuth().isValidatedFromServer()).toBe(true);
+      expect(CurrentSession.getAuth().$isValid()).toBe(true);
 
     });
 
@@ -190,7 +188,7 @@ describe('Service: ApiSession', function () {
       expect(errorCallback.calls.count()).toEqual(1);
       expect(successCallback.calls.count()).toEqual(0);
 
-      expect(Currentuser.isAuthenticated()).toBe(false);
+      expect(CurrentSession.isAuthenticated()).toBe(false);
 
       expect(errorCallback.calls.argsFor(0)[0]).toEqual('session.invalid');
 
@@ -198,8 +196,8 @@ describe('Service: ApiSession', function () {
 
     it('should fails to logout when api is down', function() {
 
-      Currentuser.setUser({ name : 'charly'});
-      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')), true);
+      CurrentSession.$$user = { name : 'charly'};
+      CurrentSession.$$auth = new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1'));
 
 
       $httpBackend.expectGET(apiURL + 'logout').respond(500, '');
@@ -213,7 +211,7 @@ describe('Service: ApiSession', function () {
       expect(errorCallback.calls.count()).toEqual(1);
       expect(successCallback.calls.count()).toEqual(0);
 
-      expect(Currentuser.isAuthenticated()).toBe(true);
+      expect(CurrentSession.isAuthenticated()).toBe(true);
 
       expect(errorCallback.calls.argsFor(0)[0]).toEqual('api.not_available');
 
@@ -224,8 +222,8 @@ describe('Service: ApiSession', function () {
       spyOn($rootScope, '$broadcast').and.callThrough();
       spyOn(ApiSessionStorageCookies, 'destroy');
 
-      Currentuser.setUser({ name : 'charly'});
-      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')), true);
+      CurrentSession.$$user = { name : 'charly'};
+      CurrentSession.$$auth = new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1'));
 
 
       $httpBackend.expectGET(apiURL + 'logout').respond(200, '');
@@ -239,7 +237,7 @@ describe('Service: ApiSession', function () {
       expect($rootScope.$broadcast).toHaveBeenCalledWith('user:disconnected');
       expect(ApiSessionStorageCookies.destroy.calls.count()).toBe(1);
 
-      expect(Currentuser.isAuthenticated()).toBe(false);
+      expect(CurrentSession.isAuthenticated()).toBe(false);
 
       expect(successCallback.calls.count()).toEqual(1);
       expect(errorCallback.calls.count()).toEqual(0);
@@ -252,8 +250,8 @@ describe('Service: ApiSession', function () {
       spyOn($rootScope, '$broadcast').and.callThrough();
       spyOn(ApiSessionStorageCookies, 'destroy');
 
-      Currentuser.setUser({ name : 'charly'});
-      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')), true);
+      CurrentSession.$$user = { name : 'charly'};
+      CurrentSession.$$auth = new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1'));
 
 
       $httpBackend.expectGET(apiURL + 'logout').respond(200, '');
@@ -267,7 +265,7 @@ describe('Service: ApiSession', function () {
       expect($rootScope.$broadcast).toHaveBeenCalledWith('user:disconnected');
       expect(ApiSessionStorageCookies.destroy.calls.count()).toBe(0);
 
-      expect(Currentuser.isAuthenticated()).toBe(false);
+      expect(CurrentSession.isAuthenticated()).toBe(false);
 
       expect(successCallback.calls.count()).toEqual(1);
       expect(errorCallback.calls.count()).toEqual(0);
@@ -294,8 +292,8 @@ describe('Service: ApiSession', function () {
 
     it('should save', function() {
 
-      Currentuser.setUser({ name : 'charly'});
-      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')), true);
+      CurrentSession.$$user = { name : 'charly'};
+      CurrentSession.$$auth = new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1'));
 
       spyOn(ApiSessionStorageCookies, 'store').and.returnValue(true);
 
@@ -313,8 +311,8 @@ describe('Service: ApiSession', function () {
 
     it('should not save cause ApiSessionStorageCookies.restore failed', function() {
 
-      Currentuser.setUser({ name : 'charly'});
-      Currentuser.setAuth(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')), true);
+      CurrentSession.$$user = { name : 'charly'};
+      CurrentSession.$$auth = new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1'));
 
       spyOn(ApiSessionStorageCookies, 'store').and.returnValue(false);
 
@@ -350,11 +348,11 @@ describe('Service: ApiSession', function () {
       expect(errorCallback.calls.any()).toEqual(false);
       expect(successCallback.calls.count()).toEqual(1);
 
-      expect(Currentuser.getUser()).toEqual({
+      expect(CurrentSession.getUser()).toEqual({
         name : 'Charly'
       });
 
-      expect(Currentuser.getAuth().isValidatedFromServer()).toBe(true);
+      expect(CurrentSession.getAuth().$isValid()).toBe(true);
 
     });
 
@@ -371,9 +369,9 @@ describe('Service: ApiSession', function () {
 
       expect(successCallback.calls.argsFor(0)[0]).toBe('session.storage.no_session');
 
-      expect(Currentuser.getUser()).toEqual(null);
+      expect(CurrentSession.getUser()).toEqual(null);
 
-      expect(Currentuser.getAuth().isValidatedFromServer()).toBe(false);
+      expect(CurrentSession.getAuth().$isValid()).toBe(false);
 
     });
 
@@ -394,9 +392,9 @@ describe('Service: ApiSession', function () {
 
       // FIXME : check cookie has been deleted
 
-      expect(Currentuser.getUser()).toEqual(null);
+      expect(CurrentSession.getUser()).toEqual(null);
 
-      expect(Currentuser.getAuth().isValidatedFromServer()).toBe(false);
+      expect(CurrentSession.getAuth().$isValid()).toBe(false);
 
     });
 

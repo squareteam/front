@@ -1,9 +1,3 @@
-<a href="#" ng-click="logout()" class="btn btn-primary pull-right">
-   {{ 'header.logout' | translate }}
-</a>
-<p>
-   &nbsp;
-</p>
 <h2>
    {{ 'registerOrganization.title' | translate }}
 </h2>
@@ -11,4 +5,4 @@
 <p>
    <em>{{ 'registerOrganization.info' | translate }}</em>
 </p>
-<st-organization-create for-users="[currentUser.getUser().id]" redirect-to="/home"></st-organization-create>
+<st-organization-create for-users="[currentSession.getUser().id]" redirect-to="/home"></st-organization-create>

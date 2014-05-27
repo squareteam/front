@@ -29,7 +29,7 @@
             <div class="pull-right user_block" ng-if="session.isAuthenticated()" ng-cloak>
                 <div class="pull-left">
                     <a href ui-sref="app.account">
-                        {{ currentUser.getUser().email }}
+                        {{ currentSession.getUser().email }}
                     </a>
                 </div>
                 <img src="/images/user.png" width="39" class="img-circle pull-right" alt="">
@@ -87,7 +87,7 @@
         <script src="scripts/initializers/app.js"></script>
         <script src="scripts/config.js"></script>
         <script src="scripts/services/ressources/user.js"></script>
-        <script src="scripts/services/currentuser.js"></script>
+        <script src="scripts/services/api/current.js"></script>
         <script src="scripts/services/api/httpinterceptors.js"></script>
         <script src="scripts/services/api/crypto.js"></script>
         <script src="scripts/services/api/sessionstoragecookies.js"></script>
