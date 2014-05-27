@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('squareteam.api')
-  .factory('ApiHttpInterceptors', function($q, ApiCrypto, ApiErrors, appConfig) {
+  .factory('ApiHttpInterceptors', function($q, $injector, ApiErrors, appConfig) {
 
     var apiProtocolRegex        = /^apis?:\/\//,
         apiSecureProtocolRegex  = /^apis:\/\//,
@@ -21,7 +21,8 @@ angular.module('squareteam.api')
 
     return {
       request : function(config) {
-        var isApiSecureCall = apiSecureProtocolRegex.test(config.url);
+        var ApiCrypto       = $injector.get('ApiCrypto'),
+            isApiSecureCall = apiSecureProtocolRegex.test(config.url);
 
         if (apiProtocolRegex.test(config.url)) {
           config.url = config.url.replace(apiProtocolRegex, appConfig.api.url);

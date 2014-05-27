@@ -8,7 +8,7 @@ angular.module('squareteam.app')
       templateUrl: 'scripts/directives/templates/stusercreate.html',
       restrict: 'E',
       replace: true,
-      controller: function($scope, $element, $attrs, $location, UserRessource, ApiErrors, ApiSession, ApiCrypto, ApiAuth) {
+      controller: function($scope, $element, $attrs, $location, UserRessource, ApiErrors, CurrentSession, ApiSession, ApiCrypto, ApiAuth) {
         
         $scope.register = function() {
 
@@ -20,13 +20,14 @@ angular.module('squareteam.app')
             email     : $scope.user.email,
             password  : $scope.user.password
           }).then(function(response) {
+            // TODO(charly) : refactor ?
             var token = ApiCrypto.generateToken(
                           $scope.user.email,
                           $scope.user.password,
                           CryptoJS.enc.Hex.parse(response.data.salt1),
                           CryptoJS.enc.Hex.parse(response.data.salt2)
                         );
-            ApiSession.$register(new ApiAuth($scope.user.email, token)).then(function() {
+            CurrentSession.$register(new ApiAuth($scope.user.email, token)).then(function() {
               ApiSession.save();
               $location.path('/home');
             }, function() {

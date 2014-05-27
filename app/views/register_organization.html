@@ -5,4 +5,4 @@
 <p>
    <em>{{ 'registerOrganization.info' | translate }}</em>
 </p>
-<st-organization-create for-users="[currentUser.getUser().id]" redirect-to="/home"></st-organization-create>
+<st-organization-create for-users="[currentSession.getUser().id]" redirect-to="/home"></st-organization-create>

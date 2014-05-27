@@ -23,7 +23,7 @@ angular
     /////////////////////
 
     var routingHelpers = {
-      checkAuthenticated : function(Currentuser, ApiSession, UserRessource, $q, $log) {
+      checkAuthenticated : function(ApiSession, $q, $log) {
 
           var deferred = $q.defer();
 
@@ -46,7 +46,7 @@ angular
         }
     };
 
-    routingHelpers.checkAuthenticated.$inject = ['Currentuser', 'ApiSession', 'UserRessource', '$q', '$log'];
+    routingHelpers.checkAuthenticated.$inject = ['ApiSession', '$q', '$log'];
 
 
     ///////////////////
@@ -143,7 +143,7 @@ angular
         abstract : true,
         template : '<ui-view></ui-view>',
         controller : ['$scope', '$stateParams', function($scope, $stateParams) {
-          $scope.organization = $.grep($scope.currentUser.getOrganizations(), function(organization) {
+          $scope.organization = $.grep($scope.currentSession.getOrganizations(), function(organization) {
             return organization.id === parseInt($stateParams.id, 10);
           })[0];
         }]

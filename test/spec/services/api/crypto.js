@@ -17,15 +17,15 @@ describe('Service: ApiCrypto', function () {
   }));
 
   // instantiate service
-  var ApiCrypto, ApiAuth, Currentuser,
+  var ApiCrypto, ApiAuth, CurrentSession,
       appConfig,
       data = {};
   
   beforeEach(inject(function ($injector) {
-    ApiCrypto     = $injector.get('ApiCrypto');
-    ApiAuth       = $injector.get('ApiAuth');
-    Currentuser   = $injector.get('Currentuser');
-    appConfig     = $injector.get('appConfig');
+    ApiCrypto       = $injector.get('ApiCrypto');
+    ApiAuth         = $injector.get('ApiAuth');
+    CurrentSession  = $injector.get('CurrentSession');
+    appConfig       = $injector.get('appConfig');
 
     data.auth = {
       identifier  : 'test@example.com',
@@ -44,7 +44,8 @@ describe('Service: ApiCrypto', function () {
 
     data.token = 'a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1';
 
-    Currentuser.setAuth(new ApiAuth(data.auth.identifier,CryptoJS.enc.Hex.parse(data.token)), true);
+    CurrentSession.$$user = { id : 1, name : 'charly', email : 'charly.poly@live.fr'};
+    CurrentSession.$$auth = new ApiAuth(data.auth.identifier,CryptoJS.enc.Hex.parse(data.token));
 
 
     // hack the Date.now to return correct timestamp..
@@ -84,8 +85,8 @@ describe('Service: ApiCrypto', function () {
 
   });
 
-  it('should fails to generateHeaders when Currentuser is anonymous', function() {
-    Currentuser.setAuth(new ApiAuth());
+  it('should fails to generateHeaders when CurrentSession is anonymous', function() {
+    CurrentSession.$$auth = new ApiAuth();
 
     expect(function() {
       ApiCrypto.transformRequest(data.request);

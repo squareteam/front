@@ -40,8 +40,8 @@ describe('Controller: ApplicationCtrl', function () {
     expect(!!scope.version).toBe(true);
   });
   
-  it('should expose Currentuser as "currentUser"', function () {
-    expect(!!scope.currentUser).toBe(true);
+  it('should expose CurrentSession as "currentSession"', function () {
+    expect(!!scope.currentSession).toBe(true);
   });
 
   it('should expose logout method', function() {
