@@ -21,23 +21,29 @@ angular.module('squareteam.app')
           });
         }
       },
-      controller: function($scope, $element, $attrs, $location, UserRessource) {
+      controller: function($scope, $element, $attrs, $location, UserRessource, lodash) {
         
-        var user = UserRessource.get({
+        var user, updateUser;
+
+        updateUser = lodash.throttle(function(user) {
+          if (user) {
+            UserRessource.update({
+              id : user.id
+            }, {
+              email : user.email,
+              name  : user.name
+            });
+          }
+        }, 1000, {
+          'trailing': false
+        });
+
+        user = UserRessource.get({
           id : $scope.userId
         }, function() {
           $scope.user = user;
 
-          $scope.$watchCollection('user', function(user) {
-            if (user) {
-              UserRessource.update({
-                id : user.id
-              }, {
-                email : user.email,
-                name  : user.name
-              });
-            }
-          });
+          $scope.$watchCollection('user', updateUser);
         }.bind(this), function() {
           console.error('Failed to load user#' + $scope.userId);
         });
