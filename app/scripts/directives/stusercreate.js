@@ -2,6 +2,13 @@
 
 /*global CryptoJS*/
 
+// User creation form
+//  User is automatically logged-in if creation succeed
+// 
+// TODO(charly) : add organizationId param ?
+// TODO(charly) : refactor auto-login in Service ?
+
+
 angular.module('squareteam.app')
   .directive('stUserCreate', function () {
     return {
@@ -20,7 +27,6 @@ angular.module('squareteam.app')
             email     : $scope.user.email,
             password  : $scope.user.password
           }).then(function(response) {
-            // TODO(charly) : refactor ?
             var token = ApiCrypto.generateToken(
                           $scope.user.email,
                           $scope.user.password,

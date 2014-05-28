@@ -1,5 +1,9 @@
 'use strict';
 
+// When the application is loaded to /login?email=:email
+// The LoginCtrl will try to find a st.oauth cookies containing
+// a temporary login token to be used as password
+
 angular.module('squareteam.app')
 .controller('LoginCtrl', function ($scope, $cookies, $location, $state, ApiSession, appConfig) {
   var login = $location.search() && $location.search().email;

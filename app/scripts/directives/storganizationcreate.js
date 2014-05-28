@@ -1,11 +1,17 @@
 'use strict';
 
+// Organization creation form
+// 
+//  - forUsers      : users to add to newly created organization,
+//                    should be an array of integers (default: undefined)
+//  - redirectPath  : path to redirect to if organization created successfully
+//  
+// FIXME(charly) : forUsers should be a array of object like : [{ id : 1 , admin : true }, ...]
+
 angular.module('squareteam.app')
   .directive('stOrganizationCreate', function () {
     return {
       scope: {
-        // list of user ids
-        //  TODO : $scope.forUsers should be a array of object like : [{ id : 1 , admin : true }, ...]
         forUsers : '=',
         redirectPath : '@'
       },

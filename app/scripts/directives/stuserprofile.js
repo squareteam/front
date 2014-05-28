@@ -2,6 +2,13 @@
 
 /*global $*/
 
+// [WIP]
+// User profile view
+// Allow to display read-only or editable user profile
+// 
+// - userId: should be an integer (default: 0)
+// - editable: allow to edit profile (default: false)
+
 angular.module('squareteam.app')
   .directive('stUserProfile', function () {
     return {

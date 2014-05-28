@@ -1,6 +1,17 @@
 /*global CryptoJS*/
 'use strict';
 
+// This Service provide methods to
+// 
+//  - login given a identifier (email) and a password
+//  - logout
+//  - save CurrentSession for persistence
+//  - restore CurrentSession from cookies
+//  
+//  
+// TODO(charly): move save and restore to CurrentSession
+// TODO(charly): remove `isAuthenticated` method
+
 angular.module('squareteam.api')
   .service('ApiSession', function Apisession($rootScope, $http, $q, appConfig, CurrentSession, ApiSessionStorageCookies, ApiAuth, ApiCrypto, ApiErrors) {
 

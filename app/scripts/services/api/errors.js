@@ -1,5 +1,14 @@
 'use strict';
 
+// ## ApiErrors
+// 
+//  Represent an data integrity, data validation errors or auth error
+//  
+// ## HttpError
+// 
+//  Represent all errors except ones matching ApiErrors
+
+
 angular.module('squareteam.app')
   .factory('ApiErrors', function Apierrors() {
     

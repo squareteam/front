@@ -1,10 +1,14 @@
 'use strict';
 
+// **Class**
+// 
+// Represent a auth with couple(token, identifier)
+// 
+//  `$isValid` method return if token is a CryptoJS.WordArray and idenfitier is not empty or null
+
 angular.module('squareteam.api')
   .factory('ApiAuth', function Apiauth() {
-    // Return class
     return function(identifier, token) {
-      // token type should always be CryptoJS.WordArray
       this.token                  = token;
       this.identifier             = identifier;
 

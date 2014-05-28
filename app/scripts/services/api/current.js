@@ -1,5 +1,14 @@
 'use strict';
 
+// Singleton that represent current active session
+// 
+//  Store current user info + current auth
+//  
+//  - `$register`   will try to validate a ApiAuth and
+//                  set it at current session if valid
+//                
+//  - `$unregister` will set current session to anonymous (invalid)
+
 angular.module('squareteam.app')
   .service('CurrentSession', function CurrentSession($rootScope, $http, $q, appConfig, ApiAuth, ApiCrypto, ApiErrors, UserRessource) {
     this.$$user                 = null;
