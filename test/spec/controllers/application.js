@@ -49,28 +49,32 @@ describe('Controller: ApplicationCtrl', function () {
     expect(typeof scope.logout).toBe('function');
   });
 
-  it('should redirect to login if logout succeed', function() {
-    var deferred = $q.defer();
-    deferred.resolve();
-    spyOn(ApiSession, 'logout').and.returnValue(deferred.promise);
-    spyOn($state, 'go');
+  describe(' when perform logout ', function() {
 
-    scope.logout();
+    it('should redirect to login if succeed', function() {
+      var deferred = $q.defer();
+      deferred.resolve();
+      spyOn(ApiSession, 'logout').and.returnValue(deferred.promise);
+      spyOn($state, 'go');
 
-    $rootScope.$digest();
+      scope.logout();
 
-    expect($state.go).toHaveBeenCalledWith('login');
-  });
+      $rootScope.$digest();
 
-  it('should redirect to home if logout failed', function() {
-    spyOn(ApiSession, 'logout').and.returnValue($q.reject('auth.invalid'));
-    spyOn($state, 'go');
+      expect($state.go).toHaveBeenCalledWith('login');
+    });
 
-    scope.logout();
+    it('should redirect to home if failed', function() {
+      spyOn(ApiSession, 'logout').and.returnValue($q.reject('auth.invalid'));
+      spyOn($state, 'go');
 
-    $rootScope.$digest();
+      scope.logout();
 
-    expect($state.go).toHaveBeenCalledWith('app.home');
+      $rootScope.$digest();
+
+      expect($state.go).toHaveBeenCalledWith('app.home');
+    });
+
   });
 
 });
