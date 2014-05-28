@@ -14,7 +14,8 @@
     "angular-ui-router": "0.2.x",
     "cryptojslib": "3.x",
     "angular-translate": "2.x",
-    "angular-translate-loader-static-files": "~2.1.0"
+    "angular-translate-loader-static-files": "~2.1.0",
+    "lodash":"2.4.x"
   },
   "devDependencies": {
     "angular-mocks": "1.2.15",
