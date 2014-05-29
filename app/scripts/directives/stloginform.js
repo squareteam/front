@@ -1,5 +1,10 @@
 'use strict';
 
+// stLoginFormDirective display a form for login
+// 
+// - redirectPath : path to redirect to if succeed (default: "app.home")
+// - githubLogin  : show login via github button (default: false)
+
 angular.module('squareteam.app')
   .directive('stLoginForm', function () {
     return {

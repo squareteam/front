@@ -1,6 +1,29 @@
 /*global $*/
 'use strict';
 
+// Handle API specific behaviour for Requests and Responses
+// 
+// ## Request
+// 
+//  All $http request starting with `api://` will be replace be API url
+//  If request url is `apis://` (notice the "s" for secure), then ApiCrypto
+//  will be called on request to add Authentification Headers
+//  
+// ## Response
+// 
+//  API Responses are like this : 
+//  
+//    {
+//      "errors" : <Array|Null>,
+//      "data"   : <Array|Null>
+//    }
+//    
+//  This Service will return proper error by adding a property `error` to response
+//  There is 2 types of Error :
+//    - ApiErrors
+//    - HttpError
+//  (see ApiErrors for more informations)
+
 angular.module('squareteam.api')
   .factory('ApiHttpInterceptors', function($q, $injector, ApiErrors, appConfig) {
 

@@ -1,6 +1,29 @@
 /*global CryptoJS*/
 'use strict';
 
+// Provide 3 important methods :
+// 
+//  - `generateToken`     generate a unique session token
+//                        (salt1 is unique per login)
+//  
+//  - `generateHeaders`   generate required auth headers from an (auth, url, method, data)
+//                          1. Client must generate a __BLOB__ from the request data sorted by key:
+//                            BLOB = "key1=value1&key2=value2&key3=value3..."
+//
+//                          2. Client generates a __TIMESTAMP__
+//
+//                          3. Client computes a __HASH__ (using his token)
+//                            HASH = HMAC_SHA256(TOKEN, HTTP_Method + ":" + URL_PATH + ":" + TIMESTAMP + ":" + BLOB)
+//
+//                          4. Client adds the three St fields in the request HTTP header:
+//                            - "St-Identifier": user_identifier
+//                            - "St-Timestamp" : TIMESTAMP
+//                            - "St-Hash"      : HASH
+//
+//                          5. Client sends data (in the same order than the blob) with the custom HTTP header.
+//                          
+//  - `transformRequest`  transform a given request to add auth required headers
+
 angular.module('squareteam.api')
   .service('ApiCrypto', function Apicrypto($injector, appConfig) {
 

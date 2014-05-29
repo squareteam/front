@@ -1,10 +1,25 @@
 'use strict';
 
+// Singleton that represent current active session
+// 
+//  Store current user info + current auth
+//  
+//  - `register`   will try to validate a ApiAuth and
+//                  set it at current session if valid
+//                
+//  - `unregister` will set current session to anonymous (invalid)
+//  
+//  - `save`       will persist CurrentSession in cookies
+//  
+//  - `restore`    will try to restore CurrentSession from cookies
+
 angular.module('squareteam.app')
-  .service('CurrentSession', function CurrentSession($rootScope, $http, $q, appConfig, ApiAuth, ApiCrypto, ApiErrors, UserRessource) {
+  .service('CurrentSession', function CurrentSession($rootScope, $http, $q, appConfig, ApiAuth, ApiCrypto, ApiErrors, ApiSessionStorageCookies) {
     this.$$user                 = null;
     this.$$auth                 = new ApiAuth();
     this.$$organizations        = [];
+
+  // GETTERS, STATES
 
     this.isAuthenticated = function() {
       return this.$$auth && this.$$auth.$isValid() && !!this.$$user;
@@ -23,13 +38,15 @@ angular.module('squareteam.app')
       return this.$$user;
     };
 
-    this.$unregister = function() {
+    // API
+
+    this.unregister = function() {
       this.$$auth = new ApiAuth();
       this.$$user = null;
       $rootScope.$broadcast('user:disconnected');
     };
 
-    this.$register = function(auth) {
+    this.register = function(auth) {
       var self      = this,
           deferred  = $q.defer();
 
@@ -51,6 +68,43 @@ angular.module('squareteam.app')
         }
       });
       
+      return deferred.promise;
+    };
+
+    this.save = function() {
+
+      var deferred = $q.defer();
+
+      if (this.isAuthenticated()) {
+        if (ApiSessionStorageCookies.store(this.getAuth())) {
+          deferred.resolve();
+        } else {
+          deferred.reject('session.storage.unable_to_store');
+        }
+      } else {
+        deferred.reject('session.invalid');
+      }
+      
+      return deferred.promise;
+
+    };
+
+    this.restore = function() {
+      var deferred  = $q.defer(),
+          auth      = ApiSessionStorageCookies.retrieve();
+
+      if (auth) {
+        this.register(auth).then(function() {
+          deferred.resolve();
+        }, function(error) {
+          // remove invalid auth from cookies
+          ApiSessionStorageCookies.destroy();
+          deferred.resolve(error);
+        });
+      } else {
+        deferred.resolve('session.storage.no_session');
+      }
+
       return deferred.promise;
     };
 

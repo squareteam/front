@@ -23,13 +23,13 @@ angular
     /////////////////////
 
     var routingHelpers = {
-      checkAuthenticated : function(ApiSession, $q, $log) {
+      checkAuthenticated : function(CurrentSession, $q, $log) {
 
           var deferred = $q.defer();
 
-          if (!ApiSession.isAuthenticated()) {
-            ApiSession.restore().then(function() {
-              if (ApiSession.isAuthenticated()) {
+          if (!CurrentSession.isAuthenticated()) {
+            CurrentSession.restore().then(function() {
+              if (CurrentSession.isAuthenticated()) {
                 deferred.resolve();
               } else {
                 $log.info('redirect to login');
@@ -46,7 +46,7 @@ angular
         }
     };
 
-    routingHelpers.checkAuthenticated.$inject = ['ApiSession', '$q', '$log'];
+    routingHelpers.checkAuthenticated.$inject = ['CurrentSession', '$q', '$log'];
 
 
     ///////////////////

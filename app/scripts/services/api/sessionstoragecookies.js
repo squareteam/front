@@ -1,6 +1,8 @@
 /*global CryptoJS*/
 'use strict';
 
+// Store ApiAuth in cookies for persistence
+
 angular.module('squareteam.api')
   .service('ApiSessionStorageCookies', function ApiSessionStorageCookies($cookies, ApiAuth, appConfig) {
 

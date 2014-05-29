@@ -1,4 +1,8 @@
 'use strict';
+
+// This is a raw version from Github
+// FIXME(charly): clone ? bowerify ?
+
 angular.module('squareteam.app')
   .directive('match', function () {
     return {
