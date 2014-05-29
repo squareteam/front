@@ -4,8 +4,11 @@
       "logout" : "Logout",
 
       "menu"   : {
-         "home"   : "Home",
-         "admin"  : "Admin"
+         "home"            : "Timeline",
+         "admin"           : "Admin",
+         "myMissions"      : "My missions",
+         "projects"        : "Projects",
+         "knowledgeCenter" : "Knowledge Center"
       }
    },
 

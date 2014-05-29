@@ -42,7 +42,7 @@ angular.module('squareteam.app')
             });
           }
         }, 1000, {
-          'trailing': false
+          'leading': false
         });
 
         user = UserRessource.get({

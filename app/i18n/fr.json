@@ -4,8 +4,11 @@
       "logout" : "Deconnexion",
 
       "menu"   : {
-         "home"   : "Accueil",
-         "admin"  : "Admin"
+         "home"            : "Timeline",
+         "admin"           : "Admin",
+         "myMissions"      : "Mes missions",
+         "projects"        : "Projects",
+         "knowledgeCenter" : "Centre de partage"
       }
    },
 
