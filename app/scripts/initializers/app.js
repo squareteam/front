@@ -80,7 +80,7 @@ angular
       // Home page for authenticated users
       .state('app.home', {
         url : '/home',
-        templateUrl: 'views/home.html',
+        templateUrl: 'views/app/home.html',
         controller: 'HomeCtrl'
       })
 
