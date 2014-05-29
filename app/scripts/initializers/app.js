@@ -136,33 +136,117 @@ angular
         templateUrl: 'views/app/account.html',
       })
 
-      // Admin namespace
-      
-      .state('app.admin', {
-        url : '/manage/:id',
-        abstract : true,
-        template : '<ui-view></ui-view>',
-        controller : ['$scope', '$stateParams', function($scope, $stateParams) {
-          $scope.organization = $.grep($scope.currentSession.getOrganizations(), function(organization) {
-            return organization.id === parseInt($stateParams.id, 10);
-          })[0];
-        }]
+
+      // KNOWLEDGE CENTER
+
+      .state('app.knowledge', {
+        url : '/knowledge',
+        templateUrl : 'views/app/knowledge/index.html'
       })
 
-      .state('app.admin.general', {
-        url : '/general',
-        templateUrl: 'views/app/admin/index.html'
+      .state('app.knowledge.create', {
+        url : '/knowledge/add'
       })
 
-      .state('app.admin.teams', {
-        url : '/teams',
-        templateUrl: 'views/app/admin/teams.html'
+      .state('app.knowledge.edit', {
+        url : '/knowledge/edit/:item_id'
       })
 
-      .state('app.admin.members', {
-        url : '/members',
-        templateUrl: 'views/app/admin/members.html'
+      .state('app.knowledge.by_project', {
+        url : '/knowledge/filter/project/:project_id'
+      })
+
+      .state('app.knowledge.by_mission', {
+        url : '/knowledge/filter/mission/:mission_id'
+      })
+
+      .state('app.knowledge.by_tags', {
+        url : '/knowledge/filter/tags/:tags'
+      })
+
+      // PROJECTS
+
+      .state('app.projects', {
+        url : '/projects',
+        templateUrl : 'views/app/projects/index.html'
+      })
+
+      .state('app.projects.create', {
+        url : '/projects/add'
+      })
+
+      .state('app.projects.edit', {
+        url : '/projects/edit/:project_id'
+      })
+
+      // MISSIONS
+
+      .state('app.missions', {
+        url : '/projects/:project_id/missions'
+      })
+
+      .state('app.my_missions', {
+        url : '/missions/mine'
+      })
+
+      .state('app.missions.add', {
+        url : '/add'
+      })
+
+      .state('app.missions.view', {
+        url : '/:mission_id'
+      })
+
+      .state('app.missions.edit', {
+        url : '/:mission_id/edit'
+      })
+
+      // TASKS
+
+      .state('app.tasks', {
+        url : '/missions/:mission_id/tasks',
+        templateUrl : 'views/app/missions/index.html'
+      })
+
+      .state('app.tasks.add', {
+        url : '/add'
+      })
+
+      .state('app.tasks.view', {
+        url : '/:task_id'
+      })
+
+      .state('app.tasks.edit', {
+        url : '/:task_id/edit'
       });
+
+      // ADMIN
+      
+      // .state('app.admin', {
+      //   url : '/manage/:id',
+      //   abstract : true,
+      //   template : '<ui-view></ui-view>',
+      //   controller : ['$scope', '$stateParams', function($scope, $stateParams) {
+      //     $scope.organization = $.grep($scope.currentSession.getOrganizations(), function(organization) {
+      //       return organization.id === parseInt($stateParams.id, 10);
+      //     })[0];
+      //   }]
+      // })
+
+      // .state('app.admin.general', {
+      //   url : '/general',
+      //   templateUrl: 'views/app/admin/index.html'
+      // })
+
+      // .state('app.admin.teams', {
+      //   url : '/teams',
+      //   templateUrl: 'views/app/admin/teams.html'
+      // })
+
+      // .state('app.admin.members', {
+      //   url : '/members',
+      //   templateUrl: 'views/app/admin/members.html'
+      // });
 
     $urlRouterProvider
       .otherwise('/home');
