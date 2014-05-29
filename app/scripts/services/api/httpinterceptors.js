@@ -25,7 +25,7 @@
 //  (see ApiErrors for more informations)
 
 angular.module('squareteam.api')
-  .factory('ApiHttpInterceptors', function($q, $injector, ApiErrors, appConfig) {
+  .factory('ApiHttpInterceptors', function($q, $injector, $rootScope, ApiErrors, appConfig) {
 
     var apiProtocolRegex        = /^apis?:\/\//,
         apiSecureProtocolRegex  = /^apis:\/\//,
@@ -47,6 +47,8 @@ angular.module('squareteam.api')
         var ApiCrypto       = $injector.get('ApiCrypto'),
             isApiSecureCall = apiSecureProtocolRegex.test(config.url);
 
+        $rootScope.loading = true;
+
         if (apiProtocolRegex.test(config.url)) {
           config.url = config.url.replace(apiProtocolRegex, appConfig.api.url);
 
@@ -64,6 +66,9 @@ angular.module('squareteam.api')
       },
 
       response : function(response) {
+
+        $rootScope.loading = false;
+
         if (apiResponseRegex.test(response.config.url)) {
           if (!response.data.errors && response.status <= 201) {
             response.data = response.data.data;
@@ -78,6 +83,8 @@ angular.module('squareteam.api')
       },
 
       responseError : function(response) {
+
+        $rootScope.loading = false;
 
         $$handleErrorResponse(response);
 

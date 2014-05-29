@@ -14,9 +14,10 @@
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/timeline.css">
+    <link rel="stylesheet" href="styles/loading-bar.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="squareteam.app">
+  <body ng-app="squareteam.app" loading-bar>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -115,6 +116,7 @@
         <script src="scripts/controllers/login.js"></script>
         <script src="scripts/directives/stuserprofile.js"></script>
         <script src="scripts/directives/stcurrentuserblock.js"></script>
+        <script src="scripts/directives/loadingbar.js"></script>
         <!-- endbuild -->
 </body>
 </html>
