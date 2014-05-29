@@ -33,8 +33,8 @@ angular.module('squareteam.app')
                           CryptoJS.enc.Hex.parse(response.data.salt1),
                           CryptoJS.enc.Hex.parse(response.data.salt2)
                         );
-            CurrentSession.$register(new ApiAuth($scope.user.email, token)).then(function() {
-              ApiSession.save();
+            CurrentSession.register(new ApiAuth($scope.user.email, token)).then(function() {
+              CurrentSession.save();
               $location.path('/home');
             }, function() {
               $scope.serverBusy = true;

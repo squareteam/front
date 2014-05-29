@@ -2,27 +2,18 @@
 'use strict';
 
 // This Service provide methods to
-// 
+//
 //  - login given a identifier (email) and a password
 //  - logout
-//  - save CurrentSession for persistence
-//  - restore CurrentSession from cookies
-//  
-//  
-// TODO(charly): move save and restore to CurrentSession
-// TODO(charly): remove `isAuthenticated` method
+//
+//
 
 angular.module('squareteam.api')
   .service('ApiSession', function Apisession($rootScope, $http, $q, appConfig, CurrentSession, ApiSessionStorageCookies, ApiAuth, ApiCrypto, ApiErrors) {
 
-    this.isAuthenticated = function() {
-      return CurrentSession.isAuthenticated();
-    };
-
     this.login = function(login, password) {
       var deferred        = $q.defer(),
-          authToValidate  = new ApiAuth(),
-          self            = this;
+          authToValidate  = new ApiAuth();
 
 
       function $$login () {
@@ -41,8 +32,8 @@ angular.module('squareteam.api')
                                           CryptoJS.enc.Hex.parse(response.data.salt2)
                                         );
 
-            CurrentSession.$register(authToValidate).then(function() {
-              self.save();
+            CurrentSession.register(authToValidate).then(function() {
+              CurrentSession.save();
               deferred.resolve();
             }, function(error) {
               if (error === 'auth.invalid') {
@@ -63,7 +54,7 @@ angular.module('squareteam.api')
         });
       }
 
-      if (this.isAuthenticated()) {
+      if (CurrentSession.isAuthenticated()) {
         this.logout().then($$login, deferred.reject);
       } else {
         $$login();
@@ -73,18 +64,17 @@ angular.module('squareteam.api')
     };
 
     this.logout = function(destroyFromStorageToo) {
-      var deferred = $q.defer(),
-          self     = this;
+      var deferred = $q.defer();
 
       destroyFromStorageToo = angular.isDefined(destroyFromStorageToo) ? destroyFromStorageToo : true;
 
-      if (this.isAuthenticated()) {
+      if (CurrentSession.isAuthenticated()) {
         $http.get('apis://logout').then(function() {
           // success
           if (destroyFromStorageToo) {
             ApiSessionStorageCookies.destroy();
           }
-          CurrentSession.$unregister();
+          CurrentSession.unregister();
           deferred.resolve();
         }, function() {
           deferred.reject('api.not_available');
@@ -93,43 +83,6 @@ angular.module('squareteam.api')
         deferred.reject('session.invalid');
       }
       
-      return deferred.promise;
-    };
-
-    this.save = function() {
-
-      var deferred = $q.defer();
-
-      if (this.isAuthenticated()) {
-        if (ApiSessionStorageCookies.store(CurrentSession.getAuth())) {
-          deferred.resolve();
-        } else {
-          deferred.reject('session.storage.unable_to_store');
-        }
-      } else {
-        deferred.reject('session.invalid');
-      }
-      
-      return deferred.promise;
-
-    };
-
-    this.restore = function() {
-      var deferred  = $q.defer(),
-          auth      = ApiSessionStorageCookies.retrieve();
-
-      if (auth) {
-        CurrentSession.$register(auth).then(function() {
-          deferred.resolve();
-        }, function(error) {
-          // remove invalid auth from cookies
-          ApiSessionStorageCookies.destroy();
-          deferred.resolve(error);
-        });
-      } else {
-        deferred.resolve('session.storage.no_session');
-      }
-
       return deferred.promise;
     };
 
