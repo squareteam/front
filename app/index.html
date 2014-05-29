@@ -13,6 +13,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/timeline.css">
     <!-- endbuild -->
   </head>
   <body ng-app="squareteam.app">
@@ -26,14 +27,22 @@
             <h1 class="title pull-left">
                 Squareteam
             </h1>
-            <div class="pull-right user_block" ng-if="currentSession.isAuthenticated()" ng-cloak>
-                <div class="pull-left">
-                    <a href ui-sref="app.account">
-                        {{ currentSession.getUser().email }}
-                    </a>
+            <st-current-user-block class="pull-right user_block">
+                <div class="dropdown">
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="accountMenu">
+                        <li role="presentation">
+                            <a role="menuitem" tabindex="-1" href ui-sref="app.account">My Account</a>
+                        </li>
+                        <li role="presentation">
+                            <a role="menuitem" tabindex="-1" href ui-sref="app.organizations">Manage organizations</a>
+                        </li>
+                        <li role="presentation" class="divider"></li>
+                        <li role="presentation">
+                            <a role="menuitem" tabindex="-1" ng-click="logout()" href>{{ 'header.logout' | translate }}</a>
+                        </li>
+                    </ul>
                 </div>
-                <img src="/images/user.png" width="39" class="img-circle pull-right" alt="">
-            </div>
+            </st-current-user-block>
              <div class="clearfix"></div>
         </header>
 
@@ -105,6 +114,7 @@
         <script src="scripts/directives/storganizationcreate.js"></script>
         <script src="scripts/controllers/login.js"></script>
         <script src="scripts/directives/stuserprofile.js"></script>
+        <script src="scripts/directives/stcurrentuserblock.js"></script>
         <!-- endbuild -->
 </body>
 </html>

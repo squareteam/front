@@ -1,0 +1,28 @@
+<h2>
+   {{ organization.name }}
+</h2>
+
+<br>
+
+<h4>
+   Members
+</h4>
+
+<ul>
+   <li ng-repeat='member in organization.users' style="list-style:none;line-height:25px;">
+      <img src="/images/user.png" width="25" class="img-circle pull-left" alt="" style="margin-right:10px;"> {{ member.name }}
+   </li>
+   <li ng-show="organization.users.length === 0">
+      No members, <a href class="btn btn-default btn-xs">add one ?</a>
+   </li>
+</ul>
+
+<hr>
+
+<h4>
+   Teams
+</h4>
+
+<em>
+   Nothing to see around here
+</em>
