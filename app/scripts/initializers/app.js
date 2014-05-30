@@ -74,57 +74,13 @@ angular
         resolve : {
           authenticated : routingHelpers.checkAuthenticated
         },
-        // resolve : {
-        //   configure : ['$injector','$q', 'Currentuser', 'UserRessource', function($injector, $q, Currentuser, UserRessource) {
-            
-        //     function checkUserConfiguration () {
-        //       var organizations = UserRessource.organizations.query({
-        //           userId : Currentuser.getUser().id
-        //         },
-        //         {}, // data
-        //         function() {
-        //           if (organizations.length) {
-        //             Currentuser.setOrganizations(organizations);
-        //             deferred.resolve();
-        //           } else {
-        //             deferred.reject({
-        //               redirectToState : 'register_organization'
-        //             });
-        //           }
-        //         }
-        //       );
-        //     }
-
-        //     var deferred = $q.defer();
-
-        //     $injector.invoke(routingHelpers.checkAuthenticated).then(function() {
-        //       checkUserConfiguration();
-        //     }, deferred.reject);
-
-        //     return deferred.promise;
-        //   }]
-        // },
-        templateUrl: 'views/app/layout.html'//,
-        // controller : ['$scope', function($scope) {
-        //   $scope.currentOrganization = $scope.currentUser.getCurrentOrganization().id;
-        // }]
-      })
-
-      .state('app.organization', {
-        abstract: true,
-        template : '<ui-view></ui-view>'
-      })
-
-      // register a new organization
-      .state('app.organization.create', {
-        url : '/organization/create',
-        templateUrl : 'views/register_organization.html'
+        templateUrl: 'views/app/layout.html'
       })
 
       // Home page for authenticated users
       .state('app.home', {
         url : '/home',
-        templateUrl: 'views/home.html',
+        templateUrl: 'views/app/home.html',
         controller: 'HomeCtrl'
       })
 
@@ -218,35 +174,58 @@ angular
 
       .state('app.tasks.edit', {
         url : '/:task_id/edit'
-      });
+      })
 
       // ADMIN
-      
-      // .state('app.admin', {
-      //   url : '/manage/:id',
-      //   abstract : true,
-      //   template : '<ui-view></ui-view>',
-      //   controller : ['$scope', '$stateParams', function($scope, $stateParams) {
-      //     $scope.organization = $.grep($scope.currentSession.getOrganizations(), function(organization) {
-      //       return organization.id === parseInt($stateParams.id, 10);
-      //     })[0];
-      //   }]
-      // })
 
-      // .state('app.admin.general', {
-      //   url : '/general',
-      //   templateUrl: 'views/app/admin/index.html'
-      // })
+      .state('app.organization_create', {
+        url : '/organization/create',
+        templateUrl : 'views/register_organization.html'
+      })
 
-      // .state('app.admin.teams', {
-      //   url : '/teams',
-      //   templateUrl: 'views/app/admin/teams.html'
-      // })
+      .state('app.organizations', {
+        url : '/organizations',
+        templateUrl : 'views/app/manage/organizations.html',
+        controller : ['$scope', 'CurrentSession', function($scope, CurrentSession) {
+          CurrentSession.getOrganizations().then(function(organizations) {
+            $scope.organizations = organizations;
+          }, function() {
+            console.error('Unable to load organizations for user #' + CurrentSession.getUser().id);
+          });
+        }]
+      })
 
-      // .state('app.admin.members', {
-      //   url : '/members',
-      //   templateUrl: 'views/app/admin/members.html'
-      // });
+      .state('app.organization', {
+        url : '/organization/:organizationId',
+        templateUrl : 'views/app/manage/organization/index.html',
+        controller : ['$scope', '$stateParams', 'CurrentSession', function($scope, $stateParams, CurrentSession) {
+          
+          CurrentSession.getOrganizations().then(function(organizations) {
+
+            var organization = $.grep(organizations, function(organization) {
+              return organization.id === parseInt($stateParams.organizationId, 10);
+            });
+            if (organization.length === 1) {
+              $scope.organization = organization[0];
+            } else {
+              console.error('404 organization #' + $stateParams.organizationId);
+              // error
+            }
+
+          }, function() {
+            console.error('Unable to load organizations for user #' + CurrentSession.getUser().id);
+          });
+        }]
+      })
+
+      .state('app.organization.teams', {
+        url : '/teams'
+      })
+
+      .state('app.organization.teams.members', {
+        url : '/:team_id/members'
+      });
+
 
     $urlRouterProvider
       .otherwise('/home');

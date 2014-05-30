@@ -1,0 +1,16 @@
+<h2>
+   Your organizations
+</h2>
+
+<ul ng-if="organizations.length > 0">
+   <li ng-repeat="organization in organizations">
+      {{ organization.name }}
+      <a ui-sref="app.organization({ organizationId : organization.id })" class="btn btn-default btn-xs">
+         manage
+      </a>
+   </li>
+</ul>
+
+<p ng-show="organizations.length === 0">
+   You don't have any organization, <a ui-sref="app.organization_create" class="btn btn-default btn-xs">create one ?</a>
+</p>
