@@ -13,7 +13,9 @@ angular
     'squareteam.ressources',
     'ngSanitize',
     'ui.router',
-    'pascalprecht.translate'
+    'pascalprecht.translate',
+    'angulartics',
+    'angulartics.google.analytics'
   ]);
 
 
