@@ -25,25 +25,48 @@ angular
     var routingHelpers = {
       checkAuthenticated : function(CurrentSession, $q, $log) {
 
-          var deferred = $q.defer();
+        var deferred = $q.defer();
 
-          if (!CurrentSession.isAuthenticated()) {
-            CurrentSession.restore().then(function() {
-              if (CurrentSession.isAuthenticated()) {
-                deferred.resolve();
-              } else {
-                $log.info('redirect to login');
-                deferred.reject({
-                  redirectToState : 'login'
-                });
-              }
-            }.bind(this));
-          } else {
-            deferred.resolve();
-          }
-
-          return deferred.promise;
+        if (!CurrentSession.isAuthenticated()) {
+          CurrentSession.restore().then(function() {
+            if (CurrentSession.isAuthenticated()) {
+              deferred.resolve();
+            } else {
+              $log.info('redirect to login');
+              deferred.reject({
+                redirectToState : 'login'
+              });
+            }
+          }.bind(this));
+        } else {
+          deferred.resolve();
         }
+
+        return deferred.promise;
+      },
+
+      checkAnonymous : function(CurrentSession, $q, $log) {
+
+        var deferred = $q.defer();
+
+        if (CurrentSession.isAuthenticated()) {
+          deferred.reject({
+            redirectToState : 'app.home'
+          });
+        } else {
+          CurrentSession.restore().then(function() {
+            if (!CurrentSession.isAuthenticated()) {
+              deferred.resolve();
+            } else {
+              deferred.reject({
+                redirectToState : 'app.home'
+              });
+            }
+          }.bind(this));
+        }
+
+        return deferred.promise;
+      }
     };
 
     routingHelpers.checkAuthenticated.$inject = ['CurrentSession', '$q', '$log'];
@@ -59,11 +82,17 @@ angular
       .state('login', {
         url : '/login',
         controller : 'LoginCtrl',
-        templateUrl: 'views/login.html'
+        templateUrl: 'views/login.html',
+        resolve : {
+          anonymous : routingHelpers.checkAnonymous
+        }
       })
       .state('register', {
         url : '/register',
-        templateUrl: 'views/register.html'
+        templateUrl: 'views/register.html',
+        resolve : {
+          anonymous : routingHelpers.checkAnonymous
+        }
       });
 
     $stateProvider
