@@ -40,13 +40,22 @@
   </p>
 
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
+    <div class="col-sm-offset-2 pull-left">
       <button ng-click="(!loginForm.$error || !loginForm.$error.required) && login()" class="btn btn-primary">
         {{ 'directives.stLoginForm.loginBtn' | translate }}
       </button>
       &nbsp;
       <a href="{{ githubLoginUrl }}" ng-show="!!githubLogin">
         <img src="/images/GitHub-Mark-32px.png" alt="" title="{{ 'directives.stLoginForm.github.tooltipBtn' | translate }}">
+      </a>
+    </div>
+    <div class="pull-right" ng-show="retries > 2">
+      <a href ui-sref="forgot_password">
+        {{ 'directives.stLoginForm.forgotLink' | translate }}
+      </a>
+      <br>
+      <a href="{{ appConfig.faq_url + 'auth' }}">
+        {{ 'directives.stLoginForm.FAQLink' | translate }}
       </a>
     </div>
   </div>
