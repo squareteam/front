@@ -257,6 +257,6 @@ angular
 
 
     $urlRouterProvider
-      .otherwise('/home');
+      .otherwise('/register');
 
   });
