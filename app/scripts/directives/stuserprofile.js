@@ -28,7 +28,7 @@ angular.module('squareteam.app')
           });
         }
       },
-      controller: function($scope, $element, $attrs, $location, UserRessource, lodash) {
+      controller: function($scope, $element, $attrs, $location, UserRessource, CurrentSession, lodash) {
         
         var user, updateUser;
 
@@ -39,6 +39,9 @@ angular.module('squareteam.app')
             }, {
               email : user.email,
               name  : user.name
+            }, function() {
+              // Force CurrentSession to reload user data
+              CurrentSession.reloadUser();
             });
           }
         }, 1000, {

@@ -39,6 +39,16 @@ angular.module('squareteam.app')
       return this.$$user;
     };
 
+    this.reloadUser = function() {
+      $http.get('apis://user/me').then(function(response) {
+        console.log(this.$$user);
+        this.$$user = response.data;
+        console.log(this.$$user);
+      }.bind(this), function() {
+        this.unregister();
+      }.bind(this));
+    };
+
     // API
 
     this.unregister = function() {
