@@ -49,7 +49,9 @@
          "emailInvalid"    : "Email is not valid",
          "passwordLabel"   : "Password",
          "emailLabel"      : "Email",
-         "loginBtn"        : "Login"
+         "loginBtn"        : "Login",
+         "forgotLink"      : "Forgot your credentials ?",
+         "FAQLink"         : "Having trouble with login ?"
       },
 
       "stUserCreate" : {
