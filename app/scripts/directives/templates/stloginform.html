@@ -1,63 +1,47 @@
-<form action="" name="loginForm" class="form-horizontal">
-  <div class="alert alert-danger" ng-show="!!loginForm.email.$error.valid">
+<div>
+  <h1>{{ 'directives.stLoginForm.title' | translate }}</h1>
+  <p class="alert" ng-show="!!loginForm.email.$error.valid">
       {{ 'directives.stLoginForm.emailInvalid' | translate }}
-  </div>
-  <div class="alert alert-danger" ng-show="!!loginForm.password.$error.valid">
+  </p>
+  <p class="alert" ng-show="!!loginForm.password.$error.valid">
       {{ 'directives.stLoginForm.passwordInvalid' | translate }}
-  </div>
-  <div class="alert alert-danger" ng-show="!!serverBusy">
-    {{ 'api.serverBusy' | translate }}
-  </div>
-
-  <h2>
-    {{ 'directives.stLoginForm.title' | translate }}
-  </h2>
-
-  <p>
-    &nbsp;
   </p>
-
-  <div class="form-group">
-    <label for="email" class="col-sm-2 control-label">
-      {{ 'directives.stLoginForm.emailLabel' | translate }}
-    </label>
-    <div class="col-sm-10">
-      <input type="email" name="email" ng-model="user.email" class="form-control" required autofocus />
-    </div>
-  </div>
-  
-  <div class="form-group">
-    <label for="password" class="col-sm-2 control-label">
-      {{ 'directives.stLoginForm.passwordLabel' | translate }}
-    </label>
-    <div class="col-sm-10">
-      <input type="password" name="password" ng-model="user.password" class="form-control" required />
-    </div>
-  <div>
-  
-  <p>
-    &nbsp;
+  <p class='alert' ng-show="!!serverBusy">
+      {{ 'api.serverBusy' | translate }}
   </p>
+  <article id="first_sign_in">
+     <form name="loginForm" action>
+        <input  type='email' name="email" placeholder="E-mail"
+                ng-model="user.email" class="text col-xs-8 col-xs-offset-2"
+                required autofocus />
 
-  <div class="form-group">
-    <div class="col-sm-offset-2 pull-left">
-      <button ng-click="(!loginForm.$error || !loginForm.$error.required) && login()" class="btn btn-primary">
-        {{ 'directives.stLoginForm.loginBtn' | translate }}
-      </button>
-      &nbsp;
-      <a href="{{ githubLoginUrl }}" ng-show="!!githubLogin">
-        <img src="/images/GitHub-Mark-32px.png" alt="" title="{{ 'directives.stLoginForm.github.tooltipBtn' | translate }}">
-      </a>
-    </div>
-    <div class="pull-right" ng-show="retries > 2">
-      <a href ui-sref="forgot_password">
-        {{ 'directives.stLoginForm.forgotLink' | translate }}
-      </a>
-      <br>
-      <a href="{{ appConfig.faq_url + 'auth' }}">
-        {{ 'directives.stLoginForm.FAQLink' | translate }}
-      </a>
-    </div>
-  </div>
+        <input  type='password' name="password" placeholder="Password"
+                ng-model="user.password" class="text col-xs-8 col-xs-offset-2"
+                required />
 
-</form>
+        <div class="col-xs-4 col-xs-offset-2" ng-click="user.remember = !user.remember">
+          <input type='checkbox' name="remenber" ng-checked="user.remember"/>
+          <label>
+            Remember me
+          </label>
+        </div>
+        <div class="col-xs-4">
+           <a ui-sref="public.forgotPassword" href>Forgot password ?</a> 
+        </div>
+        
+        <input  type='submit' name="submitLogin" value="Login"
+                class="button col-xs-8 col-xs-offset-2"
+                ng-click="(!loginForm.$error || !loginForm.$error.required) && login()" />
+        
+        <div class='clear'></div>
+     </form>
+  </article>
+
+  <article id="second_sign_in">
+     <div class="col-xs-6 col-xs-offset-3">
+        <img src="../images/logo_github.png" alt="Sign in with GitHub"/> 
+        <a href="{{ githubLoginUrl }}"><span>Sign in</span> with GitHub</a>
+     </div>   
+     <div class='clear'></div>
+  </article>
+</div>

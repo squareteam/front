@@ -1,0 +1,85 @@
+@import 'ui-kit';
+
+body .public_layout {
+   background:transparent url('../../images/bg.jpg');
+   header{
+      margin-bottom: 75px;
+      div#logo{
+         margin-top:72px;
+         img{
+            display:block;
+            margin:0 auto;
+         }
+      }
+   }
+   section{
+      #box_center{
+         > div.box_shadow{
+            box-shadow:0 0 15px #ddd;
+            h1{
+               background: #3e5c6d;
+               height: 95px;
+               text-align: center;
+               margin:0;
+               @include font(Avenir, normal, 20px, #fff, 95px);
+               @include border-radius(4px 4px 0 0);   
+            }
+            .alert{
+               background: #ff707a;
+               @include font(Avenir, normal, 14px, #fff, 14px);
+               text-align: center;
+               padding: 20px 0;
+               margin: 0;
+               border: none;
+               border-radius: 0;
+            }
+            article{
+               background:#fff;
+               @include border-radius(4px 4px 0 0);
+               padding: 20px 0;
+               &#second_sign_in{
+                  @include border-radius(0 0 4px 4px);
+               }
+            }
+
+            article{
+               &#second_sign_in{
+                  @include border-radius(0 0 4px 4px);
+               }
+               
+               &#second_sign_in{
+                  padding-bottom: 40px;
+                  @include border-radius(0 0 4px 4px);
+                  > div{
+                     margin-top: 20px;
+                     text-align: center;
+                     a{
+                        @include font(Avenir, normal, 16px, #96b2ba, 16px);
+                        span{
+                           color: #4abadb;
+                        }
+                        &:hover{
+                           text-decoration: none;
+                        }
+                     }
+                  }
+               }
+            }
+            #separate{
+               border-bottom: 1px solid #ccc;
+               height: 11px;
+               text-align: center;
+               margin-top: 10px;
+               span{
+                  background: #fff;
+                  padding: 8px;
+                  @include font(Avenir, normal, 16px, #9eb8bf, 16px);
+               }
+            }
+         }
+      }
+   }
+   .clear{
+      clear:both;
+   }
+}

@@ -1,0 +1,32 @@
+form{
+   > p {
+      @include font(Avenir, normal, 16px, #96b2ba, 21px);
+      padding: 0 10px;
+      text-align: center; 
+   }
+   > div{
+      margin-top: 30px;
+      padding: 0 !important;
+      a{
+         @include font(Avenir, normal, 14px, #55bfde, 14px);
+         text-align: right;
+         display: block;
+      }
+      label{
+         @include font(Avenir, normal, 14px, #96b2ba, 14px);
+      }
+   }
+
+   input{
+      &.text{
+         @include input_text();
+      }
+      &.button{
+         @include input_button(20px, 30px);
+         margin-top: 30px;
+      }
+      &.checkbox{
+         //@include input_checkbox();
+      }
+   }
+}

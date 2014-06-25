@@ -1,0 +1,69 @@
+@mixin font($family, $weight, $size, $color, $lineH){
+   font-size:$size;
+   line-height: $lineH;
+   color:$color;
+   font-weight: $weight;
+   font-family: $family;
+}
+@mixin border-radius($Radius){
+   -webkit-border-radius: $Radius;
+   -moz-border-radius: $Radius;
+   -khtml-border-radius: $Radius;
+   border-radius: $Radius;
+}
+
+@mixin box-shadow($Value){
+   -moz-box-shadow: $Value;
+   -webkit-box-shadow: $Value;
+   -o-box-shadow: $Value;
+   box-shadow: $Value;
+}
+
+@mixin input_text(){
+   @include font(Avenir, normal, 16px, #54bede, 21px);
+   border: none;
+   border-bottom: 1px solid #cbe2e9;
+   margin-top: 30px;
+   height: 30px;
+   &:focus{
+      outline: none;
+   }
+   &.ng-invalid.ng-dirty{
+      color: #fb7575;
+      background: transparent url('../../images/error_picto.png') no-repeat right;
+   }
+
+   // Chrome autofill hack to prevent ugly yellow background color
+   &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset;
+   }
+}
+
+@mixin input_button($Padding, $Radius){
+
+   @include font(Avenir, normal, 18px, #4abadb, 21px);
+   border: 1px solid #4abadb;
+   padding: $Padding;
+   background: #fff;
+   @include border-radius($Radius);
+   &:focus{
+      outline: none;
+   }
+   &:hover{
+      color: #fff;
+      border-color: transparent;
+      @include bg_gradient(90deg, #54bede, #8ad7ef);
+   }
+}
+
+@mixin input_checkbox(){
+   border: 1px dashed #b4c8ce;
+   @include border-radius(5px);
+}
+
+@mixin bg_gradient($Deg, $Color1, $Color2){
+   background-image:-moz-linear-gradient($Deg, $Color1, $Color2);
+   background-image:-webkit-linear-gradient($Deg, $Color1, $Color2);
+   background-image:-o-linear-gradient($Deg, $Color1, $Color2);
+   background-image:linear-gradient($Deg, $Color1, $Color2);
+}
