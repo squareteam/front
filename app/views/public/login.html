@@ -1,0 +1,33 @@
+<section class="container container-fluid">
+   <div class="row" >
+      <div id="box_center" class="col-sm-10 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3" >
+         <div class='box_shadow'>
+            
+            <st-login-form github-login="true" ng-hide="oauthAuthenticating"></st-login-form>
+
+            <div ng-show="oauthAuthenticating">
+               <br>
+               <h3>
+                  {{ 'login.github.authenticating' | translate }}
+               </h3>
+               <p>
+                  {{ 'login.authenticating' | translate }}
+               </p>
+               <br>
+            </div>
+
+         </div>
+      </div>
+   </div>
+</section>
+<section class="container container-fluid">
+   <div class="row">
+      <div id="box_center_bottom" class="button_gradient col-sm-10 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+         
+         <div>
+            <a ui-sref="public.register" href>Don't have an account?<br/><span>Discover now</span></a>
+         </div>
+      
+      </div>
+   </div>
+</section>

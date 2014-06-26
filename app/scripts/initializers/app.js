@@ -34,7 +34,7 @@ angular
             } else {
               $log.info('redirect to login');
               deferred.reject({
-                redirectToState : 'login'
+                redirectToState : 'public.login'
               });
             }
           }.bind(this));
@@ -45,7 +45,7 @@ angular
         return deferred.promise;
       },
 
-      checkAnonymous : function(CurrentSession, $q, $log) {
+      checkAnonymous : function(CurrentSession, $q) {
 
         var deferred = $q.defer();
 
@@ -79,21 +79,30 @@ angular
 
     // Public routes
     $stateProvider
-      .state('login', {
+
+      .state('public', {
+        abstract : true,
+        resolve : {
+          anonymous : routingHelpers.checkAnonymous
+        },
+        templateUrl: 'views/public/layout.html'
+      })
+
+      .state('public.login', {
         url : '/login',
         controller : 'LoginCtrl',
-        templateUrl: 'views/login.html',
-        resolve : {
-          anonymous : routingHelpers.checkAnonymous
-        }
+        templateUrl : 'views/public/login.html'
       })
-      .state('register', {
+      
+      .state('public.register', {
         url : '/register',
-        templateUrl: 'views/register.html',
-        resolve : {
-          anonymous : routingHelpers.checkAnonymous
-        }
+        templateUrl : 'views/public/register.html'
       });
+
+      // .state('public.forgotPassword', {
+      //   url : '/register',
+      //   templateUrl : 'views/public/forgot-password.html'
+      // });
 
     $stateProvider
       // App namespace
