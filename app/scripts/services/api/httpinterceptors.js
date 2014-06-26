@@ -56,10 +56,6 @@ angular.module('squareteam.api')
             config = ApiCrypto.transformRequest(config);
           }
 
-          if (config.data) { // Compat with ST API
-            config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-            config.data = $.param(config.data);
-          }
         }
 
         return config;

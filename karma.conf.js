@@ -46,6 +46,8 @@ module.exports = function(config) {
       'app/bower_components/cryptojslib/rollups/md5.js',
       'app/bower_components/angular-translate/angular-translate.js',
       'app/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
+      'app/bower_components/angulartics/src/angulartics.js',
+      'app/bower_components/angulartics/src/angulartics-ga.js',
       'app/scripts/initializers/modules.js',
       'app/scripts/initializers/api.js',
       'app/scripts/*.js',

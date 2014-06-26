@@ -1,4 +1,4 @@
-/*global CryptoJS*/
+/*global CryptoJS, toString*/
 'use strict';
 
 // Provide 3 important methods :
@@ -8,7 +8,7 @@
 //  
 //  - `generateHeaders`   generate required auth headers from an (auth, url, method, data)
 //                          1. Client must generate a __BLOB__ from the request data sorted by key:
-//                            BLOB = "key1=value1&key2=value2&key3=value3..."
+//                            BLOB = JSON.stringify(data_deeply_sorted_by_key)
 //
 //                          2. Client generates a __TIMESTAMP__
 //
@@ -27,6 +27,38 @@
 angular.module('squareteam.api')
   .service('ApiCrypto', function Apicrypto($injector, appConfig) {
 
+    this.$generateBlob = function(data) {
+      function encodeUriQuery(val) {
+        return encodeURIComponent(val).
+          replace(/%40/gi, '@').
+          replace(/%3A/gi, ':').
+          replace(/%24/g,  '$').
+          replace(/%2C/gi, ',').
+          replace(/%20/g,  '+');
+      }
+
+      function dirtyStringify (value, key) {
+        var buffer = [];
+        if (angular.isObject(value)) {
+          var keys = Object.keys(value);
+          keys.sort();
+          for(var i = 0; i < keys.length; i++) {
+            buffer.push(dirtyStringify(value[keys[i]], key ? [key,'{', keys[i] ,'}'].join('') : keys[i]));
+          }
+          return buffer.join('&');
+        } else if (angular.isArray(value)) {
+          for(var j = 0; j < value.length; j++) {
+            buffer.push(dirtyStringify(value[j], [key,'[]'].join('')));
+          }
+          return buffer.join('&');
+        } else {
+          return [key, '=', encodeUriQuery(value)].join('');
+        }
+      }
+
+      return dirtyStringify(data);
+    };
+
     this.generateToken = function(login, password, salt1, salt2) {
       var pbkdf2  = CryptoJS.PBKDF2(password, salt1, { keySize: 256/32, iterations: 1000, hasher : CryptoJS.algo.SHA256 }),
           hmac    = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, salt2.concat(pbkdf2));
@@ -44,7 +76,7 @@ angular.module('squareteam.api')
       var headers,
           hmac,
           path,
-          blob = [];
+          blob = '';
 
       path = url.replace(appConfig.api.host, '');
 
@@ -52,12 +84,8 @@ angular.module('squareteam.api')
         path = '/' + path;
       }
 
-      if (data && angular.isObject(data)) {
-        angular.forEach(Object.keys(data).sort(), function(key) {
-          // see http://apidock.com/rails/v2.3.2/Rack/Utils/escape
-          // escape called on key/value by Rack::Utils.build_query, used in our API
-          blob.push( encodeURIComponent(key).replace('%20', '+') + '=' + encodeURIComponent(data[key]).replace('%20', '+') );
-        });
+      if (data && (angular.isObject(data) || angular.isArray(data) )) {
+        blob = this.$generateBlob(data);
       }
 
       headers = {
@@ -73,7 +101,7 @@ angular.module('squareteam.api')
       hmac.update(method + ':');
       hmac.update(path + ':');
       hmac.update(headers['St-Timestamp'] + ':');
-      hmac.update(blob.join('&'));
+      hmac.update(blob);
 
       headers['St-Hash'] = hmac.finalize().toString();
 
