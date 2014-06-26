@@ -37,6 +37,15 @@ angular.module('squareteam.app')
             }
           });
         };
+      },
+
+      link : function(scope, iElement) {
+        angular.forEach(iElement.find('input'), function(element) {
+          element.addEventListener('invalid', function(e) {
+            e.preventDefault();
+            //Possibly implement your own here.
+          }, true);
+        });
       }
     };
   });
