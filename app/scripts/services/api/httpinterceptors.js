@@ -1,4 +1,3 @@
-/*global $*/
 'use strict';
 
 // Handle API specific behaviour for Requests and Responses

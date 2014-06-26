@@ -1,5 +1,3 @@
-/*globals $*/
-
 'use strict';
 
 // Organization creation form

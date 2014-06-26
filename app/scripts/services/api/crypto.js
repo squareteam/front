@@ -1,4 +1,4 @@
-/*global CryptoJS, toString*/
+/*global CryptoJS*/
 'use strict';
 
 // Provide 3 important methods :
