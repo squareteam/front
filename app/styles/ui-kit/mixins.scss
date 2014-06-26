@@ -30,7 +30,7 @@
    }
    &.ng-invalid.ng-dirty{
       color: #fb7575;
-      background: transparent url('../../images/error_picto.png') no-repeat right;
+      background: transparent url('/images/error_picto.png') no-repeat right;
    }
 
    // Chrome autofill hack to prevent ugly yellow background color
