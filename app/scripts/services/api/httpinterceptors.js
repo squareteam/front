@@ -1,4 +1,3 @@
-/*global $*/
 'use strict';
 
 // Handle API specific behaviour for Requests and Responses
@@ -25,7 +24,7 @@
 //  (see ApiErrors for more informations)
 
 angular.module('squareteam.api')
-  .factory('ApiHttpInterceptors', function($q, $injector, $rootScope, ApiErrors, appConfig) {
+  .factory('ApiHttpInterceptors', function($q, $injector, ApiErrors, appConfig) {
 
     var apiProtocolRegex        = /^apis?:\/\//,
         apiSecureProtocolRegex  = /^apis:\/\//,
@@ -47,8 +46,6 @@ angular.module('squareteam.api')
         var ApiCrypto       = $injector.get('ApiCrypto'),
             isApiSecureCall = apiSecureProtocolRegex.test(config.url);
 
-        $rootScope.loading = true;
-
         if (apiProtocolRegex.test(config.url)) {
           config.url = config.url.replace(apiProtocolRegex, appConfig.api.url);
 
@@ -56,18 +53,12 @@ angular.module('squareteam.api')
             config = ApiCrypto.transformRequest(config);
           }
 
-          if (config.data) { // Compat with ST API
-            config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-            config.data = $.param(config.data);
-          }
         }
 
         return config;
       },
 
       response : function(response) {
-
-        $rootScope.loading = false;
 
         if (apiResponseRegex.test(response.config.url)) {
           if (!response.data.errors && response.status <= 201) {
@@ -83,8 +74,6 @@ angular.module('squareteam.api')
       },
 
       responseError : function(response) {
-
-        $rootScope.loading = false;
 
         $$handleErrorResponse(response);
 

@@ -20,7 +20,7 @@ angular.module('squareteam.app')
 
     $scope.logout = function() {
       ApiSession.logout().then(function() {
-        $state.go('login');
+        $state.go('public.login');
       }.bind(this), function() {
         $state.go('app.home');
       }.bind(this));

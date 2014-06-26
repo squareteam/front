@@ -27,6 +27,13 @@ angular.module('squareteam.app')
         scope.$watch('currentSession.isAuthenticated()', function(authenticated) {
           element[authenticated ? 'show' : 'hide']();
         });
+
+        scope.$watch('currentSession.getUser()', function(currentUser) {
+          console.log('currentSession.getUser() changed', currentUser);
+          if (currentUser) {
+            scope.userName = currentUser.name;
+          }
+        });
       }
     };
   });

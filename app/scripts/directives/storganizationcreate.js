@@ -36,33 +36,10 @@ angular.module('squareteam.app')
           $scope.serverBusy = false;
           $scope.createOrganizationForm.name.$setValidity('unique', true);
 
-          var organization = OrganizationRessource.save({}, $scope.organization, function() {
-            function redirectOnFinish () {
-              $location.path($scope.redirectPath || '/home');
-            }
+          OrganizationRessource.create($scope.organization, $scope.forUsers || []).then(function() {
+            $location.path($scope.redirectPath || '/home');
+          }, onError);
 
-            if ($scope.forUsers && $scope.forUsers.length) {
-              // API DO NOT SUPPORT BATCH FOR NOW..
-              // 
-              // $.map($scope.forUsers, function(userId) {
-              //   return {
-              //     'organization_id' : organization.id,
-              //     'user_id' : userId,
-              //     'admin'   : 1
-              //   };
-              // }.bind(this))
-              var data = {
-                'organization_id' : organization.id,
-                'user_id' : $scope.forUsers[0],
-                'admin'   : 1
-              };
-              $http.post('apis://members', data).then(function() {
-                redirectOnFinish();
-              }, onError);
-            } else {
-              redirectOnFinish();
-            }
-          },onError);
         };
       }
     };
