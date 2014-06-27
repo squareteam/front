@@ -42,7 +42,7 @@ angular.module('squareteam.app')
           }, function(response) {
             if (response.error instanceof ApiErrors.Api) {
               angular.forEach(response.error.getErrors(), function(errorText) {
-                if (errorText === 'Email has already been taken') {
+                if (errorText === 'api.already_taken.Email') {
                   $scope.registerForm.email.$setValidity('unique', false);
                 }
               }.bind(this));

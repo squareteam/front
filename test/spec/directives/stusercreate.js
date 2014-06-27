@@ -72,7 +72,7 @@ describe('Directive: st-user-create', function () {
     });
 
     it('should display alert if login is incorrect', function() {
-      $httpBackend.expectPOST(appConfig.api.url + 'user', '{"name":"charly","email":"charly@live.fr","password":"test"}').respond(400, '{"data":null,"errors":["Email has already been taken"]}');
+      $httpBackend.expectPOST(appConfig.api.url + 'user', '{"name":"charly","email":"charly@live.fr","password":"test"}').respond(400, '{"data":null,"errors":["api.already_taken.Email"]}');
 
 
       scope.user = {
