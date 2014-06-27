@@ -6,3 +6,4 @@ coverage/
 app/bower_components
 app/scripts/config.js
 *.css
+!app/styles/bootstrap/**/*.css
