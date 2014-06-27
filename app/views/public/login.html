@@ -5,22 +5,26 @@
             
             <st-login-form github-login="true" ng-hide="oauthAuthenticating"></st-login-form>
 
-            <article ng-show="oauthAuthenticating">
-               <br>
-               <h3>
+            <div ng-show="oauthAuthenticating">
+               <h1>
                   {{ 'public.login.github.authenticating' | translate }}
-               </h3>
-               <p>
-                  {{ 'public.login.authenticating' | translate }}
-               </p>
-               <br>
-            </article>
+               </h1>
+               <article>
+                  <br>
+                  <p style="text-align:center;">
+                     <strong>
+                        {{ 'public.login.authenticating' | translate }}
+                     </strong>
+                  </p>
+                  <br>
+               </article>
+            </div>
 
          </div>
       </div>
    </div>
 </section>
-<section class="container container-fluid">
+<section class="container container-fluid" ng-hide="oauthAuthenticating">
    <div class="row">
       <div id="box_center_bottom" class="button_gradient col-sm-10 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
          
