@@ -10,7 +10,7 @@
       {{ 'api.serverBusy' | translate }}
   </p>
   <article id="first_sign_in">
-     <form name="loginForm" action>
+     <form name="loginForm" action ng-submit="(!loginForm.$error || !loginForm.$error.required) && login()">
         <input  type='email' name="email" placeholder="E-mail"
                 ng-model="user.email" class="text col-xs-8 col-xs-offset-2"
                 required autofocus />
@@ -30,8 +30,7 @@
         </div>
         
         <input  type='submit' name="submitLogin" value="Login"
-                class="button col-xs-8 col-xs-offset-2"
-                ng-click="(!loginForm.$error || !loginForm.$error.required) && login()" />
+                class="button col-xs-8 col-xs-offset-2" ng-click="setDirty()"/>
         
         <div class='clear'></div>
      </form>

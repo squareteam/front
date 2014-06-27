@@ -7,16 +7,44 @@
   </div>
   <article id="first_sign_in">
      <form action name="registerForm" ng-submit="register()">
-        <input type='text' name="login" value="" placeholder="Login" ng-model="user.login" required autofocus class="text col-xs-8 col-xs-offset-2" />
-        <input type='email' name="email" ng-model="user.email" required placeholder="E-mail" class="text col-xs-8 col-xs-offset-2" />
-        <input type='password' ng-model="user.password" required title="at least eight symbols containing at least one number, one lower, and one upper letter" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/" placeholder="Password" class="text col-xs-8 col-xs-offset-2" />
-        <input ng-model="user.passwordConfirm" type="password" data-match="user.password" name="confirmPassword" required placeholder="Confirm password" class="text col-xs-8 col-xs-offset-2" />
-        <div class="col-xs-4 col-xs-offset-2" ng-click="user.cgu_accept = !user.cgu_accept">
-           <input type='checkbox' name="cgu" ng-model="user.cgu_accept" required />
-           <label>Accept CGU</label>           
+        <input  type='text' name="login" placeholder="Login"
+                ng-model="user.login" required autofocus
+                class="text col-xs-8 col-xs-offset-2" />
+
+        <input  type='email' name="email" ng-model="user.email"
+                required placeholder="E-mail"
+                class="text col-xs-8 col-xs-offset-2" />
+
+        <input  type='password' name="password" ng-model="user.password" required
+                ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/" placeholder="Password"
+                class="text col-xs-8 col-xs-offset-2" />
+        <br/>
+        <div  ng-show="registerForm.password.$dirty && (registerForm.password.$error.pattern || registerForm.password.$error.required)"
+              class="error_text col-xs-8 col-xs-offset-2">
+          Le mot de passe doit être de composé de minimum 8 caractères contenant au moins un nombre, une lettre minuscule et une majuscule
         </div>
-        <input type='submit' name="submitLogin" value="Create account" class="button col-xs-8 col-xs-offset-2" />
+
+        <input  ng-model="user.passwordConfirm" type="password" data-match="user.password"
+                name="confirmPassword" required placeholder="Confirm password"
+                class="text col-xs-8 col-xs-offset-2" />
+        
+        <div  ng-show="registerForm.confirmPassword.$dirty && registerForm.confirmPassword.$error.match"
+              class="error_text col-xs-8 col-xs-offset-2">
+          La confirmation est incorrecte
+        </div>
+        
+        <div class="col-xs-4 col-xs-offset-2" ng-click="user.cgu_accept = !user.cgu_accept">
+          <input type='checkbox' name="cgu" ng-model="user.cgu_accept" required />
+          <label>Accept CGU</label>
+          <div class="error_text" ng-show="registerForm.cgu.$dirty && registerForm.cgu.$error.required">
+            Veuillez accepter les CGU
+          </div>
+        </div>
+        
+        <input type='submit' name="submitLogin" value="Create account" class="button col-xs-8 col-xs-offset-2" ng-click="setDirty()"/>
+        
         <div class='clear'></div>
+     
      </form>
   </article>
 </div>

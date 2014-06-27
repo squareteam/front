@@ -1,12 +1,11 @@
-'use strict';
-
 /*global CryptoJS*/
+'use strict';
 
 // User creation form
 //  User is automatically logged-in if creation succeed
 // 
 // TODO(charly) : add organizationId param ?
-// TODO(charly) : refactor auto-login in Service ?
+// TODO(charly) : refactor "auto-login" in Service ?
 
 
 angular.module('squareteam.app')
@@ -17,6 +16,14 @@ angular.module('squareteam.app')
       replace: true,
       controller: function($scope, $element, $attrs, $location, UserRessource, ApiErrors, CurrentSession, ApiSession, ApiCrypto, ApiAuth) {
         
+        $scope.setDirty = function() {
+          // set all inputs to dirty
+          angular.forEach(['email', 'password', 'login', 'cgu'], function(input) {
+            var i = $scope.registerForm[input];
+            i.$setViewValue(i.$viewValue);
+          });
+        };
+
         $scope.register = function() {
 
           $scope.registerForm.email.$setValidity('unique', true);
