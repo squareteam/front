@@ -11,25 +11,27 @@
   </p>
   <article id="first_sign_in">
      <form name="loginForm" action ng-submit="(!loginForm.$error || !loginForm.$error.required) && login()">
-        <input  type='email' name="email" placeholder="E-mail"
+        <input  type='email' name="email" placeholder="{{ 'directives.stLoginForm.emailLabel' | translate }}"
                 ng-model="user.email" class="text col-xs-8 col-xs-offset-2"
                 required autofocus />
 
-        <input  type='password' name="password" placeholder="Password"
+        <input  type='password' name="password" placeholder="{{ 'directives.stLoginForm.passwordLabel' | translate }}"
                 ng-model="user.password" class="text col-xs-8 col-xs-offset-2"
                 required />
 
         <div class="col-xs-4 col-xs-offset-2" ng-click="user.remember = !user.remember">
           <input type='checkbox' name="remenber" ng-checked="user.remember"/>
           <label>
-            Remember me
+            {{ 'directives.stLoginForm.rememberMe' | translate }}
           </label>
         </div>
         <div class="col-xs-4">
-           <a ui-sref="public.forgotPassword" href>Forgot password ?</a> 
+           <a ui-sref="public.forgotPassword" href>
+             {{ 'directives.stLoginForm.forgotLink' | translate }}
+           </a> 
         </div>
         
-        <input  type='submit' name="submitLogin" value="Login"
+        <input  type='submit' name="submitLogin" value="{{ 'directives.stLoginForm.loginBtn' | translate }}"
                 class="button col-xs-8 col-xs-offset-2" ng-click="setDirty()"/>
         
         <div class='clear'></div>
@@ -38,8 +40,13 @@
 
   <article id="second_sign_in">
      <div class="col-xs-6 col-xs-offset-3">
-        <img src="../images/logo_github.png" alt="Sign in with GitHub"/> 
-        <a href="{{ githubLoginUrl }}"><span>Sign in</span> with GitHub</a>
+        <img  src="../images/logo_github.png" alt="" />
+        <a href="{{ githubLoginUrl }}">
+          <span>
+            {{ 'directives.stLoginForm.signInWith_1' | translate }}
+          </span>
+            {{ 'directives.stLoginForm.signInWith_2' | translate }} GitHub
+          </a>
      </div>   
      <div class='clear'></div>
   </article>

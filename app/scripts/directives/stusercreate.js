@@ -18,7 +18,7 @@ angular.module('squareteam.app')
         
         $scope.setDirty = function() {
           // set all inputs to dirty
-          angular.forEach(['email', 'password', 'login', 'cgu'], function(input) {
+          angular.forEach(['email', 'password', 'confirmPassword', 'login', 'cgu'], function(input) {
             var i = $scope.registerForm[input];
             i.$setViewValue(i.$viewValue);
           });

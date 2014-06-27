@@ -16,7 +16,13 @@
       <div id="box_center_bottom" class="button_gradient col-sm-10 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
          
          <div>
-            <a ui-sref="public.login" href>Already have an account ?<br/><span>Sign in now</span></a>
+            <a ui-sref="public.login" href>
+               {{ 'public.register.alreadyHaveAnAccount_1' | translate }}
+               <br/>
+               <span>
+                  {{ 'public.register.alreadyHaveAnAccount_2' | translate }}
+               </span>
+            </a>
          </div>
       
       </div>

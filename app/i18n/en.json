@@ -1,5 +1,28 @@
 {
 
+   "public" : {
+      "login" : {
+         "wantAnAccount_1"   : "Don't have an account?",
+         "wantAnAccount_2"   : "Discover now",
+
+         "authenticating"  : "We are checking your identity..",
+
+         "github" : {
+            "authenticating"  : "Authenticating with Github"
+         },
+         "behance" : {
+            "authenticating"  : "Authenticating with Behance"
+         }
+      },
+
+      "register" : {
+         "title"                    : "One step closer.",
+         "alreadyHaveAnAccount_1"   : "Already have an account ?",
+         "alreadyHaveAnAccount_2"   : "Sign in now"
+      }
+   },
+
+
    "header" : {
       "logout" : "Logout",
 
@@ -17,24 +40,6 @@
       "no_results" : "No results"
    },
 
-   "login" : {
-      "wantAnAccount"   : "Want an account ?",
-      "authenticating"  : "We are checking your identity..",
-
-      "github" : {
-         "authenticating"  : "Authenticating with Github",
-         "tooltipBtn"      : "Login with Github"
-      },
-      "behance" : {
-         "authenticating"  : "Authenticating with Behance",
-         "tooltipBtn"      : "Login with Behance"
-      }
-   },
-
-   "register" : {
-      "title"                 : "One step closer.",
-      "alreadyHaveAnAccount"  : "Already have an account ?"
-   },
 
    "registerOrganization" : {
       "title"  : "Create Organization",
@@ -50,7 +55,10 @@
          "passwordLabel"   : "Password",
          "emailLabel"      : "Email",
          "loginBtn"        : "Login",
-         "forgotLink"      : "Forgot your credentials ?",
+         "rememberMe"      : "Remember me",
+         "signInWith_1"    : "Sign in",
+         "signInWith_2"    : "with",
+         "forgotLink"      : "Forgot password ?",
          "FAQLink"         : "Having trouble with login ?"
       },
 
@@ -60,8 +68,10 @@
          "emailLabel"            : "Email",
          "passwordLabel"         : "Password",
          "passwordConfirmLabel"  : "Confirm password",
+         "passwordFormatHelp"    : "Password should be at least 8 characters with 1 number, 1 uppercase and 1 lowercase letter.",
          "passwordNotMatch"      : "Passwords does not match!",
          "CGULabel"              : "Accept CGU",
+         "CGUNotice"             : "Please accept CGU",
          "createAccountBtn"      : "Create Account"
       },
 
