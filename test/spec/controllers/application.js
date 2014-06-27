@@ -61,7 +61,7 @@ describe('Controller: ApplicationCtrl', function () {
 
       $rootScope.$digest();
 
-      expect($state.go).toHaveBeenCalledWith('login');
+      expect($state.go).toHaveBeenCalledWith('public.login');
     });
 
     it('should redirect to home if failed', function() {
