@@ -7,6 +7,12 @@
             <p class='alert' ng-show="!!serverBusy">
                {{ 'api.serverBusy' | translate }}
             </p>
+            <p class='alert' ng-show="!!tokenInvalid">
+               {{ 'public.forgotPassword.tokenInvalid' | translate }} <br>
+               <a href ui-sref="public.forgotPassword.request">
+                  {{ 'public.forgotPassword.tokenInvalidClickHere' | translate }}
+               </a>
+            </p>
             <article id="first_sign_in">
                <form action ng-submit="change()" name="changePasswordForm">
                   <input  type='password' name="password" ng-model="user.password" required

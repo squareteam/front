@@ -7,6 +7,9 @@
             <p class='alert' ng-show="!!serverBusy">
                {{ 'api.serverBusy' | translate }}
             </p>
+            <p class='alert' ng-show="!!emailInvalid">
+               {{ 'public.forgotPassword.emailInvalid' | translate }} <br>
+            </p>
             <article id="first_sign_in">
                <form action ng-submit="request()" name="requestForm">
                   <p>Enter the email address you used when you joined and we'll send you instructions to reset your password.</p>

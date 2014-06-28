@@ -9,8 +9,12 @@ angular.module('squareteam.app')
           password  : $scope.user.password
         }).then(function() {
           $state.go('public.forgotPassword.changed');
-        }, function() {
-          $scope.serverBusy = true;
+        }, function(response) {
+          if (response.status === 404) {
+            $scope.tokenInvalid = true;
+          } else {
+            $scope.serverBusy = true;
+          }
         });
       };
     } else {
@@ -19,9 +23,12 @@ angular.module('squareteam.app')
           email  : $scope.user.email
         }).then(function() {
           $state.go('public.forgotPassword.request_sent');
-        }, function() {
-          // if 404 : Token expired, redirect to 'public.forgotPassword.request'
-          $scope.serverBusy = true;
+        }, function(response) {
+          if (response.status === 404) {
+            $scope.emailInvalid = true;
+          } else {
+            $scope.serverBusy = true;
+          }
         });
       };
     }

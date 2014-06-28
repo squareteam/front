@@ -21,6 +21,12 @@
          "title"                 : "Vous y êtes presque.",
          "alreadyHaveAnAccount_1"   : "Déjà inscrit ?",
          "alreadyHaveAnAccount_2"   : "Se connecter"
+      },
+
+      "forgotPassword" : {
+         "emailInvalid"          : "Aucun compte n'existe avec cet email",
+         "tokenInvalid"          : "Votre demande de changement de mot de passe est expirée",
+         "tokenInvalidClickHere" : "Effectuer une nouvelle demande"
       }
    },
 
