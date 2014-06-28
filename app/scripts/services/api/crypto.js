@@ -39,7 +39,7 @@ angular.module('squareteam.api')
 
       function dirtyStringify (value, key) {
         var buffer = [];
-        if (angular.isObject(value)) {
+        if (angular.isObject(value) && (typeof value.length === 'undefined')) {
           var keys = Object.keys(value);
           keys.sort();
           for(var i = 0; i < keys.length; i++) {

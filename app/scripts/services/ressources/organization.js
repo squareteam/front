@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('squareteam.ressources')
-  .factory('OrganizationRessource', function($resource/*, $q, $http*/) {
+  .factory('OrganizationRessource', function($resource, $http) {
     var organizationRessource;
 
     organizationRessource = $resource('apis://organizations/:id', {
@@ -12,21 +12,10 @@ angular.module('squareteam.ressources')
       }
     });
 
-    // organizationRessource.create = function(organizationData, userData) {
-    //   var defer = $q.defer();
-
-
-    //   organizationRessource.save({}, organizationData, function() {
-    //     organizationRessource.getTeams(function(teams) {
-
-          
-
-
-    //     }, defer.reject);
-    //   }, defer.reject);
-
-    //   return defer.promise;
-    // };
+    organizationRessource.createWithAdmins = function (organizationData, adminIds) {
+      organizationData.admins = adminIds;
+      return $http.post('apis://organizations/with_admins', organizationData);
+    };
 
     organizationRessource.getTeams = $resource('apis://organizations/:id/teams');
 
