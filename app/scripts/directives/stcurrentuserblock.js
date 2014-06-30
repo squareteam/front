@@ -29,7 +29,6 @@ angular.module('squareteam.app')
         });
 
         scope.$watch('currentSession.getUser()', function(currentUser) {
-          console.log('currentSession.getUser() changed', currentUser);
           if (currentUser) {
             scope.userName = currentUser.name;
           }

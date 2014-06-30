@@ -1,5 +1,35 @@
 {
 
+   "public" : {
+      "login" : {
+         "wantAnAccount_1"   : "Pas de compte ?",
+         "wantAnAccount_2"   : "Découvrir",
+
+         "authenticating"  : "Nous vérifions votre identité...",
+
+         "github" : {
+            "authenticating"  : "Authentification avec Github",
+            "tooltipBtn"      : "Se connecter avec Github"
+         },
+         "behance" : {
+            "authenticating"  : "Authentification avec Behance",
+            "tooltipBtn"      : "Se connecter avec Behance"
+         }
+      },
+
+      "register" : {
+         "title"                 : "Vous y êtes presque.",
+         "alreadyHaveAnAccount_1"   : "Déjà inscrit ?",
+         "alreadyHaveAnAccount_2"   : "Se connecter"
+      },
+
+      "forgotPassword" : {
+         "emailInvalid"          : "Aucun compte n'existe avec cet email",
+         "tokenInvalid"          : "Votre demande de changement de mot de passe est expirée",
+         "tokenInvalidClickHere" : "Effectuer une nouvelle demande"
+      }
+   },
+
    "header" : {
       "logout" : "Deconnexion",
 
@@ -17,24 +47,6 @@
       "no_results" : "Aucun résultats"
    },
 
-   "login" : {
-      "wantAnAccount"   : "S'inscrire ?",
-      "authenticating"  : "Nous vérifions votre identité...",
-
-      "github" : {
-         "authenticating"  : "Authentification avec Github",
-         "tooltipBtn"      : "Se connecter avec Github"
-      },
-      "behance" : {
-         "authenticating"  : "Authentification avec Behance",
-         "tooltipBtn"      : "Se connecter avec Behance"
-      }
-   },
-
-   "register" : {
-      "title"                 : "Vous y êtes presque.",
-      "alreadyHaveAnAccount"  : "Vous possédez déjà un compte ?"
-   },
 
    "registerOrganization" : {
       "title"  : "Créer une organisation",
@@ -50,7 +62,10 @@
          "passwordLabel"   : "Mot de passe",
          "emailLabel"      : "E-mail",
          "loginBtn"        : "Se connecter",
-         "forgotLink"      : "Oubli de mot de passe ?",
+         "rememberMe"      : "Se souvenir de moi",
+         "signInWith_1"    : "Se connecter",
+         "signInWith_2"    : "avec",
+         "forgotLink"      : "Mot de passe oublié ?",
          "FAQLink"         : "Impossible de se connecter ?"
       },
 
@@ -61,7 +76,9 @@
          "passwordLabel"         : "Mot de passe",
          "passwordConfirmLabel"  : "Confirmation du mot de passe",
          "passwordNotMatch"      : "La confirmation de mot de passe n'est pas correcte",
+         "passwordFormatHelp"    : "Nous vous recommandons d'inclure un minimum de 8 caractères contenant au moins un nombre, une lettre minuscule et une majuscule",
          "CGULabel"              : "Accepter les conditions d'utilisation",
+         "CGUNotice"             : "Merci d'accepter les conditions d'utilisation",
          "createAccountBtn"      : "Créer un compte"
       },
 

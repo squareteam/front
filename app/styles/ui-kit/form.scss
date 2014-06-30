@@ -1,4 +1,4 @@
-form{
+form {
    > p {
       @include font(Avenir, normal, 16px, #96b2ba, 21px);
       padding: 0 10px;
@@ -28,5 +28,19 @@ form{
       &.checkbox{
          //@include input_checkbox();
       }
+   }
+
+   div.error_text {
+      color: #d34336;
+      font-size: 0.75em;
+      padding: 0.5em 0 !important;
+      margin-top: 0;
+   }
+
+   div.notice_text {
+      color: #FF9D00;
+      font-size: 0.75em;
+      padding: 0.5em 0 !important;
+      margin-top: 0;
    }
 }

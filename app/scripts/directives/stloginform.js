@@ -19,6 +19,14 @@ angular.module('squareteam.app')
 
         $scope.githubLoginUrl = appConfig.api.oauth.github.loginUrl;
 
+        $scope.setDirty = function() {
+          // set all inputs to dirty
+          angular.forEach(['email', 'password'], function(input) {
+            var i = $scope.loginForm[input];
+            i.$setViewValue(i.$viewValue);
+          });
+        };
+
         $scope.login = function() {
           
           $scope.loginForm.email.$setValidity('valid', true);
