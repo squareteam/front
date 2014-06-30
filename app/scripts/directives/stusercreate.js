@@ -22,7 +22,7 @@ angular.module('squareteam.app')
         };
 
         $scope.passwordFormat = function() {
-          $scope.passwordBadPractice = $scope.user.password.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/) === null;
+          $scope.passwordBadPractice = !$scope.user.password || $scope.user.password.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/) === null;
         };
 
         $scope.register = function() {
