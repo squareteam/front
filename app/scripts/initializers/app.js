@@ -105,24 +105,24 @@ angular
       })
 
       .state('public.forgotPassword.request', {
-        url : '/forgotPassword/request',
+        url : '/forgot_password/request',
         controller : 'forgotPasswordCtrl',
         templateUrl : 'views/public/forgotPassword/request.html'
       })
 
       .state('public.forgotPassword.request_sent', {
-        url : '/forgotPassword/request_sent',
+        url : '/forgot_password/request_sent',
         templateUrl : 'views/public/forgotPassword/request_sent.html'
       })
 
       .state('public.forgotPassword.change', {
-        url : '/forgotPassword/change/:token',
+        url : '/forgot_password/change/:token',
         controller : 'forgotPasswordCtrl',
         templateUrl : 'views/public/forgotPassword/change.html'
       })
 
       .state('public.forgotPassword.changed', {
-        url : '/forgotPassword/change_success',
+        url : '/forgot_password/change_success',
         templateUrl : 'views/public/forgotPassword/change_success.html'
       });
 
