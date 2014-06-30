@@ -76,7 +76,7 @@
          "passwordLabel"         : "Mot de passe",
          "passwordConfirmLabel"  : "Confirmation du mot de passe",
          "passwordNotMatch"      : "La confirmation de mot de passe n'est pas correcte",
-         "passwordFormatHelp"    : "Le mot de passe doit être de composé de minimum 8 caractères contenant au moins un nombre, une lettre minuscule et une majuscule",
+         "passwordFormatHelp"    : "Nous vous recommandons d'inclure un minimum de 8 caractères contenant au moins un nombre, une lettre minuscule et une majuscule",
          "CGULabel"              : "Accepter les conditions d'utilisation",
          "CGUNotice"             : "Merci d'accepter les conditions d'utilisation",
          "createAccountBtn"      : "Créer un compte"
