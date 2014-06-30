@@ -17,11 +17,11 @@
                 class="text col-xs-8 col-xs-offset-2" />
 
         <input  type='password' name="password" ng-model="user.password" required
-                ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/"
+                ng-change="passwordFormat()"
                 placeholder="{{ 'directives.stUserCreate.passwordLabel' | translate }}"
                 class="text col-xs-8 col-xs-offset-2" />
         <br/>
-        <div  ng-show="registerForm.password.$dirty && (registerForm.password.$error.pattern || registerForm.password.$error.required)"
+        <div  ng-show="registerForm.password.$dirty && (passwordBadPractice)"
               class="error_text col-xs-8 col-xs-offset-2">
           {{ 'directives.stUserCreate.passwordFormatHelp' | translate }}
         </div>

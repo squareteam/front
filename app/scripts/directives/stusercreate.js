@@ -3,9 +3,6 @@
 
 // User creation form
 //  User is automatically logged-in if creation succeed
-// 
-// TODO(charly) : add organizationId param ?
-// TODO(charly) : refactor "auto-login" in Service ?
 
 
 angular.module('squareteam.app')
@@ -22,6 +19,10 @@ angular.module('squareteam.app')
             var i = $scope.registerForm[input];
             i.$setViewValue(i.$viewValue);
           });
+        };
+
+        $scope.passwordFormat = function() {
+          $scope.passwordBadPractice = $scope.user.password.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/) === null;
         };
 
         $scope.register = function() {
