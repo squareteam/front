@@ -3,6 +3,10 @@
 angular.module('squareteam.app')
   .controller('forgotPasswordCtrl', function ($scope, $stateParams, $http, $state) {
     if ($stateParams.token) {
+      $scope.passwordFormat = function() {
+        $scope.passwordBadPractice = !$scope.user.password || $scope.user.password.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/) === null;
+      };
+
       $scope.change = function() {
         $http.post('api://forgot_password/change', {
           token     : $stateParams.token,
