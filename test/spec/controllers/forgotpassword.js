@@ -38,7 +38,7 @@ describe('Controller: forgotPasswordCtrl', function () {
 
       spyOn($state, 'go');
       
-      $httpBackend.expectPOST(appConfig.api.url + 'forgotPassword').respond(200, '');
+      $httpBackend.expectPOST(appConfig.api.url + 'forgot_password').respond(200, '');
 
       scope.request();
 
@@ -52,7 +52,7 @@ describe('Controller: forgotPasswordCtrl', function () {
 
       spyOn($state, 'go');
       
-      $httpBackend.expectPOST(appConfig.api.url + 'forgotPassword').respond(404, '');
+      $httpBackend.expectPOST(appConfig.api.url + 'forgot_password').respond(404, '');
 
       scope.request();
 
@@ -66,7 +66,7 @@ describe('Controller: forgotPasswordCtrl', function () {
 
       spyOn($state, 'go');
       
-      $httpBackend.expectPOST(appConfig.api.url + 'forgotPassword').respond(500, '');
+      $httpBackend.expectPOST(appConfig.api.url + 'forgot_password').respond(500, '');
 
       scope.request();
 
@@ -110,7 +110,7 @@ describe('Controller: forgotPasswordCtrl', function () {
 
       spyOn($state, 'go');
       
-      $httpBackend.expectPOST(appConfig.api.url + 'forgotPassword/change').respond(200, '');
+      $httpBackend.expectPOST(appConfig.api.url + 'forgot_password/change').respond(200, '');
 
       scope.change();
 
@@ -124,7 +124,7 @@ describe('Controller: forgotPasswordCtrl', function () {
 
       spyOn($state, 'go');
       
-      $httpBackend.expectPOST(appConfig.api.url + 'forgotPassword/change').respond(404, '');
+      $httpBackend.expectPOST(appConfig.api.url + 'forgot_password/change').respond(404, '');
 
       scope.change();
 
@@ -138,7 +138,7 @@ describe('Controller: forgotPasswordCtrl', function () {
 
       spyOn($state, 'go');
       
-      $httpBackend.expectPOST(appConfig.api.url + 'forgotPassword/change').respond(500, '');
+      $httpBackend.expectPOST(appConfig.api.url + 'forgot_password/change').respond(500, '');
 
       scope.change();
 

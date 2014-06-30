@@ -4,7 +4,7 @@ angular.module('squareteam.app')
   .controller('forgotPasswordCtrl', function ($scope, $stateParams, $http, $state) {
     if ($stateParams.token) {
       $scope.change = function() {
-        $http.post('api://forgotPassword/change', {
+        $http.post('api://forgot_password/change', {
           token     : $stateParams.token,
           password  : $scope.user.password
         }).then(function() {
@@ -19,7 +19,7 @@ angular.module('squareteam.app')
       };
     } else {
       $scope.request = function() {
-        $http.post('api://forgotPassword', {
+        $http.post('api://forgot_password', {
           email  : $scope.user.email
         }).then(function() {
           $state.go('public.forgotPassword.request_sent');
