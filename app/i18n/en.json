@@ -19,6 +19,12 @@
          "title"                    : "One step closer.",
          "alreadyHaveAnAccount_1"   : "Already have an account ?",
          "alreadyHaveAnAccount_2"   : "Sign in now"
+      },
+
+      "forgotPassword" : {
+         "emailInvalid"          : "No account found with this email",
+         "tokenInvalid"          : "Your password change request is expired",
+         "tokenInvalidClickHere" : "Please make a new request"
       }
    },
 

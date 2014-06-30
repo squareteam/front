@@ -1,0 +1,44 @@
+<section class="container container-fluid">
+   <div class="row">
+      <div id="box_center" class="col-sm-10 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+         <div class='box_shadow'>
+            
+            <h1>Forgot password ?</h1>
+            <p class='alert' ng-show="!!serverBusy">
+               {{ 'api.serverBusy' | translate }}
+            </p>
+            <p class='alert' ng-show="!!emailInvalid">
+               {{ 'public.forgotPassword.emailInvalid' | translate }} <br>
+            </p>
+            <article id="first_sign_in">
+               <form action ng-submit="request()" name="requestForm">
+                  <p>Enter the email address you used when you joined and we'll send you instructions to reset your password.</p>
+                  
+                  <input   type='email' name="email" ng-model="user.email"
+                           placeholder="E-mail" required
+                           class="text col-xs-8 col-xs-offset-2" />
+                  
+                  <input   type='submit' name="submitForgotPwd" value="Send reset instructions"
+                           class="button col-xs-8 col-xs-offset-2" />
+                  
+                  <div class='clear'></div>
+               </form>
+            </article>
+
+         </div>
+      </div>
+   </div>
+</section>
+<section class="container container-fluid">
+   <div class="row">
+      <div id="box_center_bottom" class="button_gradient col-sm-10 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+         
+         <div>
+            <a href ui-sref="public.login">
+               Return to sign in
+            </a>
+         </div>
+      
+      </div>
+   </div>
+</section>
