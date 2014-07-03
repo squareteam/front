@@ -73,6 +73,10 @@ describe('Directive: st-oauth-link', function () {
         expect(element.find('span').text()).toBe('directives.stOAuthLink.signUp');
       });
 
+      it('should set correct service endpoint', function() {
+        expect(element.find('a').attr('href')).toBe(appConfig.api.oauth.github.endpoint);
+      });
+
       it('should display correct service icon', function() {
         expect(element.find('img').attr('src')).toBe('../images/' + appConfig.api.oauth.github.iconPath);
       });
@@ -92,6 +96,10 @@ describe('Directive: st-oauth-link', function () {
 
       xit('should display correct action name', function() {
         expect(element.find('span').text()).toBe('directives.stOAuthLink.signIn');
+      });
+
+      it('should set correct service endpoint', function() {
+        expect(element.find('a').attr('href')).toBe(appConfig.api.oauth.github.endpoint);
       });
 
       it('should display correct service icon', function() {
