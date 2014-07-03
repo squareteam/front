@@ -11,7 +11,7 @@ angular.module('squareteam.app')
       templateUrl: 'scripts/directives/templates/stusercreate.html',
       restrict: 'E',
       replace: true,
-      controller: function($scope, $element, $attrs, $location, UserRessource, ApiErrors, CurrentSession, ApiSession, ApiCrypto, ApiAuth) {
+      controller: function($scope, $element, $attrs, $location, UserResource, ApiErrors, CurrentSession, ApiSession, ApiCrypto, ApiAuth) {
         
         $scope.setDirty = function() {
           // set all inputs to dirty
@@ -30,7 +30,7 @@ angular.module('squareteam.app')
           $scope.registerForm.email.$setValidity('unique', true);
           $scope.serverBusy = false;
 
-          UserRessource.create({
+          UserResource.create({
             name      : $scope.user.login,
             email     : $scope.user.email,
             password  : $scope.user.password
