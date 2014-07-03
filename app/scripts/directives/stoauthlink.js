@@ -23,7 +23,6 @@ angular.module('squareteam.app')
         $scope.serviceName     = config.name;
 
         $translate($scope.mode === 'signin' ? 'directives.stOAuthLink.signIn' : 'directives.stOAuthLink.signUp').then(function (translation) {
-          console.log('translation :', translation);
           $scope.actionName = translation;
         });
       }
