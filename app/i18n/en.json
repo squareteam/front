@@ -62,10 +62,14 @@
          "emailLabel"      : "Email",
          "loginBtn"        : "Login",
          "rememberMe"      : "Remember me",
-         "signInWith_1"    : "Sign in",
-         "signInWith_2"    : "with",
          "forgotLink"      : "Forgot password ?",
          "FAQLink"         : "Having trouble with login ?"
+      },
+
+      "stOAuthLink" : {
+         "signIn"    : "Sign in",
+         "signUp"    : "Sign up",
+         "with"    : "with"
       },
 
       "stUserCreate" : {
