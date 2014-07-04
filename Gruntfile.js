@@ -427,7 +427,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
-      'bowerInstall',
+      // 'bowerInstall',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
