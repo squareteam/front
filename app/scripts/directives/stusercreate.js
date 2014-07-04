@@ -3,9 +3,6 @@
 
 // User creation form
 //  User is automatically logged-in if creation succeed
-// 
-// TODO(charly) : add organizationId param ?
-// TODO(charly) : refactor "auto-login" in Service ?
 
 
 angular.module('squareteam.app')
@@ -14,7 +11,7 @@ angular.module('squareteam.app')
       templateUrl: 'scripts/directives/templates/stusercreate.html',
       restrict: 'E',
       replace: true,
-      controller: function($scope, $element, $attrs, $location, UserRessource, ApiErrors, CurrentSession, ApiSession, ApiCrypto, ApiAuth) {
+      controller: function($scope, $element, $attrs, $location, UserResource, ApiErrors, CurrentSession, ApiSession, ApiCrypto, ApiAuth) {
         
         $scope.setDirty = function() {
           // set all inputs to dirty
@@ -24,12 +21,16 @@ angular.module('squareteam.app')
           });
         };
 
+        $scope.passwordFormat = function() {
+          $scope.passwordBadPractice = !$scope.user.password || $scope.user.password.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/) === null;
+        };
+
         $scope.register = function() {
 
           $scope.registerForm.email.$setValidity('unique', true);
           $scope.serverBusy = false;
 
-          UserRessource.create({
+          UserResource.create({
             name      : $scope.user.login,
             email     : $scope.user.email,
             password  : $scope.user.password

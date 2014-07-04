@@ -97,12 +97,34 @@ angular
       .state('public.register', {
         url : '/register',
         templateUrl : 'views/public/register.html'
-      });
+      })
 
-      // .state('public.forgotPassword', {
-      //   url : '/register',
-      //   templateUrl : 'views/public/forgot-password.html'
-      // });
+      .state('public.forgotPassword', {
+        abstract : true,
+        template : '<ui-view></ui-view>'
+      })
+
+      .state('public.forgotPassword.request', {
+        url : '/forgot_password/request',
+        controller : 'forgotPasswordCtrl',
+        templateUrl : 'views/public/forgotPassword/request.html'
+      })
+
+      .state('public.forgotPassword.request_sent', {
+        url : '/forgot_password/request_sent',
+        templateUrl : 'views/public/forgotPassword/request_sent.html'
+      })
+
+      .state('public.forgotPassword.change', {
+        url : '/forgot_password/change/:token',
+        controller : 'forgotPasswordCtrl',
+        templateUrl : 'views/public/forgotPassword/change.html'
+      })
+
+      .state('public.forgotPassword.changed', {
+        url : '/forgot_password/change_success',
+        templateUrl : 'views/public/forgotPassword/change_success.html'
+      });
 
     $stateProvider
       // App namespace

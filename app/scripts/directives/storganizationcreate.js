@@ -18,7 +18,7 @@ angular.module('squareteam.app')
       templateUrl: 'scripts/directives/templates/storganizationcreate.html',
       restrict: 'E',
       replace: true,
-      controller: function($scope, $element, $attrs, $location, $http, OrganizationRessource, ApiErrors) {
+      controller: function($scope, $element, $attrs, $location, $http, OrganizationResource, ApiErrors) {
 
         function onError (response) {
           if (response.error instanceof ApiErrors.Api) {
@@ -36,7 +36,8 @@ angular.module('squareteam.app')
           $scope.serverBusy = false;
           $scope.createOrganizationForm.name.$setValidity('unique', true);
 
-          OrganizationRessource.createWithAdmins($scope.organization, $scope.forUsers || []).then(function() {
+
+          OrganizationResource.createWithAdmins($scope.organization, $scope.forUsers || []).then(function() {
             $location.path($scope.redirectPath || '/home');
           }, onError);
 

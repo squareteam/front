@@ -13,6 +13,7 @@ describe('Directive: st-login-form', function () {
   });
 
   // load the directive's module
+  beforeEach(module('scripts/directives/templates/stoauthlink.html'));
   beforeEach(module('scripts/directives/templates/stloginform.html'));
   beforeEach(module('squareteam.app', function($urlRouterProvider) {
     $urlRouterProvider

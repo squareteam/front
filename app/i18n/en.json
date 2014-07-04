@@ -19,6 +19,12 @@
          "title"                    : "One step closer.",
          "alreadyHaveAnAccount_1"   : "Already have an account ?",
          "alreadyHaveAnAccount_2"   : "Sign in now"
+      },
+
+      "forgotPassword" : {
+         "emailInvalid"          : "No account found with this email",
+         "tokenInvalid"          : "Your password change request is expired",
+         "tokenInvalidClickHere" : "Please make a new request"
       }
    },
 
@@ -56,10 +62,14 @@
          "emailLabel"      : "Email",
          "loginBtn"        : "Login",
          "rememberMe"      : "Remember me",
-         "signInWith_1"    : "Sign in",
-         "signInWith_2"    : "with",
          "forgotLink"      : "Forgot password ?",
          "FAQLink"         : "Having trouble with login ?"
+      },
+
+      "stOAuthLink" : {
+         "signIn"    : "Sign in",
+         "signUp"    : "Sign up",
+         "with"    : "with"
       },
 
       "stUserCreate" : {
@@ -68,7 +78,7 @@
          "emailLabel"            : "Email",
          "passwordLabel"         : "Password",
          "passwordConfirmLabel"  : "Confirm password",
-         "passwordFormatHelp"    : "Password should be at least 8 characters with 1 number, 1 uppercase and 1 lowercase letter.",
+         "passwordFormatHelp"    : "We recommend  you to include at least 8 characters with 1 number, 1 uppercase and 1 lowercase letter.",
          "passwordNotMatch"      : "Passwords does not match!",
          "CGULabel"              : "Accept CGU",
          "CGUNotice"             : "Please accept CGU",

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('squareteam.ressources', [
+angular.module('squareteam.resources', [
   'ngCookies',
   'ngResource'
 ]);
@@ -10,7 +10,7 @@ angular.module('squareteam.api', ['pascalprecht.translate']);
 angular
   .module('squareteam.app', [
     'squareteam.api',
-    'squareteam.ressources',
+    'squareteam.resources',
     'ngSanitize',
     'ui.router',
     'pascalprecht.translate',
@@ -23,5 +23,5 @@ angular.module('squareteam.app').value('lodash', window._);
 
 // DO NOT EDIT LINE BELOW
 //  open README.md for more explaination
-var version = '0.2.5';
+var version = '0.3.1';
 angular.module('squareteam.app').value('VERSION', version);

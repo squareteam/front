@@ -12,8 +12,11 @@ angular.module('squareteam.app').factory('appConfig', function () {
   api.oauth = {
     cookieNS  : 'st.oauth'
   };
+
   api.oauth.github = {
-    loginUrl  : api.url + 'auth/github'
+    endpoint  : api.url + 'auth/github',
+    iconPath  : 'logo_github.png',
+    name      : 'Github'
   };
 
 

@@ -13,6 +13,7 @@ describe('Directive: st-user-create', function () {
   });
 
   // load the directive's module
+  beforeEach(module('scripts/directives/templates/stoauthlink.html'));
   beforeEach(module('scripts/directives/templates/stusercreate.html'));
   beforeEach(module('squareteam.app', function($urlRouterProvider) {
     $urlRouterProvider
@@ -123,6 +124,28 @@ describe('Directive: st-user-create', function () {
 
 
       expect(alertServerElt.hasClass('ng-hide')).toBe(false);
+
+    });
+
+    it('should display a notice if password is not secure', function() {
+
+      scope.user = {
+        login         : 'charly',
+        email         : 'charly@live.fr',
+        password      : 'test', // BAD PASSWORD
+        'cgu_accept'  : true
+      };
+
+      // force it since `passwordNoticeDiv` shows when password input is dirty
+      scope.registerForm.password.$dirty = true;
+
+      $rootScope.$digest();
+      scope.passwordFormat();
+      $rootScope.$digest();
+
+      var passwordNoticeDiv = $($(element).find('input[name="password"]').nextAll('div')[0]);
+      expect(passwordNoticeDiv.text().trim()).toBe('directives.stUserCreate.passwordFormatHelp');
+      expect(passwordNoticeDiv.hasClass('ng-hide')).toBe(false);
 
     });
 
