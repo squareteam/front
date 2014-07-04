@@ -92,6 +92,10 @@
          "organization_create"   : "créer"
       },
 
+      "stUserSearch" : {
+         "noResults" : "Aucun résultats"
+      },
+
       "stOrganizationCreate" : {
          "nameTaken"    : "Nom d'organisation déjà pris",
          "nameLabel"    : "Nom",

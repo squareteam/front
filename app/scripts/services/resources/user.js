@@ -17,6 +17,12 @@ angular.module('squareteam.resources')
       return $http.post('api://user', data);
     };
 
+    userResource.search = function(data) {
+      return $http.get('apis://user/search', {
+        data : data
+      });
+    };
+
     ////////////////////////
     // User Organizations //
     ////////////////////////

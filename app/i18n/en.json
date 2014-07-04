@@ -91,6 +91,10 @@
          "organization_create"   : "create"
       },
 
+      "stUserSearch" : {
+         "noResults" : "No results"
+      },
+
       "stOrganizationCreate" : {
          "nameTaken"    : "Organization name already taken",
          "nameLabel"    : "Name",
