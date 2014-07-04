@@ -36,7 +36,8 @@ angular.module('squareteam.app')
           $scope.serverBusy = false;
           $scope.createOrganizationForm.name.$setValidity('unique', true);
 
-          OrganizationResource.create($scope.organization, $scope.forUsers || []).then(function() {
+
+          OrganizationResource.createWithAdmins($scope.organization, $scope.forUsers || []).then(function() {
             $location.path($scope.redirectPath || '/home');
           }, onError);
 
