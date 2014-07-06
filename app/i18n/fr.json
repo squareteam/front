@@ -93,7 +93,8 @@
       },
 
       "stUserSearch" : {
-         "noResults" : "Aucun résultats"
+         "noResults"    : "Aucun résultats",
+         "placeholder"  : "Chercher un utilisateur"
       },
 
       "stOrganizationCreate" : {

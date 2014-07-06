@@ -92,7 +92,8 @@
       },
 
       "stUserSearch" : {
-         "noResults" : "No results"
+         "noResults"    : "No results",
+         "placeholder"  : "Search a user"
       },
 
       "stOrganizationCreate" : {

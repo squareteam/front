@@ -1,3 +1,5 @@
+/* global $ */
+
 'use strict';
 
 angular.module('squareteam.app')
@@ -12,11 +14,13 @@ angular.module('squareteam.app')
       controller: function($scope, $element, $attrs, UserResource) {
         $scope.users = [];
         $scope.search = function() {
-          UserResource.search($scope.query).then(function(response) {
-            $scope.users = response.data;
-          }, function() {
-            // do what ?
-          });
+          if ($.trim($scope.query).length) {
+            UserResource.search($scope.query).then(function(response) {
+              $scope.users = response.data;
+            }, function() {
+              // do what ?
+            });
+          }
         };
       }
     };

@@ -60,7 +60,7 @@ describe('Directive: stusersearch', function () {
 
     it('should display results if any', function() {
 
-      $httpBackend.expectGET(appConfig.api.url + 'user/search').respond(200, '{"errors":null,"data":[{"id":1,"name":"charly","email":"cpoly55@gmail.com"}]}');
+      $httpBackend.expectGET(appConfig.api.url + 'user/search?query=test').respond(200, '{"errors":null,"data":[{"id":1,"name":"charly","email":"cpoly55@gmail.com"}]}');
 
       element.isolateScope().search();
 
@@ -73,7 +73,7 @@ describe('Directive: stusersearch', function () {
 
     it('should display a message if no results', function() {
 
-      $httpBackend.expectGET(appConfig.api.url + 'user/search').respond(200, '{"errors":null,"data":[]}');
+      $httpBackend.expectGET(appConfig.api.url + 'user/search?query=test').respond(200, '{"errors":null,"data":[]}');
 
       element.isolateScope().search();
 
