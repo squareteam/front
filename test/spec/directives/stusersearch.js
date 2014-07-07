@@ -85,24 +85,6 @@ describe('Directive: stusersearch', function () {
       expect($.trim(element.find('.results li').text())).toBe('directives.stUserSearch.noResults');
     });
 
-    // TODO ?
-    xdescribe('when select a result', function() {
-      
-      it('should call on-select function', function() {
-        
-        spyOn(scope, 'userSelected');
-
-        expect(scope.userSelected).toHaveBeenCalledWith({
-          id    : 1,
-          name  : 'charly',
-          email : 'cpoly55@gmail.com'
-        });
-
-      });
-
-    });
-
-
   });
 
 });
