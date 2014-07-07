@@ -101,6 +101,20 @@
          "nameTaken"    : "Nom d'organisation déjà pris",
          "nameLabel"    : "Nom",
          "createBtn"    : "Créer l'organisation"
+      },
+
+      "stTeamManage" : {
+         "selectAll" : "Tout seléctionner/desélectionner",
+         "roles" : {
+            "MANAGE_TEAM"           : "Gérer l'équipe",
+            "ADD_PROJECT"           : "Créer un projet",
+            "MANAGE_PROJECTS"       : "Gérer les projets",
+            "ADD_TASK"              : "Créer une tâche",
+            "MANAGE_TASKS"          : "Gérer les tâches",
+            "ADD_MISSION"           : "Créer une mission",
+            "MANAGE_ORGANIZATION"   : "Gérer l'organisation",
+            "MANAGE_MISSION"        : "Gérer les missions"
+         }
       }
    }
 }

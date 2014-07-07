@@ -100,6 +100,20 @@
          "nameTaken"    : "Organization name already taken",
          "nameLabel"    : "Name",
          "createBtn"    : "Create Organization"
+      },
+
+      "stTeamManage" : {
+         "selectAll" : "Select/Unselect all",
+         "roles" : {
+            "MANAGE_TEAM"           : "Manage team",
+            "ADD_PROJECT"           : "Create projects",
+            "MANAGE_PROJECTS"       : "Manage projects",
+            "ADD_TASK"              : "Create tasks",
+            "MANAGE_TASKS"          : "Manage tasks",
+            "ADD_MISSION"           : "Create missions",
+            "MANAGE_ORGANIZATION"   : "Manage organization",
+            "MANAGE_MISSION"        : "Manage missions"
+         }
       }
    }
 }

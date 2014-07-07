@@ -23,6 +23,17 @@
    Teams
 </h4>
 
-<em>
-   Nothing to see around here
-</em>
+<ul>
+   <li ng-repeat="team in teams">
+      {{ team.name }}
+      <a ui-sref="app.team({ teamId : team.id })" class="btn btn-default btn-xs">
+         manage
+      </a>
+   </li>
+</ul>
+<p>
+   <input type="text" ng-model="newTeamName">
+   <a ng-click="!!newTeamName && createTeam(newTeamName)" class="btn btn-default btn-xs">
+      create
+   </a>
+</p>

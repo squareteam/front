@@ -258,7 +258,7 @@ angular
       .state('app.organization', {
         url : '/organization/:organizationId',
         templateUrl : 'views/app/manage/organization/index.html',
-        controller : ['$scope', '$stateParams', 'CurrentSession', function($scope, $stateParams, CurrentSession) {
+        controller : ['$scope', '$stateParams', '$state', 'CurrentSession', 'OrganizationResource', function($scope, $stateParams, $state, CurrentSession, OrganizationResource) {
           
           CurrentSession.getOrganizations().then(function(organizations) {
 
@@ -272,14 +272,38 @@ angular
               // error
             }
 
+            OrganizationResource.teams.query({
+              id :$stateParams.organizationId
+            }, function(teams) {
+              $scope.teams = teams;
+            });
+
+            $scope.createTeam = function(name) {
+              OrganizationResource.teams.save({
+                id :$stateParams.organizationId
+              },{
+                name : name
+              }, function(data) {
+                $state.go('app.team', { teamId : data.id });
+              }, function() {
+                window.alert('error while creating team');
+              });
+            };
+
           }, function() {
             console.error('Unable to load organizations for user #' + CurrentSession.getUser().id);
           });
         }]
       })
 
-      .state('app.organization.teams', {
-        url : '/teams'
+      .state('app.team', {
+        url : '/team/:teamId',
+        templateUrl : 'views/app/manage/team.html',
+        controller : ['$scope', '$stateParams', function($scope, $stateParams) {
+          $scope.teamId = $stateParams.teamId;
+
+          $scope.teamDestroyable = true;
+        }]
       })
 
       .state('app.organization.teams.members', {
