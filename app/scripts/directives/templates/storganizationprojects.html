@@ -1,0 +1,11 @@
+<div class="header">
+   <div class="organization"></div>
+
+   <div class="filters"></div>
+   <div class="sep"></div>
+   <div class="new_project"></div>
+</div>
+
+<div class="content">
+   <st-project-card ng-repeat="project in projects" project-id="{{ project.id }}"></st-project-card>
+</div>
