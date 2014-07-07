@@ -301,8 +301,6 @@ angular
         templateUrl : 'views/app/manage/team.html',
         controller : ['$scope', '$stateParams', function($scope, $stateParams) {
           $scope.teamId = $stateParams.teamId;
-
-          $scope.teamDestroyable = true;
         }]
       })
 

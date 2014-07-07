@@ -4,8 +4,7 @@ angular.module('squareteam.app')
   .directive('stTeamManage', function () {
     return {
       scope: {
-        teamId      : '@',
-        canDestroy  : '@'
+        teamId      : '@'
       },
       templateUrl: 'scripts/directives/templates/stteammanage.html',
       restrict: 'E',
@@ -33,14 +32,6 @@ angular.module('squareteam.app')
         // Logic
 
         var usersToRemove = [];
-
-        function destroyTeam () {
-          TeamResource.remove({ id : $scope.teamId }, function() {
-            $state.go('app.organizations');
-          }, function() {
-            // TODO(charly): show error
-          });
-        }
 
         function toggleUserRemoveFromTeam (user) {
           var index = usersToRemove.indexOf(user.id);
@@ -88,7 +79,6 @@ angular.module('squareteam.app')
         $scope.toggleUserRemoveFromTeam  = toggleUserRemoveFromTeam;
         $scope.addUserToTeam             = addUserToTeam;
         $scope.removeUsers               = removeUsers;
-        $scope.destroyTeam               = destroyTeam;
         $scope.updateUserRole            = updateUserRole;
 
         $scope.rolesHelpers              = TeamResource.rolesHelpers;
