@@ -1,3 +1,5 @@
+/* global $ */
+
 'use strict';
 
 angular.module('squareteam.app')
@@ -80,6 +82,12 @@ angular.module('squareteam.app')
         $scope.addUserToTeam             = addUserToTeam;
         $scope.removeUsers               = removeUsers;
         $scope.updateUserRole            = updateUserRole;
+
+        $scope.usersIds                  = function() {
+          return $.map($scope.team.users, function(user) {
+            return user.id;
+          });
+        };
 
         $scope.rolesHelpers              = TeamResource.rolesHelpers;
 
