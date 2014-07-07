@@ -119,7 +119,7 @@ angular.module('squareteam.api')
         throw new Error('Cannot load ' + config.url + ' without being authenticated !');
       }
 
-      angular.extend(config.headers, this.generateHeaders(auth, config.url, config.method, config.data));
+      angular.extend(config.headers, this.generateHeaders(auth, config.url, config.method, config.method === 'GET' ? config.params : config.data));
 
       return config;
     };
