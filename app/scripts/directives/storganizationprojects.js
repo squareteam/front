@@ -2,13 +2,17 @@
 
 // usage :
 // 
-// <st-organization-projects ng-repeat="organization in organizations" organization-id="{{ organization.id }}"></st-organization-projects>
+// <st-organization-projects  ng-repeat="organization in organizations track by organization.id"
+//                            organization-id="{{ organization.id }}"
+//                            collapsed="$index > 2">
+// </st-organization-projects>
 
 angular.module('squareteam.app')
   .directive('stOrganizationProjects', function () {
     return {
       scope : {
-        organizationId : '@'
+        organizationId  : '@',
+        collapsed       : '@'
       },
       templateUrl: 'scripts/directives/templates/storganizationprojects.html',
       restrict: 'E',

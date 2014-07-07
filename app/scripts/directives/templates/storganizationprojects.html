@@ -6,6 +6,6 @@
    <div class="new_project"></div>
 </div>
 
-<div class="content">
-   <st-project-card ng-repeat="project in projects" project-id="{{ project.id }}"></st-project-card>
+<div class="content" ng-class="{ collapsed : collapsed }">
+   <st-project-card ng-repeat="project in projects track by project.id" project-id="{{ project.id }}"></st-project-card>
 </div>
