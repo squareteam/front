@@ -184,7 +184,14 @@ angular
 
       .state('app.projects', {
         url : '/projects',
-        templateUrl : 'views/app/projects/index.html'
+        templateUrl : 'views/app/projects/index.html',
+        controller : ['$scope', 'CurrentSession', function($scope, CurrentSession) {
+          CurrentSession.getOrganizations().then(function(organizations) {
+            $scope.organizations = organizations;
+          }, function() {
+            console.error('Unable to load organizations for user #' + CurrentSession.getUser().id);
+          });
+        }]
       })
 
       .state('app.projects.create', {
