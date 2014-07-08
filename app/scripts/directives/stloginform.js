@@ -15,9 +15,9 @@ angular.module('squareteam.app')
         githubLogin   : '@'
       },
       replace : true,
-      controller: function($scope, $element, $attrs, $state, ApiSession, appConfig) {
+      controller: function($scope, $element, $attrs, $state, ApiSession) {
 
-        $scope.githubLoginUrl = appConfig.api.oauth.github.loginUrl;
+        $scope.retries = 0;
 
         $scope.setDirty = function() {
           // set all inputs to dirty
@@ -36,6 +36,7 @@ angular.module('squareteam.app')
           ApiSession.login($scope.user.email, $scope.user.password).then(function() {
             $state.go($scope.redirectPath || 'app.home');
           }, function(error) {
+            $scope.retries++;
             if (error === 'auth.bad_login') {
               $scope.loginForm.email.$setValidity('valid', false);
             } else if (error === 'auth.bad_password') {

@@ -28,7 +28,12 @@
         <div class="col-xs-4">
            <a ui-sref="public.forgotPassword.request" href>
              {{ 'directives.stLoginForm.forgotLink' | translate }}
-           </a> 
+           </a>
+           <p></p>
+           <a href="http://faq.squareteam.io/signin/system/configuration/2014/07/08/unable-to-signin/"
+              ng-show="retries > 1">
+             Having trouble?
+           </a>
         </div>
         
         <input  type='submit' name="submitLogin" value="{{ 'directives.stLoginForm.loginBtn' | translate }}"
