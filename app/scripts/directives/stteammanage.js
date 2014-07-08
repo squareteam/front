@@ -84,9 +84,9 @@ angular.module('squareteam.app')
         $scope.updateUserRole            = updateUserRole;
 
         $scope.usersIds                  = function() {
-          return $.map($scope.team.users, function(user) {
+          return $scope.team ? $.map($scope.team.users, function(user) {
             return user.id;
-          });
+          }) : [];
         };
 
         $scope.rolesHelpers              = TeamResource.rolesHelpers;

@@ -14,11 +14,12 @@ angular.module('squareteam.app')
         'forTeam'         : '@'  // restrict search scope (TODO)
       },
       replace: true,
-      controller: function($scope, $element, $attrs, $parse, UserResource) {
+      controller: function($scope, $element, $attrs, UserResource) {
         $scope.users = [];
         $scope.search = function() {
           // exclude is evaluated at each search
-          var exclude = $attrs.exclude ? $parse($attrs.exclude)($scope) : [];
+          var exclude = $scope.exclude ? $scope.exclude : [];
+
           if ($.trim($scope.query).length) {
             UserResource.search($scope.query).then(function(response) {
               $scope.users = $.grep(response.data, function(user) {
