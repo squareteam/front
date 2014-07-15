@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('squareteam.resources')
-  .factory('OrganizationResource', function($resource, $q, $http, $cacheFactory) {
+  .factory('OrganizationResource', function($resource, $q, $http) {
     var organizationResource;
 
     organizationResource = $resource('apis://organizations/:id', {
@@ -36,9 +36,7 @@ angular.module('squareteam.resources')
     organizationResource.getTeams = $resource('apis://organizations/:id/teams');
 
     organizationResource.projects = function (organizationId) {
-      return $http.get('apis://organizations/' + organizationId + '/projects', {
-        cache : $cacheFactory('projects')
-      });
+      return $http.get('apis://organizations/' + organizationId + '/projects');
     };
 
     return organizationResource;
