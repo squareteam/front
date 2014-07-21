@@ -4,9 +4,6 @@
 
 angular
   .module('squareteam.app')
-  .run(function($http, ApiCache) {
-    $http.defaults.cache = ApiCache;
-  })
   .config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
 
 

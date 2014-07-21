@@ -17,8 +17,8 @@ angular.module('squareteam.app')
       templateUrl: 'scripts/directives/templates/storganizationprojects.html',
       restrict: 'E',
       replace: true,
-      controller: function($scope, $element, $attrs, $location, OrganizationResource) {
-        OrganizationResource.projects($scope.organizationId).then(function(projects) {
+      controller: function($scope, $element, $attrs, $location, $http, ApiCache) {
+        $http.get('apis://projects/' + $scope.organizationId, { cache : ApiCache }).then(function(projects) {
           $scope.projects = projects;
         }, function() {
           // display error
