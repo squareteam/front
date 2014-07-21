@@ -104,6 +104,12 @@
 
       "stTeamManage" : {
          "selectAll" : "Select/Unselect all",
+         "errors"    : {
+            "loadTeam"     : "Error while loading team data",
+            "removeUsers"  : "Error while removing users",
+            "addUser"      : "Error while adding user",
+            "updateUser"   : "Error while updating user"
+         },
          "roles" : {
             "MANAGE_TEAM"           : "Manage team",
             "ADD_PROJECT"           : "Create projects",

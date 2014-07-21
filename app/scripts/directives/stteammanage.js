@@ -17,7 +17,8 @@ angular.module('squareteam.app')
           $scope.errors = {
             loadTeam    : false,
             removeUsers : false,
-            addUser     : false
+            addUser     : false,
+            updateUser  : false
           };
         };
 
@@ -69,7 +70,7 @@ angular.module('squareteam.app')
             $scope.team.updateUserRole($scope.editUserRole.id, $scope.roleToAdd).then(function() {
               $scope.editUserRole = false;
             }, function() {
-              // display error
+              $scope.errors.updateUser = true;
             });
           }
         }

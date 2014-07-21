@@ -6,13 +6,13 @@
       </h3>
 
       <div class="alert" ng-show="!!errors.loadTeam">
-         Unable to load team
+         {{ 'directives.stTeamManage.errors.loadTeam' | translate }}
       </div>
       <div class="alert" ng-show="!!errors.removeUsers">
-         Unable to remove given user(s), try later
+         {{ 'directives.stTeamManage.errors.removeUsers' | translate }}
       </div>
       <div class="alert" ng-show="!!errors.addUser">
-         Unable to add given user
+         {{ 'directives.stTeamManage.errors.addUser' | translate }}
       </div>
 
       <div class="controls">
@@ -54,6 +54,10 @@
                Save
             </button>
          </h3>
+
+         <div class="alert" ng-show="errors.updateUser">
+            {{ 'directives.stTeamManage.errors.updateUser' | translate }}
+         </div>
 
          <p>
             &nbsp;

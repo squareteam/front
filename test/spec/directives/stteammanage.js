@@ -37,7 +37,7 @@ describe('Directive: st-team-manage', function () {
   });
 
   describe('when giving a non-existent team', function() {
-    var alertLoadTeamError, alertRemoveUsers, alertAddUser;
+    var alertLoadTeamError, alertRemoveUsers, alertAddUser, alertUpdateUser;
 
     it('should show a error message', function() {
       element = angular.element('<st-team-manage team-id="1323"></st-team-manage>');
@@ -51,6 +51,7 @@ describe('Directive: st-team-manage', function () {
       alertLoadTeamError  = $(element.find('.alert')[0]);
       alertRemoveUsers    = $(element.find('.alert')[1]);
       alertAddUser        = $(element.find('.alert')[2]);
+      alertUpdateUser     = $(element.find('.alert')[3]);
 
       $httpBackend.flush();
 
@@ -59,6 +60,7 @@ describe('Directive: st-team-manage', function () {
       expect(alertLoadTeamError.hasClass('ng-hide')).toBe(false);
       expect(alertRemoveUsers.hasClass('ng-hide')).toBe(true);
       expect(alertAddUser.hasClass('ng-hide')).toBe(true);
+      expect(alertUpdateUser.hasClass('ng-hide')).toBe(true);
     });
 
   });
@@ -66,7 +68,7 @@ describe('Directive: st-team-manage', function () {
 
 
   describe('when giving a existent team', function() {
-    var alertLoadTeamError, alertRemoveUsers, alertAddUser;
+    var alertLoadTeamError, alertRemoveUsers, alertAddUser, alertUpdateUser;
 
     // CHECK API
 
@@ -110,6 +112,7 @@ describe('Directive: st-team-manage', function () {
         alertLoadTeamError  = $(element.find('.alert')[0]);
         alertRemoveUsers    = $(element.find('.alert')[1]);
         alertAddUser        = $(element.find('.alert')[2]);
+        alertUpdateUser     = $(element.find('.alert')[3]);
       });
 
       it('should not display error and list users', function() {
@@ -240,18 +243,18 @@ describe('Directive: st-team-manage', function () {
           expect($($(element).find('.permissions_manager')[0]).hasClass('ng-hide')).toBe(true);
         });
 
-        // xit('should display error if failure', function() {
+        it('should display error if failure', function() {
 
-        //   $httpBackend.expectPUT(appConfig.api.url + 'teams/1/users/1').respond(401, '{"errors":["api.unauthorized"],"data":[]}');
+          $httpBackend.expectPUT(appConfig.api.url + 'teams/1/users/1').respond(401, '{"errors":["api.unauthorized"],"data":[]}');
 
-        //   element.isolateScope().updateUserRole({ id : 1 });
+          element.isolateScope().updateUserRole();
 
-        //   $httpBackend.flush();
+          $httpBackend.flush();
 
-        //   $rootScope.$digest();
+          $rootScope.$digest();
 
-        // });
-
+          expect(alertUpdateUser.hasClass('ng-hide')).toBe(false);
+        });
 
       });
 
