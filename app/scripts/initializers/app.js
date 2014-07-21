@@ -6,7 +6,6 @@ angular
   .module('squareteam.app')
   .config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
 
-
     ///////////////
     // Translate //
     ///////////////
@@ -16,7 +15,6 @@ angular
       suffix: '.json'
     });
     $translateProvider.preferredLanguage('en');
-
 
     /////////////////////
     // Routing Helpers //
@@ -66,16 +64,37 @@ angular
         }
 
         return deferred.promise;
+      },
+
+      currentOrganization : function(CurrentSession, $q, $stateParams) {
+
+        var deferred = $q.defer();
+
+        CurrentSession.getOrganizations().then(function(organizations) {
+
+          var organization = $.grep(organizations, function(organization) {
+            return organization.id === parseInt($stateParams.organizationId, 10);
+          });
+          if (organization.length === 1) {
+            deferred.resolve(organization[0]);
+          } else {
+            deferred.reject(
+              new Error(['Organization #', $stateParams.organizationId, ' not found'].join(''))
+            );
+          }
+        });
+
+        return deferred.promise;
       }
     };
 
-    routingHelpers.checkAuthenticated.$inject = ['CurrentSession', '$q', '$log'];
-
+    routingHelpers.checkAuthenticated.$inject   = ['CurrentSession', '$q', '$log'];
+    routingHelpers.checkAnonymous.$inject       = ['CurrentSession', '$q'];
+    routingHelpers.currentOrganization.$inject  = ['CurrentSession', '$q', '$stateParams'];
 
     ///////////////////
     // Define states //
     ///////////////////
-
 
     // Public routes
     $stateProvider
@@ -169,15 +188,7 @@ angular
       })
 
       .state('app.knowledge.by_project', {
-        url : '/knowledge/filter/project/:project_id'
-      })
-
-      .state('app.knowledge.by_mission', {
-        url : '/knowledge/filter/mission/:mission_id'
-      })
-
-      .state('app.knowledge.by_tags', {
-        url : '/knowledge/filter/tags/:tags'
+        url : '/knowledge/filter/:project_id/:mission_id/:tags'
       })
 
       // PROJECTS
@@ -246,68 +257,31 @@ angular
       .state('app.organizations', {
         url : '/organizations',
         templateUrl : 'views/app/manage/organizations.html',
-        controller : ['$scope', 'CurrentSession', function($scope, CurrentSession) {
-          CurrentSession.getOrganizations().then(function(organizations) {
-            $scope.organizations = organizations;
-          }, function() {
-            console.error('Unable to load organizations for user #' + CurrentSession.getUser().id);
-          });
-        }]
+        controller : 'Organizations'
       })
 
       .state('app.organization', {
         url : '/organization/:organizationId',
-        templateUrl : 'views/app/manage/organization/index.html',
-        controller : ['$scope', '$stateParams', '$state', 'CurrentSession', 'OrganizationResource', function($scope, $stateParams, $state, CurrentSession, OrganizationResource) {
-          
-          CurrentSession.getOrganizations().then(function(organizations) {
-
-            var organization = $.grep(organizations, function(organization) {
-              return organization.id === parseInt($stateParams.organizationId, 10);
-            });
-            if (organization.length === 1) {
-              $scope.organization = organization[0];
-            } else {
-              console.error('404 organization #' + $stateParams.organizationId);
-              // error
-            }
-
-            OrganizationResource.teams.query({
-              id :$stateParams.organizationId
-            }, function(teams) {
-              $scope.teams = teams;
-            });
-
-            $scope.createTeam = function(name) {
-              OrganizationResource.teams.save({
-                id :$stateParams.organizationId
-              },{
-                name : name
-              }, function(data) {
-                $state.go('app.team', { teamId : data.id });
-              }, function() {
-                window.alert('error while creating team');
-              });
-            };
-
-          }, function() {
-            console.error('Unable to load organizations for user #' + CurrentSession.getUser().id);
-          });
-        }]
+        abstract : true,
+        template : '<ui-view></ui-view>',
+        resolve : {
+          currentOrganization : routingHelpers.currentOrganization
+        }
       })
 
-      .state('app.team', {
+      .state('app.organization.manage', {
+        url : '/manage',
+        templateUrl : 'views/app/manage/organization/index.html',
+        controller : 'ManageOrganizationCtrl'
+      })
+
+      .state('app.organization.team', {
         url : '/team/:teamId',
         templateUrl : 'views/app/manage/team.html',
         controller : ['$scope', '$stateParams', function($scope, $stateParams) {
           $scope.teamId = $stateParams.teamId;
         }]
-      })
-
-      .state('app.organization.teams.members', {
-        url : '/:team_id/members'
       });
-
 
     $urlRouterProvider
       .otherwise('/register');

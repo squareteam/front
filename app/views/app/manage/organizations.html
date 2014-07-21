@@ -5,7 +5,7 @@
 <ul ng-if="organizations.length > 0">
    <li ng-repeat="organization in organizations">
       {{ organization.name }}
-      <a ui-sref="app.organization({ organizationId : organization.id })" class="btn btn-default btn-xs">
+      <a ui-sref="app.organization.manage({ organizationId : organization.id })" class="btn btn-default btn-xs">
          manage
       </a>
    </li>
