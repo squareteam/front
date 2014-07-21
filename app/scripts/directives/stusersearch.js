@@ -2,6 +2,8 @@
 
 'use strict';
 
+// TODO(charly): use filter on ng-repeat expression ?
+
 angular.module('squareteam.app')
   .directive('stUserSearch', function () {
     return {
