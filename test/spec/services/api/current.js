@@ -1,4 +1,4 @@
-/*global CryptoJS*/
+/*global CryptoJS, apiResponseAsString, provideAuth */
 'use strict';
 
 describe('Service: CurrentSession', function () {
@@ -66,20 +66,16 @@ describe('Service: CurrentSession', function () {
 
   describe('when authenticated', function() {
 
-    beforeEach(function() {
-      var identifier  = 'test@example.com',
-          token       = 'a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1';
-
-      CurrentSession.$$user = { id : 1, name : 'charly', email : 'charly.poly@live.fr'};
-      CurrentSession.$$auth = new ApiAuth(identifier,CryptoJS.enc.Hex.parse(token));
-    });
+    beforeEach(inject(function($injector) {
+      provideAuth($injector)();
+    }));
 
     it('should return valid auth', function () {
       expect(CurrentSession.getAuth().$isValid()).toBe(true);
     });
 
     it('should return user', function () {
-      expect(CurrentSession.getUser()).toEqual({ id : 1, name : 'charly', email : 'charly.poly@live.fr'});
+      expect(CurrentSession.getUser()).toEqual({ id : 1, name : 'test-auth', email : 'charly.poly@live.fr'});
     });
 
   });
@@ -95,7 +91,7 @@ describe('Service: CurrentSession', function () {
       $httpBackend.verifyNoOutstandingExpectation();
       $httpBackend.verifyNoOutstandingRequest();
     });
-    
+
     it('should fails to save when anonymous', function() {
 
       CurrentSession.save().then(successCallback, errorCallback);
@@ -166,7 +162,7 @@ describe('Service: CurrentSession', function () {
     it('should restore session from cookies storage', function() {
       spyOn($rootScope, '$broadcast').and.callThrough();
 
-      $httpBackend.expectGET(apiURL + 'user/me').respond(200, '{"data":{"name":"Charly"}}');
+      $httpBackend.expectGET(apiURL + 'user/me').respond(200, apiResponseAsString(null,{'name':'Charly'}));
 
       CurrentSession.restore().then(successCallback, errorCallback);
 
@@ -207,7 +203,7 @@ describe('Service: CurrentSession', function () {
     it('should failed silently to restore session from cookies storage', function() {
 
       spyOn(ApiSessionStorageCookies, 'retrieve').and.returnValue(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
-      $httpBackend.expectGET(apiURL + 'user/me').respond(401, '{"data":null,"errors":["api.not_authorized"]}');
+      $httpBackend.expectGET(apiURL + 'user/me').respond(401, apiResponseAsString(['api.not_authorized']));
 
       CurrentSession.restore().then(successCallback, errorCallback);
 
@@ -224,6 +220,40 @@ describe('Service: CurrentSession', function () {
       expect(CurrentSession.getUser()).toEqual(null);
 
       expect(CurrentSession.getAuth().$isValid()).toBe(false);
+
+    });
+
+  });
+
+  describe('CurrentSession.reloadUser', function() {
+
+    beforeEach(inject(function($injector) {
+      provideAuth($injector)();
+    }));
+    
+    it('should update $$user object if success', function() {
+      $httpBackend.expectGET(apiURL + 'user/me').respond(200, apiResponseAsString(null,{'name':'Charly'}));
+
+      CurrentSession.reloadUser();
+
+      $httpBackend.flush();
+      $rootScope.$digest();
+
+      expect(CurrentSession.getUser()).toEqual({'name':'Charly'});
+
+    });
+
+    it('should unregister() if fail', function() {
+      spyOn(CurrentSession, 'unregister');
+
+      $httpBackend.expectGET(apiURL + 'user/me').respond(401, apiResponseAsString(['api.unauthorized']));
+
+      CurrentSession.reloadUser();
+
+      $httpBackend.flush();
+      $rootScope.$digest();
+
+      expect(CurrentSession.unregister.calls.count()).toBe(1);
 
     });
 
