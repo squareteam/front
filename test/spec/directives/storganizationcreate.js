@@ -68,9 +68,15 @@ describe('Directive: st-organization-create', function () {
     });
     
     it('should display alert if name taken', function() {
-      $httpBackend.expectPOST(appConfig.api.url + 'organizations').respond(400, '{"data":null,"errors":["Name has already been taken"]}');
+      $httpBackend.expectPOST(appConfig.api.url + 'organizations/with_admins').respond(400, '{"data":null,"errors":["Name has already been taken"]}');
 
-      scope.organization.name = 'test';
+      var directiveScope = element.isolateScope();
+      directiveScope = angular.extend(directiveScope, {
+        organization : {
+          name : 'test'
+        }
+      });
+      element.data('$isolateScope', directiveScope);
 
       $rootScope.$digest();
 
@@ -90,9 +96,15 @@ describe('Directive: st-organization-create', function () {
         
     it('should display alert if server busy', function() {
 
-      $httpBackend.expectPOST(appConfig.api.url + 'organizations').respond(500, '');
+      $httpBackend.expectPOST(appConfig.api.url + 'organizations/with_admins').respond(500, '');
 
-      scope.organization.name = 'test';
+      var directiveScope = element.isolateScope();
+      directiveScope = angular.extend(directiveScope, {
+        organization : {
+          name : 'test'
+        }
+      });
+      element.data('$isolateScope', directiveScope);
 
       $rootScope.$digest();
 

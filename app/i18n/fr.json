@@ -63,10 +63,14 @@
          "emailLabel"      : "E-mail",
          "loginBtn"        : "Se connecter",
          "rememberMe"      : "Se souvenir de moi",
-         "signInWith_1"    : "Se connecter",
-         "signInWith_2"    : "avec",
          "forgotLink"      : "Mot de passe oublié ?",
          "FAQLink"         : "Impossible de se connecter ?"
+      },
+
+      "stOAuthLink" : {
+         "signIn"    : "Sign in",
+         "signUp"    : "Sign up",
+         "with"    : "with"
       },
 
       "stUserCreate" : {

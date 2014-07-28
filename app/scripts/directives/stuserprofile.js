@@ -28,13 +28,13 @@ angular.module('squareteam.app')
           });
         }
       },
-      controller: function($scope, $element, $attrs, $location, UserRessource, CurrentSession, lodash) {
+      controller: function($scope, $element, $attrs, $location, UserResource, CurrentSession, lodash) {
         
         var user, updateUser;
 
         updateUser = lodash.throttle(function(user) {
           if (user) {
-            UserRessource.update({
+            UserResource.update({
               id : user.id
             }, {
               email : user.email,
@@ -48,7 +48,7 @@ angular.module('squareteam.app')
           'leading': false
         });
 
-        user = UserRessource.get({
+        user = UserResource.get({
           id : $scope.userId
         }, function() {
           $scope.user = user;
@@ -58,7 +58,7 @@ angular.module('squareteam.app')
           console.error('Failed to load user#' + $scope.userId);
         });
 
-        UserRessource.organizations.query({
+        UserResource.organizations.query({
           userId : $scope.userId
         }, function(organizations) {
           $scope.organizations = organizations;

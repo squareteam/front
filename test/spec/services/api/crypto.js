@@ -76,12 +76,13 @@ describe('Service: ApiCrypto', function () {
   });
 
   it('should generate correct hash (/w data)', function () {
-    data.request.data = {test : 1};
+    data.request.method = 'POST';
+    data.request.data   = {test : 1};
     var headers = ApiCrypto.transformRequest(data.request).headers;
 
     expect(headers['St-Timestamp']).toBe(1393369116);
     expect(headers['St-Identifier']).toBe(data.auth.identifier);
-    expect(headers['St-Hash']).toBe('f0036e0d6e2791030db39410edfbc8fd31fd59360a5c7fabf177e1f5a70fcac3');
+    expect(headers['St-Hash']).toBe('9c0c0d96dca26a91115fa0bef83191887e0ac95253f1a9d9aee81b8b8674a28e');
 
   });
 

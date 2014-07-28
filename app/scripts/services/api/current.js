@@ -14,7 +14,7 @@
 //  - `restore`    will try to restore CurrentSession from cookies
 
 angular.module('squareteam.app')
-  .service('CurrentSession', function CurrentSession($rootScope, $http, $q, appConfig, ApiAuth, ApiCrypto, ApiErrors, ApiSessionStorageCookies, UserRessource) {
+  .service('CurrentSession', function CurrentSession($rootScope, $http, $q, appConfig, ApiAuth, ApiCrypto, ApiErrors, ApiSessionStorageCookies, UserResource) {
     this.$$user                 = null;
     this.$$auth                 = new ApiAuth();
 
@@ -26,7 +26,7 @@ angular.module('squareteam.app')
 
     this.getOrganizations = function() {
       // TODO(charly): add caching ?
-      return UserRessource.organizations.query({
+      return UserResource.organizations.query({
         userId : this.$$user.id
       }).$promise;
     };

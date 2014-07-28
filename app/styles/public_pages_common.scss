@@ -66,11 +66,12 @@ body .public_layout {
                   }
                }
             }
-            #separate{
+            .separate{
                border-bottom: 1px solid #ccc;
                height: 11px;
                text-align: center;
-               margin-top: 10px;
+               margin-top: 20px;
+               margin-bottom: 20px;
                span{
                   background: #fff;
                   padding: 8px;

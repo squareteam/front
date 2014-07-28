@@ -28,7 +28,12 @@
         <div class="col-xs-4">
            <a ui-sref="public.forgotPassword.request" href>
              {{ 'directives.stLoginForm.forgotLink' | translate }}
-           </a> 
+           </a>
+           <p></p>
+           <a href="http://faq.squareteam.io/signin/system/configuration/2014/07/08/unable-to-signin/"
+              ng-show="retries > 1">
+             Having trouble?
+           </a>
         </div>
         
         <input  type='submit' name="submitLogin" value="{{ 'directives.stLoginForm.loginBtn' | translate }}"
@@ -39,15 +44,9 @@
   </article>
 
   <article id="second_sign_in">
-     <div class="col-xs-6 col-xs-offset-3">
-        <img  src="../images/logo_github.png" alt="" />
-        <a href="{{ githubLoginUrl }}">
-          <span>
-            {{ 'directives.stLoginForm.signInWith_1' | translate }}
-          </span>
-            {{ 'directives.stLoginForm.signInWith_2' | translate }} GitHub
-          </a>
-     </div>   
-     <div class='clear'></div>
+      <div class="col-xs-6 col-xs-offset-3">
+        <st-oauth-link service="github" mode="signin"></st-oauth-link>
+      </div>
+      <div class='clear'></div>
   </article>
 </div>
