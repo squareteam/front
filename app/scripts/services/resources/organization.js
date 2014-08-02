@@ -13,7 +13,9 @@ angular.module('squareteam.resources')
     });
 
     organizationResource.createWithAdmins = function (organizationData, adminIds) {
-      organizationData.admins = adminIds;
+      /*jshint camelcase:false */
+      organizationData.admins_ids = adminIds;
+      /*jshint camelcase:true */
       return $http.post('apis://organizations/with_admins', organizationData);
     };
 
