@@ -28,7 +28,7 @@
             <span>
                <img src="/images/user.png" width="25" class="img-circle pull-left" alt="" style="margin-right:10px;"> {{ user.name }}
             </span>
-            <a href class="edit_role" ng-click="$parent.editUserRole = user">
+            <a href class="edit_role" ng-click="editUserPermission(user)">
                Edit permissions
             </a>
          </li>
@@ -44,10 +44,10 @@
    </div>
 
    <div class="col-xs-6">
-      <div class="permissions_manager" ng-show="editUserRole != false">
+      <div class="permissions_manager" ng-show="currentEditingUser != false">
          <h3>
-            Edit permissions of {{ editUserRole.name }}
-            <button  class="btn btn-default btn-xs destroyTeam" ng-click="editUserRole = false">
+            Edit permissions of {{ currentEditingUser.name }}
+            <button  class="btn btn-default btn-xs destroyTeam" ng-click="currentEditingUser = false">
                Close
             </button>
             <button  class="btn btn-default btn-xs destroyTeam" ng-click="updateUserRole()">

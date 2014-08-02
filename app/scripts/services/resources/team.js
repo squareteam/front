@@ -33,7 +33,7 @@ angular.module('squareteam.resources')
       addUser : function(user) {
         var defer = $q.defer();
 
-        $http.post('apis://teams/'+ this.id + '/users', {
+        $http.post('apis://team/'+ this.id + '/user', {
           'user_id'     : user.id,
           'permissions' : 0
         }).then(angular.bind(this, function() {
@@ -47,7 +47,7 @@ angular.module('squareteam.resources')
       updateUserRole : function(userId, permissions) {
         var defer = $q.defer();
 
-        $http.put('apis://teams/'+ this.id + '/users/' + userId, {
+        $http.put('apis://team/'+ this.id + '/user/' + userId, {
           'permissions' : permissions
         }).then(angular.bind(this, function() {
           defer.resolve();
@@ -67,7 +67,7 @@ angular.module('squareteam.resources')
         });
 
         if (index >= 0) {
-          $http['delete']('apis://teams/'+ this.id + '/users/' + userId).then(angular.bind(this, function() {
+          $http['delete']('apis://team/'+ this.id + '/user/' + userId).then(angular.bind(this, function() {
             this.users.splice(index, 1);
             defer.resolve();
           }), defer.reject);

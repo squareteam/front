@@ -66,9 +66,9 @@ angular.module('squareteam.app')
         }
 
         function updateUserRole () {
-          if ($scope.editUserRole) {
-            $scope.team.updateUserRole($scope.editUserRole.id, $scope.roleToAdd).then(function() {
-              $scope.editUserRole = false;
+          if ($scope.currentEditingUser) {
+            $scope.team.updateUserRole($scope.currentEditingUser.id, $scope.roleToAdd).then(function() {
+              $scope.currentEditingUser = false;
             }, function() {
               $scope.errors.updateUser = true;
             });
@@ -76,13 +76,17 @@ angular.module('squareteam.app')
         }
 
         $scope.roleToAdd    = 0;
-        $scope.editUserRole = false;
+        $scope.currentEditingUser = false;
 
         // EXPOSE to $scope
         $scope.toggleUserRemoveFromTeam  = toggleUserRemoveFromTeam;
         $scope.addUserToTeam             = addUserToTeam;
         $scope.removeUsers               = removeUsers;
         $scope.updateUserRole            = updateUserRole;
+        $scope.editUserPermission        = function(user) {
+          $scope.currentEditingUser = user;
+          $scope.roleToAdd          = user.permissions;
+        };
 
         $scope.usersIds                  = function() {
           return $scope.team ? $.map($scope.team.users, function(user) {
