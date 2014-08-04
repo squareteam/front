@@ -47,6 +47,13 @@ angular.module('squareteam.resources')
       updateUserRole : function(userId, permissions) {
         var defer = $q.defer();
 
+        // update local reference
+        angular.forEach(this.users, function(user) {
+          if (user.id === userId) {
+            user.permissions = permissions;
+          }
+        });
+
         $http.put('apis://team/'+ this.id + '/user/' + userId, {
           'permissions' : permissions
         }).then(angular.bind(this, function() {
