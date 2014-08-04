@@ -21,10 +21,8 @@
 
       <ul class="users_list">
          <li ng-repeat="user in team.users track by user.id">
-            <span class="select  pull-left" ng-click="toggleUserRemoveFromTeam(user)">
-               <input type="checkbox" ng-checked="usersToRemove.indexOf(user.id) > 0">
-               <label></label>
-            </span>
+            <input   type="checkbox" class="pull-left"
+                     ng-checked="usersToRemove.indexOf(user.id) > 0" ng-click="toggleUserRemoveFromTeam(user)">
             <span>
                <img src="/images/user.png" width="25" class="img-circle pull-left" alt="" style="margin-right:10px;"> {{ user.name }}
             </span>
@@ -63,15 +61,23 @@
             &nbsp;
          </p>
 
-         <div ng-click="roleToAdd = rolesHelpers.has(roleToAdd, rolesHelpers.all()) ? rolesHelpers.remove(roleToAdd, rolesHelpers.all()) : rolesHelpers.add(roleToAdd, rolesHelpers.all())">
-            <input type="checkbox" ng-checked="rolesHelpers.has(roleToAdd, rolesHelpers.all())" id="role_ALL">
+         <div>
+            <input   type="checkbox"
+                     ng-click="roleToAdd = rolesHelpers.has(roleToAdd, rolesHelpers.all()) ? rolesHelpers.remove(roleToAdd, rolesHelpers.all()) : rolesHelpers.add(roleToAdd, rolesHelpers.all())"
+                     ng-checked="rolesHelpers.has(roleToAdd, rolesHelpers.all())"
+                     id="role_ALL">
+
             <label for="role_ALL">
                 {{ 'directives.stTeamManage.selectAll' | translate }}
             </label>
          </div>
          <li ng-repeat="(name, value) in ROLES">
-            <div ng-click="$parent.roleToAdd = rolesHelpers.has($parent.roleToAdd, value) ? rolesHelpers.remove($parent.roleToAdd, value) : rolesHelpers.add($parent.roleToAdd, value)">
-               <input type="checkbox" ng-checked="rolesHelpers.has($parent.roleToAdd, value)" id="role_{{ name }}">
+            <div>
+               <input   type="checkbox"
+                        ng-click="$parent.roleToAdd = rolesHelpers.has($parent.roleToAdd, value) ? rolesHelpers.remove($parent.roleToAdd, value) : rolesHelpers.add($parent.roleToAdd, value)"
+                        ng-checked="rolesHelpers.has($parent.roleToAdd, value)"
+                        id="role_{{ name }}">
+
                <label for="role_{{ name }}">
                    {{ 'directives.stTeamManage.roles.' + name | translate }}
                </label>

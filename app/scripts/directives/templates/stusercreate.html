@@ -46,7 +46,7 @@
         </div>
         
         <div class="col-xs-4 col-xs-offset-2" ng-click="user.cgu_accept = !user.cgu_accept">
-          <input type='checkbox' name="cgu" ng-model="user.cgu_accept" required />
+          <input type='checkbox' name="cgu" ng-model="user.cgu_accept" required class="fancy" />
           <label>{{ 'directives.stUserCreate.CGULabel' | translate }}</label>
           <div class="error_text" ng-show="registerForm.cgu.$dirty && registerForm.cgu.$error.required">
             {{ 'directives.stUserCreate.CGUNotice' | translate }}
