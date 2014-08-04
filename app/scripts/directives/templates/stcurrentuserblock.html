@@ -1,5 +1,12 @@
-<div class="pull-left">
-   {{ userName }}
+<div class="pull-right user_block">
+   <div class="row">
+      <div class="col-xs-5 pull-right avatar">
+         <img src="/images/app/layout/avatar_sample.jpg" alt="" width="80px">
+      </div>
+      <div class="menu col-xs-7 pull-right">
+         {{ userName }}
+         <i class="icon icon-arrow-down-colors"></i>
+      </div>
+   </div>
+   <div ng-transclude></div>
 </div>
-<img src="/images/user.png" width="39" class="img-circle pull-right user-avatar" alt="">
-<div ng-transclude></div>

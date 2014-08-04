@@ -195,7 +195,7 @@ angular
       })
 
       .state('app.knowledge.by_project', {
-        url : '/knowledge/filter/:project_id/:mission_id/:tags'
+        url : '/knowledge/filter/:projectId/:missionId/:tags'
       })
 
       // PROJECTS
@@ -217,13 +217,13 @@ angular
       })
 
       .state('app.projects.edit', {
-        url : '/projects/edit/:project_id'
+        url : '/projects/edit/:projectId'
       })
 
       // MISSIONS
 
       .state('app.missions', {
-        url : '/projects/:project_id/missions'
+        url : '/projects/:projectId/missions'
       })
 
       .state('app.my_missions', {
@@ -235,17 +235,17 @@ angular
       })
 
       .state('app.missions.view', {
-        url : '/:mission_id'
+        url : '/:missionId'
       })
 
       .state('app.missions.edit', {
-        url : '/:mission_id/edit'
+        url : '/:missionId/edit'
       })
 
       // TASKS
 
       .state('app.tasks', {
-        url : '/missions/:mission_id/tasks',
+        url : '/missions/:missionId/tasks',
         templateUrl : 'views/app/missions/index.html'
       })
 
@@ -254,11 +254,11 @@ angular
       })
 
       .state('app.tasks.view', {
-        url : '/:task_id'
+        url : '/:taskId'
       })
 
       .state('app.tasks.edit', {
-        url : '/:task_id/edit'
+        url : '/:taskId/edit'
       })
 
       // ADMIN

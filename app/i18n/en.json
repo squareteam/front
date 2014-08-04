@@ -35,9 +35,9 @@
       "menu"   : {
          "home"            : "Timeline",
          "admin"           : "Admin",
-         "myMissions"      : "My missions",
+         "tasks"           : "Tasks",
          "projects"        : "Projects",
-         "knowledgeCenter" : "Knowledge Center"
+         "knowledgeCenter" : "Knowledge"
       }
    },
 

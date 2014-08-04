@@ -1,31 +1,61 @@
-<div class="topbar">
-   <!-- We'll see how search results are displayed -->
-   <st-global-search>
-      <div class="search">
-         <i class="icon_search"></i>
+<header class="top_bar">
+   <div class="container">
+      <div class="row">
+         <nav class="col-xs-5">
+            <div class="row">
+               <a href="#" class="col-xs-2 search item">
+               </a>
+               <a ui-sref="app.home" class="col-xs-2 item" ui-sref-active="active">
+                  <div>
+                     <i class="icon icon-timeline"></i>
+                     <span>
+                        {{ 'header.menu.home' | translate }}
+                     </span>
+                  </div>
+               </a>
+               <a ui-sref="app.tasks({ missionId : 0 })" class="col-xs-2 item" ui-sref-active="active">
+                  <div>
+                     <i class="icon icon-tasks"></i>
+                     <span>
+                        {{ 'header.menu.tasks' | translate }}
+                     </span>
+                  </div>
+               </a>
+               <a ui-sref="app.projects" class="col-xs-2 item" ui-sref-active="active">
+                  <div>
+                     <i class="icon icon-projects"></i>
+                     <span>
+                        {{ 'header.menu.projects' | translate }}
+                     </span>
+                  </div>
+               </a>
+               <a ui-sref="app.knowledge" class="col-xs-2 item" ui-sref-active="active">
+                  <div>
+                     <i class="icon icon-knowledge"></i>
+                     <span>
+                        {{ 'header.menu.knowledgeCenter' | translate }}
+                     </span>
+                  </div>
+               </a>
+            </div>
+         </nav>
+
+         <st-current-user-block class="user-block col-xs-3 pull-right">
+             <div class="dropdown">
+                 <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="accountMenu">
+                     <li role="presentation">
+                         <a role="menuitem" tabindex="-1" href ui-sref="app.account">My Account</a>
+                     </li>
+                     <li role="presentation">
+                         <a role="menuitem" tabindex="-1" href ui-sref="app.organizations">Manage organizations</a>
+                     </li>
+                     <li role="presentation" class="divider"></li>
+                     <li role="presentation">
+                         <a role="menuitem" tabindex="-1" ng-click="logout()" href>{{ 'header.logout' | translate }}</a>
+                     </li>
+                 </ul>
+             </div>
+         </st-current-user-block>
       </div>
-   </st-global-search>
-
-   <menu>
-      <ul>
-         <li>
-            Timeline
-         </li>
-         <li>
-            Mission
-         </li>
-         <li>
-            Projects
-         </li>
-         <li>
-            Knowledge
-         </li>
-         <li>
-            My missions
-         </li>
-      </ul>
-   </menu>
-
-   <st-current-user-block></st-current-user-block>
-
-</div>
+   </div>
+</header>

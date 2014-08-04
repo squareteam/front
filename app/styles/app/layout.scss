@@ -1,0 +1,143 @@
+@import 'application/colors';
+@import 'application/helpers-classes';
+
+// Squareteam Application Layout style
+
+.container {
+   width: 1100px !important;
+}
+
+body {
+   background-color: #efeff1;
+   font-family: "Museo Sans";
+   font-weight: 500;
+   font-size: 13px;
+}
+
+header.top_bar {
+   background-color:#FFFFFF;
+}
+
+$layout_image_path: "/images/app/layout/";
+
+@mixin icon_bg($file, $left:"center", $top:"center", $bg_color:"transparent") {
+   background: url( $layout_image_path + $file ) $left $top no-repeat scroll $bg_color;
+}
+
+// TODO(charly): replace with SVG icons
+.icon {
+   display: inline-block;
+
+   &.icon-timeline {
+      width: 31px;
+      height: 28px;
+      background: url($layout_image_path + 'timeline.png') center center no-repeat scroll transparent;
+   }
+
+   &.icon-tasks {
+      width: 28px;
+      height: 26px;
+      background: url($layout_image_path + 'tasks.png') center center no-repeat scroll transparent;
+   }
+
+   &.icon-projects {
+      width: 24px;
+      height: 23px;
+      background: url($layout_image_path + 'projects.png') center center no-repeat scroll transparent;
+   }
+
+   &.icon-knowledge {
+      width: 31px;
+      height: 22px;
+      background: url($layout_image_path + 'knowledge.png') center center no-repeat scroll transparent;
+   }
+
+   &.icon-arrow-down-colors {
+      width: 29px;
+      height: 31px;
+      background: url($layout_image_path + 'arrow-down-colors.png') center center no-repeat scroll transparent;
+   }
+
+}
+
+nav {
+   height: 80px;
+   overflow: hidden;
+   width: 42.666667% !important;
+
+   .item {
+      
+      height: 80px;
+      line-height: 80px;
+      text-align: center;
+      vertical-align: middle;
+      margin-right: 15px;
+
+
+      .icon {
+         margin: 0 auto;
+
+         transition: all ease-out 0.1s;
+         transform: translateY(60px);
+         opacity: 0;
+      }
+
+      &.visible .icon {
+         transform: translateY(0px);
+         opacity: 1;
+      }
+
+      span {
+         transition: all ease-out 0.3s;
+         transition-delay:0.1s;
+         opacity: 0;
+      }
+
+      &.visible span {
+         opacity: 1;
+      }
+
+      > div {
+         vertical-align:middle;
+         display:inline-block;
+         line-height:normal;
+      }
+
+      &, &:link, &:visited, &:active {
+         color:$shy_blue;
+         transition: all ease-out 0.3s;
+      }
+
+      &:hover, &.active {
+         color:$blue_active;
+         text-decoration: none;
+      }
+   }
+
+   .search {
+      width: 80px;
+      background: url($layout_image_path + "search.png") 45% 50% no-repeat scroll $blue_active;
+   }
+}
+
+.user-block {
+   // user image
+   .avatar {
+      width: 80px;
+      padding-right:0;
+      padding-left:0;
+      overflow: hidden;
+   }
+
+   .menu {
+      text-align: right;
+      line-height: 80px;
+      color: #5e7a8a;
+      padding-right:0;
+
+      .icon {
+         vertical-align: middle;
+         cursor: pointer;
+      }
+   }
+}

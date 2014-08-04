@@ -1,3 +1,5 @@
+/* global $ */
+
 'use strict';
 
 angular.module('squareteam.app')
@@ -6,8 +8,20 @@ angular.module('squareteam.app')
       templateUrl: 'scripts/directives/templates/sttopbar.html',
       restrict: 'E',
       replace: true,
-      controller: function(/*$scope, $element, $attrs, $location, CurrentSession*/) {
-         
+      controller: function() {
+
+        // use setTimeout cause it's not watcher or data related
+        setTimeout(function() {
+          $('nav .item').each(function(i, el) {
+            // IIFE for scope
+            (function(_i) {
+              setTimeout(function() {
+                $(el).addClass('visible');
+              }, _i * 100);
+            })(i);
+          });
+        },500);
+
       }
     };
   });
