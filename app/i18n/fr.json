@@ -42,6 +42,21 @@
       }
    },
 
+   "app" : {
+
+      "projects" : {
+         "filters" : {
+            "byStatus"     : "Statut",
+            "byDeadline"   : "Deadline",
+            "byDate"       : "Date"
+         },
+
+         "add_project"  : "Nouveau projet",
+         "projects"     : "projets"
+      }
+
+   },
+
    "api" : {
       "serverBusy" : "Nos serveurs sont momentanéments indisponibles",
       "no_results" : "Aucun résultats"
@@ -121,6 +136,16 @@
             "ADD_MISSION"           : "Créer une mission",
             "MANAGE_ORGANIZATION"   : "Gérer l'organisation",
             "MANAGE_MISSION"        : "Gérer les missions"
+         }
+      },
+
+      "stProjectCard" : {
+         "status" : {
+            "done"      : "Terminé",
+            "due"       : "En cours",
+            "inprogress": "En cours",
+            "validation": "Validation",
+            "paused"    : "En pause"
          }
       }
    }

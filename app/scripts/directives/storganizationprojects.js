@@ -2,24 +2,25 @@
 
 // usage :
 // 
-// <st-organization-projects  ng-repeat="organization in organizations track by organization.id"
-//                            organization-id="{{ organization.id }}"
-//                            collapsed="$index > 2">
+// <st-organization-projects  organization-id="{{ organization.id }}">
 // </st-organization-projects>
 
 angular.module('squareteam.app')
   .directive('stOrganizationProjects', function () {
     return {
       scope : {
-        organizationId  : '@',
-        collapsed       : '@'
+        organizationId  : '@'
       },
       templateUrl: 'scripts/directives/templates/storganizationprojects.html',
       restrict: 'E',
       replace: true,
-      controller: function($scope, $element, $attrs, $location, $http, ApiCache) {
-        $http.get('apis://projects/' + $scope.organizationId, { cache : ApiCache }).then(function(projects) {
-          $scope.projects = projects;
+      controller: function($scope, $element, $attrs, ProjectResource) {
+        ProjectResource.load($scope.organizationId, { apiCache : true }).then(function(data) {
+          $scope.organization = {
+            name : 'SWCC',
+            id   : 0,
+            projects : data.projects
+          };
         }, function() {
           // display error
         });

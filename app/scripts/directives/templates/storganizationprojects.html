@@ -1,11 +1,65 @@
-<div class="header">
-   <div class="organization"></div>
+<div class="organizations_projects">
+   <header>
+      <div class="container">
+         <div class="row">
+            <div class="col-xs-3 organization vertical-center"><!--  ng-if="organization"> -->
+               <div class="row">
+                  <div class="col-xs-2 vertical-center">
+                     <img src="/images/app/layout/organization_logo_sample.png" alt="">
+                  </div>
+                  <div class="col-xs-8 vertical-center" style="width:215px;">
+                     <div class="name">
+                        {{ organization.name }}
+                     </div>
+                     <div class="projects_count">
+                        {{ organization.projects.length }} {{ 'app.projects.projects' | translate }}
+                     </div>
+                  </div>
+                  <div class="col-xs-2 vertical-center">
+                     <i class="icon icon-arrow-down-active"></i>
+                  </div>
+               </div>
+            </div>
 
-   <div class="filters"></div>
-   <div class="sep"></div>
-   <div class="new_project"></div>
-</div>
+            <div class="col-xs-1 display vertical-center">
+               <div class="row">
+                  <div class="col-xs-6 grid">
+                     <i class="icon icon-display-grid"></i>
+                  </div>
+                  <div class="col-xs-6 list">
+                     <i class="icon icon-display-list"></i>
+                  </div>
+               </div>
+            </div>
 
-<div class="content" ng-class="{ collapsed : collapsed }">
-   <st-project-card ng-repeat="project in projects track by project.id" project-id="{{ project.id }}"></st-project-card>
+            <div class="col-xs-3 filters vertical-center">
+               <div class="row">
+                  <div class="col-xs-4 by_status">
+                     <span>{{ 'app.projects.filters.byStatus' | translate }}</span>
+                     <i class="icon icon-arrow-down-inactive"></i>
+                  </div>
+                  <div class="col-xs-4 by_deadline">
+                     <span>{{ 'app.projects.filters.byDeadline' | translate }}</span>
+                     <i class="icon icon-arrow-down-inactive"></i>
+                  </div>
+                  <div class="col-xs-4 by_date">
+                     <span>{{ 'app.projects.filters.byDate' | translate }}</span>
+                     <i class="icon icon-arrow-down-inactive"></i>
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-xs-2 vertical-center add_project">
+               <button class="primary">
+                  {{ 'app.projects.add_project' | translate }}
+               </button>
+            </div>
+         </div>
+      </div>
+   </header>
+
+   <div class="projects container">
+      <st-project-card ng-repeat="project in organization.projects track by project.id" project="project"></st-project-card>
+   </div>
+
 </div>

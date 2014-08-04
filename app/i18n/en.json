@@ -52,6 +52,21 @@
       "info"   : "An organization represent a group of teams and people working together."
    },
 
+   "app" : {
+
+      "projects" : {
+         "filters" : {
+            "byStatus"     : "Status",
+            "byDeadline"   : "Deadline",
+            "byDate"       : "Date"
+         },
+
+         "add_project"  : "New project",
+         "projects"     : "projects"
+      }
+
+   },
+
 
    "directives" : {
       "stLoginForm" : {
@@ -120,6 +135,16 @@
             "ADD_MISSION"           : "Create missions",
             "MANAGE_ORGANIZATION"   : "Manage organization",
             "MANAGE_MISSION"        : "Manage missions"
+         }
+      },
+
+      "stProjectCard" : {
+         "status" : {
+            "done"      : "Done",
+            "due"       : "In progress",
+            "inprogress": "In progress",
+            "validation": "Validation",
+            "paused"    : "Paused"
          }
       }
    }

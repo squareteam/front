@@ -205,7 +205,7 @@ angular
         templateUrl : 'views/app/projects/index.html',
         controller : ['$scope', 'CurrentSession', function($scope, CurrentSession) {
           CurrentSession.getOrganizations().then(function(organizations) {
-            $scope.organizations = organizations;
+            $scope.organization = organizations[0];
           }, function() {
             console.error('Unable to load organizations for user #' + CurrentSession.getUser().id);
           });

@@ -1,0 +1,93 @@
+<div class="project_card">
+   <div class="top row">
+      <div class="col-xs-10">
+         <h3>
+            {{ project.title }}
+         </h3>
+         <span class="created_at">
+            Créé le
+            <time datetime="1977-04-22T01:00:00-05:00">
+               {{ project.createdAtDate }}
+            </time>
+         </span>
+      </div>
+      <div class="col-xs-2">
+         <i class="icon icon-settings"></i>
+      </div>
+   </div>
+
+   <div class="status row" ng-if="project.status !== 'done'">
+      <div class="col-xs-7">
+         <div>
+            <i class="icon icon-status-due" ng-if="project.status === 'due'"></i>
+            <i class="icon icon-status-inprogress" ng-if="project.status !== 'due'"></i>
+            <time datetime="{{ project.deadlineDate }}">
+               {{ project.deadlineDate }}
+            </time>
+         </div>
+         <div>
+            <div class="progress_bg">
+               <div class="progress" ng-style="{ width : project.progress }"></div>
+               <div class="cursor" ng-style="{ left : project.progress }">
+                  <div class="inner"></div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-xs-5">
+         <button ng-class="['status_name', project.status ]">
+            <span>
+               {{ 'directives.stProjectCard.status.' + project.status | translate }}
+            </span>
+         </button>
+      </div>
+   </div>
+
+   <div class="status row" ng-if="project.status === 'done'">
+      <div class="col-xs-7">
+         <i class="icon icon-status-done"></i>
+         <time datetime="1977-04-22T01:00:00-05:00">
+            05/07/14
+         </time>
+      </div>
+      <div class="col-xs-5">
+         <button class="status_name done">
+            <span>Terminé</span>
+         </button>
+      </div>
+   </div>
+
+   <div class="project_thumbnail"  ng-if="project.thumbnail">
+      <img st-file-id="{{ project.thumbnail }}" alt="">
+   </div>
+
+   <div class="description" ng-if="project.description">
+      {{ project.description }}
+   </div>
+
+   <div class="metadata row">
+      <div class="col-xs-3 vertical-center">
+         <i class="icon icon-metadata-documents"></i>
+         <span>{{ project.metadata.documents }}</span>
+      </div>
+      <div class="col-xs-3 vertical-center">
+         <i class="icon icon-metadata-comments"></i>
+         <span>{{ project.metadata.comments }}</span>
+      </div>
+      <div class="col-xs-3 vertical-center">
+         <i class="icon icon-metadata-tasks"></i>
+         <span>{{ project.metadata.missions }}</span>
+      </div>
+      <div class="col-xs-3 vertical-center">
+         <i class="icon icon-metadata-members"></i>
+         <span>{{ project.metadata.members }}</span>
+      </div>
+   </div>
+
+   <div class="view_project">
+      <div>
+         <a href="">Voir ce projet</a>
+      </div>
+   </div>
+
+</div>
