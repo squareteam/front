@@ -17,7 +17,7 @@ angular.module('squareteam.app')
       },{
         name : name
       }, function(data) {
-        $state.go('app.organization.team', { teamId : data.id, organizationId : currentOrganization });
+        $state.go('app.organization.team', { teamId : data.id, organizationId : currentOrganization.id });
       }, function() {
         window.alert('error while creating team');
       });
