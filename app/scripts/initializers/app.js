@@ -66,7 +66,7 @@ angular
         return deferred.promise;
       },
 
-      currentOrganization : function(CurrentSession, $q, $stateParams) {
+      currentOrganization : function(authenticated, CurrentSession, $q, $stateParams) {
 
         var deferred = $q.defer();
 
@@ -90,7 +90,7 @@ angular
 
     routingHelpers.checkAuthenticated.$inject   = ['CurrentSession', '$q', '$log'];
     routingHelpers.checkAnonymous.$inject       = ['CurrentSession', '$q'];
-    routingHelpers.currentOrganization.$inject  = ['CurrentSession', '$q', '$stateParams'];
+    routingHelpers.currentOrganization.$inject  = ['authenticated', 'CurrentSession', '$q', '$stateParams'];
 
     ///////////////////
     // Define states //
