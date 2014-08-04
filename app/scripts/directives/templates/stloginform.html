@@ -9,6 +9,9 @@
   <p class='alert' ng-show="!!serverBusy">
       {{ 'api.serverBusy' | translate }}
   </p>
+  <p class="alert" ng-show="!!youAlreadyHaveAccount">
+      {{ 'directives.stLoginForm.youAlreadyHaveAccount' | translate }}
+  </p>
   <article id="first_sign_in">
      <form name="loginForm" action ng-submit="(!loginForm.$error || !loginForm.$error.required) && login()">
         <input  type='email' name="email" placeholder="{{ 'directives.stLoginForm.emailLabel' | translate }}"

@@ -55,15 +55,16 @@
 
    "directives" : {
       "stLoginForm" : {
-         "title"           : "Please login",
-         "passwordInvalid" : "Password is not valid",
-         "emailInvalid"    : "Email is not valid",
-         "passwordLabel"   : "Password",
-         "emailLabel"      : "Email",
-         "loginBtn"        : "Login",
-         "rememberMe"      : "Remember me",
-         "forgotLink"      : "Forgot password ?",
-         "FAQLink"         : "Having trouble with login ?"
+         "title"                 : "Please login",
+         "passwordInvalid"       : "Password is not valid",
+         "emailInvalid"          : "Email is not valid",
+         "passwordLabel"         : "Password",
+         "emailLabel"            : "Email",
+         "loginBtn"              : "Login",
+         "rememberMe"            : "Remember me",
+         "forgotLink"            : "Forgot password ?",
+         "FAQLink"               : "Having trouble with login ?",
+         "youAlreadyHaveAccount" : "You already have a Squareteam account"
       },
 
       "stOAuthLink" : {

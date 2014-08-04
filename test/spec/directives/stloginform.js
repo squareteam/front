@@ -21,15 +21,16 @@ describe('Directive: st-login-form', function () {
   }));
 
   var appConfig,
-      $httpBackend, $rootScope, $state,
+      $httpBackend, $rootScope, $state, $location,
       element, scope,
       alertLoginElt, alertPasswordElt, alertServerElt;
 
   beforeEach(inject(function ($compile, $injector) {
 
-    $httpBackend    = $injector.get('$httpBackend');
-    $rootScope      = $injector.get('$rootScope');
-    $state          = $injector.get('$state');
+    $httpBackend        = $injector.get('$httpBackend');
+    $rootScope          = $injector.get('$rootScope');
+    $state              = $injector.get('$state');
+    $location           = $injector.get('$location');
 
     appConfig       = $injector.get('appConfig');
 
@@ -38,6 +39,33 @@ describe('Directive: st-login-form', function () {
   afterEach(function() {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
+  });
+
+  describe('with oauth redirection when email conflicts', function() {
+    var alertElt, loginInput;
+
+    beforeEach(inject(function($compile) {
+      scope = $rootScope.$new();
+      element = angular.element('<st-login-form></st-login-form>');
+
+      spyOn($location, 'search').and.returnValue({
+        provider : 'squareteam',
+        email    : 'cpoly55@gmail.com'
+      });
+
+      element = $compile(element)(scope);
+
+      $rootScope.$digest();
+
+      alertElt    = $(element.find('.alert')[4]);
+      loginInput  = $(element).find('input[type="email"]');
+
+    }));
+
+    it('should display a message and fill email input', function() {
+      expect(alertElt.hasClass('ng-hide')).toBe(false);
+      expect(loginInput.val()).toBe('cpoly55@gmail.com');
+    });
   });
 
   describe('with no directive options', function() {
