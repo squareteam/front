@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: stprojectcard', function () {
+xdescribe('Directive: stprojectcard', function () {
 
   // load the directive's module
   beforeEach(module('squareteamApp'));

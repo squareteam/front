@@ -44,6 +44,7 @@ module.exports = function(config) {
       'app/bower_components/cryptojslib/rollups/hmac-sha256.js',
       'app/bower_components/cryptojslib/rollups/pbkdf2.js',
       'app/bower_components/cryptojslib/rollups/md5.js',
+      'app/bower_components/cryptojslib/components/enc-base64.js',
       'app/bower_components/angular-translate/angular-translate.js',
       'app/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
       'app/bower_components/angulartics/src/angulartics.js',
