@@ -4,7 +4,14 @@
 
 angular
   .module('squareteam.app')
-  .config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $translateProvider, $analyticsProvider) {
+
+    /////////////////
+    // Angulartics //
+    /////////////////
+
+    // Disable Angulartics in dev mode
+    $analyticsProvider.virtualPageviews(window.location.hostname.match(/dev\.squareteam/) === null);
 
     ///////////////
     // Translate //
