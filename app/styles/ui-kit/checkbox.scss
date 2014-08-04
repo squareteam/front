@@ -1,4 +1,4 @@
-[type="checkbox"]{
+[type="checkbox"].fancy {
    &:not(:checked), &:checked{
       position: absolute;  
       left: -9999px;  

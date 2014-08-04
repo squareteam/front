@@ -1,0 +1,11 @@
+<div>
+   <input type="search" ng-model="query" ng-change="search()" placeholder="{{ 'directives.stUserSearch.placeholder' | translate }}">
+   <ul class="results">
+      <li ng-repeat="user in users" ng-click="onSelect({ user : user })" ng-show="query.length > 0">
+         {{ user.name }}
+      </li>
+      <li ng-if="query.length > 0 && users.length === 0">
+         {{ 'directives.stUserSearch.noResults' | translate }}
+      </li>
+   </ul>
+</div>

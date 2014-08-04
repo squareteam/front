@@ -56,15 +56,16 @@
 
    "directives" : {
       "stLoginForm" : {
-         "title"           : "Veuillez vous connecter",
-         "passwordInvalid" : "Le mot de passe n'est pas valide",
-         "emailInvalid"    : "L'e-mail n'est pas valide",
-         "passwordLabel"   : "Mot de passe",
-         "emailLabel"      : "E-mail",
-         "loginBtn"        : "Se connecter",
-         "rememberMe"      : "Se souvenir de moi",
-         "forgotLink"      : "Mot de passe oublié ?",
-         "FAQLink"         : "Impossible de se connecter ?"
+         "title"                 : "Veuillez vous connecter",
+         "passwordInvalid"       : "Le mot de passe n'est pas valide",
+         "emailInvalid"          : "L'e-mail n'est pas valide",
+         "passwordLabel"         : "Mot de passe",
+         "emailLabel"            : "E-mail",
+         "loginBtn"              : "Se connecter",
+         "rememberMe"            : "Se souvenir de moi",
+         "forgotLink"            : "Mot de passe oublié ?",
+         "FAQLink"               : "Impossible de se connecter ?",
+         "youAlreadyHaveAccount" : "Vous possédez déjà un compte Squareteam"
       },
 
       "stOAuthLink" : {
@@ -92,10 +93,35 @@
          "organization_create"   : "créer"
       },
 
+      "stUserSearch" : {
+         "noResults"    : "Aucun résultats",
+         "placeholder"  : "Chercher un utilisateur"
+      },
+
       "stOrganizationCreate" : {
          "nameTaken"    : "Nom d'organisation déjà pris",
          "nameLabel"    : "Nom",
          "createBtn"    : "Créer l'organisation"
+      },
+
+      "stTeamManage" : {
+         "selectAll" : "Tout seléctionner/desélectionner",
+         "errors"    : {
+            "loadTeam"     : "Erreur lors du chargement des données de l'équipe",
+            "removeUsers"  : "Erreur de l'exclusion des utilisateurs",
+            "addUser"      : "Erreur lors de l'ajout de l'utilisateur",
+            "updateUser"   : "Erreur lors de la mise à jour"
+         },
+         "roles"     : {
+            "MANAGE_TEAM"           : "Gérer l'équipe",
+            "ADD_PROJECT"           : "Créer un projet",
+            "MANAGE_PROJECTS"       : "Gérer les projets",
+            "ADD_TASK"              : "Créer une tâche",
+            "MANAGE_TASKS"          : "Gérer les tâches",
+            "ADD_MISSION"           : "Créer une mission",
+            "MANAGE_ORGANIZATION"   : "Gérer l'organisation",
+            "MANAGE_MISSION"        : "Gérer les missions"
+         }
       }
    }
 }
