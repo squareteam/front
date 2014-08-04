@@ -245,8 +245,8 @@ angular
       // TASKS
 
       .state('app.tasks', {
-        url : '/missions/:missionId/tasks',
-        templateUrl : 'views/app/missions/index.html'
+        url : '/missions/:missionId/tasks'//,
+        // templateUrl : 'views/app/missions/index.html'
       })
 
       .state('app.tasks.add', {
