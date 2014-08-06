@@ -135,7 +135,7 @@ describe('Directive: st-team-manage', function () {
 
         it('should add user to list if success', function() {
 
-          $httpBackend.expectPOST(appConfig.api.url + 'team/1/user').respond(200, apiResponseAsString(null, []));
+          $httpBackend.expectPOST(appConfig.api.url + 'team/1/users').respond(200, apiResponseAsString(null, []));
 
           element.isolateScope().addUserToTeam({
             name : 'Paul',
@@ -151,7 +151,7 @@ describe('Directive: st-team-manage', function () {
 
         it('should display error if failure', function() {
 
-          $httpBackend.expectPOST(appConfig.api.url + 'team/1/user').respond(401, apiResponseAsString(['api.unauthorized']));
+          $httpBackend.expectPOST(appConfig.api.url + 'team/1/users').respond(401, apiResponseAsString(['api.unauthorized']));
 
           element.isolateScope().addUserToTeam({
             name : 'Paul',

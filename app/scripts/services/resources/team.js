@@ -33,7 +33,7 @@ angular.module('squareteam.resources')
       addUser : function(user) {
         var defer = $q.defer();
 
-        $http.post('apis://team/'+ this.id + '/user', {
+        $http.post('apis://team/'+ this.id + '/users', {
           'user_id'     : user.id,
           'permissions' : 0
         }).then(angular.bind(this, function() {
