@@ -8,11 +8,17 @@ angular.module('squareteam.app')
       replace: true,
       templateUrl : 'scripts/directives/templates/stcurrentuserblock.html',
       link: function postLink(scope, element) {
-        var button      = element.find('.icon'),
-            dropdown    = element.find('.dropdown-menu');
+        var button        = element.find('.avatar'),
+            dropdown      = element.find('.user_dropdown'),
+            buttonOffset  = button.offset();
+
+        dropdown.css({
+          top   : buttonOffset.top + 75 + 'px',
+          left  : buttonOffset.left - ((parseInt(dropdown.css('width'), 10) - parseInt(button.css('width'), 10))/2) - 35 + 'px'
+        });
 
         button.on('click', function() {
-          dropdown.fadeToggle(100);
+          dropdown[dropdown.is(':visible') ? 'fadeOut' : 'fadeIn'](200);
         });
 
         dropdown.on('click', function() {

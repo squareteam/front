@@ -41,20 +41,17 @@
          </nav>
 
          <st-current-user-block class="user-block col-xs-3 pull-right">
-             <div class="dropdown">
-                 <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="accountMenu">
-                     <li role="presentation">
-                         <a role="menuitem" tabindex="-1" href ui-sref="app.account">My Account</a>
-                     </li>
-                     <li role="presentation">
-                         <a role="menuitem" tabindex="-1" href ui-sref="app.organizations">Manage organizations</a>
-                     </li>
-                     <li role="presentation" class="divider"></li>
-                     <li role="presentation">
-                         <a role="menuitem" tabindex="-1" ng-click="logout()" href>{{ 'header.logout' | translate }}</a>
-                     </li>
-                 </ul>
-             </div>
+            <ul class="user_dropdown">
+               <li ui-sref="app.account">
+                  <a href>My account</a>
+               </li>
+               <li>
+                  <a href>Manage organization</a>
+               </li>
+               <li class="logout" ng-click="logout()">
+                  <a href>{{ 'header.logout' | translate }}</a>
+               </li>
+            </ul>
          </st-current-user-block>
       </div>
    </div>
