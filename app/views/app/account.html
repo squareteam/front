@@ -1,1 +1,91 @@
-<st-user-profile user-id="currentSession.getUser().id" editable></st-user-profile>
+<div class="container my-account">
+   <div class="row">
+      
+      <div class="col-xs-6 account">
+         <div class="col-xs-8 col-xs-push-2">
+            <div class="header">
+               <h2>
+                  My account
+               </h2>
+               <p>
+                  Let's put a friendly avatar.
+               </p>
+            </div>
+
+            <div class="avatar">
+               <img src="http://placekitten.com/g/85/85" alt="" width="85px">
+
+               <a href="#">
+                  Change my avatar
+               </a>
+            </div>
+
+            <form action="" class="minimal" name="userForm" ng-submit="updateUser()">
+
+               <label for="pseudo">
+                  Pseudo
+               </label>
+               <input type="text" type="text" name="pseudo" class="fluid" ng-model="user.name" required>
+
+               <label for="password">
+                  Password
+               </label>
+               <input type="password" type="text" name="password" class="fluid" ng-model="user.password">
+
+               <label for="email">
+                  Email
+               </label>
+               <input type="email" type="text" name="email" class="fluid" ng-model="user.email" required>
+
+               <div class="submit-footer">
+                  <input type="submit" value="Save">
+               </div>
+
+            </form>
+
+         </div>
+      </div>
+
+      <div class="col-xs-6 organizations">
+         <div class="col-xs-10 col-xs-push-1">
+            <div class="header">
+               <h2>
+                  Organizations
+               </h2>
+               <p>
+                  Member of the following organizations
+               </p>
+               <ul class="organizations-list">
+                  <li class="row" ng-repeat="organization in organizations track by organization.id">
+                     <div class="col-xs-2">
+                        <img src="../images/layout/organization_logo_sample.png" alt="">
+                     </div>
+                     <div class="col-xs-5 name">
+                        {{ organization.name }}
+                     </div>
+                     <div class="col-xs-4 pull-right">
+                        <div class="leave-button" ng-click="leaveOrganization(organization.id)">
+                           <div class="mask">
+                              <div class="text">
+                                 Leave
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </li>
+                  <li class="row" ng-if="!organizations">
+                     <div class="col-xs-12">
+                        No organization.
+                     </div>
+                  </li>
+               </ul>
+
+               <button class="submit minimal" ui-sref="app.organization_create">
+                  Create
+               </button>
+            </div>
+         </div>
+      </div>
+
+   </div>
+</div>

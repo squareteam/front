@@ -175,6 +175,7 @@ angular
 
       .state('app.account', {
         url : '/account',
+        controller : 'MyAccountCtrl',
         templateUrl: 'views/app/account.html',
       })
 

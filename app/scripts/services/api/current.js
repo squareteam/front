@@ -39,8 +39,6 @@ angular.module('squareteam.app')
       return this.$$user;
     };
 
-    // TODO(charly):  add $http interceptor to watch 
-    //                PUT on /user/me to schedule user reload
     this.reloadUser = function() {
       $http.get('apis://user/me').then(function(response) {
         this.$$user = response.data;
