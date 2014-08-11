@@ -1,6 +1,5 @@
-@import 'mixins';
-
-form {
+@import 'ui-kit/mixins';
+form.fancy {
    > p {
       @include font(Avenir, normal, 16px, #96b2ba, 21px);
       padding: 0 10px;
@@ -45,5 +44,55 @@ form {
       padding: 0.5em 0 !important;
       margin-top: 0;
       padding: 0.5em 0;
+   }
+}
+
+@import 'ui-kit/application/colors';
+
+form.minimal {
+
+   .submit-footer {
+      text-align: center;
+   }
+
+   label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #6d8593;
+      display: block;
+   }
+
+   input {
+      padding: 10px;
+      border-radius:5px;
+      border: 1px solid #cbe2e9;
+      color: #8fa8b7;
+      font-size: 14px;
+      font-weight: 300;
+
+      &:hover, &:focus {
+         color: $blue_active;
+         outline:none;
+      }
+
+      &.fluid {
+         width: 100%;
+      }
+   }
+}
+
+form.minimal input[type="submit"], button.minimal.submit {
+   margin:30px 30px 15px 30px;
+   border-radius: 3px;
+   color:#FFFFFF;
+   border:none;
+   outline: none;
+
+   transition: background-color ease-in 150ms;
+   background-color:$dark_blue;
+   padding: 22px 70px;
+
+   &:hover {
+      background-color:#57c0df;
    }
 }

@@ -15,7 +15,7 @@
     {{ 'api.serverBusy' | translate }}
   </div>
   <article id="first_sign_in"  style="padding-top:0;">
-     <form action name="registerForm" ng-submit="register()">
+     <form action name="registerForm" ng-submit="register()" class="fancy">
         <input  type='text' name="login"
                 placeholder="{{ 'directives.stUserCreate.loginLabel' | translate }}"
                 ng-model="user.login" required autofocus
@@ -46,7 +46,7 @@
         </div>
         
         <div class="col-xs-4 col-xs-offset-2" ng-click="user.cgu_accept = !user.cgu_accept">
-          <input type='checkbox' name="cgu" ng-model="user.cgu_accept" required class="fancy" />
+          <input type='checkbox' name="cgu" ng-model="user.cgu_accept" required />
           <label>{{ 'directives.stUserCreate.CGULabel' | translate }}</label>
           <div class="error_text" ng-show="registerForm.cgu.$dirty && registerForm.cgu.$error.required">
             {{ 'directives.stUserCreate.CGUNotice' | translate }}

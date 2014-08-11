@@ -191,7 +191,7 @@ module.exports = function (grunt) {
     sass: {
       dist: {
         options: {
-          loadPath: '<%= yeoman.app %>/styles/ui-kit',
+          loadPath: '<%= yeoman.app %>/styles/',
           style: 'expanded'
         },
         files: [{
