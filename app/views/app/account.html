@@ -55,31 +55,33 @@
                <p>
                   Member of the following organizations
                </p>
-               <ul class="organizations-list">
-                  <li class="row" ng-repeat="organization in organizations track by organization.id">
-                     <div class="col-xs-2">
-                        <img src="http://placekitten.com/g/45/45" alt="">
-                     </div>
-                     <div class="col-xs-5 name">
-                        {{ organization.name }}
-                     </div>
-                     <div class="col-xs-4 pull-right">
-                        <div class="leave-button" ng-click="leaveOrganization(organization.id)">
-                           <div class="mask">
-                              <div class="text">
-                                 Leave
-                              </div>
+            </div>
+            <ul class="organizations-list">
+               <li class="row" ng-repeat="organization in organizations track by organization.id">
+                  <div class="col-xs-2">
+                     <img src="http://placekitten.com/g/45/45" alt="">
+                  </div>
+                  <div class="col-xs-5 name">
+                     {{ organization.name }}
+                  </div>
+                  <div class="col-xs-4 pull-right">
+                     <div class="leave-button" ng-click="leaveOrganization(organization.id)">
+                        <div class="mask">
+                           <div class="text">
+                              Leave
                            </div>
                         </div>
                      </div>
-                  </li>
-                  <li class="row" ng-if="!organizations.length">
-                     <div class="col-xs-12 no-organization">
-                        No organization.
-                     </div>
-                  </li>
-               </ul>
+                  </div>
+               </li>
+               <li class="row" ng-if="!organizations.length">
+                  <div class="col-xs-12 no-organization">
+                     No organization.
+                  </div>
+               </li>
+            </ul>
 
+            <div class="text-center">
                <button class="submit minimal" ui-sref="app.organization_create">
                   Create
                </button>

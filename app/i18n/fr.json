@@ -116,7 +116,7 @@
       "stOrganizationCreate" : {
          "nameTaken"    : "Nom d'organisation déjà pris",
          "nameLabel"    : "Nom",
-         "createBtn"    : "Créer l'organisation"
+         "createBtn"    : "Créer"
       },
 
       "stTeamManage" : {

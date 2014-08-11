@@ -1,16 +1,48 @@
-<h2>
-   Your organizations
-</h2>
 
-<ul ng-if="organizations.length > 0">
-   <li ng-repeat="organization in organizations">
-      {{ organization.name }}
-      <a ui-sref="app.organization.manage({ organizationId : organization.id })" class="btn btn-default btn-xs">
-         manage
-      </a>
-   </li>
-</ul>
+<div class="container manage-organizations">
+   <div class="row">
+      <div class="organizations col-xs-6 col-xs-push-3">
+         <div class="col-xs-10 col-xs-push-1">
+            <div class="header">
+               <h2>
+                  Your organizations
+               </h2>
+               <p>
+                  Organizations you can manage
+               </p>
+            </div>
 
-<p ng-show="organizations.length === 0">
-   You don't have any organization, <a ui-sref="app.organization_create" class="btn btn-default btn-xs">create one ?</a>
-</p>
+            <ul ng-if="organizations.length > 0" class="organizations-list">
+               <li class="row" ng-repeat="organization in organizations track by organization.id">
+                  <div class="col-xs-2">
+                     <img src="http://placekitten.com/g/45/45" alt="">
+                  </div>
+                  <div class="col-xs-5 name">
+                     {{ organization.name }}
+                  </div>
+                  <div class="col-xs-4 pull-right">
+                     <div class="manage-button" ui-sref="app.organization.manage({ organizationId : organization.id })">
+                        <div class="mask">
+                           <div class="text">
+                              Manage
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </li>
+               <li class="row" ng-if="!organizations.length">
+                  <div class="col-xs-12 no-organization">
+                     No organization.
+                  </div>
+               </li>
+            </ul>
+
+            <div class="text-center">
+               <button class="submit minimal" ui-sref="app.organization_create">
+                  Create
+               </button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

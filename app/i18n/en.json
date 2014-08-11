@@ -115,7 +115,7 @@
       "stOrganizationCreate" : {
          "nameTaken"    : "Organization name already taken",
          "nameLabel"    : "Name",
-         "createBtn"    : "Create Organization"
+         "createBtn"    : "Create"
       },
 
       "stTeamManage" : {

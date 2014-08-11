@@ -1,7 +1,7 @@
 @import 'ui-kit/application/colors';
 @import 'ui-kit/form';
 
-.my-account {
+.my-account, .manage-organizations {
    padding: 20px 15px;
 
    .account, .organizations {
@@ -90,7 +90,7 @@
                color: #6d8593;
             }
 
-            .leave-button {
+            .leave-button, .manage-button {
                cursor: pointer;
                z-index: 6;
                position: relative;
@@ -100,7 +100,17 @@
                padding:10px 25px;
                border-radius:2px;
                width: 100px;
+            }
 
+            .manage-button {
+               transition: background-color 150ms ease-in;
+
+               &:hover {
+                  background-color: $dark_blue;
+               }
+            }
+
+            .leave-button {
                &:after {
                   content: '';
                   position: absolute;
