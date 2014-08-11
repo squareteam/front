@@ -18,7 +18,11 @@ angular.module('squareteam.resources')
     };
 
     userResource.search = function(query) {
-      return $http.get('apis://search/users/' + encodeURIComponent(query));
+      return $http.get('apis://users/search', {
+        params : {
+          q : query
+        }
+      });
     };
 
     ////////////////////////
