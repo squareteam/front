@@ -15,7 +15,8 @@ angular
     'ui.router',
     'pascalprecht.translate',
     'angulartics',
-    'angulartics.google.analytics'
+    'angulartics.google.analytics',
+    'ngDialog'
   ]);
 
 

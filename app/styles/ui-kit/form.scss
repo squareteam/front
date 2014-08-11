@@ -29,6 +29,9 @@ form.fancy {
       &.checkbox{
          //@include input_checkbox();
       }
+      &:-webkit-autofill {
+         -webkit-box-shadow: 0 0 0 1000px white inset;
+      }
    }
 
    div.error_text {
@@ -77,6 +80,9 @@ form.minimal {
 
       &.fluid {
          width: 100%;
+      }
+      &:-webkit-autofill {
+         -webkit-box-shadow: 0 0 0 1000px white inset;
       }
    }
 }

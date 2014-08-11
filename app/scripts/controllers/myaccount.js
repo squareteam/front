@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .controller('MyAccountCtrl', function ($scope, ApiSession, CurrentSession, UserResource) {
+  .controller('MyAccountCtrl', function ($scope, ApiSession, CurrentSession, UserResource, PasswordConfirmPopin) {
+    // Keep copy to know if password or email updated since last save
     var userData = angular.copy(CurrentSession.getUser());
     
     // INITIALIZE
@@ -27,7 +28,14 @@ angular.module('squareteam.app')
         
         if ($scope.user.email !== userData.email || ($scope.user.password && $scope.user.password.length)) {
           // need to re-register session, so prompt password
-          ApiSession.login($scope.user.email, window.prompt('Confirm password :'));
+          PasswordConfirmPopin.prompt().then(function(password) {
+            console.log('PasswordConfirmPopin', password);
+            ApiSession.login($scope.user.email, password).then(function() {
+              userData = angular.copy($scope.user);
+            });
+          }, function() {
+            window.alert('Error while update !');
+          });
         } else {
           CurrentSession.reloadUser();
         }
