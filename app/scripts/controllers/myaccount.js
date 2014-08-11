@@ -6,6 +6,7 @@ angular.module('squareteam.app')
     
     // INITIALIZE
     $scope.user = CurrentSession.getUser();
+    $scope.organizations = [];
 
     CurrentSession.getOrganizations().then(function(organizations) {
       $scope.organizations = organizations;

@@ -58,7 +58,7 @@
                <ul class="organizations-list">
                   <li class="row" ng-repeat="organization in organizations track by organization.id">
                      <div class="col-xs-2">
-                        <img src="../images/layout/organization_logo_sample.png" alt="">
+                        <img src="http://placekitten.com/g/45/45" alt="">
                      </div>
                      <div class="col-xs-5 name">
                         {{ organization.name }}
@@ -73,8 +73,8 @@
                         </div>
                      </div>
                   </li>
-                  <li class="row" ng-if="!organizations">
-                     <div class="col-xs-12">
+                  <li class="row" ng-if="!organizations.length">
+                     <div class="col-xs-12 no-organization">
                         No organization.
                      </div>
                   </li>

@@ -2,7 +2,7 @@
 @import 'ui-kit/form';
 
 .my-account {
-   padding-top: 20px;
+   padding: 20px 0;
 
    .account, .organizations {
       width: 48.6%;
@@ -70,11 +70,16 @@
             border-bottom: 1px solid #F3F3F3;
          }
 
+         .no-organization {
+            line-height: 45px;
+         }
+
          li {
             padding: 25px 0;
 
             img {
                width: 45px;
+               border-radius:50%;
             }
 
             .name {
