@@ -62,7 +62,7 @@ describe('Directive: stusersearch', function () {
 
       it('should display results if any', function() {
 
-        $httpBackend.expectGET(appConfig.api.url + 'search/users/test').respond(200, apiResponseAsString(null, [{'id':1,'name':'charly','email':'cpoly55@gmail.com'}]));
+        $httpBackend.expectGET(appConfig.api.url + 'users/search?q=test').respond(200, apiResponseAsString(null, [{'id':1,'name':'charly','email':'cpoly55@gmail.com'}]));
 
         element.isolateScope().search();
 
@@ -75,7 +75,7 @@ describe('Directive: stusersearch', function () {
 
       it('should display a message if no results', function() {
 
-        $httpBackend.expectGET(appConfig.api.url + 'search/users/test').respond(200, apiResponseAsString(null, []));
+        $httpBackend.expectGET(appConfig.api.url + 'users/search?q=test').respond(200, apiResponseAsString(null, []));
 
         element.isolateScope().search();
 
@@ -114,7 +114,7 @@ describe('Directive: stusersearch', function () {
 
       it('should not display excluded user_ids', function() {
 
-        $httpBackend.expectGET(appConfig.api.url + 'search/users/test').respond(200, apiResponseAsString(null, [{'id':1,'name':'charly','email':'cpoly55@gmail.com'},{'id':2,'name':'paul','email':'popox@gmail.com'}]));
+        $httpBackend.expectGET(appConfig.api.url + 'users/search?q=test').respond(200, apiResponseAsString(null, [{'id':1,'name':'charly','email':'cpoly55@gmail.com'},{'id':2,'name':'paul','email':'popox@gmail.com'}]));
 
         element.isolateScope().search();
 
