@@ -59,7 +59,9 @@
    </header>
 
    <div class="projects container">
-      <st-project-card ng-repeat="project in organization.projects track by project.id" project="project"></st-project-card>
+      <div class="row">
+         <st-project-card ng-repeat="project in organization.projects track by project.id" project="project"></st-project-card>
+      </div>
    </div>
 
 </div>

@@ -182,7 +182,7 @@ $projects_image_path: "/images/app/projects_list/";
    }
 
    .projects {
-      padding: 50px 0 0 0;
+      padding-top: 50px;
       color:$default_text_color;
 
       .project_card:nth-child(3n+1) {
@@ -194,8 +194,8 @@ $projects_image_path: "/images/app/projects_list/";
       }
 
       .project_card {
-         margin-right:11px;
-         margin-left:11px;
+         margin-right:12px;
+         margin-left:12px;
          margin-bottom: 50px;
 
          width: 350px;
