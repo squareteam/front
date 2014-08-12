@@ -53,6 +53,25 @@
 
          "add_project"  : "Nouveau projet",
          "projects"     : "projets"
+      },
+
+      "myAccount" : {
+         "profile" : {
+            "title"           : "Mon Compte",
+            "subtitle"        : "Besoin de mettre à jour vos informations ?",
+            "change_avatar"   : "Changer mon avatar",
+            "name"            : "Pseudo",
+            "password"        : "Mot de passe",
+            "email"           : "E-mail",
+            "save"            : "Sauver"
+         },
+         "organizations" : {
+            "title"           : "Organisations",
+            "subtitle"        : "Organisations dont vous êtes membre",
+            "leave"           : "Quitter",
+            "no_organizations": "Aucune organisation.",
+            "create"          : "Créer"
+         }
       }
 
    },
@@ -100,12 +119,6 @@
          "CGULabel"              : "Accepter les conditions d'utilisation",
          "CGUNotice"             : "Merci d'accepter les conditions d'utilisation",
          "createAccountBtn"      : "Créer un compte"
-      },
-
-      "stUserProfile" : {
-         "email"                 : "E-mail",
-         "organizations"         : "Membres des organisations :",
-         "organization_create"   : "créer"
       },
 
       "stUserSearch" : {

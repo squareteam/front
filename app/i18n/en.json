@@ -63,6 +63,25 @@
 
          "add_project"  : "New project",
          "projects"     : "projects"
+      },
+
+      "myAccount" : {
+         "profile" : {
+            "title"           : "My Account",
+            "subtitle"        : "Need to update your informations ?",
+            "change_avatar"   : "Change my avatar",
+            "name"            : "Pseudo",
+            "password"        : "Password",
+            "email"           : "Email",
+            "save"            : "Save"
+         },
+         "organizations" : {
+            "title"           : "Organizations",
+            "subtitle"        : "Member of the following organizations",
+            "leave"           : "Leave",
+            "no_organizations": "No organization.",
+            "create"          : "Create"
+         }
       }
 
    },
@@ -99,12 +118,6 @@
          "CGULabel"              : "Accept CGU",
          "CGUNotice"             : "Please accept CGU",
          "createAccountBtn"      : "Create Account"
-      },
-
-      "stUserProfile" : {
-         "email"                 : "Email",
-         "organizations"         : "Member of following organizations :",
-         "organization_create"   : "create"
       },
 
       "stUserSearch" : {
