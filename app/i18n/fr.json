@@ -87,6 +87,14 @@
       "info"   : "Une organisation représente un ensemble d'équipes et de personnes travaillant ensemble."
    },
 
+   "popin" : {
+      "passwordConfirm" : {
+         "title"     : "Merci de confirmer votre mot de passe",
+         "subtitle"  : "Pour votre sécurité.",
+         "continue"   : "Continuer"
+      }
+   },
+
 
    "directives" : {
       "stLoginForm" : {

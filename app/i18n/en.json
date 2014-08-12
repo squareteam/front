@@ -86,6 +86,14 @@
 
    },
 
+   "popin" : {
+      "passwordConfirm" : {
+         "title"     : "Please confirm your password",
+         "subtitle"  : "For your security.",
+         "continue"   : "Continue"
+      }
+   },
+
 
    "directives" : {
       "stLoginForm" : {

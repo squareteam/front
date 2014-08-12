@@ -4,7 +4,18 @@
 
 angular
   .module('squareteam.app')
-  .config(function ($stateProvider, $urlRouterProvider, $translateProvider, $analyticsProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $translateProvider, $analyticsProvider, ngDialogProvider) {
+
+    //////////////
+    // ngDialog //
+    //////////////
+
+    ngDialogProvider.setDefaults({
+      className: 'ngdialog-theme-squareteam',
+      showClose: true,
+      closeByDocument: true,
+      closeByEscape: true
+    });
 
     /////////////////
     // Angulartics //
