@@ -49,6 +49,7 @@ module.exports = function(config) {
       'app/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
       'app/bower_components/angulartics/src/angulartics.js',
       'app/bower_components/angulartics/src/angulartics-ga.js',
+      'app/bower_components/ngDialog/js/ngDialog.js',
       'app/scripts/initializers/modules.js',
       'app/scripts/initializers/api.js',
       'app/scripts/*.js',
