@@ -12,28 +12,18 @@ angular.module('squareteam.resources')
       }
     });
 
-    // organizationResource.create = function(organizationData, userData) {
-    //   var defer = $q.defer();
-
-
-    //   organizationResource.save({}, organizationData, function() {
-    //     organizationResource.getTeams(function(teams) {
-
-          
-
-
-    //     }, defer.reject);
-    //   }, defer.reject);
-
-    //   return defer.promise;
-    // };
-    
     organizationResource.createWithAdmins = function (organizationData, adminIds) {
-      organizationData.admins = adminIds;
+      /*jshint camelcase:false */
+      organizationData.admins_ids = adminIds;
+      /*jshint camelcase:true */
       return $http.post('apis://organizations/with_admins', organizationData);
     };
 
-    organizationResource.getTeams = $resource('apis://organizations/:id/teams');
+    organizationResource.teams = $resource('apis://organizations/:id/teams');
+
+    organizationResource.projects = function (organizationId) {
+      return $http.get('apis://organizations/' + organizationId + '/projects');
+    };
 
     return organizationResource;
   });

@@ -8,7 +8,7 @@ angular.module('squareteam.api')
 
     this.store =  function(apiAuth) {
       if (apiAuth.$isValid()) {
-        $cookies[appConfig.api.storageNS] = [apiAuth.identifier, apiAuth.token.toString()].join(':');
+        $cookies[appConfig.api.storageNS] = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse([apiAuth.identifier, apiAuth.token.toString()].join(':')));
       } else {
         return false;
       }
@@ -16,7 +16,7 @@ angular.module('squareteam.api')
 
     this.retrieve = function() {
       if (!this.empty()) {
-        var rawSession = $cookies[appConfig.api.storageNS].split(':');
+        var rawSession = CryptoJS.enc.Utf8.stringify(CryptoJS.enc.Base64.parse($cookies[appConfig.api.storageNS])).split(':');
         if (rawSession.length === 2) {
           return new ApiAuth(rawSession[0], CryptoJS.enc.Hex.parse(rawSession[1]));
         } else {

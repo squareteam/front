@@ -14,7 +14,7 @@
                </a>
             </p>
             <article id="first_sign_in">
-               <form action ng-submit="change()" name="changePasswordForm">
+               <form action ng-submit="change()" name="changePasswordForm" class="fancy">
                   <input  type='password' name="password" ng-model="user.password" required
                           ng-change="passwordFormat()"
                           placeholder="{{ 'directives.stUserCreate.passwordLabel' | translate }}"

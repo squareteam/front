@@ -32,19 +32,18 @@
       color: #fb7575;
       background: transparent url('/images/error_picto.png') no-repeat right;
    }
-
    // Chrome autofill hack to prevent ugly yellow background color
    &:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px white inset;
+      -webkit-box-shadow: 0 0 0 1000px white inset;
    }
 }
 
 @mixin input_button($Padding, $Radius){
-
    @include font(Avenir, normal, 18px, #4abadb, 21px);
    border: 1px solid #4abadb;
    padding: $Padding;
    background: #fff;
+   transition: background-color ease-in 150ms;
    @include border-radius($Radius);
    &:focus{
       outline: none;
@@ -52,7 +51,7 @@
    &:hover{
       color: #fff;
       border-color: transparent;
-      @include bg_gradient(90deg, #54bede, #8ad7ef);
+      background-color:#57c0df;
    }
 }
 

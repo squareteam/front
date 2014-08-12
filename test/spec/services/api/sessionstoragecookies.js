@@ -1,6 +1,10 @@
 /*global CryptoJS*/
 'use strict';
 
+function stringToBase64 (str) {
+  return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(str));
+}
+
 describe('Service: ApiSessionStorageCookies', function () {
 
   // load the service's module
@@ -52,7 +56,7 @@ describe('Service: ApiSessionStorageCookies', function () {
 
       ApiSessionStorageCookies.store(auth);
 
-      expect($cookies[appConfig.api.storageNS]).toBe('charly:a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1');
+      expect($cookies[appConfig.api.storageNS]).toBe(stringToBase64('charly:a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1'));
 
     });
 
@@ -70,7 +74,7 @@ describe('Service: ApiSessionStorageCookies', function () {
   describe('ApiSessionStorageCookies.destroy', function() {
     
     it('should remove auth from cookies', function() {
-      $cookies[appConfig.api.storageNS] = 'charly:a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1';
+      $cookies[appConfig.api.storageNS] = stringToBase64('charly:a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1');
 
       ApiSessionStorageCookies.destroy();
 
@@ -82,7 +86,7 @@ describe('Service: ApiSessionStorageCookies', function () {
   describe('ApiSessionStorageCookies.retrieve', function() {
     
     it('should retrieve auth stored in cookies', function() {
-      $cookies[appConfig.api.storageNS] = 'charly:a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1';
+      $cookies[appConfig.api.storageNS] = stringToBase64('charly:a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1');
 
       expect(ApiSessionStorageCookies.retrieve().$isValid()).toBe(true);
       expect(ApiSessionStorageCookies.retrieve().identifier).toBe('charly');
@@ -93,7 +97,9 @@ describe('Service: ApiSessionStorageCookies', function () {
     it('should not retrieve invalid auth stored in cookies', function() {
 
       $cookies[appConfig.api.storageNS] = 'charly';
-      expect(ApiSessionStorageCookies.retrieve()).toBe(false);
+      expect(function() {
+        ApiSessionStorageCookies.retrieve();
+      }).toThrow(new Error('Malformed UTF-8 data'));
 
     });
 

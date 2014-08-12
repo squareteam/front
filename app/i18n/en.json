@@ -35,9 +35,9 @@
       "menu"   : {
          "home"            : "Timeline",
          "admin"           : "Admin",
-         "myMissions"      : "My missions",
+         "tasks"           : "Tasks",
          "projects"        : "Projects",
-         "knowledgeCenter" : "Knowledge Center"
+         "knowledgeCenter" : "Knowledge"
       }
    },
 
@@ -52,18 +52,61 @@
       "info"   : "An organization represent a group of teams and people working together."
    },
 
+   "app" : {
+
+      "projects" : {
+         "filters" : {
+            "byStatus"     : "Status",
+            "byDeadline"   : "Deadline",
+            "byDate"       : "Date"
+         },
+
+         "add_project"  : "New project",
+         "projects"     : "projects"
+      },
+
+      "myAccount" : {
+         "profile" : {
+            "title"           : "My Account",
+            "subtitle"        : "Need to update your informations ?",
+            "change_avatar"   : "Change my avatar",
+            "name"            : "Pseudo",
+            "password"        : "Password",
+            "email"           : "Email",
+            "save"            : "Save"
+         },
+         "organizations" : {
+            "title"           : "Organizations",
+            "subtitle"        : "Member of the following organizations",
+            "leave"           : "Leave",
+            "no_organizations": "No organization.",
+            "create"          : "Create"
+         }
+      }
+
+   },
+
+   "popin" : {
+      "passwordConfirm" : {
+         "title"     : "Please confirm your password",
+         "subtitle"  : "For your security.",
+         "continue"   : "Continue"
+      }
+   },
+
 
    "directives" : {
       "stLoginForm" : {
-         "title"           : "Please login",
-         "passwordInvalid" : "Password is not valid",
-         "emailInvalid"    : "Email is not valid",
-         "passwordLabel"   : "Password",
-         "emailLabel"      : "Email",
-         "loginBtn"        : "Login",
-         "rememberMe"      : "Remember me",
-         "forgotLink"      : "Forgot password ?",
-         "FAQLink"         : "Having trouble with login ?"
+         "title"                 : "Please login",
+         "passwordInvalid"       : "Password is not valid",
+         "emailInvalid"          : "Email is not valid",
+         "passwordLabel"         : "Password",
+         "emailLabel"            : "Email",
+         "loginBtn"              : "Login",
+         "rememberMe"            : "Remember me",
+         "forgotLink"            : "Forgot password ?",
+         "FAQLink"               : "Having trouble with login ?",
+         "youAlreadyHaveAccount" : "You already have a Squareteam account"
       },
 
       "stOAuthLink" : {
@@ -85,16 +128,45 @@
          "createAccountBtn"      : "Create Account"
       },
 
-      "stUserProfile" : {
-         "email"                 : "Email",
-         "organizations"         : "Member of following organizations :",
-         "organization_create"   : "create"
+      "stUserSearch" : {
+         "noResults"    : "No results",
+         "placeholder"  : "Search a user"
       },
 
       "stOrganizationCreate" : {
          "nameTaken"    : "Organization name already taken",
          "nameLabel"    : "Name",
-         "createBtn"    : "Create Organization"
+         "createBtn"    : "Create"
+      },
+
+      "stTeamManage" : {
+         "selectAll" : "Select/Unselect all",
+         "errors"    : {
+            "loadTeam"     : "Error while loading team data",
+            "removeUsers"  : "Error while removing users",
+            "addUser"      : "Error while adding user",
+            "updateUser"   : "Error while updating user"
+         },
+         "roles" : {
+            "MANAGE_TEAM"           : "Manage team",
+            "ADD_PROJECT"           : "Create projects",
+            "MANAGE_PROJECTS"       : "Manage projects",
+            "ADD_TASK"              : "Create tasks",
+            "MANAGE_TASKS"          : "Manage tasks",
+            "ADD_MISSION"           : "Create missions",
+            "MANAGE_ORGANIZATION"   : "Manage organization",
+            "MANAGE_MISSION"        : "Manage missions"
+         }
+      },
+
+      "stProjectCard" : {
+         "status" : {
+            "done"      : "Done",
+            "due"       : "In progress",
+            "inprogress": "In progress",
+            "validation": "Validation",
+            "paused"    : "Paused"
+         }
       }
    }
 }

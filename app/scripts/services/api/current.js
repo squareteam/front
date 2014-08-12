@@ -39,8 +39,6 @@ angular.module('squareteam.app')
       return this.$$user;
     };
 
-    // TODO(charly):  add $http interceptor to watch 
-    //                PUT on /user/me to schedule user reload
     this.reloadUser = function() {
       $http.get('apis://user/me').then(function(response) {
         this.$$user = response.data;
@@ -84,10 +82,16 @@ angular.module('squareteam.app')
 
     this.save = function() {
 
-      var deferred = $q.defer();
+      var deferred = $q.defer(),
+          stored   = false;
 
       if (this.isAuthenticated()) {
-        if (ApiSessionStorageCookies.store(this.getAuth())) {
+        // try to store session
+        try {
+          stored = ApiSessionStorageCookies.store(this.getAuth());
+        } catch (_) {}
+
+        if (stored) {
           deferred.resolve();
         } else {
           deferred.reject('session.storage.unable_to_store');
@@ -102,7 +106,13 @@ angular.module('squareteam.app')
 
     this.restore = function() {
       var deferred  = $q.defer(),
-          auth      = ApiSessionStorageCookies.retrieve();
+          auth;
+
+      try {
+        auth = ApiSessionStorageCookies.retrieve();
+      } catch (error) {
+        deferred.resolve(error);
+      }
 
       if (auth) {
         this.register(auth).then(function() {

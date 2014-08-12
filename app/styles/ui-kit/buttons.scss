@@ -1,4 +1,6 @@
-.button_gradient {
+@import 'ui-kit/mixins';
+
+@mixin button_gradient() {
    div{
       margin-top: 20px;
       margin-bottom: 20px;
@@ -16,4 +18,8 @@
          }
       }
    }
+}
+
+.button_gradient {
+   @include button_gradient()
 }

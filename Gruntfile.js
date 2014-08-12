@@ -75,7 +75,7 @@ module.exports = function (grunt) {
         tasks: ['newer:jshint:test', 'karma']
       },
       sass: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+        files: ['<%= yeoman.app %>/styles/{,**/}*.{scss,sass}'],
         tasks: ['sass:server', 'autoprefixer']
       },
       gruntfile: {
@@ -191,13 +191,13 @@ module.exports = function (grunt) {
     sass: {
       dist: {
         options: {
-          loadPath: '<%= yeoman.app %>/styles/ui-kit',
+          loadPath: '<%= yeoman.app %>/styles/',
           style: 'expanded'
         },
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>/styles',
-          src: ['*.scss'],
+          src: ['**/*.scss'],
           dest: '<%= yeoman.app %>/styles',
           ext: '.css'
         }]
@@ -258,7 +258,7 @@ module.exports = function (grunt) {
         flow: {
           html: {
             steps: {
-              js: ['concat'/*, 'uglifyjs'*/],
+              js: ['concat', 'uglifyjs'],
               css: ['cssmin']
             },
             post: {}
@@ -475,7 +475,7 @@ module.exports = function (grunt) {
     'ngmin',
     'copy:dist',
     'cssmin',
-    // 'uglify',
+    'uglify',
     'rev',
     'usemin',
     'htmlmin'

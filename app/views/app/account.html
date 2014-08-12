@@ -1,1 +1,95 @@
-<st-user-profile user-id="currentSession.getUser().id" editable></st-user-profile>
+<div class="container my-account">
+   <div class="row">
+      
+      <div class="col-xs-6 account">
+         <div class="col-xs-8 col-xs-push-2">
+            <div class="header">
+               <h2>
+                  {{ 'app.myAccount.profile.title' | translate }}
+               </h2>
+               <p>
+                  {{ 'app.myAccount.profile.subtitle' | translate }}
+               </p>
+            </div>
+
+            <div class="avatar">
+               <img src="http://placekitten.com/g/85/85" alt="" width="85px">
+
+               <a href="#">
+                  {{ 'app.myAccount.profile.change_avatar' | translate }}
+               </a>
+            </div>
+
+            <form action="" class="minimal" name="userForm" ng-submit="updateUser()">
+
+               <label for="pseudo">
+                  {{ 'app.myAccount.profile.name' | translate }}
+               </label>
+               <input type="text" type="text" name="pseudo" class="fluid" ng-model="user.name" required>
+
+               <label for="password">
+                  {{ 'app.myAccount.profile.password' | translate }}
+               </label>
+               <input type="password" type="text" name="password" class="fluid" ng-model="user.password">
+
+               <label for="email">
+                  {{ 'app.myAccount.profile.email' | translate }}
+               </label>
+               <input type="email" type="text" name="email" class="fluid" ng-model="user.email" required>
+
+               <div class="submit-footer">
+                  <input   type="submit"
+                           value="{{ 'app.myAccount.profile.save' | translate }}">
+               </div>
+
+            </form>
+
+         </div>
+      </div>
+
+      <div class="col-xs-6 organizations">
+         <div class="col-xs-10 col-xs-push-1">
+            <div class="header">
+               <h2>
+                  {{ 'app.myAccount.organizations.title' | translate }}
+               </h2>
+               <p>
+                  {{ 'app.myAccount.organizations.subtitle' | translate }}
+               </p>
+            </div>
+            <ul class="organizations-list">
+               <li   class="row"
+                     ng-repeat="organization in organizations track by organization.id">
+                  <div class="col-xs-2">
+                     <img src="http://placekitten.com/g/45/45" alt="">
+                  </div>
+                  <div class="col-xs-5 name">
+                     {{ organization.name }}
+                  </div>
+                  <div class="col-xs-4 pull-right">
+                     <div class="leave-button" ng-click="leaveOrganization(organization.id)">
+                        <div class="mask">
+                           <div class="text">
+                              {{ 'app.myAccount.organizations.leave' | translate }}
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </li>
+               <li class="row" ng-if="!organizations.length">
+                  <div class="col-xs-12 no-organization">
+                     {{ 'app.myAccount.organizations.no_organizations' | translate }}
+                  </div>
+               </li>
+            </ul>
+
+            <div class="text-center">
+               <button class="submit minimal" ui-sref="app.organization_create">
+                  {{ 'app.myAccount.organizations.create' | translate }}
+               </button>
+            </div>
+         </div>
+      </div>
+
+   </div>
+</div>

@@ -1,0 +1,89 @@
+<div class="team_manager row">
+
+   <div class="col-xs-6">
+      <h3>
+         {{ team.name }}
+      </h3>
+
+      <div class="alert" ng-show="!!errors.loadTeam">
+         {{ 'directives.stTeamManage.errors.loadTeam' | translate }}
+      </div>
+      <div class="alert" ng-show="!!errors.removeUsers">
+         {{ 'directives.stTeamManage.errors.removeUsers' | translate }}
+      </div>
+      <div class="alert" ng-show="!!errors.addUser">
+         {{ 'directives.stTeamManage.errors.addUser' | translate }}
+      </div>
+
+      <div class="controls">
+         <button class="removeUsers" ng-show="usersToRemove.length" ng-click="removeUsers()">Remove from team</button>
+      </div>
+
+      <ul class="users_list">
+         <li ng-repeat="user in team.users track by user.id">
+            <input   type="checkbox" class="pull-left"
+                     ng-checked="usersToRemove.indexOf(user.id) > 0" ng-click="toggleUserRemoveFromTeam(user)">
+            <span>
+               <img src="/images/user.png" width="25" class="img-circle pull-left" alt="" style="margin-right:10px;"> {{ user.name }}
+            </span>
+            <a href class="edit_role" ng-click="editUserPermission(user)">
+               Edit permissions
+            </a>
+         </li>
+      </ul>
+
+      <p>
+         &nbsp;
+      </p>
+
+      <div class="add_user_control">
+         <st-user-search on-select="addUserToTeam(user)" exclude="{{ usersIds() }}"></st-user-search>
+      </div>
+   </div>
+
+   <div class="col-xs-6">
+      <div class="permissions_manager" ng-show="currentEditingUser != false">
+         <h3>
+            Edit permissions of {{ currentEditingUser.name }}
+            <button  class="btn btn-default btn-xs destroyTeam" ng-click="currentEditingUser = false">
+               Close
+            </button>
+            <button  class="btn btn-default btn-xs destroyTeam" ng-click="updateUserRole()">
+               Save
+            </button>
+         </h3>
+
+         <div class="alert" ng-show="errors.updateUser">
+            {{ 'directives.stTeamManage.errors.updateUser' | translate }}
+         </div>
+
+         <p>
+            &nbsp;
+         </p>
+
+         <div>
+            <input   type="checkbox"
+                     ng-click="roleToAdd = rolesHelpers.has(roleToAdd, rolesHelpers.all()) ? rolesHelpers.remove(roleToAdd, rolesHelpers.all()) : rolesHelpers.add(roleToAdd, rolesHelpers.all())"
+                     ng-checked="rolesHelpers.has(roleToAdd, rolesHelpers.all())"
+                     id="role_ALL">
+
+            <label for="role_ALL">
+                {{ 'directives.stTeamManage.selectAll' | translate }}
+            </label>
+         </div>
+         <li ng-repeat="(name, value) in ROLES">
+            <div>
+               <input   type="checkbox"
+                        ng-click="$parent.roleToAdd = rolesHelpers.has($parent.roleToAdd, value) ? rolesHelpers.remove($parent.roleToAdd, value) : rolesHelpers.add($parent.roleToAdd, value)"
+                        ng-checked="rolesHelpers.has($parent.roleToAdd, value)"
+                        id="role_{{ name }}">
+
+               <label for="role_{{ name }}">
+                   {{ 'directives.stTeamManage.roles.' + name | translate }}
+               </label>
+            </div>
+         </li>
+      </div>
+   </div>
+
+</div>

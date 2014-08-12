@@ -1,0 +1,139 @@
+@import 'ui-kit/application/colors';
+@import 'ui-kit/form';
+
+.my-account, .manage-organizations {
+   padding: 20px 15px;
+
+   .account, .organizations {
+      width: 48.6%;
+      border-radius:2px;
+      box-shadow: 0px 0px 3px rgba(0,0,0,0.1);
+      background-color:#FFFFFF;
+      padding-bottom: 30px;
+
+      .header {
+         text-align: center;
+         margin-top: 45px;
+         font-weight: 300;
+
+         h2 {
+            color: #66808f;
+            font-size: 20px;
+            font-weight: 300;
+         }
+
+         p {
+            font-size: 18px;
+            color: #8fa8b7;
+         }
+      }
+   }
+
+   .account {
+      margin-right: 30px;
+
+      .avatar {
+         margin-top: 40px;
+         text-align: center;
+         overflow: hidden;
+         cursor: pointer;
+
+         img {
+            border-radius:50%;
+         }
+      }
+
+      a {
+         display: block;
+         margin-top: 10px;
+         color: $blue_active;
+      }
+
+      form {
+         label {
+            padding-top: 30px;
+         }
+      }
+   }
+
+   .organizations {
+      .organizations-list {
+         list-style: none;
+         padding: 0;
+         margin: 40px 0;
+
+         li {
+            border-top: 1px solid #F3F3F3;
+         }
+
+         li:last-child {
+            border-bottom: 1px solid #F3F3F3;
+         }
+
+         .no-organization {
+            line-height: 45px;
+         }
+
+         li {
+            padding: 25px 0;
+
+            img {
+               width: 45px;
+               border-radius:50%;
+            }
+
+            .name {
+               padding-left: 0;
+               text-align: left;
+               line-height: 45px;
+               font-weight: 500;
+               color: #6d8593;
+            }
+
+            .leave-button, .manage-button {
+               cursor: pointer;
+               z-index: 6;
+               position: relative;
+               color: #FFFFFF;
+               text-align: center;
+               background-color: #678496;
+               padding:10px 25px;
+               border-radius:2px;
+               width: 100px;
+            }
+
+            .manage-button {
+               transition: background-color 150ms ease-in;
+
+               &:hover {
+                  background-color: $dark_blue;
+               }
+            }
+
+            .leave-button {
+               &:after {
+                  content: '';
+                  position: absolute;
+                  z-index: -1;
+                  transition: all 0.3s;
+                  width: 0%;
+                  height: 100%;
+                  top: 0;
+                  left: 0;
+                  border-radius:2px;
+                  background: #ff6e83;
+               }
+
+               &:hover:after {
+                  width: 100%;
+               }
+            }
+         }
+
+         li > div {
+            height: 45px;
+         }
+
+      }
+   }
+}

@@ -5,19 +5,20 @@ angular.module('squareteam.app')
     return {
       restrict: 'E',
       transclude : true,
+      replace: true,
       templateUrl : 'scripts/directives/templates/stcurrentuserblock.html',
       link: function postLink(scope, element) {
-        var userAvatar  = element.find('.user-avatar'),
-            dropdown    = element.find('.dropdown-menu');
+        var button        = element.find('.avatar'),
+            dropdown      = element.find('.user_dropdown'),
+            buttonOffset  = button.offset();
 
-        dropdown.css('marginTop', '40px');
-
-        userAvatar.on('mouseover', function() {
-          dropdown.show();
+        dropdown.css({
+          top   : buttonOffset.top + 75 + 'px',
+          left  : buttonOffset.left - ((parseInt(dropdown.css('width'), 10) - parseInt(button.css('width'), 10))/2) - 35 + 'px'
         });
 
-        dropdown.on('mouseleave', function() {
-          dropdown.hide();
+        button.on('click', function() {
+          dropdown[dropdown.is(':visible') ? 'fadeOut' : 'fadeIn'](200);
         });
 
         dropdown.on('click', function() {

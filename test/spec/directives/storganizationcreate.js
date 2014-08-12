@@ -1,5 +1,5 @@
 'use strict';
-/*global $, CryptoJS*/
+/*global $, apiResponseAsString, provideAuth */
 describe('Directive: st-organization-create', function () {
 
 
@@ -29,8 +29,7 @@ describe('Directive: st-organization-create', function () {
     appConfig       = $injector.get('appConfig');
     ApiAuth         = $injector.get('ApiAuth');
 
-    $injector.get('CurrentSession').$$user = { id : 1, name : 'charly', email : 'charly.poly@live.fr'};
-    $injector.get('CurrentSession').$$auth = new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1'));
+    provideAuth($injector)();
 
   }));
 
@@ -68,7 +67,7 @@ describe('Directive: st-organization-create', function () {
     });
     
     it('should display alert if name taken', function() {
-      $httpBackend.expectPOST(appConfig.api.url + 'organizations/with_admins').respond(400, '{"data":null,"errors":["Name has already been taken"]}');
+      $httpBackend.expectPOST(appConfig.api.url + 'organizations/with_admins').respond(400, apiResponseAsString(['Name has already been taken']));
 
       var directiveScope = element.isolateScope();
       directiveScope = angular.extend(directiveScope, {
@@ -121,100 +120,8 @@ describe('Directive: st-organization-create', function () {
 
     });
 
-    // it('should save organization and redirect to `/home`', function() {
-
-    //   spyOn($location, 'path');
-
-    //   $httpBackend.expectPOST(appConfig.api.url + 'organizations').respond(201, '{"data": {"id":1,"name":"test","members":[]},"errors":null');
-
-    //   scope.organization.name = 'test';
-
-    //   $rootScope.$digest();
-
-    //   element.isolateScope().create();
-
-    //   $rootScope.$digest();
-
-    //   $httpBackend.flush();
-
-    //   $rootScope.$digest();
-
-
-    //   expect($location.path).toHaveBeenCalledWith('/home');
-
-    //   expect(element.find('.alert').hasClass('ng-hide')).toBe(true);
-
-    // });
-
 
   });
-
-
-
-  // describe('with for-users directive options', function() {
-      
-  //   beforeEach(inject(function($compile) {
-  //     scope = $rootScope.$new();
-
-  //     scope.userIds = [1];
-
-  //     element = angular.element('<st-organization-create for-users="userIds"></st-organization-create>');
-  //     element = $compile(element)(scope);
-
-  //     $rootScope.$digest();
-
-  //     scope.organization = {};
-  //   }));
-
-  //   it('should save organization but fail to add members (500)', function() {
-
-  //     $httpBackend.expectPOST(appConfig.api.url + 'organizations').respond(201, '{"data": {"id":1,"name":"test","members":[]},"errors":null');
-  //     $httpBackend.expectPOST(appConfig.api.url + 'members').respond(500, '');
-
-  //     scope.organization.name = 'test';
-
-  //     $rootScope.$digest();
-
-  //     element.isolateScope().create();
-
-  //     $rootScope.$digest();
-
-  //     $httpBackend.flush();
-
-  //     $rootScope.$digest();
-
-
-  //     expect($(element.find('.alert')[1]).hasClass('ng-hide')).toBe(false);
-
-  //   });
-
-  //   it('should save organization, add members and redirect to `/home`', function() {
-
-  //     spyOn($location, 'path');
-
-  //     $httpBackend.expectPOST(appConfig.api.url + 'organizations').respond(201, '{"data":{"id":1,"name":"tester","members":[]},"errors":""}');
-  //     $httpBackend.expectPOST(appConfig.api.url + 'members', 'organization_id=1&user_id=1&admin=1').respond(201, '{"data": {"id":1,"organization_id":1,"user_id":1},"errors":null}');
-
-  //     scope.organization.name = 'test';
-
-  //     $rootScope.$digest();
-
-  //     element.isolateScope().create();
-
-  //     $rootScope.$digest();
-
-  //     $httpBackend.flush();
-
-  //     $rootScope.$digest();
-
-
-  //     expect($location.path).toHaveBeenCalledWith('/home');
-
-  //     expect(element.find('.alert').hasClass('ng-hide')).toBe(true);
-
-  //   });
-    
-  // });
 
   
 });

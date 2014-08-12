@@ -1,28 +1,4 @@
-<st-current-user-block class="pull-right user_block">
-    <div class="dropdown">
-        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="accountMenu">
-            <li role="presentation">
-                <a role="menuitem" tabindex="-1" href ui-sref="app.account">My Account</a>
-            </li>
-            <li role="presentation">
-                <a role="menuitem" tabindex="-1" href ui-sref="app.organizations">Manage organizations</a>
-            </li>
-            <li role="presentation" class="divider"></li>
-            <li role="presentation">
-                <a role="menuitem" tabindex="-1" ng-click="logout()" href>{{ 'header.logout' | translate }}</a>
-            </li>
-        </ul>
-    </div>
-</st-current-user-block>
+<st-top-bar></st-top-bar>
 
-<ul class="nav nav-pills" ng-cloak>
-  <li ui-sref-active="active"><a ui-sref="app.home">{{ 'header.menu.home' | translate }}</a></li>
-  <li ui-sref-active="active"><a ui-sref="app.my_missions">{{ 'header.menu.myMissions' | translate }}</a></li>
-  <li ui-sref-active="active"><a ui-sref="app.projects">{{ 'header.menu.projects' | translate }}</a></li>
-  <li ui-sref-active="active"><a ui-sref="app.knowledge">{{ 'header.menu.knowledgeCenter' | translate }}</a></li>
-</ul>
-
-<br>
-<br>
 
 <ui-view></ui-view>

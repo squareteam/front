@@ -1,0 +1,58 @@
+<header class="top_bar">
+   <div class="container">
+      <div class="row">
+         <nav class="col-xs-5">
+            <div class="row">
+               <a href="#" class="col-xs-2 search item">
+               </a>
+               <a ui-sref="app.home" class="col-xs-2 item" ui-sref-active="active">
+                  <div>
+                     <i class="icon icon-timeline"></i>
+                     <span>
+                        {{ 'header.menu.home' | translate }}
+                     </span>
+                  </div>
+               </a>
+               <a ui-sref="app.tasks({ missionId : 0 })" class="col-xs-2 item" ui-sref-active="active">
+                  <div>
+                     <i class="icon icon-tasks"></i>
+                     <span>
+                        {{ 'header.menu.tasks' | translate }}
+                     </span>
+                  </div>
+               </a>
+               <a ui-sref="app.projects" class="col-xs-2 item" ui-sref-active="active">
+                  <div>
+                     <i class="icon icon-projects"></i>
+                     <span>
+                        {{ 'header.menu.projects' | translate }}
+                     </span>
+                  </div>
+               </a>
+               <a ui-sref="app.knowledge" class="col-xs-2 item" ui-sref-active="active">
+                  <div>
+                     <i class="icon icon-knowledge"></i>
+                     <span>
+                        {{ 'header.menu.knowledgeCenter' | translate }}
+                     </span>
+                  </div>
+               </a>
+            </div>
+         </nav>
+
+         <st-current-user-block class="user-block col-xs-3 pull-right">
+            <ul class="user_dropdown">
+               <li ui-sref="app.account">
+                  <a href>My account</a>
+               </li>
+               <li ui-sref="app.organizations">
+                  <a href>Manage organizations</a>
+               </li>
+               <li class="logout" ng-click="logout()">
+                  <a href>{{ 'header.logout' | translate }}</a>
+               </li>
+            </ul>
+         </st-current-user-block>
+      </div>
+   </div>
+</header>

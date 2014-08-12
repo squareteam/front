@@ -15,10 +15,15 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="styles/bootstrap/css/bootstrap.css">
     <!-- Optional theme -->
-    <link rel="stylesheet" href="styles/bootstrap/css/bootstrap-theme.css">
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/public_pages_common.css">
     <link rel="stylesheet" href="styles/tmp/timeline.css">
+    <!-- TODO(charly): move in layout.html? -->
+    <link rel="stylesheet" href="styles/app/layout.css">
+    <link rel="stylesheet" href="styles/app/projects.css">
+    <link rel="stylesheet" href="styles/app/manage.css">
+    <link rel="stylesheet" href="styles/app/popin.css">
+    <link rel="stylesheet" href="bower_components/ngDialog/css/ngDialog.css">
     <!-- endbuild -->
   </head>
   <body ng-app="squareteam.app">
@@ -67,11 +72,13 @@
     <script src="bower_components/jquery-waypoints/waypoints.js"></script>
     <script src="bower_components/angulartics/src/angulartics.js"></script>
     <script src="bower_components/angulartics/src/angulartics-ga.js"></script>
+    <script src="bower_components/ngDialog/js/ngDialog.js"></script>
     <!-- endbower -->
     <!-- put CryptoJS after bower but in build block -->
     <script src="bower_components/cryptojslib/rollups/hmac-sha256.js"></script>
     <script src="bower_components/cryptojslib/rollups/pbkdf2.js"></script>
     <script src="bower_components/cryptojslib/rollups/md5.js"></script>
+    <script src="bower_components/cryptojslib/components/enc-base64.js"></script>
     <!-- endbuild -->
 
 
@@ -99,7 +106,6 @@
     <script src="scripts/controllers/application.js"></script>
     <script src="scripts/directives/storganizationcreate.js"></script>
     <script src="scripts/controllers/login.js"></script>
-    <script src="scripts/directives/stuserprofile.js"></script>
     <script src="scripts/directives/stcurrentuserblock.js"></script>
     <script src="scripts/controllers/forgotpassword.js"></script>
     <script src="scripts/directives/stoauthlink.js"></script>
@@ -107,6 +113,19 @@
     <script src="scripts/services/resources/mission.js"></script>
     <script src="scripts/services/resources/project.js"></script>
     <script src="scripts/services/resources/task.js"></script>
+    <script src="scripts/directives/sttopbar.js"></script>
+    <script src="scripts/directives/storganizationprojects.js"></script>
+    <script src="scripts/services/api/cache.js"></script>
+    <script src="scripts/directives/stteammanage.js"></script>
+    <script src="scripts/directives/stusersearch.js"></script>
+    <script src="scripts/services/resources/team.js"></script>
+    <script src="scripts/controllers/manageorganization.js"></script>
+    <script src="scripts/controllers/organizations.js"></script>
+    <script src="scripts/directives/stprojectcard.js"></script>
+    <script src="scripts/controllers/myaccount.js"></script>
+    <script src="scripts/services/popin/passwordconfirm.js"></script>
     <!-- endbuild -->
+    <script type="text/javascript" src="//use.typekit.net/jsv4ymo.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </body>
 </html>

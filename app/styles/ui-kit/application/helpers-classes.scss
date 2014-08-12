@@ -1,0 +1,11 @@
+@import 'ui-kit/application/colors';
+
+.vertical-center {
+    display:table-cell;
+    vertical-align:middle;
+    float:none;
+}
+
+.primary {
+   background-color: $blue_active;
+}

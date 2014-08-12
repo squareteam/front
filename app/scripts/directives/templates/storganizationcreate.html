@@ -6,27 +6,13 @@
     {{ 'api.serverBusy' | translate }}
   </div>
 
-  <p>
-    &nbsp;
-  </p>
+  <label for="name">
+    {{ 'directives.stOrganizationCreate.nameLabel' | translate }}
+  </label>
+  <input type="text" name="name" ng-model="organization.name" class="form-control" required autofocus />
 
-  <div class="form-group">
-    <label for="name" class="col-sm-2 control-label">
-      {{ 'directives.stOrganizationCreate.nameLabel' | translate }}
-    </label>
-    <div class="col-sm-10">
-      <input type="text" name="name" ng-model="organization.name" class="form-control" required autofocus />
-    </div>
-  </div>
-  
-  <p>
-    &nbsp;
-  </p>
-
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <input type="submit" class="btn btn-primary" value="{{ 'directives.stOrganizationCreate.createBtn' | translate }}" />
-    </div>
+  <div class="submit-footer">
+    <input type="submit" class="btn btn-primary" value="{{ 'directives.stOrganizationCreate.createBtn' | translate }}" />
   </div>
 
 </form>

@@ -4,8 +4,25 @@
 
 angular
   .module('squareteam.app')
-  .config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $translateProvider, $analyticsProvider, ngDialogProvider) {
 
+    //////////////
+    // ngDialog //
+    //////////////
+
+    ngDialogProvider.setDefaults({
+      className: 'ngdialog-theme-squareteam',
+      showClose: true,
+      closeByDocument: true,
+      closeByEscape: true
+    });
+
+    /////////////////
+    // Angulartics //
+    /////////////////
+
+    // Disable Angulartics in dev mode
+    $analyticsProvider.virtualPageviews(window.location.hostname.match(/dev\.squareteam/) === null);
 
     ///////////////
     // Translate //
@@ -16,7 +33,6 @@ angular
       suffix: '.json'
     });
     $translateProvider.preferredLanguage('en');
-
 
     /////////////////////
     // Routing Helpers //
@@ -66,16 +82,37 @@ angular
         }
 
         return deferred.promise;
+      },
+
+      currentOrganization : function(authenticated, CurrentSession, $q, $stateParams) {
+
+        var deferred = $q.defer();
+
+        CurrentSession.getOrganizations().then(function(organizations) {
+
+          var organization = $.grep(organizations, function(organization) {
+            return organization.id === parseInt($stateParams.organizationId, 10);
+          });
+          if (organization.length === 1) {
+            deferred.resolve(organization[0]);
+          } else {
+            deferred.reject(
+              new Error(['Organization #', $stateParams.organizationId, ' not found'].join(''))
+            );
+          }
+        });
+
+        return deferred.promise;
       }
     };
 
-    routingHelpers.checkAuthenticated.$inject = ['CurrentSession', '$q', '$log'];
-
+    routingHelpers.checkAuthenticated.$inject   = ['CurrentSession', '$q', '$log'];
+    routingHelpers.checkAnonymous.$inject       = ['CurrentSession', '$q'];
+    routingHelpers.currentOrganization.$inject  = ['authenticated', 'CurrentSession', '$q', '$stateParams'];
 
     ///////////////////
     // Define states //
     ///////////////////
-
 
     // Public routes
     $stateProvider
@@ -149,6 +186,7 @@ angular
 
       .state('app.account', {
         url : '/account',
+        controller : 'MyAccountCtrl',
         templateUrl: 'views/app/account.html',
       })
 
@@ -169,22 +207,21 @@ angular
       })
 
       .state('app.knowledge.by_project', {
-        url : '/knowledge/filter/project/:project_id'
-      })
-
-      .state('app.knowledge.by_mission', {
-        url : '/knowledge/filter/mission/:mission_id'
-      })
-
-      .state('app.knowledge.by_tags', {
-        url : '/knowledge/filter/tags/:tags'
+        url : '/knowledge/filter/:projectId/:missionId/:tags'
       })
 
       // PROJECTS
 
       .state('app.projects', {
         url : '/projects',
-        templateUrl : 'views/app/projects/index.html'
+        templateUrl : 'views/app/projects/index.html',
+        controller : ['$scope', 'CurrentSession', function($scope, CurrentSession) {
+          CurrentSession.getOrganizations().then(function(organizations) {
+            $scope.organization = organizations[0];
+          }, function() {
+            console.error('Unable to load organizations for user #' + CurrentSession.getUser().id);
+          });
+        }]
       })
 
       .state('app.projects.create', {
@@ -192,13 +229,13 @@ angular
       })
 
       .state('app.projects.edit', {
-        url : '/projects/edit/:project_id'
+        url : '/projects/edit/:projectId'
       })
 
       // MISSIONS
 
       .state('app.missions', {
-        url : '/projects/:project_id/missions'
+        url : '/projects/:projectId/missions'
       })
 
       .state('app.my_missions', {
@@ -210,18 +247,18 @@ angular
       })
 
       .state('app.missions.view', {
-        url : '/:mission_id'
+        url : '/:missionId'
       })
 
       .state('app.missions.edit', {
-        url : '/:mission_id/edit'
+        url : '/:missionId/edit'
       })
 
       // TASKS
 
       .state('app.tasks', {
-        url : '/missions/:mission_id/tasks',
-        templateUrl : 'views/app/missions/index.html'
+        url : '/missions/:missionId/tasks'//,
+        // templateUrl : 'views/app/missions/index.html'
       })
 
       .state('app.tasks.add', {
@@ -229,11 +266,11 @@ angular
       })
 
       .state('app.tasks.view', {
-        url : '/:task_id'
+        url : '/:taskId'
       })
 
       .state('app.tasks.edit', {
-        url : '/:task_id/edit'
+        url : '/:taskId/edit'
       })
 
       // ADMIN
@@ -246,46 +283,31 @@ angular
       .state('app.organizations', {
         url : '/organizations',
         templateUrl : 'views/app/manage/organizations.html',
-        controller : ['$scope', 'CurrentSession', function($scope, CurrentSession) {
-          CurrentSession.getOrganizations().then(function(organizations) {
-            $scope.organizations = organizations;
-          }, function() {
-            console.error('Unable to load organizations for user #' + CurrentSession.getUser().id);
-          });
-        }]
+        controller : 'Organizations'
       })
 
       .state('app.organization', {
         url : '/organization/:organizationId',
+        abstract : true,
+        template : '<ui-view></ui-view>',
+        resolve : {
+          currentOrganization : routingHelpers.currentOrganization
+        }
+      })
+
+      .state('app.organization.manage', {
+        url : '/manage',
         templateUrl : 'views/app/manage/organization/index.html',
-        controller : ['$scope', '$stateParams', 'CurrentSession', function($scope, $stateParams, CurrentSession) {
-          
-          CurrentSession.getOrganizations().then(function(organizations) {
+        controller : 'ManageOrganizationCtrl'
+      })
 
-            var organization = $.grep(organizations, function(organization) {
-              return organization.id === parseInt($stateParams.organizationId, 10);
-            });
-            if (organization.length === 1) {
-              $scope.organization = organization[0];
-            } else {
-              console.error('404 organization #' + $stateParams.organizationId);
-              // error
-            }
-
-          }, function() {
-            console.error('Unable to load organizations for user #' + CurrentSession.getUser().id);
-          });
+      .state('app.organization.team', {
+        url : '/team/:teamId',
+        templateUrl : 'views/app/manage/team.html',
+        controller : ['$scope', '$stateParams', function($scope, $stateParams) {
+          $scope.teamId = $stateParams.teamId;
         }]
-      })
-
-      .state('app.organization.teams', {
-        url : '/teams'
-      })
-
-      .state('app.organization.teams.members', {
-        url : '/:team_id/members'
       });
-
 
     $urlRouterProvider
       .otherwise('/register');

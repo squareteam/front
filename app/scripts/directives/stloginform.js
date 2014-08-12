@@ -15,9 +15,19 @@ angular.module('squareteam.app')
         githubLogin   : '@'
       },
       replace : true,
-      controller: function($scope, $element, $attrs, $state, ApiSession) {
+      controller: function($scope, $element, $attrs, $state, $location, ApiSession) {
 
         $scope.retries = 0;
+
+        var login     = $location.search() && $location.search().email,
+            provider  = $location.search() && $location.search().provider;
+
+        if (provider && login && provider.toLowerCase() === 'squareteam') {
+          $scope.user = {
+            email : login
+          };
+          $scope.youAlreadyHaveAccount = true;
+        }
 
         $scope.setDirty = function() {
           // set all inputs to dirty
@@ -31,7 +41,8 @@ angular.module('squareteam.app')
           
           $scope.loginForm.email.$setValidity('valid', true);
           $scope.loginForm.password.$setValidity('valid', true);
-          $scope.serverBusy = false;
+          $scope.serverBusy             = false;
+          $scope.youAlreadyHaveAccount  = false;
           
           ApiSession.login($scope.user.email, $scope.user.password).then(function() {
             $state.go($scope.redirectPath || 'app.home');
@@ -52,7 +63,6 @@ angular.module('squareteam.app')
         angular.forEach(iElement.find('input'), function(element) {
           element.addEventListener('invalid', function(e) {
             e.preventDefault();
-            //Possibly implement your own here.
           }, true);
         });
       }
