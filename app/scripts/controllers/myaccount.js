@@ -63,7 +63,23 @@ angular.module('squareteam.app')
       });
     };
 
-    $scope.leaveOrganization = function(/*organizationId*/) {
-      window.alert('Not implemented yet.');
+    $scope.leaveOrganization = function(organizationId) {
+      $http.delete('apis://organizations/'+organizationId+'/user/'+CurrentSession.getUser().id).then(function() {
+        // remove organizationId from $scope.organizations
+        var index = -1;
+
+        angular.forEach($scope.organizations, function(organization, i) {
+          if (organization.id === organizationId) {
+            index = i;
+          }
+        });
+
+        if (index >= 0) {
+          $scope.organizations.splice(index, 1);
+        }
+
+      }, function() {
+        window.alert('Error while leaving organization, aborted.');
+      });
     };
   });
