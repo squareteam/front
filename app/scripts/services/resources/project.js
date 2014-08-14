@@ -2,9 +2,9 @@
 
 angular.module('squareteam.resources')
   .factory('ProjectResource', function($resource, $http, $q, ApiCache) {
-    var ProjectResource;
+    var OrganizationProjectsResource;
 
-    ProjectResource = $resource('apis://projects/:id', {}, {
+    OrganizationProjectsResource = $resource('apis://projects', {}, {
       update: {
         method: 'PUT'
       }
@@ -13,118 +13,67 @@ angular.module('squareteam.resources')
 
     function ProjectCollection (projects) {
       this.projects = projects;
+
+      // Placeholder
+      angular.forEach(this.projects, function(project) {
+        project.status = 'inprogress';
+        project.metadata = {
+          members   : 0,
+          missions  : 0,
+          documents : 0,
+          comments  : 0
+        };
+      });
     }
 
     ProjectCollection.prototype = {
-      create : function(/*project*/) {
-
+      create : function(project) {
+        // OrganizationProjectsResource.create
+        return $http.post('apis://projects', project);
       },
 
       update : function(/*project*/) {
-
+        // OrganizationProjectsResource.update
       },
 
       remove : function(/*projectId*/) {
-
+        // OrganizationProjectsResource.remove
       }
     };
 
-
-    function getProjects (id, options) {
+    function getProjects (url, options) {
       var defer = $q.defer();
 
       options = options || {};
 
-      defer.resolve(new ProjectCollection([
-        {
-          id : 1,
-          title         : 'Site mobile',
-          createdAtDate : '21/04/2014',
-          deadlineDate  : '21/04/2015',
-          progress      : '50%',
-          status        : 'inprogress',
-          description   : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque earum laudantium, rem dicta recusandae, error temporibus quasi excepturi, minus repellendus inventore maiores tenetur.',
-          metadata      : {
-            members   : 5,
-            missions  : 3,
-            documents : 10,
-            comments  : 0
-          }
-        },
-        {
-          id : 2,
-          title         : 'Landing page',
-          createdAtDate : '21/04/2014',
-          deadlineDate  : '21/04/2015',
-          progress      : '5%',
-          status        : 'paused',
-          description   : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque earum laudantium, rem dicta recusandae, error temporibus quasi excepturi, minus repellendus inventore maiores tenetur.',
-          metadata      : {
-            members   : 5,
-            missions  : 3,
-            documents : 10,
-            comments  : 0
-          }
-        },
-        {
-          id : 3,
-          title         : 'FMB',
-          createdAtDate : '21/04/2014',
-          deadlineDate  : '21/04/2015',
-          progress      : '20%',
-          status        : 'due',
-          description   : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque earum laudantium, rem dicta recusandae, error temporibus quasi excepturi, minus repellendus inventore maiores tenetur.',
-          metadata      : {
-            members   : 5,
-            missions  : 3,
-            documents : 10,
-            comments  : 0
-          }
-        },
-        {
-          id : 4,
-          title         : 'PaaS',
-          createdAtDate : '21/04/2014',
-          deadlineDate  : '21/04/2015',
-          progress      : '80%',
-          status        : 'validation',
-          description   : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque earum laudantium, rem dicta recusandae, error temporibus quasi excepturi, minus repellendus inventore maiores tenetur.',
-          metadata      : {
-            members   : 5,
-            missions  : 3,
-            documents : 10,
-            comments  : 0
-          }
-        },
-        {
-          id : 5,
-          title         : 'Site mobile',
-          createdAtDate : '21/04/2014',
-          deadlineDate  : '21/04/2015',
-          progress      : '100%',
-          status        : 'done',
-          description   : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque earum laudantium, rem dicta recusandae, error temporibus quasi excepturi, minus repellendus inventore maiores tenetur.',
-          metadata      : {
-            members   : 5,
-            missions  : 3,
-            documents : 10,
-            comments  : 0
-          }
-        }
-      ]));
-
-      // $http.get('apis://projects/'+ id, { cache : options.apiCache ? ApiCache : false }).then(function(response) {
-      //   defer.resolve(new Project(response.data));
-      // }, defer.reject);
+      $http.get(url, { cache : options.apiCache ? ApiCache : false }).then(function(response) {
+        defer.resolve(new ProjectCollection(response.data));
+      }, defer.reject);
 
       return defer.promise;
     }
 
+
+    function getProjectsFromOrganizationId (organizationId, options) {
+      return getProjects('apis://projects', options); // FIXME(charly): undo when API ready
+      // return getProjects('apis://organizations/' + organizationId + '/projects', options);
+    }
+
+
+    function getProjectsFromUserId (userId, options) {
+      return getProjects('apis://projects', options); // FIXME(charly): undo when API ready
+      // return getProjects('apis://users/' + userId + '/projects', options);
+    }
+
+
+
     return {
-      load    : getProjects,
-      get     : ProjectResource.get,
-      query   : ProjectResource.query,
-      remove  : ProjectResource.remove,
-      update  : ProjectResource.update
+      fromOrganization  : getProjectsFromOrganizationId,
+      fromUser          : getProjectsFromUserId,
+      get               : OrganizationProjectsResource.get,
+      query             : OrganizationProjectsResource.query,
+      remove            : OrganizationProjectsResource.remove,
+      create            : OrganizationProjectsResource.save,
+      update            : OrganizationProjectsResource.update
     };
   });

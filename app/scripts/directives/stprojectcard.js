@@ -1,5 +1,9 @@
 'use strict';
 
+// TODO(charly):
+//  - if projectId -> load project
+//  - if project -> use object as data
+
 angular.module('squareteam.app')
   .directive('stProjectCard', function () {
     return {

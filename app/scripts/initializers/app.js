@@ -215,12 +215,13 @@ angular
       .state('app.projects', {
         url : '/projects',
         templateUrl : 'views/app/projects/index.html',
-        controller : ['$scope', 'CurrentSession', function($scope, CurrentSession) {
-          CurrentSession.getOrganizations().then(function(organizations) {
-            $scope.organization = organizations[0];
-          }, function() {
-            console.error('Unable to load organizations for user #' + CurrentSession.getUser().id);
-          });
+        resolve : {
+          organizations : ['authenticated', 'CurrentSession', function(authenticated, CurrentSession) {
+            return CurrentSession.getOrganizations();
+          }]
+        },
+        controller : ['$scope', 'CurrentSession', 'organizations', function($scope, CurrentSession, organizations) {
+          $scope.organization = organizations[0];
         }]
       })
 
