@@ -50,6 +50,7 @@ module.exports = function(config) {
       'app/bower_components/angulartics/src/angulartics.js',
       'app/bower_components/angulartics/src/angulartics-ga.js',
       'app/bower_components/ngDialog/js/ngDialog.js',
+      'app/bower_components/angular-restmod/dist/angular-restmod-bundle.js',
       'app/scripts/initializers/modules.js',
       'app/scripts/initializers/api.js',
       'app/scripts/*.js',

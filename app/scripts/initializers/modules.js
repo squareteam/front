@@ -16,7 +16,8 @@ angular
     'pascalprecht.translate',
     'angulartics',
     'angulartics.google.analytics',
-    'ngDialog'
+    'ngDialog',
+    'plRestmod'
   ]);
 
 
