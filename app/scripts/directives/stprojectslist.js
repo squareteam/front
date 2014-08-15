@@ -51,6 +51,19 @@ angular.module('squareteam.app')
         // Load projects at startup
         $scope.loadProjects();
 
+        $scope.$on('project:delete', function(_, projectId) {
+          var index = -1;
+          angular.forEach($scope.projects, function(project, i) {
+            if (project.id === projectId) {
+              index = i;
+            }
+          });
+
+          if (index >= 0) {
+            $scope.projects.splice(index, 1);
+          }
+        });
+
         $scope.createProjectPopin = function() {
           var dialog,
               createProjectPopinScope = $rootScope.$new();

@@ -15,14 +15,39 @@ angular.module('squareteam.app')
       templateUrl: 'scripts/directives/templates/stprojectcard.html',
       restrict: 'E',
       replace : true,
-      controller : function($scope, $element, $attrs, stTooltip) {
+      controller : function($scope, $element, $attrs, stTooltip, ngDialog) {
 
         var editProjectBtn    = $($element).find('.icon-settings'),
             editProjectScope  = $scope.$new(),
             $tooltip          = null;
 
         editProjectScope.edit = function() {
-          console.log('edit project', $scope.project.id);
+          
+          var dialog,
+              updateProjectScope = $scope.$new();
+
+          updateProjectScope.project = $scope.project;
+
+          updateProjectScope.updateProject = function() {
+            $scope.project = updateProjectScope.project;
+            dialog.close();
+          };
+
+          $tooltip && $tooltip.hide();
+          dialog = ngDialog.open({
+            template  : 'views/app/projects/update_project_popin.html',
+            scope     : updateProjectScope
+          });
+
+        };
+
+        editProjectScope.delete = function() {
+          $tooltip && $tooltip.hide();
+          $scope.$emit('project:delete', $scope.project.id);
+        };
+
+        editProjectScope.archive = function() {
+          console.log('feature not supported for now..');
         };
 
         editProjectBtn.on('click', function() {
