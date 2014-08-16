@@ -26,9 +26,16 @@ angular.module('squareteam.app')
 
     this.getOrganizations = function() {
       // TODO(charly): add caching ?
-      return UserResource.organizations.query({
-        userId : this.$$user.id
-      }).$promise;
+      var user,
+          deferred = $q.defer();
+
+      user = UserResource.$find(this.$$user.id).$then(
+        function() {
+          user.organizations.$fetch().$then(deferred.resolve);
+        }
+      );
+
+      return deferred.promise;
     };
 
     this.getAuth = function() {

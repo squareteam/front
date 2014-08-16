@@ -27,12 +27,12 @@ angular.module('squareteam.app')
     // EXPOSE METHODS
 
     $scope.updateUser = function() {
-      UserResource.update({
-        id : $scope.user.id
-      }, {
-        email : $scope.user.email,
-        name  : $scope.user.name
-      }, function() {
+      var user = UserResource.$find($scope.user.id);
+
+      user.email = $scope.user.email;
+      user.name  = $scope.user.name;
+
+      user.$save().$then(function() {
 
         // Force CurrentSession to reload user data
         if ($scope.user.email !== userData.email || ($scope.user.password && $scope.user.password.length)) {
