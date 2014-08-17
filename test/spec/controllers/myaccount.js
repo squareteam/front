@@ -9,8 +9,9 @@ describe('Controller: MyAccountCtrl', function () {
   beforeEach(module('squareteam.app'));
 
   var MyAccountCtrl, scope, resolvePromise,
-      appConfig, PasswordConfirmPopin, CurrentSession, ApiSession,
-      $httpBackend, $controller, $q;
+      appConfig, PasswordConfirmPopin, CurrentSession, ApiSession, UserResource,
+      $httpBackend, $controller, $q,
+      user;
 
   resolvePromise = function() {
     var deferred = $q.defer();
@@ -28,16 +29,19 @@ describe('Controller: MyAccountCtrl', function () {
     PasswordConfirmPopin  = $injector.get('PasswordConfirmPopin');
     CurrentSession        = $injector.get('CurrentSession');
     ApiSession            = $injector.get('ApiSession');
+    UserResource          = $injector.get('UserResource');
 
     provideAuth($injector)();
 
     scope = $rootScope.$new();
 
-    spyOn(CurrentSession, 'getUser').and.returnValue({
+    user = UserResource.$buildRaw({
       id    : 1,
       name  : 'Charly',
       email : 'charly@squareteam.io'
     });
+
+    spyOn(CurrentSession, 'getUser').and.returnValue(user);
 
     spyOn(CurrentSession, 'getOrganizations').and.callFake(function() {
       var deferred = $q.defer();
@@ -64,11 +68,7 @@ describe('Controller: MyAccountCtrl', function () {
     });
 
     it('should provide current user as $scope.user', function() {
-      expect(scope.user).toEqual({
-        id    : 1,
-        name  : 'Charly',
-        email : 'charly@squareteam.io'
-      });
+      expect(scope.user).toEqual(user);
     });
 
   });
@@ -109,11 +109,7 @@ describe('Controller: MyAccountCtrl', function () {
       scope.$digest();
 
 
-      expect(scope.user).toEqual({
-        id    : 1,
-        name  : 'Charly',
-        email : 'charly@squareteam.io'
-      });
+      expect(scope.user).toEqual(user);
 
     });
     it('should NOT ask to confirm password when updating pseudo', function() {

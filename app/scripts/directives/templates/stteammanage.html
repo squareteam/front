@@ -22,7 +22,7 @@
       <ul class="users_list">
          <li ng-repeat="user in team.users track by user.id">
             <input   type="checkbox" class="pull-left"
-                     ng-checked="usersToRemove.indexOf(user.id) > 0" ng-click="toggleUserRemoveFromTeam(user)">
+                     ng-checked="usersToRemove.indexOf(user) > 0" ng-click="toggleUserRemoveFromTeam(user)">
             <span>
                <img src="/images/user.png" width="25" class="img-circle pull-left" alt="" style="margin-right:10px;"> {{ user.name }}
             </span>

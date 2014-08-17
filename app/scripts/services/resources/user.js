@@ -1,23 +1,13 @@
 'use strict';
 
 angular.module('squareteam.resources')
-  .factory('UserResource', function($resource, $http) {
-    var userResource;
-
-    userResource = $resource('apis://users/:id', {
-      // id: '@'
-    }, {
-      update: {
-        method: 'PUT'
-      }
+  .factory('UserResource', function($http, restmod) {
+    var User = restmod.model('apis://users', {
+      organizations : { hasMany : 'OrganizationResource' },
+      // projects  : { hasMany : 'ProjectResource'}
     });
 
-    // Creating user is a public route
-    userResource.create = function(data) {
-      return $http.post('api://user', data);
-    };
-
-    userResource.search = function(query) {
+    User.search = function(query) {
       return $http.get('apis://users/search', {
         params : {
           q : query
@@ -25,10 +15,10 @@ angular.module('squareteam.resources')
       });
     };
 
-    ////////////////////////
-    // User Organizations //
-    ////////////////////////
-    userResource.organizations = $resource('apis://users/:userId/organizations', {});
+    // Creating a user is a public route
+    User.create = function(data) {
+      return $http.post('api://user', data);
+    };
 
-    return userResource;
+    return User;
   });

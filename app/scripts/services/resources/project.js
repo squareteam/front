@@ -4,6 +4,8 @@ angular.module('squareteam.resources')
   .factory('ProjectResource', function($resource, $http, $q, ApiCache) {
     var OrganizationProjectsResource;
 
+    // restmod.model('apis://projects');
+
     OrganizationProjectsResource = $resource('apis://projects', {}, {
       update: {
         method: 'PUT'

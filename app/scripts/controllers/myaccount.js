@@ -20,19 +20,15 @@ angular.module('squareteam.app')
         userData = angular.copy($scope.user);
       }, function() {
         window.alert('Update failed !');
-        $scope.user = userData;
+        $scope.user.email = userData.email;
+        $scope.user.name  = userData.name;
       });
     }
 
     // EXPOSE METHODS
 
     $scope.updateUser = function() {
-      UserResource.update({
-        id : $scope.user.id
-      }, {
-        email : $scope.user.email,
-        name  : $scope.user.name
-      }, function() {
+      $scope.user.$save().$then(function() {
 
         // Force CurrentSession to reload user data
         if ($scope.user.email !== userData.email || ($scope.user.password && $scope.user.password.length)) {
@@ -48,14 +44,16 @@ angular.module('squareteam.app')
                 $$refreshSession($scope.user.password);
               }, function() {
                 window.alert('Update canceled !');
-                $scope.user = userData;
+                $scope.user.email = userData.email;
+                $scope.user.name  = userData.name;
               });
             } else {
               $$refreshSession(confirmPassword);
             }
           }, function() {
             window.alert('Update canceled !');
-            $scope.user = userData;
+            $scope.user.email = userData.email;
+            $scope.user.name  = userData.name;
           });
         } else {
           CurrentSession.reloadUser();

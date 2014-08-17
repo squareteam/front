@@ -26,9 +26,7 @@ angular.module('squareteam.app')
 
     this.getOrganizations = function() {
       // TODO(charly): add caching ?
-      return UserResource.organizations.query({
-        userId : this.$$user.id
-      }).$promise;
+      return this.$$user.organizations.$fetch().$promise;
     };
 
     this.getAuth = function() {
@@ -41,7 +39,7 @@ angular.module('squareteam.app')
 
     this.reloadUser = function() {
       $http.get('apis://user/me').then(function(response) {
-        this.$$user = response.data;
+        this.$$user = UserResource.$buildRaw(response.data);
       }.bind(this), function() {
         this.unregister();
       }.bind(this));
@@ -66,7 +64,7 @@ angular.module('squareteam.app')
         headers : angular.extend({'X-Requested-With': 'XMLHttpRequest'}, ApiCrypto.generateHeaders(auth, appConfig.api.url + 'user/me', 'GET', {}))
       }).then(function(response) {
         self.$$auth = auth;
-        self.$$user = response.data;
+        self.$$user = UserResource.$buildRaw(response.data);
         $rootScope.$broadcast('user:connected');
         deferred.resolve(response.data);
       }, function(response) {
