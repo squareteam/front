@@ -27,7 +27,6 @@ angular.module('squareteam.app')
         // Load team
 
         TeamResource.$find($scope.teamId).$then(function(team) {
-          console.log('team', team);
           $scope.team = team;
         }, function() {
           $scope.errors.loadTeam = true;
@@ -49,7 +48,7 @@ angular.module('squareteam.app')
 
         function addUserToTeam (user) {
           $scope.$setPristine();
-          $scope.team.addUser(user).catch(function() {
+          $scope.team.users.$create(user).$promise.catch(function() {
             $scope.errors.addUser = true;
           });
         }
@@ -59,9 +58,7 @@ angular.module('squareteam.app')
           $scope.$setPristine();
           if (usersToRemove.length) {
             angular.forEach(usersToRemove, function(user) {
-              $http.delete('apis://team' + $scope.team.id + '/user/'+ user.id).then(function() {
-                $scope.team.$remove(user);
-              } ,function() {
+              user.$destroy().$promise.catch(function() {
                 $scope.errors.removeUsers = true;
               });
             });

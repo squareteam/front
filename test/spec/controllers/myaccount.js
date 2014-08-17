@@ -78,6 +78,7 @@ describe('Controller: MyAccountCtrl', function () {
       spyOn(PasswordConfirmPopin, 'prompt').and.callFake(resolvePromise);
       spyOn(ApiSession, 'login').and.callFake(resolvePromise);
 
+      $httpBackend.expectGET(appConfig.api.url + 'users/1').respond('');
       $httpBackend.expectPUT(appConfig.api.url + 'users/1').respond('');
 
       scope.user.email = 'paul@squareteam.io';
@@ -98,6 +99,7 @@ describe('Controller: MyAccountCtrl', function () {
         return $q.reject();
       });
 
+      $httpBackend.expectGET(appConfig.api.url + 'users/1').respond('');
       $httpBackend.expectPUT(appConfig.api.url + 'users/1').respond('');
 
       scope.user.email = 'paul@squareteam.io';
@@ -121,6 +123,7 @@ describe('Controller: MyAccountCtrl', function () {
       spyOn(PasswordConfirmPopin, 'prompt').and.callFake(resolvePromise);
       spyOn(ApiSession, 'login').and.callFake(resolvePromise);
 
+      $httpBackend.expectGET(appConfig.api.url + 'users/1').respond('');
       $httpBackend.expectPUT(appConfig.api.url + 'users/1').respond('');
       $httpBackend.expectGET(appConfig.api.url + 'user/me').respond('');
 
