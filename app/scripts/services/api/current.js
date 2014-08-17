@@ -26,7 +26,7 @@ angular.module('squareteam.app')
 
     this.getOrganizations = function() {
       // TODO(charly): add caching ?
-      return this.$$user.organizations.$fetch().$promise;
+      return this.$$user.organizations.$refresh().$promise;
     };
 
     this.getAuth = function() {
