@@ -129,9 +129,7 @@ describe('Service: ApiSession', function () {
       expect(errorCallback.calls.any()).toEqual(false);
       expect(successCallback.calls.count()).toEqual(1);
 
-      expect(CurrentSession.getUser()).toEqual({
-        name : 'Charly'
-      });
+      expect(CurrentSession.getUser().name).toEqual('Charly');
 
       expect(CurrentSession.isAuthenticated()).toBe(true);
 
@@ -158,9 +156,7 @@ describe('Service: ApiSession', function () {
       expect(errorCallback.calls.any()).toEqual(false);
       expect(successCallback.calls.count()).toEqual(1);
 
-      expect(CurrentSession.getUser()).toEqual({
-        name : 'Charly'
-      });
+      expect(CurrentSession.getUser().name).toEqual('Charly');
 
       expect(CurrentSession.getAuth().$isValid()).toBe(true);
 

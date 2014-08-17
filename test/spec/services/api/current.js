@@ -22,7 +22,7 @@ describe('Service: CurrentSession', function () {
   }));
 
   // instantiate service
-  var CurrentSession, ApiAuth, ApiSessionStorageCookies,
+  var CurrentSession, ApiAuth, ApiSessionStorageCookies, UserResource,
       $httpBackend, $rootScope,
       successCallback, errorCallback, apiURL;
 
@@ -30,6 +30,7 @@ describe('Service: CurrentSession', function () {
     CurrentSession            = $injector.get('CurrentSession');
     ApiAuth                   = $injector.get('ApiAuth');
     ApiSessionStorageCookies  = $injector.get('ApiSessionStorageCookies');
+    UserResource              = $injector.get('UserResource');
 
     $httpBackend              = $injector.get('$httpBackend');
     $rootScope                = $injector.get('$rootScope');
@@ -75,7 +76,9 @@ describe('Service: CurrentSession', function () {
     });
 
     it('should return user', function () {
-      expect(CurrentSession.getUser()).toEqual({ id : 1, name : 'test-auth', email : 'charly.poly@live.fr'});
+      expect(CurrentSession.getUser().id).toEqual(1);
+      expect(CurrentSession.getUser().name).toEqual('test-auth');
+      expect(CurrentSession.getUser().email).toEqual('charly.poly@live.fr');
     });
 
   });
@@ -173,9 +176,7 @@ describe('Service: CurrentSession', function () {
       expect(errorCallback.calls.any()).toEqual(false);
       expect(successCallback.calls.count()).toEqual(1);
 
-      expect(CurrentSession.getUser()).toEqual({
-        name : 'Charly'
-      });
+      expect(CurrentSession.getUser().name).toEqual('Charly');
 
       expect(CurrentSession.getAuth().$isValid()).toBe(true);
 
@@ -239,7 +240,7 @@ describe('Service: CurrentSession', function () {
       $httpBackend.flush();
       $rootScope.$digest();
 
-      expect(CurrentSession.getUser()).toEqual({'name':'Charly'});
+      expect(CurrentSession.getUser().name).toEqual('Charly');
 
     });
 
