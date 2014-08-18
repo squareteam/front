@@ -17,7 +17,8 @@ angular
     'angulartics',
     'angulartics.google.analytics',
     'ngDialog',
-    'restmod'
+    'restmod',
+    'angularMoment'
   ]);
 
 

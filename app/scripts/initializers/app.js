@@ -4,6 +4,22 @@
 
 angular
   .module('squareteam.app')
+  .run(function(moment) {
+    ///////////////
+    // Moment.js //
+    ///////////////
+
+    moment.lang('en', {
+      calendar : {
+        lastDay : '[yesterday at] LT',
+        sameDay : '[today at] LT',
+        nextDay : '[tomorrow at] LT',
+        lastWeek : '[last] dddd [at] LT',
+        nextWeek : 'dddd [at] LT',
+        sameElse : 'L'
+      }
+    });
+  })
   .config(function ($stateProvider, $urlRouterProvider, $translateProvider, $analyticsProvider, ngDialogProvider) {
 
     //////////////
