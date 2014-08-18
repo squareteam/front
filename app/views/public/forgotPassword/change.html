@@ -3,7 +3,9 @@
       <div id="box_center" class="col-sm-10 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
          <div class='box_shadow'>
             
-            <h1>Please enter a new password</h1>
+            <h1>
+              {{ 'public.forgotPassword.change.title' | translate }}
+            </h1>
             <p class='alert' ng-show="!!serverBusy">
                {{ 'api.serverBusy' | translate }}
             </p>
@@ -36,7 +38,7 @@
                   </div>
 
                   <input  type='submit' name="changePassword"
-                          value="Change password"
+                          value="{{ 'public.forgotPassword.change.submitBtn' | translate }}"
                           class="button col-xs-8 col-xs-offset-2"/>
                   
                   <div class='clear'></div>
