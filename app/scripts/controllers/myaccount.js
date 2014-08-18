@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .controller('MyAccountCtrl', function ($scope, $http, ApiSession, CurrentSession, UserResource, PasswordConfirmPopin) {
+  .controller('MyAccountCtrl', function ($scope, $http, ApiSession, CurrentSession, UserResource, PasswordConfirmPopin, ApiErrors) {
     // Keep copy to know if password or email updated since last save
     var userData = angular.copy(CurrentSession.getUser());
     
@@ -25,6 +25,10 @@ angular.module('squareteam.app')
     }
 
     // EXPOSE METHODS
+
+    $scope.passwordFormat = function() {
+      $scope.passwordBadPractice = !$scope.user.password || $scope.user.password.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/) === null;
+    };
 
     $scope.updateUser = function() {
       UserResource.update({
@@ -59,6 +63,14 @@ angular.module('squareteam.app')
           });
         } else {
           CurrentSession.reloadUser();
+        }
+      }, function(response) {
+        if (response.error instanceof ApiErrors.Api) {
+          angular.forEach(response.error.getErrors(), function(errorText) {
+            if (errorText === 'api.already_taken.Email') {
+              $scope.userForm.email.$setValidity('unique', false);
+            }
+          }.bind(this));
         }
       });
     };
