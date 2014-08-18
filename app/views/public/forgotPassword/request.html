@@ -10,6 +10,11 @@
             <p class='alert' ng-show="!!emailInvalid">
                {{ 'public.forgotPassword.emailInvalid' | translate }} <br>
             </p>
+            <p class='alert' ng-show="!!oAuthAccountFound">
+               <a ng-href="{{ oAuthLoginLink }}">
+                  {{ 'public.forgotPassword.oAuthAccountFound' | translate }} {{ oAuthAccountFound }}
+               </a>
+            </p>
             <article id="first_sign_in">
                <form action ng-submit="request()" name="requestForm" class="fancy">
                   <p>Enter the email address you used when you joined and we'll send you instructions to reset your password.</p>

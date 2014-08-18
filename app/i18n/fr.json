@@ -25,6 +25,7 @@
 
       "forgotPassword" : {
          "emailInvalid"          : "Aucun compte n'existe avec cet email",
+         "oAuthAccountFound"     : "Merci de vous connecter avec",
          "tokenInvalid"          : "Votre demande de changement de mot de passe est expirée",
          "tokenInvalidClickHere" : "Effectuer une nouvelle demande"
       }

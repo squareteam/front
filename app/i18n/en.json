@@ -23,6 +23,7 @@
 
       "forgotPassword" : {
          "emailInvalid"          : "No account found with this email",
+         "oAuthAccountFound"     : "Please try to login with",
          "tokenInvalid"          : "Your password change request is expired",
          "tokenInvalidClickHere" : "Please make a new request"
       }
