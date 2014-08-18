@@ -21,6 +21,10 @@ angular.module('squareteam.app')
     $scope.sortBy         = '';
     $scope.filter         = {};
 
+    $scope.organizationsSelectorFilter = function(actual, expected) {
+      return actual.id !== expected.id;
+    };
+
     $scope.isFiltered = function() {
       return Object.keys($scope.filter).length;
     };

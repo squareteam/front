@@ -15,7 +15,7 @@
                         {{ projects.length }} {{ 'app.projects.projects' | translate }}
                      </div>
                   </div>
-                  <div  class="col-xs-2 vertical-center change"
+                  <div  class="col-xs-2 vertical-center change" ng-show="organizations.length > 1"
                         st-dropdown top-pad="80" left-pad="138" dropdown=".organization_dropdown">
                      <i class="icon icon-arrow-down-active"></i>
                   </div>
@@ -54,7 +54,7 @@
    </div>
 
    <ul class="organization_dropdown vertical-center">
-      <li class="row" ng-repeat="organization in organizations track by organization.id" ng-click="changeOrganization(organization)">
+      <li class="row" ng-repeat="organization in organizations | filter:organization:organizationsSelectorFilter" ng-click="changeOrganization(organization)">
          <div class="col-xs-2 vertical-center">
             <img src="/images/app/layout/organization_logo_sample.png" alt="">
          </div>
