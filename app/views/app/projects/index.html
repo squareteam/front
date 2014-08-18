@@ -1,2 +1,133 @@
-<st-projects-list organization-id="{{ organization.id }}">
-</st-projects-list>
+<div class="organizations_projects">
+   <header>
+      <div class="container">
+         <div class="row">
+            <div  class="col-xs-2 organization vertical-center" ng-if="organization">
+               <div class="row">
+                  <div class="col-xs-2 vertical-center">
+                     <img src="/images/app/layout/organization_logo_sample.png" alt="">
+                  </div>
+                  <div class="col-xs-8 vertical-center" style="width:215px;">
+                     <div class="name">
+                        {{ organization.name }}
+                     </div>
+                     <div class="projects_count">
+                        {{ projects.length }} {{ 'app.projects.projects' | translate }}
+                     </div>
+                  </div>
+                  <div  class="col-xs-2 vertical-center change"
+                        st-dropdown top-pad="80" left-pad="138" dropdown=".organization_dropdown">
+                     <i class="icon icon-arrow-down-active"></i>
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-xs-3 filters vertical-center">
+                  <div class="by_status" st-dropdown top-pad="80" dropdown=".status_filters">
+                     <span>{{ 'app.projects.filters.byStatus' | translate }}</span>
+                     <i class="icon icon-arrow-down-inactive"></i>
+                  </div>
+                  <div class="by_team" st-dropdown top-pad="80" dropdown=".team_filters">
+                     <span>{{ 'app.projects.filters.byTeam' | translate }}</span>
+                     <i class="icon icon-arrow-down-inactive"></i>
+                  </div>
+                  <div class="sort" st-dropdown top-pad="80" dropdown=".sort_filters">
+                     <span>{{ 'app.projects.filters.sortBy' | translate }}</span>
+                     <i class="icon icon-arrow-down-inactive"></i>
+                  </div>
+            </div>
+
+            <div class="col-xs-2 vertical-center add_project">
+               <button class="primary" ng-click="createProjectPopin()">
+                  {{ 'app.projects.add_project' | translate }}
+               </button>
+            </div>
+         </div>
+      </div>
+   </header>
+
+   <div class="projects container">
+      <div ng-show="isFiltered()" ng-click="clearFilters()" class="clear-filters">Clear filters</div>
+      <div class="row">
+         <st-project-card ng-repeat="project in projects | orderBy:sortBy | filter:filter" project="project"></st-project-card>
+      </div>
+   </div>
+
+   <ul class="organization_dropdown vertical-center">
+      <li class="row" ng-repeat="organization in organizations track by organization.id" ng-click="changeOrganization(organization)">
+         <div class="col-xs-2 vertical-center">
+            <img src="/images/app/layout/organization_logo_sample.png" alt="">
+         </div>
+         <div class="col-xs-10 vertical-center" style="width:215px;">
+            <div class="name">
+               {{ organization.name }}
+            </div>
+            <!--
+            <div class="projects_count">
+               x projets
+            </div>
+            -->
+         </div>
+      </li>
+   </ul>
+
+   <ul class="filters_dropdown status_filters">
+      <li   style="border-left: 2px solid #57c0df;" data-color="#57c0df"
+            ng-click="filter = { 'status': 'inprogress' }">
+         {{ 'directives.stProjectCard.status.inprogress' | translate }}
+      </li>
+      <li   style="border-left: 2px solid #ff6e83;" data-color="#ff6e83"
+            ng-click="filter = { 'status': 'due' }">
+         {{ 'directives.stProjectCard.status.due' | translate }}
+      </li>
+      <li   style="border-left: 2px solid #cf83c0;" data-color="#cf83c0"
+            ng-click="filter = { 'status': 'validation' }">
+         {{ 'directives.stProjectCard.status.validation' | translate }}
+      </li>
+      <li   style="border-left: 2px solid #73c26D;" data-color="#73c26D"
+            ng-click="filter = { 'status': 'done' }">
+         {{ 'directives.stProjectCard.status.done' | translate }}
+      </li>
+      <li   style="border-left: 2px solid #9cb6be;" data-color="#9cb6be"
+            ng-click="filter = { 'status': 'paused' }">
+         {{ 'directives.stProjectCard.status.paused' | translate }}
+      </li>
+   </ul>
+
+   <ul class="filters_dropdown team_filters">
+      <li   style="border-left: 2px solid #57c0df;" data-color="#57c0df"
+            ng-click="filter = { 'team': 'panda' }">
+         Team Panda
+      </li>
+      <li   style="border-left: 2px solid #73c26D;" data-color="#73c26D"
+            ng-click="filter = { 'team': 'tiger' }">
+         Team Tiger
+      </li>
+      <li   style="border-left: 2px solid #ff6e83;" data-color="#ff6e83"
+            ng-click="filter = { 'team': 'snow' }">
+         Team Snow
+      </li>
+   </ul>
+
+   <ul class="filters_dropdown sort_filters">
+      <li class="icon-sort-asc" ng-click="sortBy='deadline'">
+         {{ 'app.projects.sort.deadline' | translate }}
+      </li>
+      <li class="icon-sort-desc" ng-click="sortBy='-deadline'">
+         {{ 'app.projects.sort.deadline' | translate }}
+      </li>
+      <li class="icon-sort-asc" ng-click="sortBy='progress'">
+         {{ 'app.projects.sort.progress' | translate }}
+      </li>
+      <li class="icon-sort-desc" ng-click="sortBy='-progress'">
+         {{ 'app.projects.sort.progress' | translate }}
+      </li>
+      <li class="icon-sort-asc" ng-click="sortBy='created_at'">
+         {{ 'app.projects.sort.date' | translate }}
+      </li>
+      <li class="icon-sort-desc" ng-click="sortBy='-created_at'">
+         {{ 'app.projects.sort.date' | translate }}
+      </li>
+   </ul>
+
+</div>

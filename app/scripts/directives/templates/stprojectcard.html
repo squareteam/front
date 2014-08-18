@@ -5,9 +5,9 @@
             {{ project.title }}
          </h3>
          <span class="created_at">
-            Créé le
-            <time datetime="1977-04-22T01:00:00-05:00">
-               {{ project.createdAtDate }}
+            {{ 'directives.stProjectCard.created' | translate }} 
+            <time datetime="{{ project.created_at }}">
+               {{ project.createdAt | amCalendar }}
             </time>
          </span>
       </div>
@@ -22,7 +22,7 @@
             <i class="icon icon-status-due" ng-if="project.status === 'due'"></i>
             <i class="icon icon-status-inprogress" ng-if="project.status !== 'due'"></i>
             <time datetime="{{ project.deadlineDate }}">
-               {{ project.deadlineDate }}
+               {{ project.deadline }}
             </time>
          </div>
          <div>
@@ -47,12 +47,12 @@
       <div class="col-xs-7">
          <i class="icon icon-status-done"></i>
          <time datetime="1977-04-22T01:00:00-05:00">
-            05/07/14
+            {{ project.deadline }}
          </time>
       </div>
       <div class="col-xs-5">
          <button class="status_name done">
-            <span>Terminé</span>
+            <span>{{ 'directives.stProjectCard.status.done' | translate }}</span>
          </button>
       </div>
    </div>
@@ -86,7 +86,7 @@
 
    <div class="view_project">
       <div>
-         <a href="">Voir ce projet</a>
+         <a href="">{{ 'directives.stProjectCard.seeProject' | translate }}</a>
       </div>
    </div>
 

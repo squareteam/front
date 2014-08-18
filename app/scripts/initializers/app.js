@@ -236,9 +236,7 @@ angular
             return CurrentSession.getOrganizations();
           }]
         },
-        controller : ['$scope', 'CurrentSession', 'organizations', function($scope, CurrentSession, organizations) {
-          $scope.organization = organizations[0];
-        }]
+        controller : 'ProjectsListCtrl'
       })
 
       .state('app.projects.create', {

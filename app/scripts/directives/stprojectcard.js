@@ -29,8 +29,9 @@ angular.module('squareteam.app')
           updateProjectScope.project = $scope.project;
 
           updateProjectScope.updateProject = function() {
-            $scope.project = updateProjectScope.project;
-            dialog.close();
+            $scope.project.title        = updateProjectScope.project.title;
+            $scope.project.description  = updateProjectScope.project.description;
+            $scope.project.$save().$then(dialog.close);
           };
 
           $tooltip && $tooltip.hide();

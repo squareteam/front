@@ -106,12 +106,18 @@ $projects_image_path: "/images/app/projects_list/";
       height: 80px;
       background-color: $dark_blue;
 
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      -o-user-select: none;
+      user-select: none;
+
       .organization {
          height: 80px;
-         padding-right: 24px;
+         padding-right: 0;
 
          // To fit with project cards width (not bootstrap grid based)
-         width: 23.8%;
+         width: 18.4%;
 
          .name {
             color: #FFF;
@@ -123,47 +129,84 @@ $projects_image_path: "/images/app/projects_list/";
 
          .icon {
             vertical-align: middle;
-            cursor: pointer;
             margin-bottom: 5px;
          }
 
-      }
+         .change {
+            cursor: pointer;
+            height: 80px;
+            width: 80px;
+            text-align: center;
 
-      .display {
-         height: 80px;
-         .grid {
-            padding-right: 0;
-            text-align: left;
-            padding-left: 26px;
-            border-left: 1px solid rgba(150, 178, 186, 0.5);
+            &.dropdown-open {
+               background-color: $darken_blue;
+               .icon {
+                  transform: rotate(180deg);
+               }
+            }
          }
-         .list {
-            padding-left: 0;
-            padding-right: 26px;
-            border-right: 1px solid rgba(150, 178, 186, 0.5);
-            text-align: right;
-         }
+
       }
 
       .filters {
-         height: 80px;
-         .by_status {
-            padding-left: 26px;
-         }
-      }
+         text-align: center;
 
-      .filters, .display {
+         padding-left:0;
+
+         .dropdown-open {
+            background-color:$darken_blue;
+
+            .icon {
+               transform: rotate(180deg) translateY(-3px);
+            }
+         }
+
+         .active {
+            color:#FFF;
+
+            .icon {
+               width: 29px;
+               height: 33px;
+               background: url($projects_image_path + 'arrow-down-active.png') center center no-repeat scroll transparent;
+            }
+         }
+
+         .by_status, .by_team, .sort {
+            margin-left: -3px;
+            height: 80px;
+            line-height: 80px;
+            display: inline-block;
+            width: 134px;
+         }
+
+         .sort {
+            &.active {
+               padding-left: 5px;
+            }
+            &.icon-sort-desc {
+               // sort_active_sprite
+               background: url($projects_image_path + '/sort-active-sprite.png') 0 -52px no-repeat scroll #2c4858;
+            }
+
+            &.icon-sort-asc {
+               // sort_active_sprite
+               background: url($projects_image_path + '/sort-active-sprite.png') 0 8px no-repeat scroll #2c4858;
+            }
+         }
+
          color:$shy_blue;
 
          .icon {
             margin-bottom: 5px;
             vertical-align: middle;
             cursor: pointer;
+            float: right;
+            padding-top: 57%;
+            margin-right: 10px;
          }
       }
 
       .add_project {
-         height: 80px;
          text-align: right;
          padding-right: 0;
 
@@ -173,9 +216,8 @@ $projects_image_path: "/images/app/projects_list/";
             color: #FFFFFF;
             border: none;
             border-radius: 2px;
-            text-align: left;
 
-            padding-left: 55px;
+            padding-left: 50px;
             background: url($projects_image_path + "add.png") 12% 48% no-repeat scroll #57c0df;
          }
       }
@@ -184,6 +226,25 @@ $projects_image_path: "/images/app/projects_list/";
    .projects {
       padding-top: 50px;
       color:$default_text_color;
+
+      .clear-filters {
+         cursor: pointer;
+         color: #FFFFFF;
+         text-align: center;
+         background-color: #678496;
+         padding: 5px;
+         border-radius: 2px;
+         font-size: 11px;
+         width: 89px;
+         margin-left: -15px;
+         margin-bottom: 10px;
+
+         transition: background-color 150ms ease-in;
+
+         &:hover {
+            background-color: $dark_blue;
+         }
+      }
 
       .project_card:nth-child(3n+1) {
          margin-left:0;
@@ -289,13 +350,14 @@ $projects_image_path: "/images/app/projects_list/";
                border:none;
                padding: 0;
                height: 25px;
-               // font-size: 14px;
+               cursor: default;
 
                span {
                   padding: 2px 12px;
                }
 
                &.editable {
+                  cursor: pointer;
                   span {
                      padding: 2px 7px 2px 12px;
                   }
@@ -359,7 +421,7 @@ $projects_image_path: "/images/app/projects_list/";
                .progress {
                   background-color:#57c0df;
                   height: 4px;
-                  width: 50%;
+                  // width: 50%;
                }
 
                .cursor {
@@ -554,5 +616,105 @@ $projects_image_path: "/images/app/projects_list/";
             text-decoration: none;
          }
       }
+   }
+}
+
+.organization_dropdown {
+   display: none;
+
+   position: absolute;
+   background-color: $darken_blue;
+   width: 354px;
+   list-style: none;
+   margin:0;
+   padding: 0;
+   -moz-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   -o-user-select: none;
+   user-select: none;
+
+   li {
+      padding:15px 15px 15px 0;
+      margin:0;
+      cursor: pointer;
+      transition: all 0.2s ease-in;
+
+      &:hover {
+         background-color:#2c4858;
+         .name {
+            color: #FFF;
+         }
+      }
+   }
+
+   .name {
+      color: #8fa8b7;
+   }
+
+   .projects_count {
+      color: #b7ccd8;
+   }
+}
+
+.filters_dropdown {
+   display: none;
+
+   color:$shy_blue;
+
+   position: absolute;
+   background-color: $darken_blue;
+   width: 134px;
+   list-style: none;
+   margin:0;
+   padding: 0;
+   -moz-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   -o-user-select: none;
+   user-select: none;
+
+   li {
+      padding:25px;
+      margin:0;
+      cursor: pointer;
+
+      transition: all 0.2s ease-in;
+
+      &:hover {
+         color: #FFF;
+      }
+   }
+}
+
+.sort_filters {
+
+   li {
+      overflow: hidden;
+      padding-left:55px;
+      padding-right:40px;
+   }
+
+   li:hover {
+
+      &.icon-sort-desc {
+         // sort_active_sprite
+         background: url($projects_image_path + '/sort-active-sprite.png') 20px -58px no-repeat scroll #2c4858;
+      }
+
+      &.icon-sort-asc {
+         // sort_active_sprite
+         background: url($projects_image_path + '/sort-active-sprite.png') 20px 3px no-repeat scroll #2c4858;
+      }
+   }
+
+   .icon-sort-desc {
+      // sort_active_sprite
+      background: url($projects_image_path + '/sort-inactive-sprite.png') 20px -58px no-repeat scroll transparent;
+   }
+
+   .icon-sort-asc {
+      // sort_active_sprite
+      background: url($projects_image_path + '/sort-inactive-sprite.png') 20px 3px no-repeat scroll transparent;
    }
 }
