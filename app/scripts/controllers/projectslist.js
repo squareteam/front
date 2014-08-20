@@ -1,5 +1,3 @@
-/* global $ */
-
 'use strict';
 
 angular.module('squareteam.app')
@@ -19,14 +17,94 @@ angular.module('squareteam.app')
 
     $scope.organizations  = [];
     $scope.sortBy         = '';
-    $scope.filter         = {};
+    $scope.teamFilter     = '';
+    $scope.statusFilter   = '';
+
+    $scope.statusFilterChoices = [
+      {
+        label   : 'directives.stProjectCard.status.inprogress',
+        color   : '#57c0df',
+        value   : 'inprogress'
+      },
+      {
+        label   : 'directives.stProjectCard.status.due',
+        color   : '#ff6e83',
+        value   : 'due'
+      },
+      {
+        label   : 'directives.stProjectCard.status.validation',
+        color   : '#cf83c0',
+        value   : 'validation'
+      },
+      {
+        label   : 'directives.stProjectCard.status.done',
+        color   : '#73c26D',
+        value   : 'done'
+      },
+      {
+        label   : 'directives.stProjectCard.status.paused',
+        color   : '#9cb6be',
+        value   : 'paused'
+      }
+    ];
+
+    $scope.teamFilterChoices = [
+      {
+        label   : 'Team Panda',
+        color   : '#57c0df',
+        value   : 'panda'
+      },
+      {
+        label   : 'Team Tiger',
+        color   : '#73c26D',
+        value   : 'tiger'
+      },
+      {
+        label   : 'Team Snow',
+        color   : '#ff6e83',
+        value   : 'snow'
+      }
+    ];
+
+    $scope.sortChoices = [
+      {
+        label   : 'app.projects.sort.deadline',
+        value   : 'deadline',
+        dir     : 'asc'
+      },
+      {
+        label   : 'app.projects.sort.deadline',
+        value   : '-deadline',
+        dir     : 'desc'
+      },
+      {
+        label   : 'app.projects.sort.progress',
+        value   : 'progress',
+        dir     : 'asc'
+      },
+      {
+        label   : 'app.projects.sort.progress',
+        value   : '-progress',
+        dir     : 'desc'
+      },
+      {
+        label   : 'app.projects.sort.date',
+        value   : 'created_at',
+        dir     : 'asc'
+      },
+      {
+        label   : 'app.projects.sort.date',
+        value   : '-created_at',
+        dir     : 'desc'
+      }
+    ];
 
     $scope.organizationsSelectorFilter = function(actual, expected) {
       return actual.id !== expected.id;
     };
 
     $scope.isFiltered = function() {
-      return Object.keys($scope.filter).length;
+      return $scope.teamFilter || $scope.statusFilter;
     };
 
     $scope.loadProjects = function() {
@@ -91,56 +169,10 @@ angular.module('squareteam.app')
       }
     });
 
-    // TO MOVE IN A DIRECTIVE + SERVICE (stDropdownFilters)
-
     $scope.clearFilters = function() {
-      $('.filters .by_team .active_label, .filters .by_status .active_label').remove();
-      $('.filters .by_team span, .filters .by_status span').show();
-      $('.filters .by_team, .filters .by_status').removeClass('active').show();
-      $('.filters .by_team , .filters .by_status').css('backgroundColor', '');
-
-      $scope.filter      = {};
+      $scope.teamFilter     = '';
+      $scope.statusFilter   = '';
     };
-
-    $('.status_filters li, .team_filters li').mouseover(function(e) {
-      $(e.currentTarget).css('backgroundColor', $(e.currentTarget).data('color'));
-    });
-
-    $('.status_filters li, .team_filters li').mouseout(function(e) {
-      $(e.currentTarget).css('backgroundColor', '');
-    });
-
-
-    function setSelectedLabel (node, text) {
-      if (!node.find('.active_label').length) {
-        node.find('span').hide();
-        node.prepend('<span class="active_label"></span>');
-      }
-      node.find('.active_label').text(text);
-      node.addClass('active');
-    }
-
-    $('.status_filters li').on('click', function(e) {
-      setSelectedLabel($('.by_status'), $(e.currentTarget).text());
-
-      $('.by_status').css('backgroundColor', $(e.currentTarget).data('color'));
-    });
-
-    $('.team_filters li').on('click', function(e) {
-      
-      setSelectedLabel($('.by_team'), $(e.currentTarget).text());
-
-      $('.by_team').css('backgroundColor', $(e.currentTarget).data('color'));
-    });
-
-    $('.sort_filters li').on('click', function(e) {
-      setSelectedLabel($('.sort'), $(e.currentTarget).text());
-
-      $('.sort').removeClass('icon-sort-asc');
-      $('.sort').removeClass('icon-sort-desc');
-      $('.sort').addClass($(e.currentTarget).attr('class'));
-    });
-
 
     // METHODS
 

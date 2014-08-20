@@ -172,6 +172,7 @@ $projects_image_path: "/images/app/projects_list/";
          }
 
          .by_status, .by_team, .sort {
+            position: relative;
             margin-left: -3px;
             height: 80px;
             line-height: 80px;
@@ -663,14 +664,19 @@ $projects_image_path: "/images/app/projects_list/";
 .filters_dropdown {
    display: none;
 
+   line-height: normal;
+
    color:$shy_blue;
 
    position: absolute;
+   z-index: 999;
    background-color: $darken_blue;
    width: 134px;
    list-style: none;
    margin:0;
    padding: 0;
+   text-align: left;
+
    -moz-user-select: none;
    -webkit-user-select: none;
    -ms-user-select: none;

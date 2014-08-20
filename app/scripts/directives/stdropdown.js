@@ -3,22 +3,16 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .directive('stDropdown', function () {
+  .directive('stDropdown', function ($parse) {
     return {
-      scope: {
-        topPad  : '@',
-        leftPad : '@',
-        dropdown: '@',
-        onShow  : '&',
-        onHide  : '&'
-      },
-      // transclude: true,
       restrict: 'AC',
-      link: function postLink($scope, $element) {
-        var $dropdown           = $($scope.dropdown),
-            topPad              = !isNaN(parseInt($scope.topPad,0))  ? parseInt($scope.topPad, 10)  : 0,
-            leftPad             = !isNaN(parseInt($scope.leftPad,0)) ? parseInt($scope.leftPad, 10) : 0,
-            // elementPlaceholder  = $element.text(),
+      link: function postLink($scope, $element, attrs) {
+        var $dropdown           = $($element).find('.dropdown_menu'),
+            position            = $parse(attrs.position  || 'absolute')($scope),
+            topPadRaw           = $parse(attrs.topPad  || '')($scope),
+            leftPadRaw          = $parse(attrs.leftPad || '')($scope),
+            topPad              = !isNaN(parseInt(topPadRaw,0))  ? parseInt(topPadRaw, 10)  : 0,
+            leftPad             = !isNaN(parseInt(leftPadRaw,0)) ? parseInt(leftPadRaw, 10) : 0,
             timeout;
 
         function closeDropdown () {
@@ -26,27 +20,31 @@ angular.module('squareteam.app')
 
           $element.removeClass('dropdown-open');
 
-          if ($scope.onHide) {
-            $scope.onHide({ element : $element });
-          }
         }
 
 
         $element.on('mouseenter', function(e) {
-          var offset = $element.offset();
 
           if (!$dropdown.is(':visible')) {
-            $dropdown.css({
-              top   : offset.top + topPad + 'px',
-              left  : offset.left - ((parseInt($dropdown.css('width'), 10) - parseInt($(e.currentTarget).css('width'), 10))/2) - leftPad + 'px',
-              display: 'none'
-            }).fadeIn(200);
 
+            if (position === 'absolute') {
+              var offset = $element.offset();
+              $dropdown.css({
+                top   : offset.top + topPad + 'px',
+                left  : offset.left - ((parseInt($dropdown.css('width'), 10) - parseInt($(e.currentTarget).css('width'), 10))/2) - leftPad + 'px',
+                display: 'none'
+              });
+            } else {
+              $dropdown.css({
+                top   : 0 + topPad + 'px',
+                left  : 0 + leftPad + 'px',
+                display: 'none'
+              });
+            }
+
+            $dropdown.fadeIn(200);
             $element.addClass('dropdown-open');
 
-            if ($scope.onShow) {
-              $scope.onShow({ element : $element });
-            }
           }
 
         });
