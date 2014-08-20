@@ -21,15 +21,15 @@ angular.module('squareteam.app')
         scope.selected = null;
 
         function setValue (item) {
-          $('.sort').removeClass('icon-sort-asc');
-          $('.sort').removeClass('icon-sort-desc');
+          element.removeClass('icon-sort-asc');
+          element.removeClass('icon-sort-desc');
 
           if (!item) {
             element.removeClass('active');
             scope.selected = null;
           } else {
             element.addClass('active');
-            $('.sort').addClass('icon-sort-' + item.dir);
+            element.addClass('icon-sort-' + item.dir);
             scope.selected = item;
           }
         }
