@@ -122,7 +122,7 @@ describe('Controller: MyAccountCtrl', function () {
       spyOn(ApiSession, 'login').and.callFake(resolvePromise);
 
       $httpBackend.expectPUT(appConfig.api.url + 'users/1').respond('');
-      $httpBackend.expectGET(appConfig.api.url + 'user/me').respond('');
+      $httpBackend.expectGET(appConfig.api.url + 'users/me').respond('');
 
       scope.user.name = 'Paul';
 
@@ -140,7 +140,7 @@ describe('Controller: MyAccountCtrl', function () {
   describe('User organizations', function() {
     it('should remove organization from list after leave', function() {
 
-      $httpBackend.expectDELETE(appConfig.api.url + 'organizations/1/user/1').respond('');
+      $httpBackend.expectDELETE(appConfig.api.url + 'organizations/1/users/1').respond('');
 
       scope.leaveOrganization(1);
 

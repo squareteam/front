@@ -14,7 +14,7 @@ angular.module('squareteam.resources')
 
     // Creating user is a public route
     userResource.create = function(data) {
-      return $http.post('api://user', data);
+      return $http.post('api://users', data);
     };
 
     userResource.search = function(query) {

@@ -131,7 +131,7 @@ describe('Directive: st-login-form', function () {
 
     it('should display alert if password is incorrect', function() {
       $httpBackend.expectPUT(appConfig.api.url + 'login', '{"identifier":"charly@live.fr"}').respond(200, apiResponseAsString(null, {'salt1':'36b26d1ee22bb35e','salt2':'a5e28ef7bcb5605b'}));
-      $httpBackend.expectGET(appConfig.api.url + 'user/me').respond(401, apiResponseAsString(['auth is not valid']));
+      $httpBackend.expectGET(appConfig.api.url + 'users/me').respond(401, apiResponseAsString(['auth is not valid']));
 
       var directiveScope = element.isolateScope();
       directiveScope = angular.extend(directiveScope, {
@@ -160,7 +160,7 @@ describe('Directive: st-login-form', function () {
 
     it('should display alert if API is down (password check)', function() {
       $httpBackend.expectPUT(appConfig.api.url + 'login', '{"identifier":"charly@live.fr"}').respond(200, apiResponseAsString(null, {'salt1':'36b26d1ee22bb35e','salt2':'a5e28ef7bcb5605b'}));
-      $httpBackend.expectGET(appConfig.api.url + 'user/me').respond(500);
+      $httpBackend.expectGET(appConfig.api.url + 'users/me').respond(500);
 
       var directiveScope = element.isolateScope();
       directiveScope = angular.extend(directiveScope, {
@@ -217,7 +217,7 @@ describe('Directive: st-login-form', function () {
       spyOn($state, 'go');
 
       $httpBackend.expectPUT(appConfig.api.url + 'login', '{"identifier":"charly@live.fr"}')  .respond(200, apiResponseAsString(null, {'salt1':'36b26d1ee22bb35e','salt2':'a5e28ef7bcb5605b'}));
-      $httpBackend.expectGET(appConfig.api.url + 'user/me').respond(200, apiResponseAsString(null, {'name':'Charly'}));
+      $httpBackend.expectGET(appConfig.api.url + 'users/me').respond(200, apiResponseAsString(null, {'name':'Charly'}));
 
       var directiveScope = element.isolateScope();
       directiveScope = angular.extend(directiveScope, {

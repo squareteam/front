@@ -162,7 +162,7 @@ describe('Service: CurrentSession', function () {
     it('should restore session from cookies storage', function() {
       spyOn($rootScope, '$broadcast').and.callThrough();
 
-      $httpBackend.expectGET(apiURL + 'user/me').respond(200, apiResponseAsString(null,{'name':'Charly'}));
+      $httpBackend.expectGET(apiURL + 'users/me').respond(200, apiResponseAsString(null,{'name':'Charly'}));
 
       CurrentSession.restore().then(successCallback, errorCallback);
 
@@ -203,7 +203,7 @@ describe('Service: CurrentSession', function () {
     it('should failed silently to restore session from cookies storage', function() {
 
       spyOn(ApiSessionStorageCookies, 'retrieve').and.returnValue(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
-      $httpBackend.expectGET(apiURL + 'user/me').respond(401, apiResponseAsString(['api.not_authorized']));
+      $httpBackend.expectGET(apiURL + 'users/me').respond(401, apiResponseAsString(['api.not_authorized']));
 
       CurrentSession.restore().then(successCallback, errorCallback);
 
@@ -232,7 +232,7 @@ describe('Service: CurrentSession', function () {
     }));
     
     it('should update $$user object if success', function() {
-      $httpBackend.expectGET(apiURL + 'user/me').respond(200, apiResponseAsString(null,{'name':'Charly'}));
+      $httpBackend.expectGET(apiURL + 'users/me').respond(200, apiResponseAsString(null,{'name':'Charly'}));
 
       CurrentSession.reloadUser();
 
@@ -246,7 +246,7 @@ describe('Service: CurrentSession', function () {
     it('should unregister() if fail', function() {
       spyOn(CurrentSession, 'unregister');
 
-      $httpBackend.expectGET(apiURL + 'user/me').respond(401, apiResponseAsString(['api.unauthorized']));
+      $httpBackend.expectGET(apiURL + 'users/me').respond(401, apiResponseAsString(['api.unauthorized']));
 
       CurrentSession.reloadUser();
 

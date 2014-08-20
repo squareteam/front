@@ -45,7 +45,7 @@ angular.module('squareteam.app')
 
             if (($scope.user.password && $scope.user.password.length)) {
 
-              $http.put('apis://user/me/change_password', {
+              $http.put('apis://users/me/change_password', {
                 password  : $scope.user.password
               }).then(function() {
                 CurrentSession.unregister(); // to prevent XHR on /logout (that will fail)
@@ -76,7 +76,7 @@ angular.module('squareteam.app')
     };
 
     $scope.leaveOrganization = function(organizationId) {
-      $http.delete('apis://organizations/'+organizationId+'/user/'+CurrentSession.getUser().id).then(function() {
+      $http.delete('apis://organizations/'+organizationId+'/users/'+CurrentSession.getUser().id).then(function() {
         // remove organizationId from $scope.organizations
         var index = -1;
 

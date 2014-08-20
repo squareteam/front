@@ -135,7 +135,7 @@ describe('Directive: st-team-manage', function () {
 
         it('should add user to list if success', function() {
 
-          $httpBackend.expectPOST(appConfig.api.url + 'team/1/users').respond(200, apiResponseAsString(null, []));
+          $httpBackend.expectPOST(appConfig.api.url + 'teams/1/users').respond(200, apiResponseAsString(null, []));
 
           element.isolateScope().addUserToTeam({
             name : 'Paul',
@@ -151,7 +151,7 @@ describe('Directive: st-team-manage', function () {
 
         it('should display error if failure', function() {
 
-          $httpBackend.expectPOST(appConfig.api.url + 'team/1/users').respond(401, apiResponseAsString(['api.unauthorized']));
+          $httpBackend.expectPOST(appConfig.api.url + 'teams/1/users').respond(401, apiResponseAsString(['api.unauthorized']));
 
           element.isolateScope().addUserToTeam({
             name : 'Paul',
@@ -179,7 +179,7 @@ describe('Directive: st-team-manage', function () {
 
         it('should remove user from list if success', function() {
 
-          $httpBackend.expectDELETE(appConfig.api.url + 'team/1/user/1').respond(200, apiResponseAsString(null, []));
+          $httpBackend.expectDELETE(appConfig.api.url + 'teams/1/users/1').respond(200, apiResponseAsString(null, []));
 
           element.isolateScope().toggleUserRemoveFromTeam({ id : 1 });
 
@@ -194,7 +194,7 @@ describe('Directive: st-team-manage', function () {
 
         it('should display error if failure', function() {
 
-          $httpBackend.expectDELETE(appConfig.api.url + 'team/1/user/1').respond(401, apiResponseAsString(['api.unauthorized']));
+          $httpBackend.expectDELETE(appConfig.api.url + 'teams/1/users/1').respond(401, apiResponseAsString(['api.unauthorized']));
 
           element.isolateScope().toggleUserRemoveFromTeam({ id : 1 });
 
@@ -229,7 +229,7 @@ describe('Directive: st-team-manage', function () {
 
         it('should close permissions editor if success', function() {
 
-          $httpBackend.expectPUT(appConfig.api.url + 'team/1/user/1').respond(200, apiResponseAsString(null, []));
+          $httpBackend.expectPUT(appConfig.api.url + 'teams/1/users/1').respond(200, apiResponseAsString(null, []));
 
           element.isolateScope().updateUserRole();
 
@@ -242,7 +242,7 @@ describe('Directive: st-team-manage', function () {
 
         it('should display error if failure', function() {
 
-          $httpBackend.expectPUT(appConfig.api.url + 'team/1/user/1').respond(401, apiResponseAsString(['api.unauthorized']));
+          $httpBackend.expectPUT(appConfig.api.url + 'teams/1/users/1').respond(401, apiResponseAsString(['api.unauthorized']));
 
           element.isolateScope().updateUserRole();
 
