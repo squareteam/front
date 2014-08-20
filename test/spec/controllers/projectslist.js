@@ -79,18 +79,16 @@ describe('Controller: ProjectsListCtrl', function () {
     });
 
     it('$scope.isFiltered should be `true` when filtering', function() {
-      scope.filter = {
-        status : 'done'
-      };
+      scope.statusFilter = 'done';
+      scope.teamFilter = '';
 
       expect(scope.isFiltered()).toBeTruthy();
     });
 
     it('clear filters should restore list to defaults', function() {
       
-      scope.filter = {
-        status : 'done'
-      };
+      scope.statusFilter = 'done';
+      scope.teamFilter = '';
 
       expect(scope.isFiltered()).toBeTruthy();
 
