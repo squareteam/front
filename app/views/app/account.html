@@ -27,10 +27,10 @@
                </label>
                <input type="text" type="text" name="pseudo" class="fluid" ng-model="user.name" required>
 
-               <label for="password">
+               <label for="password" ng-hide="$scope.isOAuthAccount">
                   {{ 'app.myAccount.profile.password' | translate }}
                </label>
-               <input type="password" type="text" name="password" class="fluid" ng-model="user.password">
+               <input type="password" type="text" name="password" class="fluid" ng-model="user.password" ng-hide="$scope.isOAuthAccount">
 
                <label for="email">
                   {{ 'app.myAccount.profile.email' | translate }}
