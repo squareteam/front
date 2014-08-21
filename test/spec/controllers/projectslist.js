@@ -34,7 +34,7 @@ describe('Controller: ProjectsListCtrl', function () {
 
     scope = $rootScope.$new();
 
-    $httpBackend.expectGET(appConfig.api.url + 'projects').respond(200, '{"data":[]}');
+    $httpBackend.expectGET(appConfig.api.url + 'projects').respond(200, '{"data":[{"id":1,"name":"test","description":"test test"}]}');
 
   }));
 
@@ -128,6 +128,47 @@ describe('Controller: ProjectsListCtrl', function () {
     it('should close dialog is update succeed');
 
     it('should close dialog is error and display message');
+
+  });
+
+  describe('delete project', function() {
+
+    beforeEach(function() {
+
+      spyOn(CurrentSession, 'getOrganizations').and.callFake(function() {
+        var deferred = $q.defer();
+        deferred.resolve([
+          {
+            id : 1,
+            name : 'FMB'
+          }
+        ]);
+        return deferred.promise;
+      });
+
+      ProjectsListCtrl = $controller('ProjectsListCtrl', {
+        $scope: scope
+      });
+
+      $httpBackend.flush();
+
+      scope.$digest();
+
+    });
+
+    it('should remove it from list', function() {
+
+      $httpBackend.expectDELETE(appConfig.api.url + 'projects/1').respond(200, '');
+
+      scope.$emit('project:delete', scope.projects[0]);
+
+      scope.$digest();
+
+      $httpBackend.flush();
+
+      expect(scope.projects.length).toBe(0);
+
+    });
 
   });
 
