@@ -99,14 +99,6 @@ angular.module('squareteam.app')
       }
     ];
 
-    $scope.organizationsSelectorFilter = function(actual, expected) {
-      return actual.id !== expected.id;
-    };
-
-    $scope.isFiltered = function() {
-      return $scope.teamFilter || $scope.statusFilter;
-    };
-
     $scope.loadProjects = function() {
       function projectsLoaded (projects) {
         $scope.projects = projects;
@@ -142,11 +134,6 @@ angular.module('squareteam.app')
 
     };
 
-    $scope.changeOrganization = function(organization) {
-      $scope.organization = organization;
-      $scope.loadProjects();
-    };
-
     // INIT
 
     CurrentSession.getOrganizations().then(function(_organizations) {
@@ -156,25 +143,30 @@ angular.module('squareteam.app')
       $scope.loadProjects();
     });
 
-    $scope.$on('project:delete', function(_, projectId) {
-      var index = -1;
-      angular.forEach($scope.projects, function(project, i) {
-        if (project.id === projectId) {
-          index = i;
-        }
-      });
-
-      if (index >= 0) {
-        $scope.projects.splice(index, 1);
-      }
+    $scope.$on('project:delete', function(_, project) {
+      project.$destroy();
+      // TODO(charly): handle error message
     });
+
+    // METHODS
+
+    $scope.organizationsSelectorFilter = function(actual, expected) {
+      return actual.id !== expected.id;
+    };
+
+    $scope.isFiltered = function() {
+      return $scope.teamFilter || $scope.statusFilter;
+    };
 
     $scope.clearFilters = function() {
       $scope.teamFilter     = '';
       $scope.statusFilter   = '';
     };
 
-    // METHODS
+    $scope.changeOrganization = function(organization) {
+      $scope.organization = organization;
+      $scope.loadProjects();
+    };
 
     $scope.createProjectPopin = function() {
       var dialog,

@@ -44,7 +44,7 @@ angular.module('squareteam.app')
 
         editProjectScope.delete = function() {
           $tooltip && $tooltip.hide();
-          $scope.$emit('project:delete', $scope.project.id);
+          $scope.$emit('project:delete', $scope.project);
         };
 
         editProjectScope.archive = function() {
