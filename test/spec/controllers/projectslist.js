@@ -100,7 +100,7 @@ describe('Controller: ProjectsListCtrl', function () {
 
   });
 
-  describe('creating project', function() {
+  describe('create project', function() {
 
     beforeEach(function() {
 
