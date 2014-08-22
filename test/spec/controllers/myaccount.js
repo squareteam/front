@@ -1,4 +1,4 @@
-/* global provideAuth */
+/* global provideAuth, apiURL */
 
 'use strict';
 
@@ -9,9 +9,9 @@ describe('Controller: MyAccountCtrl', function () {
   beforeEach(module('squareteam.app'));
 
   var MyAccountCtrl, scope, resolvePromise,
-      appConfig, PasswordConfirmPopin, CurrentSession, ApiSession, UserResource,
+      PasswordConfirmPopin, CurrentSession, ApiSession, UserResource,
       $httpBackend, $controller, $q,
-      user;
+      user, url;
 
   resolvePromise = function() {
     var deferred = $q.defer();
@@ -25,13 +25,14 @@ describe('Controller: MyAccountCtrl', function () {
     $controller           = $injector.get('$controller');
     $q                    = $injector.get('$q');
 
-    appConfig             = $injector.get('appConfig');
     PasswordConfirmPopin  = $injector.get('PasswordConfirmPopin');
     CurrentSession        = $injector.get('CurrentSession');
     ApiSession            = $injector.get('ApiSession');
     UserResource          = $injector.get('UserResource');
 
     provideAuth($injector)();
+
+    url = apiURL($injector);
 
     scope = $rootScope.$new();
 
@@ -78,7 +79,7 @@ describe('Controller: MyAccountCtrl', function () {
       spyOn(PasswordConfirmPopin, 'prompt').and.callFake(resolvePromise);
       spyOn(ApiSession, 'login').and.callFake(resolvePromise);
 
-      $httpBackend.expectPUT(appConfig.api.url + 'users/1').respond('');
+      $httpBackend.expectPUT( url('users/1') ).respond('');
 
       scope.user.email = 'paul@squareteam.io';
 
@@ -98,7 +99,7 @@ describe('Controller: MyAccountCtrl', function () {
         return $q.reject();
       });
 
-      $httpBackend.expectPUT(appConfig.api.url + 'users/1').respond('');
+      $httpBackend.expectPUT( url('users/1') ).respond('');
 
       scope.user.email = 'paul@squareteam.io';
 
@@ -117,8 +118,8 @@ describe('Controller: MyAccountCtrl', function () {
       spyOn(PasswordConfirmPopin, 'prompt').and.callFake(resolvePromise);
       spyOn(ApiSession, 'login').and.callFake(resolvePromise);
 
-      $httpBackend.expectPUT(appConfig.api.url + 'users/1').respond('');
-      $httpBackend.expectGET(appConfig.api.url + 'users/me').respond('');
+      $httpBackend.expectPUT( url('users/1') ).respond('');
+      $httpBackend.expectGET( url('users/me') ).respond('');
 
       scope.user.name = 'Paul';
 
@@ -136,7 +137,7 @@ describe('Controller: MyAccountCtrl', function () {
   describe('User organizations', function() {
     it('should remove organization from list after leave', function() {
 
-      $httpBackend.expectDELETE(appConfig.api.url + 'organizations/1/users/1').respond('');
+      $httpBackend.expectDELETE( url('organizations/1/users/1') ).respond('');
 
       scope.leaveOrganization(1);
 

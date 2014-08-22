@@ -1,3 +1,5 @@
+/* global apiURL */
+
 'use strict';
 
 describe('Controller: forgotPasswordCtrl', function () {
@@ -7,7 +9,7 @@ describe('Controller: forgotPasswordCtrl', function () {
   var forgotPasswordCtrl,
       $rootScope, $httpBackend, $state,
       appConfig,
-      scope;
+      scope, url;
 
   describe('without token in URL', function() {
 
@@ -18,6 +20,8 @@ describe('Controller: forgotPasswordCtrl', function () {
       $state          = $injector.get('$state');
       
       appConfig       = $injector.get('appConfig');
+
+      url = apiURL($injector);
 
       scope = $rootScope.$new();
       forgotPasswordCtrl = $controller('forgotPasswordCtrl', {
@@ -38,7 +42,7 @@ describe('Controller: forgotPasswordCtrl', function () {
 
       spyOn($state, 'go');
       
-      $httpBackend.expectPOST(appConfig.api.url + 'forgot_password').respond(200, '');
+      $httpBackend.expectPOST( url('forgot_password') ).respond(200, '');
 
       scope.request();
 
@@ -52,7 +56,7 @@ describe('Controller: forgotPasswordCtrl', function () {
 
       spyOn($state, 'go');
       
-      $httpBackend.expectPOST(appConfig.api.url + 'forgot_password').respond(404, '');
+      $httpBackend.expectPOST( url('forgot_password') ).respond(404, '');
 
       scope.request();
 
@@ -66,7 +70,7 @@ describe('Controller: forgotPasswordCtrl', function () {
 
       spyOn($state, 'go');
       
-      $httpBackend.expectPOST(appConfig.api.url + 'forgot_password').respond(500, '');
+      $httpBackend.expectPOST( url('forgot_password') ).respond(500, '');
 
       scope.request();
 
@@ -78,7 +82,7 @@ describe('Controller: forgotPasswordCtrl', function () {
 
     describe('when oAuth account recognized', function() {
       beforeEach(function() {
-        $httpBackend.expectPOST(appConfig.api.url + 'forgot_password').respond(400, '["api.oauth_account", {"provider": "github"}]');
+        $httpBackend.expectPOST( url('forgot_password') ).respond(400, '["api.oauth_account", {"provider": "github"}]');
       });
 
       it('should set scope.oAuthAccountFound as provider name', function() {
@@ -114,6 +118,8 @@ describe('Controller: forgotPasswordCtrl', function () {
       
       appConfig       = $injector.get('appConfig');
 
+      url = apiURL($injector);
+
       scope = $rootScope.$new();
       forgotPasswordCtrl = $controller('forgotPasswordCtrl', {
         $scope: scope,
@@ -136,7 +142,7 @@ describe('Controller: forgotPasswordCtrl', function () {
 
       spyOn($state, 'go');
       
-      $httpBackend.expectPOST(appConfig.api.url + 'forgot_password/change').respond(200, '');
+      $httpBackend.expectPOST( url('forgot_password/change') ).respond(200, '');
 
       scope.change();
 
@@ -150,7 +156,7 @@ describe('Controller: forgotPasswordCtrl', function () {
 
       spyOn($state, 'go');
       
-      $httpBackend.expectPOST(appConfig.api.url + 'forgot_password/change').respond(404, '');
+      $httpBackend.expectPOST( url('forgot_password/change') ).respond(404, '');
 
       scope.change();
 
@@ -164,7 +170,7 @@ describe('Controller: forgotPasswordCtrl', function () {
 
       spyOn($state, 'go');
       
-      $httpBackend.expectPOST(appConfig.api.url + 'forgot_password/change').respond(500, '');
+      $httpBackend.expectPOST( url('forgot_password/change') ).respond(500, '');
 
       scope.change();
 

@@ -1,3 +1,5 @@
+/* global apiURL */
+
 'use strict';
 
 describe('Service: ApiCache', function () {
@@ -6,16 +8,15 @@ describe('Service: ApiCache', function () {
   beforeEach(module('squareteam.app'));
 
   // instantiate service
-  var ApiCache, appConfig;
+  var ApiCache, appConfig, url;
 
   beforeEach(inject(function ($injector) {
     ApiCache = $injector.get('ApiCache');
     appConfig = $injector.get('appConfig');
+
+    url = apiURL($injector);
   }));
 
-  function url (path) {
-    return appConfig.api.url + path;
-  }
 
   it('should store request as given', function() {
     ApiCache.put(url('project/1'), { id : 1 , name : 'test'});

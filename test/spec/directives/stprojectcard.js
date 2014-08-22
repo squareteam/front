@@ -1,4 +1,4 @@
-/* global provideAuth */
+/* global provideAuth, apiURL */
 
 'use strict';
 
@@ -9,7 +9,7 @@ describe('Directive: st-project-card', function () {
   beforeEach(module('squareteam.app'));
 
   var element, scope, tooltipScope,
-      appConfig, ProjectResourceCustom,
+      url, ProjectResourceCustom,
       $httpBackend, $rootScope, ngDialog;
 
   beforeEach(inject(function ($injector, $compile, restmod) {
@@ -18,7 +18,7 @@ describe('Directive: st-project-card', function () {
     $httpBackend  = $injector.get('$httpBackend');
     ngDialog      = $injector.get('ngDialog');
 
-    appConfig         = $injector.get('appConfig');
+    url = apiURL($injector);
 
     scope = $rootScope.$new();
 
@@ -58,7 +58,7 @@ describe('Directive: st-project-card', function () {
 
       var updateProjectScope = null;
 
-      $httpBackend.expectPUT(appConfig.api.url + 'projects/1').respond(200, '');
+      $httpBackend.expectPUT( url('projects/1') ).respond(200, '');
 
       spyOn(ngDialog, 'open').and.callFake(function(config) {
         updateProjectScope = config.scope;

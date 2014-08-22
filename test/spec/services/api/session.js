@@ -1,4 +1,4 @@
-/*global CryptoJS*/
+/*global CryptoJS, apiURL */
 'use strict';
 
 // TODO : test bad JSON response
@@ -26,7 +26,7 @@ describe('Service: ApiSession', function () {
   // instantiate service
   var ApiSession, CurrentSession, ApiAuth, ApiSessionStorageCookies,
       $http, $httpBackend, $rootScope,
-      apiURL, successCallback, errorCallback;
+      url, successCallback, errorCallback;
 
   beforeEach(inject(function ($injector) {
     ApiSession                = $injector.get('ApiSession');
@@ -38,7 +38,7 @@ describe('Service: ApiSession', function () {
     $httpBackend        = $injector.get('$httpBackend');
     $rootScope          = $injector.get('$rootScope');
 
-    apiURL              = $injector.get('appConfig').api.url;
+    url = apiURL($injector);
   }));
 
   beforeEach(function() {
@@ -59,7 +59,7 @@ describe('Service: ApiSession', function () {
   describe('ApiSession.login', function() {
     
     it('should fail to login cause login is incorrect', function() {
-      $httpBackend.expectPUT(apiURL + 'login').respond(400, '{"errors":["identifier is not valid"],"data":null}');
+      $httpBackend.expectPUT( url('login') ).respond(400, '{"errors":["identifier is not valid"],"data":null}');
 
       ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
 
@@ -72,8 +72,8 @@ describe('Service: ApiSession', function () {
     });
 
     it('should fail to login cause password is incorrect', function() {
-      $httpBackend.expectPUT(apiURL + 'login').respond(200, '{"data":{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}}');
-      $httpBackend.expectGET(apiURL + 'users/me').respond(401, '{"data":null,"errors":["auth is not valid"]}');
+      $httpBackend.expectPUT( url('login') ).respond(200, '{"data":{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}}');
+      $httpBackend.expectGET( url('users/me') ).respond(401, '{"data":null,"errors":["auth is not valid"]}');
 
       ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
 
@@ -86,7 +86,7 @@ describe('Service: ApiSession', function () {
     });
 
     it('should fail to login cause salts returned by server is incorrect', function() {
-      $httpBackend.expectPUT(apiURL + 'login').respond(200, '{"data":{"salt1":"z","salt2":""}}');
+      $httpBackend.expectPUT( url('login') ).respond(200, '{"data":{"salt1":"z","salt2":""}}');
 
       ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
 
@@ -101,7 +101,7 @@ describe('Service: ApiSession', function () {
     it('should fail to login cause API is down', function() {
 
 
-      $httpBackend.expectPUT(apiURL + 'login').respond(503, '{"data":{"salt1":"z","salt2":""}}');
+      $httpBackend.expectPUT( url('login') ).respond(503, '{"data":{"salt1":"z","salt2":""}}');
 
       ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
 
@@ -117,8 +117,8 @@ describe('Service: ApiSession', function () {
     it('should login', function() {
       spyOn($rootScope, '$broadcast').and.callThrough();
 
-      $httpBackend.expectPUT(apiURL + 'login')  .respond(200, '{"data":{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}}');
-      $httpBackend.expectGET(apiURL + 'users/me').respond(200, '{"data":{"name":"Charly"}}');
+      $httpBackend.expectPUT( url('login') )  .respond(200, '{"data":{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}}');
+      $httpBackend.expectGET( url('users/me') ).respond(200, '{"data":{"name":"Charly"}}');
 
       ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
 
@@ -142,9 +142,9 @@ describe('Service: ApiSession', function () {
       CurrentSession.$$auth = new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1'));
 
 
-      $httpBackend.expectGET(apiURL + 'logout') .respond(200, '');
-      $httpBackend.expectPUT(apiURL + 'login')  .respond(200, '{"data":{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}}');
-      $httpBackend.expectGET(apiURL + 'users/me').respond(200, '{"data":{"name":"Charly"}}');
+      $httpBackend.expectGET( url('logout') ).respond(200, '');
+      $httpBackend.expectPUT( url('login') ).respond(200, '{"data":{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}}');
+      $httpBackend.expectGET( url('users/me') ).respond(200, '{"data":{"name":"Charly"}}');
 
       ApiSession.login('test@test.fr', 'test').then(successCallback, errorCallback);
 
@@ -187,7 +187,7 @@ describe('Service: ApiSession', function () {
       CurrentSession.$$auth = new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1'));
 
 
-      $httpBackend.expectGET(apiURL + 'logout').respond(500, '');
+      $httpBackend.expectGET( url('logout') ).respond(500, '');
 
       ApiSession.logout().then(successCallback, errorCallback);
 
@@ -213,7 +213,7 @@ describe('Service: ApiSession', function () {
       CurrentSession.$$auth = new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1'));
 
 
-      $httpBackend.expectGET(apiURL + 'logout').respond(200, '');
+      $httpBackend.expectGET( url('logout') ).respond(200, '');
 
       ApiSession.logout().then(successCallback, errorCallback);
 
@@ -241,7 +241,7 @@ describe('Service: ApiSession', function () {
       CurrentSession.$$auth = new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1'));
 
 
-      $httpBackend.expectGET(apiURL + 'logout').respond(200, '');
+      $httpBackend.expectGET( url('logout') ).respond(200, '');
 
       ApiSession.logout(false).then(successCallback, errorCallback);
 

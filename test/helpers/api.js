@@ -12,3 +12,14 @@ function apiResponseAsString (error, data) {
     data   : data  ? data  : null
   });
 }
+
+/**
+ * Helper to generate api url (depending on config)
+ * @param  {AUTO.$injector} $injector
+ * @return {Function}
+ */
+function apiURL ($injector) {
+  return function(path) {
+    return $injector.get('appConfig').api.url + path;
+  };
+}

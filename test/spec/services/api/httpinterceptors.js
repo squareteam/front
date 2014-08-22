@@ -1,4 +1,4 @@
-/* global provideAuth, apiResponseAsString */
+/* global provideAuth, apiResponseAsString, apiURL */
 'use strict';
 
 describe('Service: ApiHttpInterceptors', function () {
@@ -19,7 +19,7 @@ describe('Service: ApiHttpInterceptors', function () {
   // instantiate service
   var ApiHttpInterceptors, ApiAuth, ApiErrors,
       $http, $httpBackend,
-      apiURL,
+      url,
       REQUEST_HEADERS = {
       'Accept':'application/json, text/plain, */*',
       'St-Identifier':'charly.poly@live.fr',
@@ -36,7 +36,7 @@ describe('Service: ApiHttpInterceptors', function () {
     $http               = $injector.get('$http');
     $httpBackend        = $injector.get('$httpBackend');
 
-    apiURL              = $injector.get('appConfig').api.url;
+    url = apiURL($injector);
 
     provideAuth($injector)();
   }));
@@ -56,7 +56,7 @@ describe('Service: ApiHttpInterceptors', function () {
     });
 
     it('should change url with api url', function () {
-      $httpBackend.expectGET(apiURL + 'login').respond(200, '');
+      $httpBackend.expectGET( url('login') ).respond(200, '');
       $http.get('api://login').success(function(/*data, status, headers*/) {
       });
 
@@ -64,7 +64,7 @@ describe('Service: ApiHttpInterceptors', function () {
     });
 
     it('should change url with api url and add headers', function () {
-      $httpBackend.expectGET(apiURL + 'users', REQUEST_HEADERS).respond(200, '');
+      $httpBackend.expectGET( url('users'), REQUEST_HEADERS).respond(200, '');
       $http.get('apis://users').success(function(/*data, status, headers*/) {
       });
 
@@ -99,7 +99,7 @@ describe('Service: ApiHttpInterceptors', function () {
       
       it('should return data property is success', function() {
       
-        $httpBackend.expectGET(apiURL + 'users').respond(200, apiResponseAsString(null, 'test'));
+        $httpBackend.expectGET( url('users') ).respond(200, apiResponseAsString(null, 'test'));
         $http.get('api://users').then(successCallback, errorCallback);
 
         $httpBackend.flush();
@@ -112,7 +112,7 @@ describe('Service: ApiHttpInterceptors', function () {
       });
 
       it('should return ApiErrors in error property', function() {
-        $httpBackend.expectGET(apiURL + 'users').respond(401, apiResponseAsString(['api.not_authorized']));
+        $httpBackend.expectGET( url('users') ).respond(401, apiResponseAsString(['api.not_authorized']));
         $http.get('api://users').then(successCallback, errorCallback);
 
         $httpBackend.flush();
@@ -124,7 +124,7 @@ describe('Service: ApiHttpInterceptors', function () {
       });
 
       it('should return ApiErrors in error property (special case)', function() {
-        $httpBackend.expectGET(apiURL + 'users').respond(200, apiResponseAsString(['api.not_authorized']));
+        $httpBackend.expectGET( url('users') ).respond(200, apiResponseAsString(['api.not_authorized']));
         $http.get('api://users').then(successCallback, errorCallback);
 
         $httpBackend.flush();
@@ -137,7 +137,7 @@ describe('Service: ApiHttpInterceptors', function () {
       });
 
       it('should return HttpError in error property', function() {
-        $httpBackend.expectGET(apiURL + 'users').respond(401, '');
+        $httpBackend.expectGET( url('users') ).respond(401, '');
         $http.get('api://users').then(successCallback, errorCallback);
 
         $httpBackend.flush();
@@ -154,7 +154,7 @@ describe('Service: ApiHttpInterceptors', function () {
     describe('APIS requests (with auth)', function() {
       
       it('should return data property is success', function() {
-        $httpBackend.expectGET(apiURL + 'users', REQUEST_HEADERS).respond(200, apiResponseAsString(null, 'test'));
+        $httpBackend.expectGET( url('users'), REQUEST_HEADERS).respond(200, apiResponseAsString(null, 'test'));
         $http.get('apis://users').then(successCallback, errorCallback);
 
         $httpBackend.flush();
@@ -166,7 +166,7 @@ describe('Service: ApiHttpInterceptors', function () {
       });
 
       it('should return ApiErrors in error property', function() {
-        $httpBackend.expectGET(apiURL + 'users', REQUEST_HEADERS).respond(401, apiResponseAsString(['api.not_authorized']));
+        $httpBackend.expectGET( url('users'), REQUEST_HEADERS).respond(401, apiResponseAsString(['api.not_authorized']));
         $http.get('apis://users').then(successCallback, errorCallback);
 
         $httpBackend.flush();
@@ -178,7 +178,7 @@ describe('Service: ApiHttpInterceptors', function () {
       });
 
       it('should return ApiErrors in error property (special case)', function() {
-        $httpBackend.expectGET(apiURL + 'users', REQUEST_HEADERS).respond(200, apiResponseAsString(['api.not_authorized']));
+        $httpBackend.expectGET( url('users'), REQUEST_HEADERS).respond(200, apiResponseAsString(['api.not_authorized']));
         $http.get('apis://users').then(successCallback, errorCallback);
 
         $httpBackend.flush();
@@ -191,7 +191,7 @@ describe('Service: ApiHttpInterceptors', function () {
       });
 
       it('should return HttpError in error property', function() {
-        $httpBackend.expectGET(apiURL + 'users', REQUEST_HEADERS).respond(401, '');
+        $httpBackend.expectGET( url('users'), REQUEST_HEADERS).respond(401, '');
         $http.get('apis://users').then(successCallback, errorCallback);
 
         $httpBackend.flush();

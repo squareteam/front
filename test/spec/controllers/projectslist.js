@@ -1,4 +1,4 @@
-/* global provideAuth */
+/* global provideAuth, apiURL */
 
 'use strict';
 
@@ -7,8 +7,8 @@ describe('Controller: ProjectsListCtrl', function () {
   beforeEach(module('views/app/projects/create_project_popin.html'));
   beforeEach(module('squareteam.app'));
 
-  var ProjectsListCtrl, scope, resolvePromise,
-      appConfig, PasswordConfirmPopin, CurrentSession, ApiSession, UserResource,
+  var ProjectsListCtrl, scope, resolvePromise, url,
+      PasswordConfirmPopin, CurrentSession, ApiSession, UserResource,
       $httpBackend, $controller, $q, ngDialog;
 
   resolvePromise = function() {
@@ -24,17 +24,18 @@ describe('Controller: ProjectsListCtrl', function () {
     $q                    = $injector.get('$q');
     ngDialog              = $injector.get('ngDialog');
 
-    appConfig             = $injector.get('appConfig');
     PasswordConfirmPopin  = $injector.get('PasswordConfirmPopin');
     CurrentSession        = $injector.get('CurrentSession');
     ApiSession            = $injector.get('ApiSession');
     UserResource          = $injector.get('UserResource');
 
+    url = apiURL($injector);
+
     provideAuth($injector)();
 
     scope = $rootScope.$new();
 
-    $httpBackend.expectGET(appConfig.api.url + 'projects').respond(200, '{"data":[{"id":1,"name":"test","description":"test test"}]}');
+    $httpBackend.expectGET( url('projects') ).respond(200, '{"data":[{"id":1,"name":"test","description":"test test"}]}');
 
   }));
 
@@ -158,7 +159,7 @@ describe('Controller: ProjectsListCtrl', function () {
 
     it('should remove it from list', function() {
 
-      $httpBackend.expectDELETE(appConfig.api.url + 'projects/1').respond(200, '');
+      $httpBackend.expectDELETE( url('projects/1') ).respond(200, '');
 
       scope.$emit('project:delete', scope.projects[0]);
 
