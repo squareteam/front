@@ -67,7 +67,7 @@ describe('Directive: st-organization-create', function () {
     });
     
     it('should display alert if name taken', function() {
-      $httpBackend.expectPOST(appConfig.api.url + 'organizations/with_admins').respond(400, apiResponseAsString(['Name has already been taken']));
+      $httpBackend.expectPOST(appConfig.api.url + 'organizations/with_admins').respond(400, apiResponseAsString(['api.already_taken.Name']));
 
       var directiveScope = element.isolateScope();
       directiveScope = angular.extend(directiveScope, {

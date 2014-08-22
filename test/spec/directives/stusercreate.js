@@ -73,7 +73,7 @@ describe('Directive: st-user-create', function () {
     });
 
     it('should display alert if login is incorrect', function() {
-      $httpBackend.expectPOST(appConfig.api.url + 'user', '{"name":"charly","email":"charly@live.fr","password":"test"}').respond(400, apiResponseAsString(['api.already_taken.Email']));
+      $httpBackend.expectPOST(appConfig.api.url + 'users', '{"name":"charly","email":"charly@live.fr","password":"test"}').respond(400, apiResponseAsString(['api.already_taken.Email']));
 
 
       scope.user = {
@@ -101,7 +101,7 @@ describe('Directive: st-user-create', function () {
     });
 
     it('should display alert cause API is down', function() {
-      $httpBackend.expectPOST(appConfig.api.url + 'user', '{"name":"charly","email":"charly@live.fr","password":"test"}').respond(500);
+      $httpBackend.expectPOST(appConfig.api.url + 'users', '{"name":"charly","email":"charly@live.fr","password":"test"}').respond(500);
 
 
       scope.user = {
@@ -152,8 +152,8 @@ describe('Directive: st-user-create', function () {
     it('should register', function() {
       spyOn($location, 'path');
 
-      $httpBackend.expectPOST(appConfig.api.url + 'user', '{"name":"charly","email":"charly@live.fr","password":"test"}').respond(201, apiResponseAsString(null, {'salt1':'36b26d1ee22bb35e','salt2':'a5e28ef7bcb5605b'}));
-      $httpBackend.expectGET(appConfig.api.url + 'user/me').respond(200, apiResponseAsString(null, {'id':1}));
+      $httpBackend.expectPOST(appConfig.api.url + 'users', '{"name":"charly","email":"charly@live.fr","password":"test"}').respond(201, apiResponseAsString(null, {'salt1':'36b26d1ee22bb35e','salt2':'a5e28ef7bcb5605b'}));
+      $httpBackend.expectGET(appConfig.api.url + 'users/me').respond(200, apiResponseAsString(null, {'id':1}));
 
       scope.user = {
         login         : 'charly',

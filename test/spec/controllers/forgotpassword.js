@@ -10,7 +10,7 @@ describe('Controller: forgotPasswordCtrl', function () {
       scope;
 
   describe('without token in URL', function() {
-    
+
     beforeEach(inject(function ($controller, $injector) {
 
       $rootScope      = $injector.get('$rootScope');
@@ -74,6 +74,32 @@ describe('Controller: forgotPasswordCtrl', function () {
 
       expect(scope.serverBusy).toBe(true);
 
+    });
+
+    describe('when oAuth account recognized', function() {
+      beforeEach(function() {
+        $httpBackend.expectPOST(appConfig.api.url + 'forgot_password').respond(400, '["api.oauth_account", {"provider": "github"}]');
+      });
+
+      it('should set scope.oAuthAccountFound as provider name', function() {
+
+        scope.request();
+
+        $httpBackend.flush();
+
+        expect(scope.oAuthAccountFound).toBe('github');
+
+      });
+
+      it('should set scope.oAuthLoginLink as provider login endpoint', function() {
+
+        scope.request();
+
+        $httpBackend.flush();
+
+        expect(scope.oAuthLoginLink).toBe(appConfig.api.oauth.github.endpoint);
+
+      });
     });
 
   });

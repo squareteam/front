@@ -38,8 +38,8 @@ angular.module('squareteam.app')
     };
 
     this.reloadUser = function() {
-      $http.get('apis://user/me').then(function(response) {
-        this.$$user = UserResource.$buildRaw(response.data);
+      $http.get('apis://users/me').then(function(response) {
+        this.$$user = response.data;
       }.bind(this), function() {
         this.unregister();
       }.bind(this));
@@ -59,9 +59,9 @@ angular.module('squareteam.app')
 
       $http({
         method  : 'GET',
-        url     : appConfig.api.url + 'user/me',
+        url     : appConfig.api.url + 'users/me',
         // FIXME : Use $httpProvider.defaults.headers.common instead
-        headers : angular.extend({'X-Requested-With': 'XMLHttpRequest'}, ApiCrypto.generateHeaders(auth, appConfig.api.url + 'user/me', 'GET', {}))
+        headers : angular.extend({'X-Requested-With': 'XMLHttpRequest'}, ApiCrypto.generateHeaders(auth, appConfig.api.url + 'users/me', 'GET', {}))
       }).then(function(response) {
         self.$$auth = auth;
         self.$$user = UserResource.$buildRaw(response.data);

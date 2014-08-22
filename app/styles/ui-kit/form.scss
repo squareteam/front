@@ -33,7 +33,9 @@ form.fancy {
          -webkit-box-shadow: 0 0 0 1000px white inset;
       }
    }
+}
 
+form.fancy, form.minimal {
    div.error_text {
       color: #d34336;
       font-size: 0.75em;

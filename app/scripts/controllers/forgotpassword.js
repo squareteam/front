@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .controller('forgotPasswordCtrl', function ($scope, $stateParams, $http, $state) {
+  .controller('forgotPasswordCtrl', function ($scope, $stateParams, $http, $state, appConfig) {
     if ($stateParams.token) {
       $scope.passwordFormat = function() {
         $scope.passwordBadPractice = !$scope.user.password || $scope.user.password.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/) === null;
@@ -30,6 +30,10 @@ angular.module('squareteam.app')
         }, function(response) {
           if (response.status === 404) {
             $scope.emailInvalid = true;
+          } else if (response.status === 400 && response.data && response.data.length && response.data[0] === 'api.oauth_account') {
+            var provider = response.data[1].provider;
+            $scope.oAuthAccountFound  = provider;
+            $scope.oAuthLoginLink     = appConfig.api.oauth[provider].endpoint;
           } else {
             $scope.serverBusy = true;
           }

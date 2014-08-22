@@ -44,6 +44,6 @@ angular.module('squareteam.resources')
       }
     };
     /*jshint bitwise: true*/
-
     return model;
   });
+

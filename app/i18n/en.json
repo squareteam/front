@@ -23,8 +23,27 @@
 
       "forgotPassword" : {
          "emailInvalid"          : "No account found with this email",
+         "oAuthAccountFound"     : "Please try to login with",
          "tokenInvalid"          : "Your password change request is expired",
-         "tokenInvalidClickHere" : "Please make a new request"
+         "tokenInvalidClickHere" : "Please make a new request",
+         "request": {
+            "title" : "Forgot password?",
+            "notice"          : "Enter the email address you used when you joined and we'll send you instructions to reset your password.",
+            "send"            : "Send reset instructions",
+            "returnToSignIn"  : "Return to sign in",
+
+            "sent_1" : "A e-mail containing instructions",
+            "sent_2" : "for password changing has been sent !"
+         },
+         "change" : {
+            "title" : "Please enter a new password",
+            "submitBtn" : "Change password"
+         },
+         "updated": {
+            "title" : "Password updated !",
+            "content_1" : "Your password has been updated!",
+            "content_2" : "You can now sign in."
+         }
       }
    },
 

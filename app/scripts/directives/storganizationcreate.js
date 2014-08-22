@@ -23,7 +23,7 @@ angular.module('squareteam.app')
         function onError (response) {
           if (response.error instanceof ApiErrors.Api) {
             angular.forEach(response.error.getErrors(), function(errorText) {
-              if (errorText === 'Name has already been taken') {
+              if (errorText === 'api.already_taken.Name') {
                 $scope.createOrganizationForm.name.$setValidity('unique', false);
               }
             });

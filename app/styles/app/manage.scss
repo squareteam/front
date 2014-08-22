@@ -49,6 +49,14 @@
          color: $blue_active;
       }
 
+      form {
+         .alert-danger {
+            margin: 20px 0 0 0;
+         }
+         label {
+            padding-top: 30px;
+         }
+      }
    }
 
    .organizations {

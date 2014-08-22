@@ -22,6 +22,10 @@
 
             <form action="" class="minimal" name="userForm" ng-submit="updateUser()">
 
+               <div class="alert alert-danger" ng-show="!!userForm.email.$error.unique">
+                   {{ 'directives.stUserCreate.emailTaken' | translate }}
+               </div>
+
                <label for="pseudo">
                   {{ 'app.myAccount.profile.name' | translate }}
                </label>
@@ -30,7 +34,11 @@
                <label for="password">
                   {{ 'app.myAccount.profile.password' | translate }}
                </label>
-               <input type="password" type="text" name="password" class="fluid" ng-model="user.password">
+               <input type="password" type="text" name="password" class="fluid" ng-model="user.password" ng-change="passwordFormat()">
+
+               <div  ng-show="userForm.password.$dirty && (passwordBadPractice)" class="notice_text">
+                 {{ 'directives.stUserCreate.passwordFormatHelp' | translate }}
+               </div>
 
                <label for="email">
                   {{ 'app.myAccount.profile.email' | translate }}

@@ -25,8 +25,27 @@
 
       "forgotPassword" : {
          "emailInvalid"          : "Aucun compte n'existe avec cet email",
+         "oAuthAccountFound"     : "Merci de vous connecter avec",
          "tokenInvalid"          : "Votre demande de changement de mot de passe est expirée",
-         "tokenInvalidClickHere" : "Effectuer une nouvelle demande"
+         "tokenInvalidClickHere" : "Effectuer une nouvelle demande",
+         "request": {
+            "title" : "Mot de passe oublié ?",
+            "notice"          : "Entrez l'adresse e-mail utilisée lors de votre inscription et nous vous enverrons les instructions pour changer de mot de passe.",
+            "send"            : "Envoyer les instructions",
+            "returnToSignIn"  : "Se connecter",
+
+            "sent_1" : "Un e-mail contenant les instructions",
+            "sent_2" : "pour le changement de mot de passe vous a été envoyé !"
+         },
+         "change" : {
+            "title" : "Choisissez un nouveau mot de passe",
+            "submitBtn" : "Changer le mot de passe"
+         },
+         "updated": {
+            "title" : "Mot de passe mis à jour !",
+            "content_1" : "Votre mot de passe a été mis à jour !",
+            "content_2" : "Vous pouvez maintenant vous connecter."
+         }
       }
    },
 
