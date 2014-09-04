@@ -1,19 +1,7 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .controller('ProjectsListCtrl', function ($scope, $rootScope, ngDialog, ProjectResource,  CurrentSession, restmod) {
-
-    var tmpProjectModel = restmod.model('apis://projects', {
-      deadline : {
-        encode : function(value) {
-          return value ? value : '';
-        },
-        chain: true
-      },
-      metadata  : { mask : 'CUD'},
-      progress  : { mask : 'CUD'},
-      status    : { mask : 'CUD'}
-    });
+  .controller('ProjectsListCtrl', function ($scope, $rootScope, ngDialog, ProjectResource,  CurrentSession) {
 
     $scope.organizations  = [];
     $scope.sortBy         = '';
@@ -118,18 +106,20 @@ angular.module('squareteam.app')
       }
 
       if ($scope.organization) {
-        tmpProjectModel.$search().$then(projectsLoaded);
-        // $scope.organization.projects.$refresh().$then(projectsLoaded);
+
+        $scope.organization.projects.$refresh().$then(projectsLoaded);
+
       } else if ($scope.organizations.length) {
+
         $scope.organization = $scope.organizations[0];
+        $scope.organization.projects.$refresh().$then(projectsLoaded);
 
-        tmpProjectModel.$search().$then(projectsLoaded);
-        // $scope.organization.projects.$refresh().$then(projectsLoaded);
       } else {
-        $scope.organization = null;
 
-        tmpProjectModel.$search().$then(projectsLoaded);
-        // CurrentSession.getUser().projects.$refresh().then(projectsLoaded);
+        $scope.organization = null;
+        $scope.user = CurrentSession.getUser();
+        $scope.user.projects.$refresh().$then(projectsLoaded);
+
       }
 
     };

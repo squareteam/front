@@ -2,12 +2,14 @@
    <header>
       <div class="container">
          <div class="row">
-            <div  class="col-xs-2 organization vertical-center" ng-if="organization">
+            <div  class="col-xs-2 organization vertical-center" ng-if="organization || user">
                <div class="row">
                   <div class="col-xs-2 vertical-center">
-                     <img src="/images/app/layout/organization_logo_sample.png" alt="">
+                     <img src="/images/app/layout/organization_logo_sample.png" alt="" ng-show="!!organization">
+                     <img src="http://placekitten.com/g/50/50" alt="" ng-show="!!user">
                   </div>
-                  <div class="col-xs-8 vertical-center" style="width:215px;">
+
+                  <div class="col-xs-8 vertical-center" style="width:215px;" ng-if="!!organization">
                      <div class="name">
                         {{ organization.name }}
                      </div>
@@ -15,6 +17,16 @@
                         {{ projects.length }} {{ 'app.projects.projects' | translate }}
                      </div>
                   </div>
+
+                  <div class="col-xs-8 vertical-center" style="width:215px;" ng-if="!!user">
+                     <div class="name">
+                        {{ user.name }}
+                     </div>
+                     <div class="projects_count">
+                        {{ projects.length }} {{ 'app.projects.projects' | translate }}
+                     </div>
+                  </div>
+
                   <div  class="col-xs-2 vertical-center change" ng-show="organizations.length > 1"
                         st-dropdown top-pad="80" position="relative">
                      <ul class="organization_dropdown vertical-center">
