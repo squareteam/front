@@ -12,8 +12,8 @@ angular.module('squareteam.app')
             topPadRaw           = $parse(attrs.topPad  || '')($scope),
             leftPadRaw          = $parse(attrs.leftPad || '')($scope),
             topPad              = !isNaN(parseInt(topPadRaw,0))  ? parseInt(topPadRaw, 10)  : 0,
-            leftPad             = !isNaN(parseInt(leftPadRaw,0)) ? parseInt(leftPadRaw, 10) : 0,
-            timeout;
+            leftPad             = !isNaN(parseInt(leftPadRaw,0)) ? parseInt(leftPadRaw, 10) : 0;
+            // timeout;
 
         function closeDropdown () {
           $dropdown.fadeOut(200);
@@ -23,7 +23,7 @@ angular.module('squareteam.app')
         }
 
 
-        $element.on('mouseenter', function(e) {
+        $element.on('click', function(e) {
 
           if (!$dropdown.is(':visible')) {
 
@@ -45,6 +45,8 @@ angular.module('squareteam.app')
             $dropdown.fadeIn(200);
             $element.addClass('dropdown-open');
 
+          } else {
+            closeDropdown();
           }
 
         });
@@ -53,21 +55,21 @@ angular.module('squareteam.app')
           closeDropdown();
         });
 
-        $dropdown.on('mouseenter', function() {
-          if (timeout) {
-            clearTimeout(timeout);
-          }
-        });
+        // $dropdown.on('mouseenter', function() {
+        //   if (timeout) {
+        //     clearTimeout(timeout);
+        //   }
+        // });
 
-        $element.on('mouseleave', function() {
-          timeout = setTimeout(function() {
-            closeDropdown();
-          }, 300);
-        });
+        // $element.on('mouseleave', function() {
+        //   timeout = setTimeout(function() {
+        //     closeDropdown();
+        //   }, 300);
+        // });
 
-        $dropdown.on('mouseleave', function() {
-          closeDropdown();
-        });
+        // $dropdown.on('mouseleave', function() {
+        //   closeDropdown();
+        // });
 
       }
     };
