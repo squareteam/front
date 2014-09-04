@@ -24,7 +24,7 @@ angular.module('squareteam.resources')
       /*jshint bitwise: false*/
     model.rolesHelpers = {
       add : function(permissions, role) {
-        return (permissions | role);
+        return (permissions & role);
       },
 
       has : function(permissions, role) {
@@ -38,7 +38,7 @@ angular.module('squareteam.resources')
       all : function() {
         var permissions = 0;
         angular.forEach(ROLES, function(value) {
-          permissions = permissions | value;
+          permissions = permissions & value;
         });
         return permissions;
       }
