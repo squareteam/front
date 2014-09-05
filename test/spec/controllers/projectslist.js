@@ -204,7 +204,7 @@ describe('Controller: ProjectsListCtrl', function () {
 
       it('should close dialog is update succeed');
 
-      it('should close dialog is error and display message');
+      it('should NOT close dialog is error and display message');
 
     });
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .controller('ProjectsListCtrl', function ($scope, $rootScope, ngDialog, ProjectResource, UserResource, CurrentSession) {
+  .controller('ProjectsListCtrl', function ($scope, $rootScope, ngDialog, ProjectResource, UserResource, CurrentSession, moment) {
 
     $scope.organizations  = [];
     $scope.sortBy         = '';
@@ -173,6 +173,11 @@ angular.module('squareteam.app')
           createProjectPopinScope = $rootScope.$new();
 
       createProjectPopinScope.createProject = function() {
+
+        if (createProjectPopinScope.project.deadline) {
+          createProjectPopinScope.project.deadline = moment(createProjectPopinScope.project.deadline).toISOString();
+        }
+
         $scope.projects.$create(createProjectPopinScope.project).$then(function() {
           $scope.loadProjects();
           dialog.close();
