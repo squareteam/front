@@ -18,7 +18,7 @@
                      <img src="http://placekitten.com/g/45/45" alt="">
                   </div>
                   <div class="col-xs-5 name">
-                     {{ organization.name }}
+                     {{ organization.name | characters:21:true }}
                   </div>
                   <div class="col-xs-4 pull-right">
                      <div class="manage-button" ui-sref="app.organization.manage({ organizationId : organization.id })">
