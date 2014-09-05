@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .controller('ProjectsListCtrl', function ($scope, $rootScope, ngDialog, ProjectResource,  CurrentSession) {
+  .controller('ProjectsListCtrl', function ($scope, $rootScope, ngDialog, ProjectResource, UserResource, CurrentSession) {
 
     $scope.organizations  = [];
     $scope.sortBy         = '';
     $scope.teamFilter     = '';
     $scope.statusFilter   = '';
+    $scope.currentUser    = CurrentSession.getUser();
 
     $scope.statusFilterChoices = [
       {
@@ -105,22 +106,15 @@ angular.module('squareteam.app')
         });
       }
 
-      if ($scope.organization) {
-
-        $scope.organization.projects.$refresh().$then(projectsLoaded);
-
-      } else if ($scope.organizations.length) {
-
-        $scope.organization = $scope.organizations[0];
-        $scope.organization.projects.$refresh().$then(projectsLoaded);
-
-      } else {
-
-        $scope.organization = null;
-        $scope.user = CurrentSession.getUser();
-        $scope.user.projects.$refresh().$then(projectsLoaded);
-
+      if (!$scope.currentScope) {
+        if ($scope.organizations.length) {
+          $scope.currentScope = $scope.organizations[0];
+        } else {
+          $scope.currentScope = $scope.currentUser;
+        }
       }
+
+      $scope.currentScope.projects.$refresh().$then(projectsLoaded);
 
     };
 
@@ -140,8 +134,24 @@ angular.module('squareteam.app')
 
     // METHODS
 
-    $scope.organizationsSelectorFilter = function(actual, expected) {
-      return actual.id !== expected.id;
+    $scope.currentScopeIsUser = function() {
+      return $scope.currentScope && $scope.currentScope.constructor.NAME && $scope.currentScope.constructor.NAME === 'User';
+    };
+
+    $scope.filteredOrganizations = function() {
+      var organizations = [];
+
+      if (!$scope.currentScope || ($scope.currentScope.constructor.NAME && $scope.currentScope.constructor.NAME === 'User')) {
+        organizations = $scope.organizations;
+      } else {
+        angular.forEach($scope.organizations, function(organization) {
+          if (organization.id !== $scope.currentScope.id) {
+            organizations.push(organization);
+          }
+        });
+      }
+
+      return organizations;
     };
 
     $scope.isFiltered = function() {
@@ -153,8 +163,8 @@ angular.module('squareteam.app')
       $scope.statusFilter   = '';
     };
 
-    $scope.changeOrganization = function(organization) {
-      $scope.organization = organization;
+    $scope.changeScope = function(scope) {
+      $scope.currentScope = scope;
       $scope.loadProjects();
     };
 

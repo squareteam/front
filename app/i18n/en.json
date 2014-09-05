@@ -61,6 +61,7 @@
    },
 
    "api" : {
+      "loading"    : "Loading...",
       "serverBusy" : "Server are busy for now, please try later",
       "no_results" : "No results"
    },

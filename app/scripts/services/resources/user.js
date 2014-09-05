@@ -20,5 +20,8 @@ angular.module('squareteam.resources')
       return $http.post('api://users', data);
     };
 
+    // FIXME(charly): find a better way to identify model class..
+    User.NAME = 'User';
+
     return User;
   });

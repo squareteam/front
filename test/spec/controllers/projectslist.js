@@ -60,15 +60,15 @@ describe('Controller: ProjectsListCtrl', function () {
       $httpBackend.flush();
 
 
-      expect(scope.user.id).toEqual(1);
-      expect(scope.user.name).toEqual('test-auth');
-      expect(scope.user.email).toEqual('charly.poly@live.fr');
+      expect(scope.currentScope.id).toEqual(1);
+      expect(scope.currentScope.name).toEqual('test-auth');
+      expect(scope.currentScope.email).toEqual('charly.poly@live.fr');
 
-      expect(scope.user.projects.length).toBe(1);
+      expect(scope.projects.length).toBe(1);
 
     });
 
-    it('from User first Organization if no $scope.organization', function() {
+    it('from User first Organization if no $scope.currentScope', function() {
 
       spyOn(CurrentSession, 'getOrganizations').and.callFake(function() {
         var deferred = $q.defer();
@@ -91,51 +91,10 @@ describe('Controller: ProjectsListCtrl', function () {
 
       $httpBackend.flush();
 
-      expect(scope.organization.id).toEqual(1);
-      expect(scope.organization.name).toEqual('FMB');
+      expect(scope.currentScope.id).toEqual(1);
+      expect(scope.currentScope.name).toEqual('FMB');
 
-      expect(scope.organization.projects.length).toBe(1);
-
-    });
-
-    it('from given Organization if $scope.organization', function() {
-
-      spyOn(CurrentSession, 'getOrganizations').and.callFake(function() {
-        var deferred = $q.defer();
-        deferred.resolve([
-          OrganizationResource.$buildRaw({
-            id : 1,
-            name : 'FMB'
-          }),
-          OrganizationResource.$buildRaw({
-            id : 2,
-            name : 'ST'
-          })
-        ]);
-        return deferred.promise;
-      });
-
-      scope.organization = OrganizationResource.$buildRaw({
-        id : 2,
-        name : 'ST'
-      });
-
-      scope.$digest();
-
-      $httpBackend.expectGET( url('organizations/2/projects') ).respond(200, '{"data":[{"id":1,"name":"test","description":"test test"}]}');
-
-      ProjectsListCtrl = $controller('ProjectsListCtrl', {
-        $scope: scope
-      });
-
-      scope.$digest();
-
-      $httpBackend.flush();
-
-      expect(scope.organization.id).toEqual(2);
-      expect(scope.organization.name).toEqual('ST');
-
-      expect(scope.organization.projects.length).toBe(1);
+      expect(scope.projects.length).toBe(1);
 
     });
 
@@ -175,11 +134,11 @@ describe('Controller: ProjectsListCtrl', function () {
 
       spyOn(scope, 'loadProjects');
 
-      scope.changeOrganization(scope.organizations[1]);
+      scope.changeScope(scope.organizations[1]);
 
       scope.$digest();
 
-      expect(scope.organization.id).toBe(2);
+      expect(scope.currentScope.id).toBe(2);
       expect(scope.loadProjects.calls.count()).toBe(1);
 
     });

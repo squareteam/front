@@ -2,35 +2,36 @@
    <header>
       <div class="container">
          <div class="row">
-            <div  class="col-xs-2 organization vertical-center" ng-if="organization || user">
+            <div  class="col-xs-2 organization vertical-center">
                <div class="row">
                   <div class="col-xs-2 vertical-center">
-                     <img src="/images/app/layout/organization_logo_sample.png" alt="" ng-show="!!organization">
-                     <img src="http://placekitten.com/g/50/50" alt="" ng-show="!!user">
+                     <img src="/images/app/layout/organization_logo_sample.png" alt="">
+                     <!-- <img src st-file-id="currentScope.avatar" alt=""> -->
                   </div>
 
-                  <div class="col-xs-8 vertical-center" style="width:215px;" ng-if="!!organization">
+                  <div class="col-xs-8 vertical-center" style="width:215px;">
                      <div class="name">
-                        {{ organization.name }}
+                        {{ currentScope.name || ('api.loading' | translate) }}
                      </div>
-                     <div class="projects_count">
+                     <div class="projects_count" ng-show="!!projects">
                         {{ projects.length }} {{ 'app.projects.projects' | translate }}
                      </div>
                   </div>
 
-                  <div class="col-xs-8 vertical-center" style="width:215px;" ng-if="!!user">
-                     <div class="name">
-                        {{ user.name }}
-                     </div>
-                     <div class="projects_count">
-                        {{ projects.length }} {{ 'app.projects.projects' | translate }}
-                     </div>
-                  </div>
-
-                  <div  class="col-xs-2 vertical-center change" ng-show="organizations.length > 1"
+                  <div  class="col-xs-2 vertical-center change" ng-show="organizations.length"
                         st-dropdown top-pad="80" left-pad="-277" position="relative">
                      <ul class="organization_dropdown vertical-center dropdown_menu">
-                        <li class="row" ng-repeat="orga in organizations" ng-click="changeOrganization(orga)">
+                        <li class="row" ng-click="changeScope(currentUser)" ng-hide="currentScopeIsUser()">
+                           <div class="col-xs-2 vertical-center">
+                              <img src="/images/user.png" alt="" class="img-circle" width="54px">
+                           </div>
+                           <div class="col-xs-10 vertical-center" style="width:215px;">
+                              <div class="name">
+                                 {{ currentUser.name | characters:21:true }}
+                              </div>
+                           </div>
+                        </li>
+                        <li class="row" ng-repeat="orga in filteredOrganizations()" ng-click="changeScope(orga)">
                            <div class="col-xs-2 vertical-center">
                               <img src="/images/app/layout/organization_logo_sample.png" alt="">
                            </div>
@@ -38,11 +39,6 @@
                               <div class="name">
                                  {{ orga.name | characters:21:true }}
                               </div>
-                              <!--
-                              <div class="projects_count">
-                                 x projets
-                              </div>
-                              -->
                            </div>
                         </li>
                      </ul>

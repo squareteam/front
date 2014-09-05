@@ -101,6 +101,7 @@
    },
 
    "api" : {
+      "loading"    : "Chargement...",
       "serverBusy" : "Nos serveurs sont momentanéments indisponibles",
       "no_results" : "Aucun résultats"
    },
