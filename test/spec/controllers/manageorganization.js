@@ -28,7 +28,7 @@ describe('Controller: ManageOrganizationCtrl', function () {
 
     provideAuth($injector)();
 
-    $httpBackend.expectGET( url('organizations/1') ).respond(200, '{"data":[{"id":1,"name":"FMB","description":"test test"}]}');
+    $httpBackend.expectGET( url('organizations/1') ).respond(200, '{"data":{"id":1,"name":"FMB","description":"test test"}}');
     $httpBackend.expectGET( url('organizations/1/teams') ).respond(200, '{"data":[{"id":6,"name":"Admin","users":[{"id":1,"name":"Charly P.","email":"charly@squareteam.io","provider":"squareteam","permissions":0}]}],"errors":""}');
 
     scope = $rootScope.$new();
