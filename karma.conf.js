@@ -52,6 +52,7 @@ module.exports = function(config) {
       'app/bower_components/angulartics/src/angulartics-ga.js',
       'app/bower_components/ngDialog/js/ngDialog.js',
       'app/bower_components/angular-restmod/dist/angular-restmod-bundle.js',
+      'app/bower_components/angular-restmod/dist/plugins/dirty.js',
       'app/bower_components/moment/moment.js',
       'app/bower_components/angular-moment/angular-moment.js',
       'app/bower_components/angular-truncate/src/truncate.js',

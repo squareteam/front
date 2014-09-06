@@ -40,6 +40,7 @@ describe('Service: CurrentSession', function () {
 
 
   it('should provide proper API', function() {
+    expect(!!CurrentSession.isOAuthAccount).toBe(true);
     expect(!!CurrentSession.isAuthenticated).toBe(true);
     expect(!!CurrentSession.getOrganizations).toBe(true);
     expect(!!CurrentSession.getAuth).toBe(true);
@@ -231,7 +232,7 @@ describe('Service: CurrentSession', function () {
     beforeEach(inject(function($injector) {
       provideAuth($injector)();
     }));
-    
+
     it('should update $$user object if success', function() {
       $httpBackend.expectGET( url('users/me') ).respond(200, apiResponseAsString(null,{'name':'Charly'}));
 
@@ -260,5 +261,36 @@ describe('Service: CurrentSession', function () {
 
   });
 
+
+  describe('CurrentSession.isOAuthAccount()', function() {
+
+
+    it('should return true if user.provider != "squareteam"', function() {
+
+      CurrentSession.$$user = UserResource.$buildRaw({
+        id    : 1,
+        name  : 'Charly',
+        email : 'charly@squareteam.io',
+        provider : 'github'
+      });
+
+      expect(CurrentSession.isOAuthAccount()).toBe(true);
+
+    });
+
+    it('should return false if user.provider == "squareteam"', function() {
+
+      CurrentSession.$$user = UserResource.$buildRaw({
+        id    : 1,
+        name  : 'Charly',
+        email : 'charly@squareteam.io',
+        provider : 'squareteam'
+      });
+
+      expect(CurrentSession.isOAuthAccount()).toBe(false);
+
+    });
+
+  });
 
 });

@@ -24,6 +24,10 @@ angular.module('squareteam.app')
       return this.$$auth && this.$$auth.$isValid() && !!this.$$user;
     };
 
+    this.isOAuthAccount = function() {
+      return this.$$user.provider.toLowerCase() !== 'squareteam';
+    };
+
     this.getOrganizations = function() {
       // TODO(charly): add caching ?
       return this.$$user.organizations.$refresh().$promise;
