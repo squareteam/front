@@ -11,7 +11,7 @@
 
                   <div class="col-xs-8 vertical-center" style="width:215px;">
                      <div class="name">
-                        {{ currentScope.name || ('api.loading' | translate) }}
+                        {{ (currentScope.name | characters:21:true) || ('api.loading' | translate) }}
                      </div>
                      <div class="projects_count" ng-show="!!projects">
                         {{ projects.length }} {{ 'app.projects.projects' | translate }}
