@@ -22,7 +22,7 @@
             <i class="icon icon-status-due" ng-if="project.status === 'due'"></i>
             <i class="icon icon-status-inprogress" ng-if="project.status !== 'due'"></i>
             <time datetime="{{ project.deadlineDate }}">
-               {{ project.deadline }}
+               {{ project.deadline | amCalendar }}
             </time>
          </div>
          <div>
