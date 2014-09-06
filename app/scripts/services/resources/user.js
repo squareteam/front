@@ -17,8 +17,11 @@ angular.module('squareteam.resources')
 
     // Creating a user is a public route
     User.create = function(data) {
-      return $http.post('api://user', data);
+      return $http.post('api://users', data);
     };
+
+    // FIXME(charly): find a better way to identify model class..
+    User.NAME = 'User';
 
     return User;
   });

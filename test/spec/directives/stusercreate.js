@@ -1,6 +1,6 @@
 'use strict';
 
-/* global $, apiResponseAsString*/
+/* global $, apiResponseAsString, apiURL */
 
 
 describe('Directive: st-user-create', function () {
@@ -20,7 +20,7 @@ describe('Directive: st-user-create', function () {
       .otherwise('/');
   }));
 
-  var appConfig,
+  var url,
       $httpBackend, $rootScope, $location,
       element, scope,
       alertEmailTakenElt, alertServerElt;
@@ -31,7 +31,7 @@ describe('Directive: st-user-create', function () {
     $rootScope      = $injector.get('$rootScope');
     $location       = $injector.get('$location');
 
-    appConfig       = $injector.get('appConfig');
+    url = apiURL($injector);
 
   }));
 
@@ -73,7 +73,7 @@ describe('Directive: st-user-create', function () {
     });
 
     it('should display alert if login is incorrect', function() {
-      $httpBackend.expectPOST(appConfig.api.url + 'user', '{"name":"charly","email":"charly@live.fr","password":"test"}').respond(400, apiResponseAsString(['api.already_taken.Email']));
+      $httpBackend.expectPOST( url('users'), '{"name":"charly","email":"charly@live.fr","password":"test"}').respond(400, apiResponseAsString(['api.already_taken.Email']));
 
 
       scope.user = {
@@ -101,7 +101,7 @@ describe('Directive: st-user-create', function () {
     });
 
     it('should display alert cause API is down', function() {
-      $httpBackend.expectPOST(appConfig.api.url + 'user', '{"name":"charly","email":"charly@live.fr","password":"test"}').respond(500);
+      $httpBackend.expectPOST( url('users'), '{"name":"charly","email":"charly@live.fr","password":"test"}').respond(500);
 
 
       scope.user = {
@@ -152,8 +152,8 @@ describe('Directive: st-user-create', function () {
     it('should register', function() {
       spyOn($location, 'path');
 
-      $httpBackend.expectPOST(appConfig.api.url + 'user', '{"name":"charly","email":"charly@live.fr","password":"test"}').respond(201, apiResponseAsString(null, {'salt1':'36b26d1ee22bb35e','salt2':'a5e28ef7bcb5605b'}));
-      $httpBackend.expectGET(appConfig.api.url + 'user/me').respond(200, apiResponseAsString(null, {'id':1}));
+      $httpBackend.expectPOST( url('users'), '{"name":"charly","email":"charly@live.fr","password":"test"}').respond(201, apiResponseAsString(null, {'salt1':'36b26d1ee22bb35e','salt2':'a5e28ef7bcb5605b'}));
+      $httpBackend.expectGET( url('users/me') ).respond(200, apiResponseAsString(null, {'id':1}));
 
       scope.user = {
         login         : 'charly',

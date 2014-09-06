@@ -7,7 +7,7 @@ angular.module('squareteam.app')
 
     organization = OrganizationResource.$find(currentOrganization.id).$then(function() {
 
-      $scope.organization = currentOrganization;
+      $scope.organization = organization;
 
       organization.teams.$fetch().$then(function(teams) {
         $scope.teams = teams;

@@ -1,5 +1,7 @@
+/*global $, apiResponseAsString, provideAuth, apiURL */
+
 'use strict';
-/*global $, apiResponseAsString, provideAuth */
+
 describe('Directive: st-organization-create', function () {
 
 
@@ -16,7 +18,7 @@ describe('Directive: st-organization-create', function () {
       .otherwise('/');
   }));
 
-  var appConfig, ApiAuth,
+  var url, ApiAuth,
       $httpBackend, $rootScope, $location,
       element, scope;
 
@@ -26,8 +28,9 @@ describe('Directive: st-organization-create', function () {
     $rootScope      = $injector.get('$rootScope');
     $location       = $injector.get('$location');
 
-    appConfig       = $injector.get('appConfig');
     ApiAuth         = $injector.get('ApiAuth');
+
+    url = apiURL($injector);
 
     provideAuth($injector)();
 
@@ -67,7 +70,7 @@ describe('Directive: st-organization-create', function () {
     });
     
     it('should display alert if name taken', function() {
-      $httpBackend.expectPOST(appConfig.api.url + 'organizations/with_admins').respond(400, apiResponseAsString(['Name has already been taken']));
+      $httpBackend.expectPOST( url('organizations/with_admins') ).respond(400, apiResponseAsString(['api.already_taken.Name']));
 
       var directiveScope = element.isolateScope();
       directiveScope = angular.extend(directiveScope, {
@@ -95,7 +98,7 @@ describe('Directive: st-organization-create', function () {
         
     it('should display alert if server busy', function() {
 
-      $httpBackend.expectPOST(appConfig.api.url + 'organizations/with_admins').respond(500, '');
+      $httpBackend.expectPOST( url('organizations/with_admins') ).respond(500, '');
 
       var directiveScope = element.isolateScope();
       directiveScope = angular.extend(directiveScope, {

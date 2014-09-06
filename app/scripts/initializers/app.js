@@ -177,6 +177,11 @@ angular
       .state('public.forgotPassword.changed', {
         url : '/forgot_password/change_success',
         templateUrl : 'views/public/forgotPassword/change_success.html'
+      })
+
+      .state('public.organization.invite', {
+        url : '/invite/organization/:id',
+        // templateUrl : 'views/public/invite/organization.html'
       });
 
     $stateProvider
@@ -207,7 +212,7 @@ angular
       })
 
 
-      // KNOWLEDGE CENTER
+      // KNOWLEDGE CENTER (TODO)
 
       .state('app.knowledge', {
         url : '/knowledge',
@@ -239,15 +244,7 @@ angular
         controller : 'ProjectsListCtrl'
       })
 
-      .state('app.projects.create', {
-        url : '/projects/add'
-      })
-
-      .state('app.projects.edit', {
-        url : '/projects/edit/:projectId'
-      })
-
-      // MISSIONS
+      // MISSIONS (TODO)
 
       .state('app.missions', {
         url : '/projects/:projectId/missions'
@@ -269,7 +266,7 @@ angular
         url : '/:missionId/edit'
       })
 
-      // TASKS
+      // TASKS (TODO)
 
       .state('app.tasks', {
         url : '/missions/:missionId/tasks'//,

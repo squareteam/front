@@ -1,8 +1,7 @@
-/* global provideAuth */
+/* global provideAuth, apiURL */
 
 'use strict';
 
-// wait for final implementation to write tests..
 describe('Controller: MyAccountCtrl', function () {
 
   // load the controller's module
@@ -11,7 +10,7 @@ describe('Controller: MyAccountCtrl', function () {
   var MyAccountCtrl, scope, resolvePromise,
       appConfig, PasswordConfirmPopin, CurrentSession, ApiSession, UserResource,
       $httpBackend, $controller, $q, $location,
-      user;
+      user, url;
 
   resolvePromise = function() {
     var deferred = $q.defer();
@@ -26,13 +25,15 @@ describe('Controller: MyAccountCtrl', function () {
     $q                    = $injector.get('$q');
     $location             = $injector.get('$location');
 
-    appConfig             = $injector.get('appConfig');
     PasswordConfirmPopin  = $injector.get('PasswordConfirmPopin');
     CurrentSession        = $injector.get('CurrentSession');
     ApiSession            = $injector.get('ApiSession');
     UserResource          = $injector.get('UserResource');
+    appConfig             = $injector.get('appConfig');
 
     provideAuth($injector)();
+
+    url = apiURL($injector);
 
     scope = $rootScope.$new();
 
@@ -90,7 +91,7 @@ describe('Controller: MyAccountCtrl', function () {
           return prop === 'email';
         });
 
-        $httpBackend.expectPUT(appConfig.api.url + 'users/1').respond('');
+        $httpBackend.expectPUT( url('users/1') ).respond('');
 
         scope.user.email = 'paul@squareteam.io';
 
@@ -114,7 +115,7 @@ describe('Controller: MyAccountCtrl', function () {
           return prop === 'email';
         });
 
-        $httpBackend.expectPUT(appConfig.api.url + 'users/1').respond('');
+        $httpBackend.expectPUT( url('users/1') ).respond('');
 
         scope.user.email = 'paul@squareteam.io';
 
@@ -136,7 +137,7 @@ describe('Controller: MyAccountCtrl', function () {
           return prop === 'email';
         });
 
-        $httpBackend.expectPUT(appConfig.api.url + 'users/1').respond(500, '');
+        $httpBackend.expectPUT( url('users/1') ).respond(500, '');
 
         scope.user.email = 'paul@squareteam.io';
 
@@ -159,8 +160,8 @@ describe('Controller: MyAccountCtrl', function () {
           return prop === 'name';
         });
 
-        $httpBackend.expectPUT(appConfig.api.url + 'users/1').respond('');
-        $httpBackend.expectGET(appConfig.api.url + 'user/me').respond('');
+        $httpBackend.expectPUT( url('users/1') ).respond('');
+        $httpBackend.expectGET( url('users/me') ).respond('');
 
         scope.user.name = 'Paul';
 
@@ -178,7 +179,7 @@ describe('Controller: MyAccountCtrl', function () {
     describe('User organizations', function() {
       it('should remove organization from list after leave', function() {
 
-        $httpBackend.expectDELETE(appConfig.api.url + 'organizations/1/user/1').respond('');
+        $httpBackend.expectDELETE( url('organizations/1/users/1') ).respond('');
 
         scope.leaveOrganization(1);
 
@@ -230,7 +231,7 @@ describe('Controller: MyAccountCtrl', function () {
             return prop === 'email';
           });
 
-          $httpBackend.expectPUT(appConfig.api.url + 'users/1').respond(200, '');
+          $httpBackend.expectPUT( url('users/1') ).respond(200, '');
 
           scope.user.email = 'paul@squareteam.io';
 
@@ -280,7 +281,7 @@ describe('Controller: MyAccountCtrl', function () {
           return prop === 'email';
         });
 
-        $httpBackend.expectPUT(appConfig.api.url + 'users/1').respond(200, '');
+        $httpBackend.expectPUT( url('users/1') ).respond(200, '');
 
         scope.user.email = 'paul@squareteam.io';
 

@@ -3,11 +3,14 @@
       <div id="box_center" class="col-sm-10 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
          <div class='box_shadow'>
             
-            <h1>Password forget ?</h1>
+            <h1>
+               {{ 'public.forgotPassword.request.title' | translate }}
+            </h1>
             <article id="first_sign_in">
-               <form action>
+               <form action class="fancy">
                   <p>
-                     A e-mail containing instructions <br> for password changing has been sent !
+                     {{ 'public.forgotPassword.request.sent_1' | translate }} <br>
+                     {{ 'public.forgotPassword.request.sent_2' | translate }}
                   </p>
                </form>
             </article>

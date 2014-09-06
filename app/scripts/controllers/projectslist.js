@@ -1,24 +1,13 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .controller('ProjectsListCtrl', function ($scope, $rootScope, ngDialog, ProjectResource,  CurrentSession, restmod) {
-
-    var tmpProjectModel = restmod.model('apis://projects', {
-      deadline : {
-        encode : function(value) {
-          return value ? value : '';
-        },
-        chain: true
-      },
-      metadata  : { mask : 'CUD'},
-      progress  : { mask : 'CUD'},
-      status    : { mask : 'CUD'}
-    });
+  .controller('ProjectsListCtrl', function ($scope, $rootScope, ngDialog, ProjectResource, UserResource, CurrentSession, moment) {
 
     $scope.organizations  = [];
     $scope.sortBy         = '';
     $scope.teamFilter     = '';
     $scope.statusFilter   = '';
+    $scope.currentUser    = CurrentSession.getUser();
 
     $scope.statusFilterChoices = [
       {
@@ -99,14 +88,6 @@ angular.module('squareteam.app')
       }
     ];
 
-    $scope.organizationsSelectorFilter = function(actual, expected) {
-      return actual.id !== expected.id;
-    };
-
-    $scope.isFiltered = function() {
-      return $scope.teamFilter || $scope.statusFilter;
-    };
-
     $scope.loadProjects = function() {
       function projectsLoaded (projects) {
         $scope.projects = projects;
@@ -125,26 +106,16 @@ angular.module('squareteam.app')
         });
       }
 
-      if ($scope.organization) {
-        tmpProjectModel.$search().$then(projectsLoaded);
-        // $scope.organization.projects.$refresh().$then(projectsLoaded);
-      } else if ($scope.organizations.length) {
-        $scope.organization = $scope.organizations[0];
-
-        tmpProjectModel.$search().$then(projectsLoaded);
-        // $scope.organization.projects.$refresh().$then(projectsLoaded);
-      } else {
-        $scope.organization = null;
-
-        tmpProjectModel.$search().$then(projectsLoaded);
-        // CurrentSession.getUser().projects.$refresh().then(projectsLoaded);
+      if (!$scope.currentScope) {
+        if ($scope.organizations.length) {
+          $scope.currentScope = $scope.organizations[0];
+        } else {
+          $scope.currentScope = $scope.currentUser;
+        }
       }
 
-    };
+      $scope.currentScope.projects.$refresh().$then(projectsLoaded);
 
-    $scope.changeOrganization = function(organization) {
-      $scope.organization = organization;
-      $scope.loadProjects();
     };
 
     // INIT
@@ -156,31 +127,57 @@ angular.module('squareteam.app')
       $scope.loadProjects();
     });
 
-    $scope.$on('project:delete', function(_, projectId) {
-      var index = -1;
-      angular.forEach($scope.projects, function(project, i) {
-        if (project.id === projectId) {
-          index = i;
-        }
-      });
-
-      if (index >= 0) {
-        $scope.projects.splice(index, 1);
-      }
+    $scope.$on('project:delete', function(_, project) {
+      project.$destroy();
+      // TODO(charly): handle error message
     });
+
+    // METHODS
+
+    $scope.currentScopeIsUser = function() {
+      return $scope.currentScope && $scope.currentScope.constructor.NAME && $scope.currentScope.constructor.NAME === 'User';
+    };
+
+    $scope.filteredOrganizations = function() {
+      var organizations = [];
+
+      if (!$scope.currentScope || ($scope.currentScope.constructor.NAME && $scope.currentScope.constructor.NAME === 'User')) {
+        organizations = $scope.organizations;
+      } else {
+        angular.forEach($scope.organizations, function(organization) {
+          if (organization.id !== $scope.currentScope.id) {
+            organizations.push(organization);
+          }
+        });
+      }
+
+      return organizations;
+    };
+
+    $scope.isFiltered = function() {
+      return $scope.teamFilter || $scope.statusFilter;
+    };
 
     $scope.clearFilters = function() {
       $scope.teamFilter     = '';
       $scope.statusFilter   = '';
     };
 
-    // METHODS
+    $scope.changeScope = function(scope) {
+      $scope.currentScope = scope;
+      $scope.loadProjects();
+    };
 
     $scope.createProjectPopin = function() {
       var dialog,
           createProjectPopinScope = $rootScope.$new();
 
       createProjectPopinScope.createProject = function() {
+
+        if (createProjectPopinScope.project.deadline) {
+          createProjectPopinScope.project.deadline = moment(createProjectPopinScope.project.deadline).toISOString();
+        }
+
         $scope.projects.$create(createProjectPopinScope.project).$then(function() {
           $scope.loadProjects();
           dialog.close();

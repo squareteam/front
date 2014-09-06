@@ -22,6 +22,10 @@
 
             <form action="" class="minimal" name="userForm" ng-submit="updateUser()">
 
+               <div class="alert alert-danger" ng-show="!!userForm.email.$error.unique">
+                   {{ 'directives.stUserCreate.emailTaken' | translate }}
+               </div>
+
                <label for="pseudo">
                   {{ 'app.myAccount.profile.name' | translate }}
                </label>
@@ -30,7 +34,13 @@
                <label for="password" ng-hide="$scope.isOAuthAccount">
                   {{ 'app.myAccount.profile.password' | translate }}
                </label>
-               <input type="password" type="text" name="password" class="fluid" ng-model="user.password" ng-hide="$scope.isOAuthAccount">
+
+               <input   type="password" type="text" name="password" class="fluid"
+                        ng-model="user.password" ng-change="passwordFormat()" ng-hide="$scope.isOAuthAccount">
+
+               <div  ng-show="userForm.password.$dirty && (passwordBadPractice)" class="notice_text">
+                 {{ 'directives.stUserCreate.passwordFormatHelp' | translate }}
+               </div>
 
                <label for="email">
                   {{ 'app.myAccount.profile.email' | translate }}
@@ -64,7 +74,7 @@
                      <img src="http://placekitten.com/g/45/45" alt="">
                   </div>
                   <div class="col-xs-5 name">
-                     {{ organization.name }}
+                     {{ organization.name | characters:21:true }}
                   </div>
                   <div class="col-xs-4 pull-right">
                      <div class="leave-button" ng-click="leaveOrganization(organization.id)">

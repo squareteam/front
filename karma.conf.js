@@ -55,6 +55,7 @@ module.exports = function(config) {
       'app/bower_components/angular-restmod/dist/plugins/dirty.js',
       'app/bower_components/moment/moment.js',
       'app/bower_components/angular-moment/angular-moment.js',
+      'app/bower_components/angular-truncate/src/truncate.js',
       'app/scripts/initializers/modules.js',
       'app/scripts/initializers/api.js',
       'app/scripts/*.js',

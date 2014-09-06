@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .controller('MyAccountCtrl', function ($scope, $http, $location, ApiSession, CurrentSession, UserResource, PasswordConfirmPopin, appConfig) {
+
+  .controller('MyAccountCtrl', function ($scope, $http, $location, ApiSession, CurrentSession, UserResource, PasswordConfirmPopin, appConfig, ApiErrors) {
 
     // INITIALIZE
     $scope.isOAuthAccount = CurrentSession.isOAuthAccount();
@@ -34,6 +35,10 @@ angular.module('squareteam.app')
 
     // EXPOSE METHODS
 
+    $scope.passwordFormat = function() {
+      $scope.passwordBadPractice = !$scope.user.password || $scope.user.password.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/) === null;
+    };
+
     $scope.updateUser = function() {
       $scope.user.$save().$then(function() {
 
@@ -48,7 +53,7 @@ angular.module('squareteam.app')
 
               if ($scope.user.$dirty('password')) {
 
-                $http.put('apis://user/me/change_password', {
+                $http.put('apis://users/me/change_password', {
                   password  : $scope.user.password
                 }).then(function() {
                   CurrentSession.unregister(); // to prevent XHR on /logout (that will fail)
@@ -68,14 +73,21 @@ angular.module('squareteam.app')
         } else {
           CurrentSession.reloadUser();
         }
-      }, function() {
-        window.alert('update failed');
-        $scope.user.$restore();
+      }, function(response) {
+        if (response.error instanceof ApiErrors.Api) {
+          angular.forEach(response.error.getErrors(), function(errorText) {
+            if (errorText === 'api.already_taken.Email') {
+              $scope.userForm.email.$setValidity('unique', false);
+            }
+          }.bind(this));
+        } else {
+          $scope.user.$restore();
+        }
       });
     };
     // TODO(charly) : refactor with use of restomod::RecordApi
     $scope.leaveOrganization = function(organizationId) {
-      $http.delete('apis://organizations/'+organizationId+'/user/'+CurrentSession.getUser().id).then(function() {
+      $http.delete('apis://organizations/'+organizationId+'/users/'+CurrentSession.getUser().id).then(function() {
         // remove organizationId from $scope.organizations
         var index = -1;
 

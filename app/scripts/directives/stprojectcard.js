@@ -34,7 +34,9 @@ angular.module('squareteam.app')
             $scope.project.$save().$then(dialog.close);
           };
 
-          $tooltip && $tooltip.hide();
+          if ($tooltip) {
+            $tooltip.hide();
+          }
           dialog = ngDialog.open({
             template  : 'views/app/projects/update_project_popin.html',
             scope     : updateProjectScope
@@ -43,8 +45,10 @@ angular.module('squareteam.app')
         };
 
         editProjectScope.delete = function() {
-          $tooltip && $tooltip.hide();
-          $scope.$emit('project:delete', $scope.project.id);
+          if($tooltip) {
+            $tooltip.hide();
+          }
+          $scope.$emit('project:delete', $scope.project);
         };
 
         editProjectScope.archive = function() {
