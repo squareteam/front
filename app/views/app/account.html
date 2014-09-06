@@ -31,12 +31,12 @@
                </label>
                <input type="text" type="text" name="pseudo" class="fluid" ng-model="user.name" required>
 
-               <label for="password" ng-hide="$scope.isOAuthAccount">
+               <label for="password" ng-hide="isOAuthAccount">
                   {{ 'app.myAccount.profile.password' | translate }}
                </label>
 
                <input   type="password" type="text" name="password" class="fluid"
-                        ng-model="user.password" ng-change="passwordFormat()" ng-hide="$scope.isOAuthAccount">
+                        ng-model="user.password" ng-change="passwordFormat()" ng-hide="isOAuthAccount">
 
                <div  ng-show="userForm.password.$dirty && (passwordBadPractice)" class="notice_text">
                  {{ 'directives.stUserCreate.passwordFormatHelp' | translate }}

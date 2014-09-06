@@ -8,7 +8,7 @@ describe('Controller: MyAccountCtrl', function () {
   beforeEach(module('squareteam.app'));
 
   var MyAccountCtrl, scope, resolvePromise,
-      appConfig, PasswordConfirmPopin, CurrentSession, ApiSession, UserResource,
+      appConfig, PasswordConfirmPopin, CurrentSession, ApiSession, UserResource, stUtils,
       $httpBackend, $controller, $q, $location,
       user, url;
 
@@ -29,6 +29,7 @@ describe('Controller: MyAccountCtrl', function () {
     CurrentSession        = $injector.get('CurrentSession');
     ApiSession            = $injector.get('ApiSession');
     UserResource          = $injector.get('UserResource');
+    stUtils               = $injector.get('stUtils');
     appConfig             = $injector.get('appConfig');
 
     provideAuth($injector)();
@@ -226,7 +227,8 @@ describe('Controller: MyAccountCtrl', function () {
 
         it('it should redirect to "/api/auth/github" if success', function() {
 
-          spyOn($location, 'url');
+          spyOn(stUtils, 'redirect');
+
           spyOn(user, '$dirty').and.callFake(function(prop) {
             return prop === 'email';
           });
@@ -241,8 +243,7 @@ describe('Controller: MyAccountCtrl', function () {
 
           scope.$digest();
 
-
-          expect($location.url).toHaveBeenCalledWith(appConfig.api.oauth.github.endpoint);
+          expect(stUtils.redirect).toHaveBeenCalledWith(appConfig.api.oauth.github.endpoint);
 
         });
 
@@ -292,7 +293,7 @@ describe('Controller: MyAccountCtrl', function () {
         scope.$digest();
 
         expect(CurrentSession.unregister.calls.count()).toBe(1);
-        expect($location.path).toHaveBeenCalledWith('/');
+        expect($location.path).toHaveBeenCalledWith('/login');
 
       });
 

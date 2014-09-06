@@ -1,8 +1,10 @@
+/* global alert */
+
 'use strict';
 
 angular.module('squareteam.app')
 
-  .controller('MyAccountCtrl', function ($scope, $http, $location, ApiSession, CurrentSession, UserResource, PasswordConfirmPopin, appConfig, ApiErrors) {
+  .controller('MyAccountCtrl', function ($scope, $http, $location, ApiSession, CurrentSession, UserResource, PasswordConfirmPopin, appConfig, ApiErrors, ApiSessionStorageCookies, stUtils) {
 
     // INITIALIZE
     $scope.isOAuthAccount = CurrentSession.isOAuthAccount();
@@ -17,19 +19,21 @@ angular.module('squareteam.app')
 
     function $$refreshSession (password) {
       ApiSession.login($scope.user.email, password).catch(function() {
-        window.alert('Refresh session failed !');
+        alert('Refresh session failed !');
         $scope.user.$restore();
       });
     }
 
     function redirectOAuthRefreshSession () {
       var endpoint = appConfig.api.oauth[$scope.user.provider] && appConfig.api.oauth[$scope.user.provider].endpoint;
-      if (endpoint) {
-        $location.url(endpoint);
+      if (angular.isString(endpoint)) {
+        alert('profile updated, redirection...');
+        stUtils.redirect(endpoint, 300);
       } else {
-        window.alert('oauth redirection failed, logout..');
+        alert('oauth redirection failed, logout..');
         CurrentSession.unregister(); // to prevent XHR on /logout (that will fail)
-        $location.path('/');
+        ApiSessionStorageCookies.destroy();
+        $location.path('/login');
       }
     }
 
@@ -40,10 +44,12 @@ angular.module('squareteam.app')
     };
 
     $scope.updateUser = function() {
+      var emailOrPasswordWasDirty = $scope.user.$dirty('password') || $scope.user.$dirty('email');
+
       $scope.user.$save().$then(function() {
 
         // Force CurrentSession to reload user data
-        if ($scope.user.$dirty('password') || $scope.user.$dirty('email')) {
+        if (emailOrPasswordWasDirty) {
 
           if ($scope.isOAuthAccount) {
             redirectOAuthRefreshSession();
@@ -59,14 +65,14 @@ angular.module('squareteam.app')
                   CurrentSession.unregister(); // to prevent XHR on /logout (that will fail)
                   $$refreshSession($scope.user.password);
                 }, function() {
-                  window.alert('Update canceled !');
+                  alert('Update canceled !');
                   $scope.user.$restore();
                 });
               } else {
                 $$refreshSession(confirmPassword);
               }
             }, function() {
-              window.alert('Update canceled !');
+              alert('Update canceled !');
               $scope.user.$restore();
             });
           }
@@ -102,7 +108,7 @@ angular.module('squareteam.app')
         }
 
       }, function() {
-        window.alert('Error while leaving organization, aborted.');
+        alert('Error while leaving organization, aborted.');
       });
     };
   });
