@@ -661,7 +661,9 @@ $projects_image_path: "/images/app/projects_list/";
       color: #b7ccd8;
    }
 }
-
+.dropdown-open {
+   z-index: 10;
+}
 .filters_dropdown {
    display: none;
 
