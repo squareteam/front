@@ -48,4 +48,18 @@ describe('Controller: Organizations', function () {
 
   });
 
+  it('should remove organization from list after leave', function() {
+
+    $httpBackend.expectDELETE( url('organizations/1/users/1') ).respond('');
+
+    scope.leaveOrganization(1);
+
+    $httpBackend.flush();
+
+    scope.$digest();
+
+    expect(scope.organizations.length).toBe(0);
+
+  });
+
 });

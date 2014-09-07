@@ -12,7 +12,7 @@
                </p>
             </div>
 
-            <ul ng-if="organizations.length > 0" class="organizations-list">
+            <ul class="organizations-list">
                <li class="row" ng-repeat="organization in organizations track by organization.id">
                   <div class="col-xs-2">
                      <img src="http://placekitten.com/g/45/45" alt="">
@@ -28,6 +28,15 @@
                            </div>
                         </div>
                      </div>
+                  <!--
+                     <div class="leave-button" ng-click="leaveOrganization(organization.id)">
+                        <div class="mask">
+                           <div class="text">
+                              {{ 'app.myAccount.organizations.leave' | translate }}
+                           </div>
+                        </div>
+                     </div>
+                  -->
                   </div>
                </li>
                <li class="row" ng-if="!organizations.length">

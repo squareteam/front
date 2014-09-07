@@ -38,17 +38,6 @@ describe('Controller: MyAccountCtrl', function () {
 
     scope = $rootScope.$new();
 
-    spyOn(CurrentSession, 'getOrganizations').and.callFake(function() {
-      var deferred = $q.defer();
-      deferred.resolve([
-        {
-          id : 1,
-          name : 'FMB'
-        }
-      ]);
-      return deferred.promise;
-    });
-
   }));
 
 
@@ -73,10 +62,6 @@ describe('Controller: MyAccountCtrl', function () {
     });
 
     describe('at initial state', function() {
-
-      it('should provide organizations list as $scope.organizations', function() {
-        expect(scope.organizations.length).toBe(1);
-      });
 
       it('should provide current user as $scope.user', function() {
         expect(scope.user).toEqual(user);
@@ -177,22 +162,6 @@ describe('Controller: MyAccountCtrl', function () {
       });
     });
 
-    describe('User organizations', function() {
-      it('should remove organization from list after leave', function() {
-
-        $httpBackend.expectDELETE( url('organizations/1/users/1') ).respond('');
-
-        scope.leaveOrganization(1);
-
-        $httpBackend.flush();
-
-        scope.$digest();
-
-        expect(scope.organizations.length).toBe(0);
-
-      });
-    });
-
   });
 
   describe('with a Github account (OAuth Account)', function() {
@@ -243,7 +212,7 @@ describe('Controller: MyAccountCtrl', function () {
 
           scope.$digest();
 
-          expect(stUtils.redirect).toHaveBeenCalledWith(appConfig.api.oauth.github.endpoint);
+          expect(stUtils.redirect).toHaveBeenCalledWith(appConfig.api.oauth.github.endpoint, 300);
 
         });
 

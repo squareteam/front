@@ -9,13 +9,7 @@ angular.module('squareteam.app')
     // INITIALIZE
     $scope.isOAuthAccount = CurrentSession.isOAuthAccount();
     $scope.user           = CurrentSession.getUser();
-    $scope.organizations  = [];
 
-    CurrentSession.getOrganizations().then(function(organizations) {
-      $scope.organizations = organizations;
-    }, function() {
-      console.error('Unable to load organizations for user #', $scope.user.id);
-    });
 
     function $$refreshSession (password) {
       ApiSession.login($scope.user.email, password).catch(function() {
@@ -91,24 +85,5 @@ angular.module('squareteam.app')
         }
       });
     };
-    // TODO(charly) : refactor with use of restomod::RecordApi
-    $scope.leaveOrganization = function(organizationId) {
-      $http.delete('apis://organizations/'+organizationId+'/users/'+CurrentSession.getUser().id).then(function() {
-        // remove organizationId from $scope.organizations
-        var index = -1;
 
-        angular.forEach($scope.organizations, function(organization, i) {
-          if (organization.id === organizationId) {
-            index = i;
-          }
-        });
-
-        if (index >= 0) {
-          $scope.organizations.splice(index, 1);
-        }
-
-      }, function() {
-        alert('Error while leaving organization, aborted.');
-      });
-    };
   });
