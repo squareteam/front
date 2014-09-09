@@ -135,13 +135,13 @@ angular.module('squareteam.app')
     // METHODS
 
     $scope.currentScopeIsUser = function() {
-      return $scope.currentScope && $scope.currentScope.constructor.NAME && $scope.currentScope.constructor.NAME === 'User';
+      return $scope.currentScope && $scope.currentScope.constructor.$name() === 'users';
     };
 
     $scope.filteredOrganizations = function() {
       var organizations = [];
 
-      if (!$scope.currentScope || ($scope.currentScope.constructor.NAME && $scope.currentScope.constructor.NAME === 'User')) {
+      if (!$scope.currentScope || ($scope.currentScope && $scope.currentScope.constructor.$name() === 'users') ) {
         organizations = $scope.organizations;
       } else {
         angular.forEach($scope.organizations, function(organization) {
