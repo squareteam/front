@@ -48,7 +48,12 @@ angular.module('squareteam.app')
 
         function addUserToTeam (user) {
           $scope.$setPristine();
-          $scope.team.users.$create(user).$promise.catch(function() {
+          $scope.team.users.$create({
+            'id'          : user.id,
+            'user_id'     : user.id,
+            'permissions' : 0,
+            'name'        : user.name
+          }).$promise.catch(function() {
             $scope.errors.addUser = true;
           });
         }
