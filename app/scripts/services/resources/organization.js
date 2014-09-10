@@ -7,7 +7,8 @@ angular.module('squareteam.resources')
 
       teams     : { hasMany : 'TeamResource'},
       projects  : { hasMany : 'ProjectResource' }
-    });
+
+    }, 'AclModel');
 
     Organization.createWithAdmins = function (organizationData, adminIds) {
       /*jshint camelcase:false */

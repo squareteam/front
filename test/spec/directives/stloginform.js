@@ -21,8 +21,8 @@ describe('Directive: st-login-form', function () {
   }));
 
   var url,
-      $httpBackend, $rootScope, $state, $location,
-      element, scope,
+      $httpBackend, $rootScope, $state, $location, $q,
+      element, scope, CurrentSession,
       alertLoginElt, alertPasswordElt, alertServerElt;
 
   beforeEach(inject(function ($compile, $injector) {
@@ -31,10 +31,20 @@ describe('Directive: st-login-form', function () {
     $rootScope          = $injector.get('$rootScope');
     $state              = $injector.get('$state');
     $location           = $injector.get('$location');
+    $q                  = $injector.get('$q');
+
+
+    CurrentSession      = $injector.get('CurrentSession');
 
     url = apiURL($injector);
 
   }));
+
+  function resolvePromise() {
+    var deferred = $q.defer();
+    deferred.resolve();
+    return deferred.promise;
+  }
 
   afterEach(function() {
     $httpBackend.verifyNoOutstandingExpectation();
@@ -215,6 +225,7 @@ describe('Directive: st-login-form', function () {
 
     it('should login', function() {
       spyOn($state, 'go');
+      spyOn(CurrentSession, '$$reloadUserPermissions').and.callFake(resolvePromise);
 
       $httpBackend.expectPUT( url('login'), '{"identifier":"charly@live.fr"}')  .respond(200, apiResponseAsString(null, {'salt1':'36b26d1ee22bb35e','salt2':'a5e28ef7bcb5605b'}));
       $httpBackend.expectGET( url('users/me') ).respond(200, apiResponseAsString(null, {'name':'Charly'}));

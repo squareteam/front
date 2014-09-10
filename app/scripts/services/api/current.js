@@ -14,22 +14,62 @@
 //  - `restore`    will try to restore CurrentSession from cookies
 
 angular.module('squareteam.app')
-  .service('CurrentSession', function CurrentSession($rootScope, $http, $q, appConfig, ApiAuth, ApiCrypto, ApiErrors, ApiSessionStorageCookies, UserResource) {
-    this.$$user                 = null;
-    this.$$auth                 = new ApiAuth();
+  .service('CurrentSession', function CurrentSession($rootScope, $http, $q, appConfig, ApiAuth, ApiCrypto, ApiErrors, ApiSessionStorageCookies, UserResource, AclRoles) {
+    this.$$user = null;
+    this.$$auth = new ApiAuth();
 
-  // GETTERS, STATES
+    // Three dimensional hash [organizationId][model][action] = true/false
+    this.$$userPermissions = {};
+
+    // ACL
+
+    // TODO(charly): should be called when changed made to
+    //  - organization (create, delete)
+    //  - teams
+    this.$$reloadUserPermissions = function() {
+      var deferred = $q.defer();
+
+      this.getUser().teams.$refresh().$then(angular.bind(this, function(teams) {
+
+        angular.forEach(teams, function(team) {
+          angular.forEach(team.users, function(user) {
+            if (user.id === this.$$user.id) {
+              this.$$userPermissions[team.organizationId] = AclRoles.asBooleanMap(user.permissions);
+            }
+          }, this);
+        }, this);
+
+        deferred.resolve();
+
+      }), deferred.reject);
+
+      return deferred.promise;
+    };
+
+    this.userCanDo = function(doWhat, onWhat, organizationId) {
+      if (!organizationId) {
+        return true; // creator
+      } else {
+        // O(1)
+        return  this.$$userPermissions[organizationId]                  &&
+                this.$$userPermissions[organizationId][onWhat]          &&
+                this.$$userPermissions[organizationId][onWhat][doWhat];
+      }
+    };
 
     this.isAuthenticated = function() {
       return this.$$auth && this.$$auth.$isValid() && !!this.$$user;
     };
 
+    // OAuth helpers
+
     this.isOAuthAccount = function() {
       return this.$$user.provider.toLowerCase() !== 'squareteam';
     };
 
+    // GETTERS
+
     this.getOrganizations = function() {
-      // TODO(charly): add caching ?
       return this.$$user.organizations.$refresh().$promise;
     };
 
@@ -40,6 +80,8 @@ angular.module('squareteam.app')
     this.getUser = function() {
       return this.$$user;
     };
+
+    // Current session management
 
     this.reloadUser = function() {
       $http.get('apis://users/me').then(function(response) {
@@ -70,7 +112,9 @@ angular.module('squareteam.app')
         self.$$auth = auth;
         self.$$user = UserResource.$buildRaw(response.data);
         $rootScope.$broadcast('user:connected');
-        deferred.resolve(response.data);
+        self.$$reloadUserPermissions().then(function() {
+          deferred.resolve(response.data);
+        }, deferred.reject);
       }, function(response) {
         if (response.error instanceof ApiErrors.Http) {
           deferred.reject('api.not_available');

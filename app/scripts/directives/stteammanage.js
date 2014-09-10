@@ -11,7 +11,7 @@ angular.module('squareteam.app')
       templateUrl: 'scripts/directives/templates/stteammanage.html',
       restrict: 'E',
       replace: true,
-      controller: function($scope, $element, $attrs, $state, $http, TeamResource) {
+      controller: function($scope, $element, $attrs, $state, $http, TeamResource, AclRoles) {
         
         $scope.$setPristine = function() {
           $scope.errors = {
@@ -100,10 +100,10 @@ angular.module('squareteam.app')
           }) : [];
         };
 
-        $scope.rolesHelpers              = TeamResource.rolesHelpers;
+        $scope.rolesHelpers              = AclRoles;
 
         $scope.usersToRemove             = usersToRemove;
-        $scope.ROLES                     = TeamResource.ROLES;
+        $scope.ROLES                     = AclRoles.ROLES;
       }
     };
   });

@@ -22,8 +22,8 @@ describe('Service: CurrentSession', function () {
   }));
 
   // instantiate service
-  var CurrentSession, ApiAuth, ApiSessionStorageCookies, UserResource,
-      $httpBackend, $rootScope,
+  var CurrentSession, ApiAuth, ApiSessionStorageCookies, UserResource, AclRoles,
+      $httpBackend, $rootScope, $q,
       successCallback, errorCallback, url;
 
   beforeEach(inject(function ($injector) {
@@ -31,12 +31,20 @@ describe('Service: CurrentSession', function () {
     ApiAuth                   = $injector.get('ApiAuth');
     ApiSessionStorageCookies  = $injector.get('ApiSessionStorageCookies');
     UserResource              = $injector.get('UserResource');
+    AclRoles                  = $injector.get('AclRoles');
 
     $httpBackend              = $injector.get('$httpBackend');
     $rootScope                = $injector.get('$rootScope');
+    $q                        = $injector.get('$q');
 
     url = apiURL($injector);
   }));
+
+  function resolvePromise() {
+    var deferred = $q.defer();
+    deferred.resolve();
+    return deferred.promise;
+  }
 
 
   it('should provide proper API', function() {
@@ -80,6 +88,49 @@ describe('Service: CurrentSession', function () {
       expect(CurrentSession.getUser().id).toEqual(1);
       expect(CurrentSession.getUser().name).toEqual('test-auth');
       expect(CurrentSession.getUser().email).toEqual('charly.poly@live.fr');
+    });
+
+  });
+
+  describe('User ACL', function() {
+
+    beforeEach(inject(function($injector) {
+      provideAuth($injector)();
+    }));
+
+    it('CurrentSession.$$reloadUserPermissions should refresh user permissions', function() {
+
+      spyOn(AclRoles, 'asBooleanMap').and.returnValue({});
+      $httpBackend.expectGET( url('users/1/teams') ).respond(200, apiResponseAsString(null, []));
+
+      CurrentSession.$$reloadUserPermissions();
+
+      $httpBackend.flush();
+      $rootScope.$digest();
+
+    });
+
+    describe('CurrentSession.userCanDo', function() {
+
+      beforeEach(function() {
+
+        CurrentSession.$$userPermissions = {
+          1 : {
+            projects : {
+              manage : false,
+              add : true
+            }
+          }
+        };
+
+      });
+
+      it('should return `true` cause user CAN create project', function() {
+
+        expect(CurrentSession.userCanDo('add', 'projects', 1)).toBe(true);
+
+      });
+
     });
 
   });
@@ -165,6 +216,7 @@ describe('Service: CurrentSession', function () {
 
     it('should restore session from cookies storage', function() {
       spyOn($rootScope, '$broadcast').and.callThrough();
+      spyOn(CurrentSession, '$$reloadUserPermissions').and.callFake(resolvePromise);
 
       $httpBackend.expectGET( url('users/me') ).respond(200, apiResponseAsString(null,{'name':'Charly'}));
 

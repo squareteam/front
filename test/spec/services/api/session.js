@@ -25,7 +25,7 @@ describe('Service: ApiSession', function () {
 
   // instantiate service
   var ApiSession, CurrentSession, ApiAuth, ApiSessionStorageCookies,
-      $http, $httpBackend, $rootScope,
+      $http, $httpBackend, $rootScope, $q,
       url, successCallback, errorCallback;
 
   beforeEach(inject(function ($injector) {
@@ -37,9 +37,16 @@ describe('Service: ApiSession', function () {
     $http               = $injector.get('$http');
     $httpBackend        = $injector.get('$httpBackend');
     $rootScope          = $injector.get('$rootScope');
+    $q                  = $injector.get('$q');
 
     url = apiURL($injector);
   }));
+
+  function resolvePromise() {
+    var deferred = $q.defer();
+    deferred.resolve();
+    return deferred.promise;
+  }
 
   beforeEach(function() {
     successCallback = jasmine.createSpy('success');
@@ -116,6 +123,7 @@ describe('Service: ApiSession', function () {
 
     it('should login', function() {
       spyOn($rootScope, '$broadcast').and.callThrough();
+      spyOn(CurrentSession, '$$reloadUserPermissions').and.callFake(resolvePromise);
 
       $httpBackend.expectPUT( url('login') )  .respond(200, '{"data":{"salt1":"36b26d1ee22bb35e","salt2":"a5e28ef7bcb5605b"}}');
       $httpBackend.expectGET( url('users/me') ).respond(200, '{"data":{"name":"Charly"}}');
@@ -137,6 +145,7 @@ describe('Service: ApiSession', function () {
 
     it('if already and connected, it should logout and login', function() {
       spyOn($rootScope, '$broadcast').and.callThrough();
+      spyOn(CurrentSession, '$$reloadUserPermissions').and.callFake(resolvePromise);
 
       CurrentSession.$$user = { name : 'charly'};
       CurrentSession.$$auth = new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1'));
