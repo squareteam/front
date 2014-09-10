@@ -11,5 +11,12 @@ angular.module('squareteam.resources')
         },
         chain: true
       }
-    }, 'AclModel');
+    }, 'AclModel', function() {
+      // TMP
+      this.attrMask('status', 'CU');
+      this.attrMask('metadata', 'CU');
+      this.attrMask('progress', 'CU');
+      this.attrMask('creator', 'CU');
+      this.attrMask('users', 'CU');
+    });
   });

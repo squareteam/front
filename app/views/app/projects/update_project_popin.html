@@ -22,9 +22,7 @@
       <label for="deadline">
         Deadline
       </label>
-      <input type="text" placeholder="DD" style="width:50px">
-      <input type="text" placeholder="MM" style="width:50px">
-      <input type="text" placeholder="YYYY" style="width:80px">
+      <st-date-input ng-model="$parent.project.deadline" mask="DMY"></st-date-input>
 
       <footer>
         <input type='submit' value="Update"/>

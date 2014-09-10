@@ -31,6 +31,7 @@ angular.module('squareteam.app')
           updateProjectScope.updateProject = function() {
             $scope.project.title        = updateProjectScope.project.title;
             $scope.project.description  = updateProjectScope.project.description;
+            $scope.project.deadline     = updateProjectScope.project.deadline;
             $scope.project.$save().$then(dialog.close);
           };
 
