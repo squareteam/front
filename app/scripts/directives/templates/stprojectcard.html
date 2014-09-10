@@ -12,7 +12,7 @@
          </span>
       </div>
       <div class="col-xs-2">
-         <i class="icon icon-settings" ng-show="project.$can('manage')"></i>
+         <i class="icon icon-settings" ng-show="project.$can('manage')" ng-click="project.$can('manage') && openUpdateProjectTooltip()"></i>
       </div>
    </div>
 
@@ -35,9 +35,10 @@
          </div>
       </div>
       <div class="col-xs-5">
-         <button ng-class="['status_name', project.status ]" class="{{ project.$can('manage') ? 'editable' : '' }}">
+         <button  ng-class="['status_name', project.status ]" class="{{ project.$can('manage') ? 'editable' : '' }}"
+                  ng-click="project.$can('manage') && openChangeStatusTooltip()">
             <span>
-               {{ 'directives.stProjectCard.status.' + project.status | translate }}
+               {{ 'directives.stProjectCard.status.' + project.status | translate | characters:8:true }}
             </span>
             <i class="icon icon-arrow-down-small" ng-show="project.$can('manage')"></i>
          </button>
@@ -52,7 +53,8 @@
          </time>
       </div>
       <div class="col-xs-5">
-         <button class="status_name done {{ project.$can('manage') ? 'editable' : '' }}">
+         <button  class="status_name done {{ project.$can('manage') ? 'editable' : '' }}"
+                  ng-click="project.$can('manage') && openChangeStatusTooltip()">
             <span>{{ 'directives.stProjectCard.status.done' | translate }}</span>
             <i class="icon icon-arrow-down-small" ng-show="project.$can('manage')"></i>
          </button>

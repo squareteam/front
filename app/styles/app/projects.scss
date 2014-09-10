@@ -362,12 +362,16 @@ $projects_image_path: "/images/app/projects_list/";
 
                &.editable {
                   cursor: pointer;
+                  width: 98px;
+
                   span {
                      padding: 2px 7px 2px 12px;
+                     line-height: 24px;
                   }
                }
 
                .icon-arrow-down-small {
+                  float: right;
                   display: inline-block;
                   width: 23px;
                   height: 25px;
@@ -603,7 +607,7 @@ $projects_image_path: "/images/app/projects_list/";
    position: absolute;
    background-color: $dark_blue;
    list-style: none;
-   padding: 10px 30px 10px 10px;
+   padding: 10px 26px 10px 10px;
    margin: 0;
    border-radius:0 0 4px 4px;
 

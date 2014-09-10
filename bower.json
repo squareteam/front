@@ -18,7 +18,7 @@
     "lodash": "2.4.x",
     "angulartics": "0.15.x",
     "ngDialog": "0.2.x",
-    "angular-restmod": "~0.16.0",
+    "angular-restmod": "~0.16.x",
     "angular-moment": "~0.8.0",
     "angular-truncate": "*"
   },

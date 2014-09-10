@@ -17,9 +17,20 @@ angular.module('squareteam.app')
       replace : true,
       controller : function($scope, $element, $attrs, stTooltip, ngDialog) {
 
-        var editProjectBtn    = $($element).find('.icon-settings'),
-            editProjectScope  = $scope.$new(),
-            $tooltip          = null;
+        var editProjectBtn          = $($element).find('.icon-settings'),
+            editProjectScope        = $scope.$new(),
+            editProjectStatusScope  = $scope.$new(),
+            $tooltips               = {};
+
+        editProjectStatusScope.status = function(status) {
+          $scope.project.status = status;
+          $scope.project.$save().$then(function() {
+            if ($tooltips.updateProjectStatus) {
+              $tooltips.updateProjectStatus.hide();
+              $tooltips.updateProjectStatus = null;
+            }
+          });
+        };
 
         editProjectScope.edit = function() {
           
@@ -35,8 +46,8 @@ angular.module('squareteam.app')
             $scope.project.$save().$then(dialog.close);
           };
 
-          if ($tooltip) {
-            $tooltip.hide();
+          if ($tooltips.updateProject) {
+            $tooltips.updateProject.hide();
           }
           dialog = ngDialog.open({
             template  : 'views/app/projects/update_project_popin.html',
@@ -46,8 +57,8 @@ angular.module('squareteam.app')
         };
 
         editProjectScope.delete = function() {
-          if($tooltip) {
-            $tooltip.hide();
+          if($tooltips.updateProject) {
+            $tooltips.updateProject.hide();
           }
           $scope.$emit('project:delete', $scope.project);
         };
@@ -56,18 +67,29 @@ angular.module('squareteam.app')
           console.log('feature not supported for now..');
         };
 
-        editProjectBtn.on('click', function() {
-          if (!$tooltip) {
+        $scope.openUpdateProjectTooltip = function() {
+          if (!$tooltips.updateProject) {
             stTooltip.open('views/app/projects/edit_project_tooltip.html', 'edit_project', editProjectScope).then(function(tooltip) {
-              $tooltip = tooltip;
-              $tooltip.showOnNode(editProjectBtn, 30);
+              $tooltips.updateProject = tooltip;
+              $tooltips.updateProject.showOnNode(editProjectBtn, 30);
             });
           } else {
-            $tooltip.hide();
-            $tooltip = null;
+            $tooltips.updateProject.hide();
+            $tooltips.updateProject = null;
           }
-        });
+        };
 
+        $scope.openChangeStatusTooltip = function() {
+          if (!$tooltips.updateProjectStatus) {
+            stTooltip.open('views/app/projects/update_project_status_tooltip.html', 'edit_project_status', editProjectStatusScope).then(function(tooltip) {
+              $tooltips.updateProjectStatus = tooltip;
+              $tooltips.updateProjectStatus.showOnNode($($element).find('button.editable'), 25);
+            });
+          } else {
+            $tooltips.updateProjectStatus.hide();
+            $tooltips.updateProjectStatus = null;
+          }
+        };
       }
     };
   });

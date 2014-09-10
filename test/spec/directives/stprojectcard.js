@@ -8,7 +8,7 @@ describe('Directive: st-project-card', function () {
   beforeEach(module('scripts/directives/templates/stprojectcard.html'));
   beforeEach(module('squareteam.app'));
 
-  var element, scope, tooltipScope,
+  var element, scope, tooltipScope, changeProjectStatusScope,
       url, ProjectResourceCustom,
       $httpBackend, $rootScope, ngDialog;
 
@@ -46,8 +46,8 @@ describe('Directive: st-project-card', function () {
 
     $rootScope.$digest();
 
-    // Our directive have only 1 child scope, let's grab it
     tooltipScope = element.isolateScope().$$childHead;
+    changeProjectStatusScope = tooltipScope.$$nextSibling;
 
   }));
 
@@ -81,7 +81,25 @@ describe('Directive: st-project-card', function () {
 
     });
 
-    it('should display an error message and close tooltip if failure');
+    it('should display an error message if failure');
+
+  });
+
+  describe('project status change', function() {
+
+    it('should save updates', function() {
+
+      $httpBackend.expectPUT( url('projects/1') ).respond(200, '');
+
+      changeProjectStatusScope.status('inprogress');
+
+      $rootScope.$digest();
+
+      $httpBackend.flush();
+
+      expect(scope.project.status).toBe('inprogress');
+
+    });
 
   });
 
