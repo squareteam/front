@@ -63,8 +63,8 @@
 
          <div>
             <input   type="checkbox"
-                     ng-click="roleToAdd = rolesHelpers.has(roleToAdd, rolesHelpers.all()) ? rolesHelpers.remove(roleToAdd, rolesHelpers.all()) : rolesHelpers.add(roleToAdd, rolesHelpers.all())"
-                     ng-checked="rolesHelpers.has(roleToAdd, rolesHelpers.all())"
+                     ng-click="roleToAdd = (roleToAdd === rolesHelpers.all() ? 0 : rolesHelpers.all())"
+                     ng-checked="roleToAdd === rolesHelpers.all()"
                      id="role_ALL">
 
             <label for="role_ALL">
