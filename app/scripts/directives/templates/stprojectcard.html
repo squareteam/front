@@ -35,10 +35,11 @@
          </div>
       </div>
       <div class="col-xs-5">
-         <button ng-class="['status_name', project.status ]">
+         <button ng-class="['status_name', project.status ]" class="{{ project.$can('manage') ? 'editable' : '' }}">
             <span>
                {{ 'directives.stProjectCard.status.' + project.status | translate }}
             </span>
+            <i class="icon icon-arrow-down-small" ng-show="project.$can('manage')"></i>
          </button>
       </div>
    </div>
@@ -51,8 +52,9 @@
          </time>
       </div>
       <div class="col-xs-5">
-         <button class="status_name done">
+         <button class="status_name done {{ project.$can('manage') ? 'editable' : '' }}">
             <span>{{ 'directives.stProjectCard.status.done' | translate }}</span>
+            <i class="icon icon-arrow-down-small" ng-show="project.$can('manage')"></i>
          </button>
       </div>
    </div>

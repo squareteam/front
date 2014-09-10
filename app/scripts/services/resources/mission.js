@@ -2,5 +2,5 @@
 
 angular.module('squareteam.resources')
   .factory('MissionResource', function(restmod) {
-    return restmod.model('apis://missions');
+    return restmod.model('apis://missions', 'AclModel');
   });

@@ -134,6 +134,14 @@ angular.module('squareteam.app')
 
     // METHODS
 
+    $scope.currentUserCanCreateProject = function() {
+      if (!$scope.currentScope) {
+        return false;
+      } else {
+        return $scope.currentScopeIsUser() ? true : CurrentSession.userCanDo('add', 'projects', $scope.currentScope.id);
+      }
+    };
+
     $scope.currentScopeIsUser = function() {
       return $scope.currentScope && $scope.currentScope.constructor.$name() === 'users';
     };

@@ -60,7 +60,7 @@
             </div>
 
             <div class="col-xs-2 vertical-center add_project">
-               <button class="primary" ng-click="createProjectPopin()">
+               <button class="primary" ng-click="createProjectPopin()" ng-show="currentUserCanCreateProject()">
                   {{ 'app.projects.add_project' | translate }}
                </button>
             </div>
