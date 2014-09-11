@@ -24,5 +24,5 @@ angular.module('squareteam.app').value('lodash', window._);
 
 // DO NOT EDIT LINE BELOW
 //  open README.md for more explaination
-var version = '0.3.2';
+var version = '0.4.0';
 angular.module('squareteam.app').value('VERSION', version);
