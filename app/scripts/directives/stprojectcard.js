@@ -15,7 +15,7 @@ angular.module('squareteam.app')
       templateUrl: 'scripts/directives/templates/stprojectcard.html',
       restrict: 'E',
       replace : true,
-      controller : function($scope, $element, $attrs, stTooltip, ngDialog) {
+      controller : function($scope, $element, $attrs, stTooltip, ngDialog, moment) {
 
         var editProjectBtn          = $($element).find('.icon-settings'),
             editProjectScope        = $scope.$new(),
@@ -40,9 +40,9 @@ angular.module('squareteam.app')
           updateProjectScope.project = $scope.project;
 
           updateProjectScope.updateProject = function() {
-            $scope.project.title        = updateProjectScope.project.title;
-            $scope.project.description  = updateProjectScope.project.description;
-            $scope.project.deadline     = updateProjectScope.project.deadline;
+            if ($scope.project.deadline instanceof Date) {
+              $scope.project.deadline = moment($scope.project.deadline).toISOString();
+            }
             $scope.project.$save().$then(dialog.close);
           };
 

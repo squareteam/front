@@ -5,12 +5,6 @@ angular.module('squareteam.resources')
     return restmod.model({
       url      : null,
       name     : 'projects',
-      deadline : {
-        encode : function(value) {
-          return value ? value : '';
-        },
-        chain: true
-      }
     }, 'AclModel', function() {
       // TMP
       this.attrMask('status', 'CU');
@@ -18,5 +12,10 @@ angular.module('squareteam.resources')
       this.attrMask('progress', 'CU');
       this.attrMask('creator', 'CU');
       this.attrMask('users', 'CU');
+      this.attrMask('createdAt', 'CU');
+      this.attrMask('id', 'CU');
+      this.attrEncoder('deadline', function(value) {
+        return value === null ? '' : value;
+      });
     });
   });
