@@ -1,4 +1,4 @@
-/* global $, provideAuth, apiResponseAsString */
+/* global $, provideAuth, apiResponseAsString, apiURL */
 
 'use strict';
 
@@ -10,7 +10,7 @@ describe('Directive: stusersearch', function () {
     $urlRouterProvider.otherwise('/');
   }));
 
-  var appConfig,
+  var url,
      $httpBackend, $rootScope, $state, $compile,
      element, scope;
 
@@ -21,7 +21,7 @@ describe('Directive: stusersearch', function () {
     $state          = $injector.get('$state');
     $compile        = $injector.get('$compile');
 
-    appConfig       = $injector.get('appConfig');
+    url = apiURL($injector);
 
     // provide a valid auth for the test
     provideAuth($injector)();
@@ -62,7 +62,7 @@ describe('Directive: stusersearch', function () {
 
       it('should display results if any', function() {
 
-        $httpBackend.expectGET(appConfig.api.url + 'users/search?q=test').respond(200, apiResponseAsString(null, [{'id':1,'name':'charly','email':'cpoly55@gmail.com'}]));
+        $httpBackend.expectGET( url('users/search?q=test') ).respond(200, apiResponseAsString(null, [{'id':1,'name':'charly','email':'cpoly55@gmail.com'}]));
 
         element.isolateScope().search();
 
@@ -75,7 +75,7 @@ describe('Directive: stusersearch', function () {
 
       it('should display a message if no results', function() {
 
-        $httpBackend.expectGET(appConfig.api.url + 'users/search?q=test').respond(200, apiResponseAsString(null, []));
+        $httpBackend.expectGET( url('users/search?q=test') ).respond(200, apiResponseAsString(null, []));
 
         element.isolateScope().search();
 
@@ -114,7 +114,7 @@ describe('Directive: stusersearch', function () {
 
       it('should not display excluded user_ids', function() {
 
-        $httpBackend.expectGET(appConfig.api.url + 'users/search?q=test').respond(200, apiResponseAsString(null, [{'id':1,'name':'charly','email':'cpoly55@gmail.com'},{'id':2,'name':'paul','email':'popox@gmail.com'}]));
+        $httpBackend.expectGET( url('users/search?q=test') ).respond(200, apiResponseAsString(null, [{'id':1,'name':'charly','email':'cpoly55@gmail.com'},{'id':2,'name':'paul','email':'popox@gmail.com'}]));
 
         element.isolateScope().search();
 

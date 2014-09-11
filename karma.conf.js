@@ -17,7 +17,8 @@ module.exports = function(config) {
       // do not include tests or libraries
       // (these files will be instrumented by Istanbul)
       'app/scripts/**/*.js': ['coverage'],
-      'app/scripts/directives/templates/*.html': ['ng-html2js']
+      'app/scripts/directives/templates/*.html': ['ng-html2js'],
+      'app/views/**/*.html': ['ng-html2js']
     },
 
     ngHtml2JsPreprocessor: {
@@ -50,11 +51,17 @@ module.exports = function(config) {
       'app/bower_components/angulartics/src/angulartics.js',
       'app/bower_components/angulartics/src/angulartics-ga.js',
       'app/bower_components/ngDialog/js/ngDialog.js',
+      'app/bower_components/angular-restmod/dist/angular-restmod-bundle.js',
+      'app/bower_components/angular-restmod/dist/plugins/dirty.js',
+      'app/bower_components/moment/moment.js',
+      'app/bower_components/angular-moment/angular-moment.js',
+      'app/bower_components/angular-truncate/src/truncate.js',
       'app/scripts/initializers/modules.js',
       'app/scripts/initializers/api.js',
       'app/scripts/*.js',
       'app/scripts/**/*.js',
       'app/scripts/directives/templates/*.html',
+      'app/views/**/*.html',
       'test/helpers/*.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'

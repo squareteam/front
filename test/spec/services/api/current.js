@@ -1,4 +1,4 @@
-/*global CryptoJS, apiResponseAsString, provideAuth */
+/*global CryptoJS, apiResponseAsString, provideAuth, apiURL */
 'use strict';
 
 describe('Service: CurrentSession', function () {
@@ -22,23 +22,33 @@ describe('Service: CurrentSession', function () {
   }));
 
   // instantiate service
-  var CurrentSession, ApiAuth, ApiSessionStorageCookies,
-      $httpBackend, $rootScope,
-      successCallback, errorCallback, apiURL;
+  var CurrentSession, ApiAuth, ApiSessionStorageCookies, UserResource, AclRoles,
+      $httpBackend, $rootScope, $q,
+      successCallback, errorCallback, url;
 
   beforeEach(inject(function ($injector) {
     CurrentSession            = $injector.get('CurrentSession');
     ApiAuth                   = $injector.get('ApiAuth');
     ApiSessionStorageCookies  = $injector.get('ApiSessionStorageCookies');
+    UserResource              = $injector.get('UserResource');
+    AclRoles                  = $injector.get('AclRoles');
 
     $httpBackend              = $injector.get('$httpBackend');
     $rootScope                = $injector.get('$rootScope');
+    $q                        = $injector.get('$q');
 
-    apiURL = $injector.get('appConfig').api.url;
+    url = apiURL($injector);
   }));
+
+  function resolvePromise() {
+    var deferred = $q.defer();
+    deferred.resolve();
+    return deferred.promise;
+  }
 
 
   it('should provide proper API', function() {
+    expect(!!CurrentSession.isOAuthAccount).toBe(true);
     expect(!!CurrentSession.isAuthenticated).toBe(true);
     expect(!!CurrentSession.getOrganizations).toBe(true);
     expect(!!CurrentSession.getAuth).toBe(true);
@@ -75,7 +85,52 @@ describe('Service: CurrentSession', function () {
     });
 
     it('should return user', function () {
-      expect(CurrentSession.getUser()).toEqual({ id : 1, name : 'test-auth', email : 'charly.poly@live.fr'});
+      expect(CurrentSession.getUser().id).toEqual(1);
+      expect(CurrentSession.getUser().name).toEqual('test-auth');
+      expect(CurrentSession.getUser().email).toEqual('charly.poly@live.fr');
+    });
+
+  });
+
+  describe('User ACL', function() {
+
+    beforeEach(inject(function($injector) {
+      provideAuth($injector)();
+    }));
+
+    it('CurrentSession.$$reloadUserPermissions should refresh user permissions', function() {
+
+      spyOn(AclRoles, 'asBooleanMap').and.returnValue({});
+      $httpBackend.expectGET( url('users/1/teams') ).respond(200, apiResponseAsString(null, []));
+
+      CurrentSession.$$reloadUserPermissions();
+
+      $httpBackend.flush();
+      $rootScope.$digest();
+
+    });
+
+    describe('CurrentSession.userCanDo', function() {
+
+      beforeEach(function() {
+
+        CurrentSession.$$userPermissions = {
+          1 : {
+            projects : {
+              manage : false,
+              add : true
+            }
+          }
+        };
+
+      });
+
+      it('should return `true` cause user CAN create project', function() {
+
+        expect(CurrentSession.userCanDo('add', 'projects', 1)).toBe(true);
+
+      });
+
     });
 
   });
@@ -161,8 +216,9 @@ describe('Service: CurrentSession', function () {
 
     it('should restore session from cookies storage', function() {
       spyOn($rootScope, '$broadcast').and.callThrough();
+      spyOn(CurrentSession, '$$reloadUserPermissions').and.callFake(resolvePromise);
 
-      $httpBackend.expectGET(apiURL + 'users/me').respond(200, apiResponseAsString(null,{'name':'Charly'}));
+      $httpBackend.expectGET( url('users/me') ).respond(200, apiResponseAsString(null,{'name':'Charly'}));
 
       CurrentSession.restore().then(successCallback, errorCallback);
 
@@ -173,9 +229,7 @@ describe('Service: CurrentSession', function () {
       expect(errorCallback.calls.any()).toEqual(false);
       expect(successCallback.calls.count()).toEqual(1);
 
-      expect(CurrentSession.getUser()).toEqual({
-        name : 'Charly'
-      });
+      expect(CurrentSession.getUser().name).toEqual('Charly');
 
       expect(CurrentSession.getAuth().$isValid()).toBe(true);
 
@@ -203,7 +257,7 @@ describe('Service: CurrentSession', function () {
     it('should failed silently to restore session from cookies storage', function() {
 
       spyOn(ApiSessionStorageCookies, 'retrieve').and.returnValue(new ApiAuth('charly', CryptoJS.enc.Hex.parse('a99246bedaa6cadacaa902e190f32ec689a80a724aa4a1c198617e52460f74d1')));
-      $httpBackend.expectGET(apiURL + 'users/me').respond(401, apiResponseAsString(['api.not_authorized']));
+      $httpBackend.expectGET( url('users/me') ).respond(401, apiResponseAsString(['api.not_authorized']));
 
       CurrentSession.restore().then(successCallback, errorCallback);
 
@@ -230,23 +284,23 @@ describe('Service: CurrentSession', function () {
     beforeEach(inject(function($injector) {
       provideAuth($injector)();
     }));
-    
+
     it('should update $$user object if success', function() {
-      $httpBackend.expectGET(apiURL + 'users/me').respond(200, apiResponseAsString(null,{'name':'Charly'}));
+      $httpBackend.expectGET( url('users/me') ).respond(200, apiResponseAsString(null,{'name':'Charly'}));
 
       CurrentSession.reloadUser();
 
       $httpBackend.flush();
       $rootScope.$digest();
 
-      expect(CurrentSession.getUser()).toEqual({'name':'Charly'});
+      expect(CurrentSession.getUser().name).toEqual('Charly');
 
     });
 
     it('should unregister() if fail', function() {
       spyOn(CurrentSession, 'unregister');
 
-      $httpBackend.expectGET(apiURL + 'users/me').respond(401, apiResponseAsString(['api.unauthorized']));
+      $httpBackend.expectGET( url('users/me') ).respond(401, apiResponseAsString(['api.unauthorized']));
 
       CurrentSession.reloadUser();
 
@@ -259,5 +313,36 @@ describe('Service: CurrentSession', function () {
 
   });
 
+
+  describe('CurrentSession.isOAuthAccount()', function() {
+
+
+    it('should return true if user.provider != "squareteam"', function() {
+
+      CurrentSession.$$user = UserResource.$buildRaw({
+        id    : 1,
+        name  : 'Charly',
+        email : 'charly@squareteam.io',
+        provider : 'github'
+      });
+
+      expect(CurrentSession.isOAuthAccount()).toBe(true);
+
+    });
+
+    it('should return false if user.provider == "squareteam"', function() {
+
+      CurrentSession.$$user = UserResource.$buildRaw({
+        id    : 1,
+        name  : 'Charly',
+        email : 'charly@squareteam.io',
+        provider : 'squareteam'
+      });
+
+      expect(CurrentSession.isOAuthAccount()).toBe(false);
+
+    });
+
+  });
 
 });

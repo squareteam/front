@@ -1,6 +1,6 @@
 'use strict';
 
-/*global $, apiResponseAsString */
+/*global $, apiResponseAsString, apiURL */
 
 
 describe('Directive: st-login-form', function () {
@@ -20,9 +20,9 @@ describe('Directive: st-login-form', function () {
       .otherwise('/');
   }));
 
-  var appConfig,
-      $httpBackend, $rootScope, $state, $location,
-      element, scope,
+  var url,
+      $httpBackend, $rootScope, $state, $location, $q,
+      element, scope, CurrentSession,
       alertLoginElt, alertPasswordElt, alertServerElt;
 
   beforeEach(inject(function ($compile, $injector) {
@@ -31,10 +31,20 @@ describe('Directive: st-login-form', function () {
     $rootScope          = $injector.get('$rootScope');
     $state              = $injector.get('$state');
     $location           = $injector.get('$location');
+    $q                  = $injector.get('$q');
 
-    appConfig       = $injector.get('appConfig');
+
+    CurrentSession      = $injector.get('CurrentSession');
+
+    url = apiURL($injector);
 
   }));
+
+  function resolvePromise() {
+    var deferred = $q.defer();
+    deferred.resolve();
+    return deferred.promise;
+  }
 
   afterEach(function() {
     $httpBackend.verifyNoOutstandingExpectation();
@@ -102,7 +112,7 @@ describe('Directive: st-login-form', function () {
     });
 
     it('should display alert if login is incorrect', function() {
-      $httpBackend.expectPUT(appConfig.api.url + 'login', '{"identifier":"charly@live.fr"}').respond(400, apiResponseAsString(['auth.bad_login']));
+      $httpBackend.expectPUT( url('login'), '{"identifier":"charly@live.fr"}').respond(400, apiResponseAsString(['auth.bad_login']));
 
       var directiveScope = element.isolateScope();
       directiveScope = angular.extend(directiveScope, {
@@ -130,8 +140,8 @@ describe('Directive: st-login-form', function () {
     });
 
     it('should display alert if password is incorrect', function() {
-      $httpBackend.expectPUT(appConfig.api.url + 'login', '{"identifier":"charly@live.fr"}').respond(200, apiResponseAsString(null, {'salt1':'36b26d1ee22bb35e','salt2':'a5e28ef7bcb5605b'}));
-      $httpBackend.expectGET(appConfig.api.url + 'users/me').respond(401, apiResponseAsString(['auth is not valid']));
+      $httpBackend.expectPUT( url('login'), '{"identifier":"charly@live.fr"}').respond(200, apiResponseAsString(null, {'salt1':'36b26d1ee22bb35e','salt2':'a5e28ef7bcb5605b'}));
+      $httpBackend.expectGET( url('users/me') ).respond(401, apiResponseAsString(['auth is not valid']));
 
       var directiveScope = element.isolateScope();
       directiveScope = angular.extend(directiveScope, {
@@ -159,8 +169,8 @@ describe('Directive: st-login-form', function () {
     });
 
     it('should display alert if API is down (password check)', function() {
-      $httpBackend.expectPUT(appConfig.api.url + 'login', '{"identifier":"charly@live.fr"}').respond(200, apiResponseAsString(null, {'salt1':'36b26d1ee22bb35e','salt2':'a5e28ef7bcb5605b'}));
-      $httpBackend.expectGET(appConfig.api.url + 'users/me').respond(500);
+      $httpBackend.expectPUT( url('login'), '{"identifier":"charly@live.fr"}').respond(200, apiResponseAsString(null, {'salt1':'36b26d1ee22bb35e','salt2':'a5e28ef7bcb5605b'}));
+      $httpBackend.expectGET( url('users/me') ).respond(500);
 
       var directiveScope = element.isolateScope();
       directiveScope = angular.extend(directiveScope, {
@@ -187,7 +197,7 @@ describe('Directive: st-login-form', function () {
     });
 
     it('should display alert if API is down (login check)', function() {
-      $httpBackend.expectPUT(appConfig.api.url + 'login', '{"identifier":"charly@live.fr"}').respond(500);
+      $httpBackend.expectPUT( url('login'), '{"identifier":"charly@live.fr"}').respond(500);
 
       var directiveScope = element.isolateScope();
       directiveScope = angular.extend(directiveScope, {
@@ -215,9 +225,10 @@ describe('Directive: st-login-form', function () {
 
     it('should login', function() {
       spyOn($state, 'go');
+      spyOn(CurrentSession, '$$reloadUserPermissions').and.callFake(resolvePromise);
 
-      $httpBackend.expectPUT(appConfig.api.url + 'login', '{"identifier":"charly@live.fr"}')  .respond(200, apiResponseAsString(null, {'salt1':'36b26d1ee22bb35e','salt2':'a5e28ef7bcb5605b'}));
-      $httpBackend.expectGET(appConfig.api.url + 'users/me').respond(200, apiResponseAsString(null, {'name':'Charly'}));
+      $httpBackend.expectPUT( url('login'), '{"identifier":"charly@live.fr"}')  .respond(200, apiResponseAsString(null, {'salt1':'36b26d1ee22bb35e','salt2':'a5e28ef7bcb5605b'}));
+      $httpBackend.expectGET( url('users/me') ).respond(200, apiResponseAsString(null, {'name':'Charly'}));
 
       var directiveScope = element.isolateScope();
       directiveScope = angular.extend(directiveScope, {

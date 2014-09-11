@@ -1,2 +1,78 @@
-<st-organization-projects organization-id="{{ organization.id }}">
-</st-organization-projects>
+<div class="organizations_projects">
+   <header>
+      <div class="container">
+         <div class="row">
+            <div  class="col-xs-2 organization vertical-center">
+               <div class="row">
+                  <div class="col-xs-2 vertical-center">
+                     <img src="/images/app/layout/organization_logo_sample.png" alt="">
+                     <!-- <img src st-file-id="currentScope.avatar" alt=""> -->
+                  </div>
+
+                  <div class="col-xs-8 vertical-center" style="width:215px;">
+                     <div class="name">
+                        {{ (currentScope.name | characters:18:true) || ('api.loading' | translate) }}
+                     </div>
+                     <div class="projects_count" ng-show="!!projects">
+                        {{ projects.length }} {{ 'app.projects.projects' | translate }}
+                     </div>
+                  </div>
+
+                  <div  class="col-xs-2 vertical-center change" ng-show="organizations.length"
+                        st-dropdown top-pad="80" left-pad="-277" position="relative">
+                     <ul class="organization_dropdown vertical-center dropdown_menu">
+                        <li class="row" ng-click="changeScope(currentUser)" ng-hide="currentScopeIsUser()">
+                           <div class="col-xs-2 vertical-center">
+                              <img src="/images/user.png" alt="" class="img-circle" width="54px">
+                           </div>
+                           <div class="col-xs-10 vertical-center" style="width:215px;">
+                              <div class="name">
+                                 {{ currentUser.name | characters:21:true }}
+                              </div>
+                           </div>
+                        </li>
+                        <li class="row" ng-repeat="orga in filteredOrganizations()" ng-click="changeScope(orga)">
+                           <div class="col-xs-2 vertical-center">
+                              <img src="/images/app/layout/organization_logo_sample.png" alt="">
+                           </div>
+                           <div class="col-xs-10 vertical-center" style="width:215px;">
+                              <div class="name">
+                                 {{ orga.name | characters:21:true }}
+                              </div>
+                           </div>
+                        </li>
+                     </ul>
+                     <i class="icon icon-arrow-down-active"></i>
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-xs-3 filters vertical-center">
+                  <div  class="by_status" st-dropdown top-pad="80" position="relative" dropdown-classes="filters_dropdown status_filters"
+                        st-filter-dropdown="statusFilterChoices" ng-model="statusFilter" placeholder="Status">
+                  </div>
+                  <div  class="by_team" st-dropdown top-pad="80" position="relative" dropdown-classes="filters_dropdown team_filters"
+                        st-filter-dropdown="teamFilterChoices" ng-model="teamFilter" placeholder="Team">
+                  </div>
+                  <div  class="sort" st-dropdown top-pad="80" position="relative" dropdown-classes="filters_dropdown sort_filters"
+                        st-sort-dropdown="sortChoices" ng-model="sortBy" placeholder="Sort by">
+                  </div>
+            </div>
+
+            <div class="col-xs-2 vertical-center add_project">
+               <button class="primary" ng-click="createProjectPopin()" ng-show="currentUserCanCreateProject()">
+                  {{ 'app.projects.add_project' | translate }}
+               </button>
+            </div>
+         </div>
+      </div>
+   </header>
+
+   <div class="projects container">
+      <div ng-show="isFiltered()" ng-click="clearFilters()" class="clear-filters">Clear filters</div>
+      <div class="row">
+         <st-project-card ng-repeat="project in projects | orderBy:sortBy | filter:teamFilter | filter:statusFilter" project="project"></st-project-card>
+      </div>
+   </div>
+
+</div>

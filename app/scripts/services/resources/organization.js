@@ -1,29 +1,21 @@
 'use strict';
 
 angular.module('squareteam.resources')
-  .factory('OrganizationResource', function($resource, $q, $http) {
-    var organizationResource;
+  .factory('OrganizationResource', function($resource, $q, $http, restmod) {
 
-    organizationResource = $resource('apis://organizations/:id', {
-      // id: '@'
-    }, {
-      update: {
-        method: 'PUT'
-      }
-    });
+    var Organization = restmod.model('apis://organizations', {
 
-    organizationResource.createWithAdmins = function (organizationData, adminIds) {
+      teams     : { hasMany : 'TeamResource'},
+      projects  : { hasMany : 'ProjectResource' }
+
+    }, 'AclModel');
+
+    Organization.createWithAdmins = function (organizationData, adminIds) {
       /*jshint camelcase:false */
       organizationData.admins_ids = adminIds;
       /*jshint camelcase:true */
       return $http.post('apis://organizations/with_admins', organizationData);
     };
 
-    organizationResource.teams = $resource('apis://organizations/:id/teams');
-
-    organizationResource.projects = function (organizationId) {
-      return $http.get('apis://organizations/' + organizationId + '/projects');
-    };
-
-    return organizationResource;
+    return Organization;
   });

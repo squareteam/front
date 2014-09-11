@@ -1,4 +1,34 @@
 
+@-webkit-keyframes ngdialog-flyin {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-40px);
+    transform: translateY(-40px);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes ngdialog-flyin {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-40px);
+    -ms-transform: translateY(-40px);
+    transform: translateY(-40px);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
 .ngdialog-theme-squareteam {
 
    .ngdialog-close {
@@ -15,6 +45,9 @@
    }
 
    .ngdialog-content {
+      -webkit-animation: ngdialog-flyin .5s;
+      animation: ngdialog-flyin .5s;
+
       position: absolute;
       left: 50%;
 
@@ -45,6 +78,10 @@
             color: #8fa8b7;
             font-size: 18px;
          }
+      }
+
+      footer {
+        text-align: center;
       }
 
    }

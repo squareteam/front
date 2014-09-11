@@ -1,0 +1,11 @@
+<div>
+   <ul class="{{ dropdownClasses }} dropdown_menu">
+      <li   ng-repeat="item in stFilterDropdown"
+            style="border-left: 2px solid {{ item.color }};" data-color="{{ item.color }}"
+            ng-click="$parent.selectById($index)">
+         {{ item.label | translate }}
+      </li>
+   </ul>
+   <span>{{ (selected.label || placeholder) | translate }}</span>
+   <i class="icon icon-arrow-down-{{ selected ? 'active' : 'inactive' }}"></i>
+</div>

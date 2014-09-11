@@ -4,6 +4,22 @@
 
 angular
   .module('squareteam.app')
+  .run(function(moment) {
+    ///////////////
+    // Moment.js //
+    ///////////////
+
+    moment.lang('en', {
+      calendar : {
+        lastDay : '[yesterday at] LT',
+        sameDay : '[today at] LT',
+        nextDay : '[tomorrow at] LT',
+        lastWeek : '[last] dddd [at] LT',
+        nextWeek : 'dddd [at] LT',
+        sameElse : 'L'
+      }
+    });
+  })
   .config(function ($stateProvider, $urlRouterProvider, $translateProvider, $analyticsProvider, ngDialogProvider) {
 
     //////////////
@@ -161,6 +177,11 @@ angular
       .state('public.forgotPassword.changed', {
         url : '/forgot_password/change_success',
         templateUrl : 'views/public/forgotPassword/change_success.html'
+      })
+
+      .state('public.organization.invite', {
+        url : '/invite/organization/:id',
+        // templateUrl : 'views/public/invite/organization.html'
       });
 
     $stateProvider
@@ -191,7 +212,7 @@ angular
       })
 
 
-      // KNOWLEDGE CENTER
+      // KNOWLEDGE CENTER (TODO)
 
       .state('app.knowledge', {
         url : '/knowledge',
@@ -215,24 +236,15 @@ angular
       .state('app.projects', {
         url : '/projects',
         templateUrl : 'views/app/projects/index.html',
-        controller : ['$scope', 'CurrentSession', function($scope, CurrentSession) {
-          CurrentSession.getOrganizations().then(function(organizations) {
-            $scope.organization = organizations[0];
-          }, function() {
-            console.error('Unable to load organizations for user #' + CurrentSession.getUser().id);
-          });
-        }]
+        resolve : {
+          organizations : ['authenticated', 'CurrentSession', function(authenticated, CurrentSession) {
+            return CurrentSession.getOrganizations();
+          }]
+        },
+        controller : 'ProjectsListCtrl'
       })
 
-      .state('app.projects.create', {
-        url : '/projects/add'
-      })
-
-      .state('app.projects.edit', {
-        url : '/projects/edit/:projectId'
-      })
-
-      // MISSIONS
+      // MISSIONS (TODO)
 
       .state('app.missions', {
         url : '/projects/:projectId/missions'
@@ -254,7 +266,7 @@ angular
         url : '/:missionId/edit'
       })
 
-      // TASKS
+      // TASKS (TODO)
 
       .state('app.tasks', {
         url : '/missions/:missionId/tasks'//,
