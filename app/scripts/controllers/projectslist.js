@@ -91,19 +91,6 @@ angular.module('squareteam.app')
     $scope.loadProjects = function() {
       function projectsLoaded (projects) {
         $scope.projects = projects;
-
-        // MOCKS..
-        var status = ['inprogress', 'paused', 'validation', 'done', 'due'];
-        angular.forEach($scope.projects, function(project) {
-          project.status = status[Math.floor(Math.random()*status.length)];
-          project.progress = Math.ceil(Math.random() * 100) + '%';
-          project.metadata = {
-            members   : 0,
-            missions  : 0,
-            documents : 0,
-            comments  : 0
-          };
-        });
       }
 
       if (!$scope.currentScope) {
