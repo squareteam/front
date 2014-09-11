@@ -64,10 +64,18 @@ form.minimal {
       font-size: 14px;
       font-weight: 500;
       color: #6d8593;
+
       display: block;
+      padding-top: 30px;
+
+      &.required:after {
+         content:" *";
+         color: $blue_active;
+         font-weight: 500;
+      }
    }
 
-   input {
+   input, textarea {
       padding: 10px;
       border-radius:5px;
       border: 1px solid #cbe2e9;
@@ -82,6 +90,7 @@ form.minimal {
 
       &.fluid {
          width: 100%;
+         max-width: 100%;
       }
       &:-webkit-autofill {
          -webkit-box-shadow: 0 0 0 1000px white inset;

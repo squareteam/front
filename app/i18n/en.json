@@ -61,6 +61,7 @@
    },
 
    "api" : {
+      "loading"    : "Loading...",
       "serverBusy" : "Server are busy for now, please try later",
       "no_results" : "No results"
    },
@@ -75,9 +76,20 @@
 
       "projects" : {
          "filters" : {
-            "byStatus"     : "Status",
-            "byDeadline"   : "Deadline",
-            "byDate"       : "Date"
+            "byStatus" : "Status",
+            "byTeam"   : "Team",
+            "sortBy"   : "Sort by",
+            "sort" : {
+               "deadline"  : "Deadline",
+               "date"      : "Date",
+               "progress"  : "Progress"
+            }
+         },
+
+         "sort" : {
+            "deadline"  : "Deadline",
+            "date"      : "Creation",
+            "progress"  : "Progress"
          },
 
          "add_project"  : "New project",
@@ -179,9 +191,11 @@
       },
 
       "stProjectCard" : {
+         "created" : "Created",
+         "seeProject" : "Open project",
          "status" : {
             "done"      : "Done",
-            "due"       : "In progress",
+            "due"       : "Due",
             "inprogress": "In progress",
             "validation": "Validation",
             "paused"    : "Paused"

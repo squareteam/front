@@ -1,0 +1,8 @@
+<div>
+   <input   type="text" placeholder="DD" style="width:50px" pattern="[0-2][0-9]?"
+            ng-model="day" ng-show="mask.indexOf('D') > -1" class="day">
+   <input   type="text" placeholder="MM" style="width:50px" pattern="(0[1-9])|(1[0-2])"
+            ng-model="month" ng-show="mask.indexOf('M') > -1" class="month">
+   <input   type="text" placeholder="YYYY" style="width:80px" pattern="[0-9]{4}"
+            ng-model="year" ng-show="mask.indexOf('Y') > -1" class="year">
+</div>

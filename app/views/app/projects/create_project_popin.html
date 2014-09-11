@@ -1,0 +1,32 @@
+<div>
+   <header>
+     <h1>
+       New Project
+     </h1>
+     <p>
+       It's time to build something new.
+     </p>
+   </header>
+   <form action name="createProjectForm" class="minimal" ng-submit="createProject()">
+
+      <label for="title" class="required">
+        Title
+      </label>
+      <input type="text" name="title" ng-model="$parent.project.title" required class="fluid">
+
+      <label for="description">
+        Description
+      </label>
+      <textarea name="description" ng-model="$parent.project.description" class="fluid"></textarea>
+
+      <label for="deadline">
+        Deadline
+      </label>
+
+      <st-date-input ng-model="$parent.project.deadline" mask="DMY"></st-date-input>
+
+      <footer>
+        <input type='submit' value="Create"/>
+      </footer>
+   </form>
+</div>

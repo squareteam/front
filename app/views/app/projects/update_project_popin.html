@@ -1,0 +1,31 @@
+<div>
+   <header>
+     <h1>
+       Update Project
+     </h1>
+     <p>
+       Keep things up to date.
+     </p>
+   </header>
+   <form action name="updateProjectForm" class="minimal" ng-submit="updateProject()">
+
+      <label for="title" class="required">
+        Title
+      </label>
+      <input type="text" name="title" ng-model="$parent.project.title" required class="fluid">
+
+      <label for="description">
+        Description
+      </label>
+      <textarea name="description" ng-model="$parent.project.description" class="fluid"></textarea>
+
+      <label for="deadline">
+        Deadline
+      </label>
+      <st-date-input ng-model="$parent.project.deadline" mask="DMY"></st-date-input>
+
+      <footer>
+        <input type='submit' value="Update"/>
+      </footer>
+   </form>
+</div>

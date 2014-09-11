@@ -5,14 +5,14 @@
             {{ project.title }}
          </h3>
          <span class="created_at">
-            Créé le
-            <time datetime="1977-04-22T01:00:00-05:00">
-               {{ project.createdAtDate }}
+            {{ 'directives.stProjectCard.created' | translate }} 
+            <time datetime="{{ project.created_at }}">
+               {{ project.createdAt | amCalendar }}
             </time>
          </span>
       </div>
       <div class="col-xs-2">
-         <i class="icon icon-settings"></i>
+         <i class="icon icon-settings" ng-show="project.$can('manage')" ng-click="project.$can('manage') && openUpdateProjectTooltip()"></i>
       </div>
    </div>
 
@@ -21,8 +21,8 @@
          <div>
             <i class="icon icon-status-due" ng-if="project.status === 'due'"></i>
             <i class="icon icon-status-inprogress" ng-if="project.status !== 'due'"></i>
-            <time datetime="{{ project.deadlineDate }}">
-               {{ project.deadlineDate }}
+            <time datetime="{{ project.deadline }}">
+               {{ project.deadline | amCalendar }}
             </time>
          </div>
          <div>
@@ -35,10 +35,12 @@
          </div>
       </div>
       <div class="col-xs-5">
-         <button ng-class="['status_name', project.status ]">
+         <button  ng-class="['status_name', project.status ]" class="{{ project.$can('manage') ? 'editable' : '' }}"
+                  ng-click="project.$can('manage') && openChangeStatusTooltip()">
             <span>
-               {{ 'directives.stProjectCard.status.' + project.status | translate }}
+               {{ 'directives.stProjectCard.status.' + project.status | translate | characters:8:true }}
             </span>
+            <i class="icon icon-arrow-down-small" ng-show="project.$can('manage')"></i>
          </button>
       </div>
    </div>
@@ -46,13 +48,15 @@
    <div class="status row" ng-if="project.status === 'done'">
       <div class="col-xs-7">
          <i class="icon icon-status-done"></i>
-         <time datetime="1977-04-22T01:00:00-05:00">
-            05/07/14
+         <time datetime="{{ project.deadline }}">
+            {{ project.deadline | amCalendar }}
          </time>
       </div>
       <div class="col-xs-5">
-         <button class="status_name done">
-            <span>Terminé</span>
+         <button  class="status_name done {{ project.$can('manage') ? 'editable' : '' }}"
+                  ng-click="project.$can('manage') && openChangeStatusTooltip()">
+            <span>{{ 'directives.stProjectCard.status.done' | translate }}</span>
+            <i class="icon icon-arrow-down-small" ng-show="project.$can('manage')"></i>
          </button>
       </div>
    </div>
@@ -68,25 +72,25 @@
    <div class="metadata row">
       <div class="col-xs-3 vertical-center">
          <i class="icon icon-metadata-documents"></i>
-         <span>{{ project.metadata.documents }}</span>
+         <span>{{ project.metadata.documentsCount }}</span>
       </div>
       <div class="col-xs-3 vertical-center">
          <i class="icon icon-metadata-comments"></i>
-         <span>{{ project.metadata.comments }}</span>
+         <span>{{ project.metadata.tasksCount }}</span>
       </div>
       <div class="col-xs-3 vertical-center">
          <i class="icon icon-metadata-missions"></i>
-         <span>{{ project.metadata.missions }}</span>
+         <span>{{ project.metadata.missionsCount }}</span>
       </div>
       <div class="col-xs-3 vertical-center">
          <i class="icon icon-metadata-members"></i>
-         <span>{{ project.metadata.members }}</span>
+         <span>{{ project.metadata.membersCount }}</span>
       </div>
    </div>
 
    <div class="view_project">
       <div>
-         <a href="">Voir ce projet</a>
+         <a href="">{{ 'directives.stProjectCard.seeProject' | translate }}</a>
       </div>
    </div>
 

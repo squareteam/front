@@ -65,9 +65,14 @@
 
       "projects" : {
          "filters" : {
-            "byStatus"     : "Statut",
-            "byDeadline"   : "Deadline",
-            "byDate"       : "Date"
+            "byStatus" : "Status",
+            "byTeam"   : "Equipe",
+            "sortBy"   : "Trier par",
+            "sort" : {
+               "deadline"  : "Deadline",
+               "date"      : "Création",
+               "progress"  : "Progression"
+            }
          },
 
          "add_project"  : "Nouveau projet",
@@ -96,6 +101,7 @@
    },
 
    "api" : {
+      "loading"    : "Chargement...",
       "serverBusy" : "Nos serveurs sont momentanéments indisponibles",
       "no_results" : "Aucun résultats"
    },
@@ -180,9 +186,11 @@
       },
 
       "stProjectCard" : {
+         "created" : "Créé",
+         "seeProject"   : "Voir le projet",
          "status" : {
             "done"      : "Terminé",
-            "due"       : "En cours",
+            "due"       : "En retard",
             "inprogress": "En cours",
             "validation": "Validation",
             "paused"    : "En pause"

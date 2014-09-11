@@ -1,4 +1,4 @@
-/*global CryptoJS*/
+/* global CryptoJS, $ */
 'use strict';
 
 // User creation form
@@ -43,6 +43,7 @@ angular.module('squareteam.app')
                         );
             CurrentSession.register(new ApiAuth($scope.user.email, token)).then(function() {
               CurrentSession.save();
+              $('body, html').scrollTop(0);
               $location.path('/home');
             }, function() {
               $scope.serverBusy = true;

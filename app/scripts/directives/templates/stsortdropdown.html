@@ -1,0 +1,10 @@
+<div>
+   <ul class="{{ dropdownClasses }} dropdown_menu">
+      <li   ng-repeat="item in stSortDropdown"
+            class="icon-sort-{{ item.dir }}" ng-click="$parent.selectedIndex = $index">
+         {{ item.label | translate }}
+      </li>
+   </ul>
+   <span>{{ (selected.label || placeholder) | translate }}</span>
+   <i class="icon icon-arrow-down-{{ selected ? 'active' : 'inactive' }}"></i>
+</div>

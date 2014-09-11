@@ -54,7 +54,7 @@ form.fancy [type="checkbox"], [type="checkbox"].fancy{
       + label{
          color: #aaa;
       }
-      &::not(:checked), &:checked{
+      &:not(:checked), &:checked{
          + label{
             &:before{
                border-color: #bbb;  

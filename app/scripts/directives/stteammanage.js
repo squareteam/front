@@ -11,7 +11,7 @@ angular.module('squareteam.app')
       templateUrl: 'scripts/directives/templates/stteammanage.html',
       restrict: 'E',
       replace: true,
-      controller: function($scope, $element, $attrs, $state, TeamResource) {
+      controller: function($scope, $element, $attrs, $state, $http, TeamResource, AclRoles) {
         
         $scope.$setPristine = function() {
           $scope.errors = {
@@ -26,7 +26,7 @@ angular.module('squareteam.app')
 
         // Load team
 
-        TeamResource.load($scope.teamId).then(function(team) {
+        TeamResource.$find($scope.teamId).$then(function(team) {
           $scope.team = team;
         }, function() {
           $scope.errors.loadTeam = true;
@@ -37,10 +37,10 @@ angular.module('squareteam.app')
         var usersToRemove = [];
 
         function toggleUserRemoveFromTeam (user) {
-          var index = usersToRemove.indexOf(user.id);
+          var index = usersToRemove.indexOf(user);
 
           if (index === -1) {
-            usersToRemove.push(user.id);
+            usersToRemove.push(user);
           } else {
             usersToRemove.splice(index, 1);
           }
@@ -48,7 +48,12 @@ angular.module('squareteam.app')
 
         function addUserToTeam (user) {
           $scope.$setPristine();
-          $scope.team.addUser(user).catch(function() {
+          $scope.team.users.$create({
+            'id'          : user.id,
+            'user_id'     : user.id,
+            'permissions' : 0,
+            'name'        : user.name
+          }).$promise.catch(function() {
             $scope.errors.addUser = true;
           });
         }
@@ -57,8 +62,8 @@ angular.module('squareteam.app')
         function removeUsers () {
           $scope.$setPristine();
           if (usersToRemove.length) {
-            angular.forEach(usersToRemove, function(userId) {
-              $scope.team.removeUser(userId).catch(function() {
+            angular.forEach(usersToRemove, function(user) {
+              user.$destroy().$promise.catch(function() {
                 $scope.errors.removeUsers = true;
               });
             });
@@ -67,7 +72,8 @@ angular.module('squareteam.app')
 
         function updateUserRole () {
           if ($scope.currentEditingUser) {
-            $scope.team.updateUserRole($scope.currentEditingUser.id, $scope.roleToAdd).then(function() {
+            $scope.currentEditingUser.permissions = $scope.roleToAdd;
+            $scope.currentEditingUser.$save().$then(function() {
               $scope.currentEditingUser = false;
             }, function() {
               $scope.errors.updateUser = true;
@@ -94,10 +100,10 @@ angular.module('squareteam.app')
           }) : [];
         };
 
-        $scope.rolesHelpers              = TeamResource.rolesHelpers;
+        $scope.rolesHelpers              = AclRoles;
 
         $scope.usersToRemove             = usersToRemove;
-        $scope.ROLES                     = TeamResource.ROLES;
+        $scope.ROLES                     = AclRoles.ROLES;
       }
     };
   });
