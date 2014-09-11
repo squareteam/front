@@ -69,11 +69,7 @@ describe('Directive: st-filter-dropdown', function () {
 
       it('should update ngModel and element', function() {
 
-        var directiveScope = element.isolateScope();
-        directiveScope = angular.extend(directiveScope, {
-          selectedIndex : 1
-        });
-        element.data('$isolateScope', directiveScope);
+        element.isolateScope().selectById(1);
 
         scope.$digest();
 

@@ -42,14 +42,14 @@ angular.module('squareteam.app')
           }
         }
 
-        scope.$watch('selectedIndex', function(selectedIndex) {
+        scope.selectById = function(selectedIndex) {
           if (angular.isNumber(selectedIndex) && scope.stFilterDropdown[selectedIndex]) {
 
             setValue(scope.stFilterDropdown[selectedIndex]);
             ngModel.$setViewValue(scope.selected.value);
 
           }
-        });
+        };
 
         ngModel.$render = function() {
           var value =  ngModel.$viewValue || '',
