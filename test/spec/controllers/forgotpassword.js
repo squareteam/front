@@ -82,7 +82,7 @@ describe('Controller: forgotPasswordCtrl', function () {
 
     describe('when oAuth account recognized', function() {
       beforeEach(function() {
-        $httpBackend.expectPOST( url('forgot_password') ).respond(400, '["api.oauth_account", {"provider": "github"}]');
+        $httpBackend.expectPOST( url('forgot_password') ).respond(400, '{"data":"","errors":["api.oauth_account",{"provider":"github"}]}');
       });
 
       it('should set scope.oAuthAccountFound as provider name', function() {
