@@ -21,13 +21,20 @@ angular.module('squareteam.app')
           tooltipElement.fadeOut(200);
         },
         setPosition : setPosition,
-        showOnNode : function(node, topPad, leftPad) {
+        showOnNode : function(node, topPad, leftPad, relativeCentering) {
           var offset = $(node).offset();
 
-          setPosition(
-            offset.top + (topPad || 0),
-            offset.left - ((parseInt(tooltipElement.css('width'), 10) - parseInt($(node).css('width'), 10))/2) + (leftPad || 0)
-          );
+          if (relativeCentering || typeof relativeCentering === 'undefined') {
+            setPosition(
+              offset.top + (topPad || 0),
+              offset.left - ((parseInt(tooltipElement.css('width'), 10) - parseInt($(node).css('width'), 10))/2) + (leftPad || 0)
+            );
+          } else {
+            setPosition(
+              offset.top + (topPad || 0),
+              offset.left + (leftPad || 0)
+            );
+          }
 
           tooltipElement.css('display', 'none');
           tooltipElement.fadeIn(200);

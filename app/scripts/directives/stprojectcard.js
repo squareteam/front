@@ -83,7 +83,7 @@ angular.module('squareteam.app')
           if (!$tooltips.updateProjectStatus) {
             stTooltip.open('views/app/projects/update_project_status_tooltip.html', 'edit_project_status', editProjectStatusScope).then(function(tooltip) {
               $tooltips.updateProjectStatus = tooltip;
-              $tooltips.updateProjectStatus.showOnNode($($element).find('button.editable'), 25);
+              $tooltips.updateProjectStatus.showOnNode($($element).find('button.editable'), 25, 0, false);
             });
           } else {
             $tooltips.updateProjectStatus.hide();
