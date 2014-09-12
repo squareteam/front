@@ -1,5 +1,16 @@
 ## Squareteam front (AngularJS)
 
+## Important !
+
+**Styles are in a submodule repo `front-styles` in "styles" folder, please remember to do :**
+
+- `git submodule init`
+
+- `git submodule update`
+
+
+## Tasks
+
 To build the production version, use :
 
 `grunt build`
