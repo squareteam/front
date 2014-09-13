@@ -13,8 +13,8 @@ angular.module('squareteam.app')
             buttonOffset  = button.offset();
 
         dropdown.css({
-          top   : buttonOffset.top + 75 + 'px',
-          left  : buttonOffset.left - ((parseInt(dropdown.css('width'), 10) - parseInt(button.css('width'), 10))/2) - 35 + 'px'
+          top   : buttonOffset.top + 65 + 'px',
+          left  : buttonOffset.left - ((parseInt(dropdown.css('width'), 10) - parseInt(button.css('width'), 10))/2) - 20 + 'px'
         });
 
         button.on('click', function() {
