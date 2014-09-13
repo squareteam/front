@@ -18,5 +18,9 @@ angular.module('squareteam.resources')
       this.attrEncoder('deadline', function(value) {
         return value === null ? '' : value;
       });
+
+      this.attrDecoder('progress', function(value) {
+        return value + '%';
+      });
     });
   });
