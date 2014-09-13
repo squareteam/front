@@ -235,7 +235,7 @@ angular
 
       .state('app.projects', {
         url : '/projects',
-        templateUrl : 'views/app/projects/index.html',
+        templateUrl : 'views/app/projects/list.html',
         resolve : {
           organizations : ['authenticated', 'CurrentSession', function(authenticated, CurrentSession) {
             return CurrentSession.getOrganizations();
@@ -248,10 +248,6 @@ angular
 
       .state('app.missions', {
         url : '/projects/:projectId/missions'
-      })
-
-      .state('app.my_missions', {
-        url : '/missions/mine'
       })
 
       .state('app.missions.add', {

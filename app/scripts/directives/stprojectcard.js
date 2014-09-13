@@ -57,7 +57,7 @@ angular.module('squareteam.app')
             $tooltips.updateProject.hide();
           }
           dialog = ngDialog.open({
-            template  : 'views/app/projects/update_project_popin.html',
+            template  : 'views/app/projects/popins/update_project_popin.html',
             scope     : updateProjectScope
           });
 
@@ -76,7 +76,7 @@ angular.module('squareteam.app')
 
         $scope.openUpdateProjectTooltip = function() {
           if (!$tooltips.updateProject) {
-            stTooltip.open('views/app/projects/edit_project_tooltip.html', 'edit_project', editProjectScope).then(function(tooltip) {
+            stTooltip.open('views/app/projects/tooltips/edit_project_tooltip.html', 'edit_project', editProjectScope).then(function(tooltip) {
               $tooltips.updateProject = tooltip;
               $tooltips.updateProject.showOnNode(editProjectBtn, 30);
             });
@@ -88,7 +88,7 @@ angular.module('squareteam.app')
 
         $scope.openChangeStatusTooltip = function() {
           if (!$tooltips.updateProjectStatus) {
-            stTooltip.open('views/app/projects/update_project_status_tooltip.html', 'edit_project_status', editProjectStatusScope).then(function(tooltip) {
+            stTooltip.open('views/app/projects/tooltips/update_project_status_tooltip.html', 'edit_project_status', editProjectStatusScope).then(function(tooltip) {
               $tooltips.updateProjectStatus = tooltip;
               $tooltips.updateProjectStatus.showOnNode($($element).find('button.editable'), 25, 0, false);
             });

@@ -180,7 +180,7 @@ angular.module('squareteam.app')
       };
 
       dialog = ngDialog.open({
-        template  : 'views/app/projects/create_project_popin.html',
+        template  : 'views/app/projects/popins/create_project_popin.html',
         scope     : createProjectPopinScope
       });
     };
