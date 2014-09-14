@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('squareteam.resources')
-  .factory('OrganizationResource', function($resource, $q, $http, restmod) {
+  .factory('OrganizationResource', function($resource, $q, $http, restmod, ProjectResourceConfig) {
 
     var Organization = restmod.model('apis://organizations', {
 
       teams     : { hasMany : 'TeamResource'},
-      projects  : { hasMany : 'ProjectResource' }
+      projects  : { hasMany : 'ProjectResourceNested'}
 
     }, 'AclModel');
 
