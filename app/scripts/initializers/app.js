@@ -236,30 +236,19 @@ angular
       .state('app.projects', {
         url : '/projects',
         templateUrl : 'views/app/projects/list.html',
-        resolve : {
-          organizations : ['authenticated', 'CurrentSession', function(authenticated, CurrentSession) {
-            return CurrentSession.getOrganizations();
-          }]
-        },
         controller : 'ProjectsListCtrl'
       })
 
       // MISSIONS (TODO)
 
       .state('app.missions', {
-        url : '/projects/:projectId/missions'
-      })
-
-      .state('app.missions.add', {
-        url : '/add'
+        url : '/projects/:projectId/missions',
+        templateUrl : 'views/app/projects/view.html',
+        controller : 'ProjectViewCtrl'
       })
 
       .state('app.missions.view', {
         url : '/:missionId'
-      })
-
-      .state('app.missions.edit', {
-        url : '/:missionId/edit'
       })
 
       // TASKS (TODO)

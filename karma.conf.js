@@ -56,6 +56,7 @@ module.exports = function(config) {
       'app/bower_components/moment/moment.js',
       'app/bower_components/angular-moment/angular-moment.js',
       'app/bower_components/angular-truncate/src/truncate.js',
+      'app/bower_components/angular-svg-round-progressbar/roundProgress.js',
       'app/scripts/initializers/modules.js',
       'app/scripts/initializers/api.js',
       'app/scripts/*.js',

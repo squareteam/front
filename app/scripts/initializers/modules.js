@@ -19,7 +19,8 @@ angular
     'ngDialog',
     'restmod',
     'angularMoment',
-    'truncate'
+    'truncate',
+    'angular-svg-round-progress'
   ]);
 
 
