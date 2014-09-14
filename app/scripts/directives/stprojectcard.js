@@ -44,8 +44,8 @@ angular.module('squareteam.app')
           };
 
           updateProjectScope.updateProject = function() {
-            if ($scope.project.deadline instanceof Date) {
-              $scope.project.deadline = moment($scope.project.deadline).toISOString();
+            if (updateProjectScope.project.deadline instanceof Date) {
+              $scope.project.deadline = moment(updateProjectScope.project.deadline).toISOString();
             }
             $scope.project.title = updateProjectScope.project.title;
             $scope.project.description = updateProjectScope.project.description;
