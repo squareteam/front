@@ -16,23 +16,23 @@
       <div class="col-xs-4">
          <i class="icon icon-metadata-tasks"></i>
          <span>
-            {{ mission.metadata.tasksCount }}
+            {{ mission.metadata.tasksCount || 0 }}
          </span>
       </div>
       <div class="col-xs-4">
          <i class="icon icon-metadata-threads"></i>
          <span>
-            {{ mission.metadata.threadsCount }}
+            {{ mission.metadata.threadsCount || 0 }}
          </span>
       </div>
       <div class="col-xs-4">
          <i class="icon icon-metadata-documents"></i>
          <span>
-            {{ mission.metadata.documentsCount }}
+            {{ mission.metadata.documentsCount || 0 }}
          </span>
       </div>
    </div>
    <div class="col-xs-1 deadline">
-      {{ mission.metadata.deadline | amCalendar }}
+      {{ mission.metadata.deadline ? (mission.metadata.deadline | amCalendar) : 'Aucune' }}
    </div>
 </li>

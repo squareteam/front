@@ -29,22 +29,22 @@
             </div>
 
             <div class="col-xs-3 filters vertical-center">
-               <div class="by_status">
-                  <span>Status</span>
-                  <i class="icon icon-arrow-down-inactive"></i>
+               <div  class="by_status" st-dropdown top-pad="80" position="relative" dropdown-classes="filters_dropdown status_filters list-none absolute-reset no-select"
+                     st-filter-dropdown="statusFilterChoices" ng-model="statusFilter" placeholder="Status">
                </div>
                <div class="by_assignee">
                   <span>Assigné à</span>
                   <i class="icon icon-arrow-down-inactive"></i>
                </div>
-               <div class="sort">
+               <div class="sort" st-dropdown top-pad="80" position="relative" dropdown-classes="filters_dropdown sort_filters list-none absolute-reset no-select"
+                        st-sort-dropdown="sortChoices" ng-model="sortBy" placeholder="Sort by">
                   <span>Trier par</span>
                   <i class="icon icon-arrow-down-inactive"></i>
                </div>
             </div>
 
             <div class="col-xs-2 vertical-center add_btn">
-               <button class="primary">
+               <button class="primary" ng-show="currentUserCanCreateMission()" ng-click="createMissionPopin()">
                   Nouvelle mission
                </button>
             </div>
@@ -119,13 +119,15 @@
                   Liste des missions
                </h2>
                <ul class="list">
-                  <st-mission-item mission="mission" ng-repeat="mission in project.missions"></st-mission-item>
+                  <st-mission-item  mission="mission"
+                                    ng-repeat="mission in project.missions | orderBy:sortBy | filter:statusFilter"></st-mission-item>
                </ul>
             </div>
 
             <div class="nice-block missions drafts">
                <ul class="list">
-                  <!-- <st-mission-item mission="mission" ng-repeat="mission in project.missions"></st-mission-item> -->
+                  <!-- thoses one are not sorted or filtered by controls -->
+                  <st-mission-item mission="mission" ng-repeat="mission in project.missions | filter:draftsOnly"></st-mission-item>
                </ul>
             </div>
          </div>
