@@ -107,8 +107,7 @@
 
                <img src="http://lorempixel.com/287/210/fashion/" height="210" width="100%" alt="">
 
-               <div class="description">
-                  {{ project.description }}
+               <div class="description" ng-bind-html="project.description | nl2br">
                </div>
             </div>
          </div>

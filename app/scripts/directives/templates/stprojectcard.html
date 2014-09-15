@@ -65,8 +65,7 @@
       <img st-file-id="{{ project.thumbnail }}" alt="">
    </div>
 
-   <div class="description" ng-if="project.description">
-      {{ project.description }}
+   <div class="description" ng-if="project.description" ng-bind-html="project.description | nl2br">
    </div>
 
    <div class="metadata row">
