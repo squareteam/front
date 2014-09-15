@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('squareteam.resources')
-  .factory('ProjectResourceConfig', function() {
-    return function() {
+  .factory('ProjectResourceConfig', function(restmod) {
+    return restmod.mixin(function() {
 
       this.attrMask('status', 'C');
       this.attrMask('metadata', 'CU');
@@ -19,5 +19,5 @@ angular.module('squareteam.resources')
       this.attrDecoder('progress', function(value) {
         return value + '%';
       });
-    };
+    });
   });
