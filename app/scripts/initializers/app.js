@@ -235,7 +235,7 @@ angular
 
       .state('app.projects', {
         url : '/projects',
-        templateUrl : 'views/app/projects/list.html',
+        templateUrl : 'views/app/project_list.html',
         controller : 'ProjectsListCtrl'
       })
 
@@ -243,7 +243,7 @@ angular
 
       .state('app.missions', {
         url : '/projects/:projectId/missions',
-        templateUrl : 'views/app/projects/view.html',
+        templateUrl : 'views/app/project_view.html',
         controller : 'ProjectViewCtrl'
       })
 
