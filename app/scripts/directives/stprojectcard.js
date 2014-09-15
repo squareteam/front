@@ -15,86 +15,30 @@ angular.module('squareteam.app')
       templateUrl: 'scripts/directives/templates/stprojectcard.html',
       restrict: 'E',
       replace : true,
-      controller : function($scope, $element, $attrs, stTooltip, ngDialog, moment) {
+      controller : function($scope, $element, $attrs, stTooltip) {
 
-        var editProjectBtn          = $($element).find('.icon-settings'),
-            editProjectScope        = $scope.$new(),
-            editProjectStatusScope  = $scope.$new(),
-            $tooltips               = {};
+        var editProjectStatusScope  = $scope.$new(),
+            $tooltip                = null;
 
         editProjectStatusScope.status = function(status) {
           $scope.project.status = status;
           $scope.project.$save().$then(function() {
-            if ($tooltips.updateProjectStatus) {
-              $tooltips.updateProjectStatus.hide();
-              $tooltips.updateProjectStatus = null;
+            if ($tooltip) {
+              $tooltip.hide();
+              $tooltip = null;
             }
           });
-        };
-
-        editProjectScope.edit = function() {
-          
-          var dialog,
-              updateProjectScope = $scope.$new();
-
-          updateProjectScope.project = {
-            title       : $scope.project.title,
-            description : $scope.project.description,
-            deadline    : $scope.project.deadline
-          };
-
-          updateProjectScope.updateProject = function() {
-            if (updateProjectScope.project.deadline instanceof Date) {
-              $scope.project.deadline = moment(updateProjectScope.project.deadline).toISOString();
-            }
-            $scope.project.title = updateProjectScope.project.title;
-            $scope.project.description = updateProjectScope.project.description;
-
-            $scope.project.$save().$then(dialog.close);
-          };
-
-          if ($tooltips.updateProject) {
-            $tooltips.updateProject.hide();
-          }
-          dialog = ngDialog.open({
-            template  : 'views/app/projects/popins/update_project_popin.html',
-            scope     : updateProjectScope
-          });
-
-        };
-
-        editProjectScope.delete = function() {
-          if($tooltips.updateProject) {
-            $tooltips.updateProject.hide();
-          }
-          $scope.$emit('project:delete', $scope.project);
-        };
-
-        editProjectScope.archive = function() {
-          console.log('feature not supported for now..');
-        };
-
-        $scope.openUpdateProjectTooltip = function() {
-          if (!$tooltips.updateProject) {
-            stTooltip.open('views/app/projects/tooltips/edit_project_tooltip.html', 'edit_project', editProjectScope).then(function(tooltip) {
-              $tooltips.updateProject = tooltip;
-              $tooltips.updateProject.showOnNode(editProjectBtn, 30);
-            });
-          } else {
-            $tooltips.updateProject.hide();
-            $tooltips.updateProject = null;
-          }
         };
 
         $scope.openChangeStatusTooltip = function() {
-          if (!$tooltips.updateProjectStatus) {
+          if (!$tooltip) {
             stTooltip.open('views/app/projects/tooltips/update_project_status_tooltip.html', 'edit_project_status', editProjectStatusScope).then(function(tooltip) {
-              $tooltips.updateProjectStatus = tooltip;
-              $tooltips.updateProjectStatus.showOnNode($($element).find('button.editable'), 25, 0, false);
+              $tooltip = tooltip;
+              $tooltip.showOnNode($($element).find('button.editable'), 25, 0, false);
             });
           } else {
-            $tooltips.updateProjectStatus.hide();
-            $tooltips.updateProjectStatus = null;
+            $tooltip.hide();
+            $tooltip = null;
           }
         };
       }
