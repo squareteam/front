@@ -239,35 +239,28 @@ angular
         controller : 'ProjectsListCtrl'
       })
 
-      // MISSIONS (TODO)
-
-      .state('app.missions', {
+      .state('app.project_view', {
         url : '/projects/:projectId/missions',
         templateUrl : 'views/app/project_view.html',
         controller : 'ProjectViewCtrl'
       })
 
+      // MISSIONS (TODO)
+
       .state('app.missions.view', {
-        url : '/:missionId'
+        url : '/:missionId'//,
+        // templateUrl : 'views/app/mission_view.html'
       })
 
       // TASKS (TODO)
 
       .state('app.tasks', {
-        url : '/missions/:missionId/tasks'//,
-        // templateUrl : 'views/app/missions/index.html'
-      })
-
-      .state('app.tasks.add', {
-        url : '/add'
+        url : '/tasks'//,
+        // templateUrl : 'views/app/tasks.html'
       })
 
       .state('app.tasks.view', {
-        url : '/:taskId'
-      })
-
-      .state('app.tasks.edit', {
-        url : '/:taskId/edit'
+        url : '/tasks/:taskId'
       })
 
       // ADMIN
