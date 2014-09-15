@@ -74,13 +74,15 @@ angular.module('squareteam.app')
       }
     ];
 
+    $scope.assigneeFilter = '';
+
     $scope.isFiltered = function() {
-      return $scope.teamFilter || $scope.statusFilter;
+      return $scope.assigneeFilter || $scope.statusFilter;
     };
 
     $scope.clearFilters = function() {
-      $scope.teamFilter     = '';
-      $scope.statusFilter   = '';
+      $scope.teamFilter       = '';
+      $scope.assigneeFilter   = '';
     };
 
     // MAIN
