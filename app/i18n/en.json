@@ -99,7 +99,7 @@
       "myAccount" : {
          "profile" : {
             "title"           : "My Account",
-            "subtitle"        : "Need to update your informations ?",
+            "subtitle"        : "Need to update your personal information?",
             "change_avatar"   : "Change my avatar",
             "name"            : "Pseudo",
             "password"        : "Password",
