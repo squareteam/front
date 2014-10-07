@@ -24,7 +24,7 @@ angular.module('squareteam.app').
         }
 
       }, function() {
-        alert('Error while leaving organization, aborted.');
+        window.alert('Error while leaving organization, please try later.');
       });
     };
 

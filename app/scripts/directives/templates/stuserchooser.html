@@ -1,0 +1,19 @@
+<div class="stuserchooser-container">
+   <div>
+      <input type="text" placeholder="Search a worker" ng-model="search" class="fluid search">
+   </div>
+   <ul class="results-list" ng-class="{ expand : !!users.length }">
+      <li ng-repeat="user in users track by user.id" ng-class="{ selected : isSelected(user) }" ng-click="toggleSelection(user)">
+         <div class="row">
+            <div class="col-xs-4">
+               <img src="http://placekitten.com/g/45/45" alt="">
+            </div>
+            <div class="col-xs-8 info">
+               <div class="name">
+                  {{ user.name | characters:21:true }}
+               </div>
+            </div>
+         </div>
+      </li>
+   </ul>
+</div>

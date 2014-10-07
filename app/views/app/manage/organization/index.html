@@ -1,40 +1,122 @@
-<h2>
-   {{ organization.name }}
-</h2>
+<div class="container manage">
+   <div class="row">
+      
+      <div class="col-xs-6 teams nice-block col-xs-push-3" ng-class="{ 'go-left' : !!team }">
+         <div class="row">
+            <div class="header col-xs-10 col-xs-push-1">
+               <h2>
+                  {{ organization.name }}
+               </h2>
+               <p ng-show="!!teams">
+                  {{ teams.length }} teams
+               </p>
+            </div>
+         </div>
 
-<br>
+         <ul class="teams-list">
+            <li class="row team-item" ng-repeat="team in teams track by team.id">
+               <div class="col-xs-1 vertical-center">
+                  <div class="color" style="background-color:{{ team.color }};"></div>
+               </div>
+               <div class="col-xs-4 vertical-center">
+                  <div class="name">
+                     {{ team.name | characters:21:true }}
+                  </div>
+                  <div class="count">
+                     {{ team.users.length }} users
+                  </div>
+               </div>
+               <div class="col-xs-3 users vertical-center" ng-class="{ 'no-padding' : team.$can('manage') }">
+                  <img  ng-repeat="user in team.users | limitTo:2"
+                        src="http://placekitten.com/g/24/24" alt="" title="{{ user.name }}">
+                  <div class="more" ng-show="team.users.length > 2">
+                     +{{ team.users.length - 2 }}
+                  </div>
+               </div>
+               <div class="col-xs-3 vertical-center action" ng-show="team.$can('manage')">
+                  <div  class="manage-button"
+                        ng-click="team.$can('manage') && manageTeam(team)">
+                     <div class="mask">
+                        <div class="text">
+                           Manage
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </li>
+            <li class="row" ng-if="!teams.length">
+               <div class="col-xs-12 no-results">
+                  No team.
+               </div>
+            </li>
+         </ul>
 
-<h4>
-   Members
-</h4>
+         <div class="text-center">
+            <button class="submit minimal" ng-click="openPopin('create')">
+               Create a team
+            </button>
+         </div>
+      </div>
 
-<ul>
-   <li ng-repeat='member in organization.users' style="list-style:none;line-height:25px;">
-      <img src="/images/user.png" width="25" class="img-circle pull-left" alt="" style="margin-right:10px;"> {{ member.name }}
-   </li>
-   <li ng-show="organization.users.length === 0">
-      No members, <a href class="btn btn-default btn-xs">add one ?</a>
-   </li>
-</ul>
+      <div class="col-xs-6 nice-block team" ng-class="{'enter-from-right' : !!team}">
 
-<hr>
+      <div class="row">
+         <div class="header col-xs-10 col-xs-push-1">
+            <h2>
+               {{ team.name }}
+            </h2>
+            <p ng-show="!!teams">
+               {{ team.users.length }} users
+            </p>
+         </div>
+      </div>
 
-<h4>
-   Teams
-</h4>
+      <ul class="team-users-list">
+         <li class="team-user-item  container-fluid" ng-repeat="user in team.users">
+            <div class="row">
+               <div class="col-xs-2">
+                  <img src="http://placekitten.com/g/45/45" alt="">
+               </div>
+               <div class="col-xs-6 name">
+                  {{ user.name | characters:21:true }}
+               </div>
+               <div class="col-xs-3 vertical-center actions">
+                  <div ng-click="$parent.editingUsers.push(user.id)" ng-hide="$parent.isEditing(user)">
+                     <i class="edit"></i>
+                     Edit
+                  </div>
+                  <div ng-click="updateUser(user)" ng-show="$parent.isEditing(user)">
+                     <i class="edit"></i>
+                     Save
+                  </div>
+                  <div ng-click="removeUser(user)">
+                     <i class="remove"></i>
+                     Remove
+                  </div>
+               </div>
+            </div>
+            <div class="row" ng-show="$parent.isEditing(user)">
+               <st-user-acl-edit class="col-xs-12"
+                  user="user">
+               </st-user-acl-edit>
+            </div>
+         </li>
+         <li class="row" ng-if="!teams.length">
+            <div class="col-xs-12 no-results">
+               No users.
+            </div>
+         </li>
+      </ul>
 
-<ul>
-   <li ng-repeat="team in teams">
-      {{ team.name }}
-      <a    class="btn btn-default btn-xs"
-            ui-sref="app.organization.team({ teamId : team.id })"  ng-show="team.$can('manage')">
-         manage
-      </a>
-   </li>
-</ul>
-<p>
-   <input type="text" ng-model="newTeamName">
-   <a ng-click="!!newTeamName && createTeam(newTeamName)" class="btn btn-default btn-xs">
-      create
-   </a>
-</p>
+      <footer class="text-center row">
+         <button class="submit minimal col-xs-4 col-xs-push-1" ng-click="openPopin('add_workers')">
+            Add a member
+         </button>
+         <button class="submit minimal secondary col-xs-4" ng-click="openPopin('update')">
+            Edit team
+         </button>
+      </footer>
+
+      </div>
+   </div>
+</div>

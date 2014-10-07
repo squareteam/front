@@ -1,0 +1,6 @@
+<ul class="stcolorpicker-container">
+   <li ng-repeat="color in colors" ng-click="$parent.selectedColor = color">
+      <span class="selected-circle" style="border-color:{{ color }};" ng-class="{ selected : $parent.selectedColor == color }"></span>
+      <span class="center-circle" style="background-color:{{ color }};"></span>
+   </li>
+</ul>

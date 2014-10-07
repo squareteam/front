@@ -1,0 +1,46 @@
+<div>
+   <header>
+      <h1>
+         Team
+      </h1>
+      <p ng-if="mode == 'create'">
+         Let's create a team
+      </p>
+      <p ng-if="mode == 'update'">
+         Keep informations up to date
+      </p>
+      <p ng-if="mode == 'add_workers'">
+         Add a worker
+      </p>
+   </header>
+
+   <form action name="teamForm" class="minimal" ng-submit="save()">
+
+      <label for="title" class="required" ng-if="mode == 'update' || mode == 'create'">
+        Name
+      </label>
+      <input  type="text" name="title" required class="fluid"
+              ng-model="$parent.team.name" ng-if="mode == 'update' || mode == 'create'">
+
+      <label for="color" class="required" ng-if="mode == 'update' || mode == 'create'">
+        Pick a color
+      </label>
+      <st-color-picker  colors="Team.colors" ng-model="$parent.team.color"
+                        ng-if="mode == 'update' || mode == 'create'"></st-color-picker>
+
+      <label for="workers" class="required">
+        Choose worker(s)
+      </label>
+      <st-user-chooser referential="$parent.team.users" differential="$parent.teamUsersDiff"></st-user-chooser>
+
+      <footer ng-if="mode == 'create'">
+        <input type='submit' value="Create"/>
+      </footer>
+      <footer ng-if="mode == 'update'">
+        <input type='submit' value="Update"/>
+      </footer>
+      <footer ng-if="mode == 'add_workers'">
+        <input type='submit' value="Update workers"/>
+      </footer>
+   </form>
+</div>
