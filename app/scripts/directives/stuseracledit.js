@@ -4,8 +4,7 @@ angular.module('squareteam.app')
   .directive('stUserAclEdit', function () {
     return {
       scope: {
-        user   : '=',
-        onSave : '&'
+        user   : '='
       },
       templateUrl: 'scripts/directives/templates/stuseracledit.html',
       restrict: 'E',

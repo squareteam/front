@@ -2,7 +2,7 @@
 
 'use strict';
 
-describe('Directive: st-project-card', function () {
+xdescribe('Directive: st-project-card', function () {
 
   // load the directive's module
   beforeEach(module('scripts/directives/templates/stprojectcard.html'));
