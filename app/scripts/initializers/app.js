@@ -289,14 +289,6 @@ angular
         url : '/manage',
         templateUrl : 'views/app/manage/organization/index.html',
         controller : 'ManageOrganizationCtrl'
-      })
-
-      .state('app.organization.team', {
-        url : '/team/:teamId',
-        templateUrl : 'views/app/manage/team.html',
-        controller : ['$scope', '$stateParams', function($scope, $stateParams) {
-          $scope.teamId = $stateParams.teamId;
-        }]
       });
 
     $urlRouterProvider

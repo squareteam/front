@@ -1,0 +1,46 @@
+<div>
+   <header>
+      <h1>
+         {{ 'popin.team.title' | translate }}
+      </h1>
+      <p ng-if="mode == 'create'">
+         {{ 'popin.team.subtitle_create' | translate }}
+      </p>
+      <p ng-if="mode == 'update'">
+         {{ 'popin.team.subtitle_update' | translate }}
+      </p>
+      <p ng-if="mode == 'add_workers'">
+         {{ 'popin.team.subtitle_workers' | translate }}
+      </p>
+   </header>
+
+   <form action name="teamForm" class="minimal" ng-submit="save()">
+
+      <label for="title" class="required" ng-if="mode == 'update' || mode == 'create'">
+        {{ 'popin.team.labels.name' | translate }}
+      </label>
+      <input  type="text" name="title" required class="fluid"
+              ng-model="$parent.team.name" ng-if="mode == 'update' || mode == 'create'">
+
+      <label for="color" class="required" ng-if="mode == 'update' || mode == 'create'">
+        {{ 'popin.team.labels.color' | translate }}
+      </label>
+      <st-color-picker  colors="Team.colors" ng-model="$parent.team.color"
+                        ng-if="mode == 'update' || mode == 'create'"></st-color-picker>
+
+      <label for="workers" class="required">
+        {{ 'popin.team.labels.workers' | translate }}
+      </label>
+      <st-user-chooser referential="$parent.team.users" differential="$parent.teamUsersDiff"></st-user-chooser>
+
+      <footer ng-if="mode == 'create'">
+        <input type='submit' value="{{ 'popin.team.buttons.create' | translate }}"/>
+      </footer>
+      <footer ng-if="mode == 'update'">
+        <input type='submit' value="{{ 'popin.team.buttons.update' | translate }}"/>
+      </footer>
+      <footer ng-if="mode == 'add_workers'">
+        <input type='submit' value="{{ 'popin.team.buttons.workers' | translate }}"/>
+      </footer>
+   </form>
+</div>

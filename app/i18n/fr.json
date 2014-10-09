@@ -79,8 +79,8 @@
          "projects"     : "projets"
       },
 
-      "myAccount" : {
-         "profile" : {
+      "manage" : {
+         "account" : {
             "title"           : "Mon Compte",
             "subtitle"        : "Besoin de mettre à jour vos informations ?",
             "change_avatar"   : "Changer mon avatar",
@@ -95,6 +95,23 @@
             "leave"           : "Quitter",
             "no_organizations": "Aucune organisation.",
             "create"          : "Créer"
+         },
+         "organization" : {
+            "subtitle_singular"  : "équipes",
+            "subtitle_plural"    : "équipe",
+            "team_list_user_singular"  : "membre",
+            "team_list_user_plural"    : "membres",
+            "manage" : "Gérer",
+            "no_team": "Aucune équipe.",
+            "create_team": "Créer une équipe"
+         },
+         "team" : {
+            "edit" : "Editer",
+            "save" : "Sauver",
+            "remove" : "Enlever",
+            "no_users" : "Aucun membre.",
+            "add_member" : "Ajouter un membre",
+            "edit_team" : "Editer l'équipe"
          }
       }
 
@@ -117,6 +134,22 @@
          "title"     : "Merci de confirmer votre mot de passe",
          "subtitle"  : "Pour votre sécurité.",
          "continue"   : "Continuer"
+      },
+      "team" : {
+         "title" : "Equipe",
+         "subtitle_create" : "Créons une équipe!",
+         "subtitle_update" : "Des informations à mettre à jour ?",
+         "subtitle_workers" : "Gérer les workers",
+         "labels" : {
+            "name" : "Nom",
+            "color" : "Choisissez une couleur",
+            "workers" : "Choisissez des worker(s)"
+         },
+         "buttons" : {
+            "create" : "Créer",
+            "update" : "Mettre à jour",
+            "workers" : "Mettre à jour les workers"
+         }
       }
    },
 

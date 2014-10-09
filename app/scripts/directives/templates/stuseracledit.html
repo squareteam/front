@@ -1,0 +1,13 @@
+<div class="useracl-container">
+   <li ng-repeat="(name, value) in ROLES">
+
+      <div ng-init="hasPermission = rolesHelpers.has($parent.roleToAdd, value)">
+         <span ng-if="$parent.roleToAdd = (!hasPermission ? rolesHelpers.remove($parent.roleToAdd, value) : rolesHelpers.add($parent.roleToAdd, value))"></span>
+         <st-checkbox
+                  type="square"
+                  ng-model="hasPermission"
+                  label="'directives.stTeamManage.roles.' + name | translate"></st-checkbox>
+      </div>
+
+   </li>
+</div>

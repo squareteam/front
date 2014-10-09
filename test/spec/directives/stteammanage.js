@@ -2,7 +2,7 @@
 
 'use strict';
 
-describe('Directive: st-team-manage', function () {
+xdescribe('Directive: st-team-manage', function () {
 
   // load the directive's module
   beforeEach(module('scripts/directives/templates/stusersearch.html'));

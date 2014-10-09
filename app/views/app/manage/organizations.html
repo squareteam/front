@@ -1,14 +1,14 @@
 
-<div class="container manage-organizations">
+<div class="container manage-organizations manage">
    <div class="row">
-      <div class="organizations col-xs-6 col-xs-push-3">
+      <div class="organizations nice-block col-xs-6 col-xs-push-3">
          <div class="col-xs-10 col-xs-push-1">
             <div class="header">
                <h2>
                   Your organizations
                </h2>
                <p>
-                  Organizations you can manage
+                  Group of people you belongs to
                </p>
             </div>
 
@@ -21,26 +21,26 @@
                      {{ organization.name | characters:21:true }}
                   </div>
                   <div class="col-xs-4 pull-right">
-                     <div class="manage-button" ui-sref="app.organization.manage({ organizationId : organization.id })">
+                     <div  class="manage-button" ng-show="organization.$can('manage')"
+                           ui-sref="app.organization.manage({ organizationId : organization.id })">
                         <div class="mask">
                            <div class="text">
                               Manage
                            </div>
                         </div>
                      </div>
-                  <!--
-                     <div class="leave-button" ng-click="leaveOrganization(organization.id)">
+                     <div  class="leave-button" ng-hide="organization.$can('manage')"
+                           ng-click="leaveOrganization(organization.id)">
                         <div class="mask">
                            <div class="text">
                               {{ 'app.myAccount.organizations.leave' | translate }}
                            </div>
                         </div>
                      </div>
-                  -->
                   </div>
                </li>
                <li class="row" ng-if="!organizations.length">
-                  <div class="col-xs-12 no-organization">
+                  <div class="col-xs-12 no-results">
                      No organization.
                   </div>
                </li>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('squareteam.resources')
-  .factory('OrganizationResource', function($resource, $q, $http, restmod, ProjectResourceConfig) {
+  .factory('OrganizationResource', function($resource, $q, $http, restmod) {
 
     var Organization = restmod.model('apis://organizations', {
 
