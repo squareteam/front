@@ -25,7 +25,7 @@ angular.module('squareteam.app')
         popinScope.Team = TeamResource;
         popinScope.team = mode === 'create' ? $scope.organization.teams.$buildRaw({}) : $scope.team;
 
-        $scope.save = function() {
+        popinScope.save = function() {
           popinScope.team.$save().$then(function() {
             var updates = [];
 
