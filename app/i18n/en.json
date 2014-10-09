@@ -96,8 +96,8 @@
          "projects"     : "projects"
       },
 
-      "myAccount" : {
-         "profile" : {
+      "manage" : {
+         "account" : {
             "title"           : "My Account",
             "subtitle"        : "Need to update your personal information?",
             "change_avatar"   : "Change my avatar",
@@ -112,6 +112,23 @@
             "leave"           : "Leave",
             "no_organizations": "No organization.",
             "create"          : "Create"
+         },
+         "organization" : {
+            "subtitle_singular"  : "team",
+            "subtitle_plural"    : "teams",
+            "team_list_user_singular"  : "user",
+            "team_list_user_plural"    : "users",
+            "manage" : "Manage",
+            "no_team": "No team.",
+            "create_team": "Create team"
+         },
+         "team" : {
+            "edit" : "Edit",
+            "save" : "Save",
+            "remove" : "Remove",
+            "no_users" : "No users",
+            "add_member" : "Add a member",
+            "edit_team" : "Edit team"
          }
       }
 
@@ -122,6 +139,22 @@
          "title"     : "Please confirm your password",
          "subtitle"  : "For your security.",
          "continue"   : "Continue"
+      },
+      "team" : {
+         "title" : "Team",
+         "subtitle_create" : "Let's create a team",
+         "subtitle_update" : "Keep informations up to date",
+         "subtitle_workers" : "Manage workers",
+         "labels" : {
+            "name" : "Name",
+            "color" : "Pick a color",
+            "workers" : "Choose worker(s)"
+         },
+         "buttons" : {
+            "create" : "Create",
+            "update" : "Update",
+            "workers" : "Update workers"
+         }
       }
    },
 

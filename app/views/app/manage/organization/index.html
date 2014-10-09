@@ -7,8 +7,11 @@
                <h2>
                   {{ organization.name }}
                </h2>
-               <p ng-show="!!teams">
-                  {{ teams.length }} teams
+               <p ng-show="teams.length == 1">
+                  {{ teams.length }} {{ 'app.manage.organization.subtitle_singular' | translate }}
+               </p>
+               <p ng-show="teams.length > 1">
+                  {{ teams.length }} {{ 'app.manage.organization.subtitle_plural' | translate }}
                </p>
             </div>
          </div>
@@ -22,8 +25,11 @@
                   <div class="name">
                      {{ team.name | characters:21:true }}
                   </div>
-                  <div class="count">
-                     {{ team.users.length }} users
+                  <div class="count" ng-if="team.users.length <= 1">
+                     {{ team.users.length }} {{ 'app.manage.organization.team_list_user_singular' | translate }}
+                  </div>
+                  <div class="count" ng-if="team.users.length > 1">
+                     {{ team.users.length }} {{ 'app.manage.organization.team_list_user_plural' | translate }}
                   </div>
                </div>
                <div class="col-xs-3 users vertical-center" ng-class="{ 'no-padding' : team.$can('manage') }">
@@ -38,7 +44,7 @@
                         ng-click="team.$can('manage') && manageTeam(team)">
                      <div class="mask">
                         <div class="text">
-                           Manage
+                           {{ 'app.manage.organization.manage' | translate }}
                         </div>
                      </div>
                   </div>
@@ -46,14 +52,14 @@
             </li>
             <li class="row" ng-if="!teams.length">
                <div class="col-xs-12 no-results">
-                  No team.
+                  {{ 'app.manage.organization.no_team' | translate }}
                </div>
             </li>
          </ul>
 
          <div class="text-center">
             <button class="submit minimal" ng-click="openPopin('create')">
-               Create a team
+               {{ 'app.manage.organization.create_team' | translate }}
             </button>
          </div>
       </div>
@@ -65,8 +71,11 @@
             <h2>
                {{ team.name }}
             </h2>
-            <p ng-show="!!teams">
-               {{ team.users.length }} users
+            <p ng-if="team.users.length <= 1">
+               {{ team.users.length }} {{ 'app.manage.organization.team_list_user_singular' | translate }}
+            </p>
+            <p ng-if="team.users.length > 1">
+               {{ team.users.length }} {{ 'app.manage.organization.team_list_user_plural' | translate }}
             </p>
          </div>
       </div>
@@ -83,15 +92,15 @@
                <div class="col-xs-3 vertical-center actions">
                   <div ng-click="$parent.editingUsers.push(user.id)" ng-hide="$parent.isEditing(user)">
                      <i class="edit"></i>
-                     Edit
+                     {{ 'app.manage.team.edit' | translate }}
                   </div>
                   <div ng-click="updateUser(user)" ng-show="$parent.isEditing(user)">
                      <i class="edit"></i>
-                     Save
+                     {{ 'app.manage.team.save' | translate }}
                   </div>
                   <div ng-click="removeUser(user)">
                      <i class="remove"></i>
-                     Remove
+                     {{ 'app.manage.team.remove' | translate }}
                   </div>
                </div>
             </div>
@@ -103,17 +112,17 @@
          </li>
          <li class="row" ng-if="!teams.length">
             <div class="col-xs-12 no-results">
-               No users.
+               {{ 'app.manage.team.no_users' | translate }}
             </div>
          </li>
       </ul>
 
       <footer class="text-center row">
          <button class="submit minimal col-xs-4 col-xs-push-1" ng-click="openPopin('add_workers')">
-            Add a member
+            {{ 'app.manage.team.add_member' | translate }}
          </button>
          <button class="submit minimal secondary col-xs-4" ng-click="openPopin('update')">
-            Edit team
+            {{ 'app.manage.team.edit_team' | translate }}
          </button>
       </footer>
 

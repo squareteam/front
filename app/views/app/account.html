@@ -5,10 +5,10 @@
          <div class="col-xs-8 col-xs-push-2">
             <div class="header">
                <h2>
-                  {{ 'app.myAccount.profile.title' | translate }}
+                  {{ 'app.manage.account.title' | translate }}
                </h2>
                <p>
-                  {{ 'app.myAccount.profile.subtitle' | translate }}
+                  {{ 'app.manage.account.subtitle' | translate }}
                </p>
             </div>
 
@@ -16,7 +16,7 @@
                <img src="http://placekitten.com/g/85/85" alt="" width="85px">
 
                <a href="#">
-                  {{ 'app.myAccount.profile.change_avatar' | translate }}
+                  {{ 'app.manage.account.change_avatar' | translate }}
                </a>
             </div>
 
@@ -27,12 +27,12 @@
                </div>
 
                <label for="pseudo">
-                  {{ 'app.myAccount.profile.name' | translate }}
+                  {{ 'app.manage.account.name' | translate }}
                </label>
                <input type="text" type="text" name="pseudo" class="fluid" ng-model="user.name" required>
 
                <label for="password" ng-hide="isOAuthAccount">
-                  {{ 'app.myAccount.profile.password' | translate }}
+                  {{ 'app.manage.account.password' | translate }}
                </label>
 
                <input   type="password" type="text" name="password" class="fluid"
@@ -43,13 +43,13 @@
                </div>
 
                <label for="email">
-                  {{ 'app.myAccount.profile.email' | translate }}
+                  {{ 'app.manage.account.email' | translate }}
                </label>
                <input type="email" type="text" name="email" class="fluid" ng-model="user.email" required>
 
                <div class="submit-footer">
                   <input   type="submit"
-                           value="{{ 'app.myAccount.profile.save' | translate }}">
+                           value="{{ 'app.manage.account.save' | translate }}">
                </div>
 
             </form>
