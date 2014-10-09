@@ -79,7 +79,7 @@ angular.module('squareteam.app')
             if (errorText === 'api.already_taken.Email') {
               $scope.userForm.email.$setValidity('unique', false);
             }
-          }.bind(this));
+          }, this);
         } else {
           $scope.user.$restore();
         }

@@ -126,11 +126,11 @@ angular.module('squareteam.app')
     // Current session management
 
     this.reloadUser = function() {
-      $http.get('apis://users/me').then(function(response) {
+      $http.get('apis://users/me').then(angular.bind(this, function(response) {
         this.$$user = response.data;
-      }.bind(this), function() {
+      }), angular.bind(this, function() {
         this.unregister();
-      }.bind(this));
+      }));
     };
 
     // API

@@ -54,7 +54,7 @@ angular.module('squareteam.app')
                 if (errorText === 'api.already_taken.Email') {
                   $scope.registerForm.email.$setValidity('unique', false);
                 }
-              }.bind(this));
+              }, this);
             } else {
               $scope.serverBusy = true;
             }
