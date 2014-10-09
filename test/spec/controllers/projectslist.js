@@ -4,7 +4,7 @@
 
 describe('Controller: ProjectsListCtrl', function () {
 
-  beforeEach(module('views/app/projects/create_project_popin.html'));
+  beforeEach(module('views/app/projects/popins/create_project_popin.html'));
   beforeEach(module('squareteam.app'));
 
   var ProjectsListCtrl, scope, resolvePromise, url,
