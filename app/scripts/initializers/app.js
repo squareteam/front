@@ -9,7 +9,7 @@ angular
     // Moment.js //
     ///////////////
 
-    moment.lang('en', {
+    moment.locale('en', {
       calendar : {
         lastDay : '[yesterday at] LT',
         sameDay : '[today at] LT',
