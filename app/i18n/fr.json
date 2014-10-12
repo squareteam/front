@@ -34,8 +34,8 @@
             "send"            : "Envoyer les instructions",
             "returnToSignIn"  : "Se connecter",
 
-            "sent_1" : "Un e-mail contenant les instructions",
-            "sent_2" : "pour le changement de mot de passe vous a été envoyé !"
+            "sent_1" : "Merci vérifier vos emails, vous devriez bientôt recevoir des instructions pour changer votre mot de passe.",
+            "sent_2" : "Vous pouvez maintenant fermer cette page."
          },
          "change" : {
             "title" : "Choisissez un nouveau mot de passe",

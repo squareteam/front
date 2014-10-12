@@ -32,8 +32,8 @@
             "send"            : "Send reset instructions",
             "returnToSignIn"  : "Return to sign in",
 
-            "sent_1" : "A e-mail containing instructions",
-            "sent_2" : "for password changing has been sent !"
+            "sent_1" : "Please check your emails, you will shortly receive instructions on how to reset your password.",
+            "sent_2" : "You can now close this page"
          },
          "change" : {
             "title" : "Please enter a new password",
