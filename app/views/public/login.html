@@ -5,6 +5,10 @@
             
             <st-login-form github-login="true" ng-hide="oauthAuthenticating"></st-login-form>
 
+            <div class="alert alert-danger" ng-show="oauthAuthenticatingError">
+               {{ oauthAuthenticatingError | translate }}
+            </div>
+
             <div ng-show="oauthAuthenticating">
                <h1>
                   {{ 'public.login.github.authenticating' | translate }}

@@ -7,6 +7,8 @@
 
          "authenticating"  : "We are checking your identity..",
 
+         "authenticating_error": "Identity validation failed, please contact the support.",
+
          "github" : {
             "authenticating"  : "Authenticating with Github"
          },

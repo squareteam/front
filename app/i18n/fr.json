@@ -7,6 +7,8 @@
 
          "authenticating"  : "Nous vérifions votre identité...",
 
+         "authenticating_error": "La vérification de votre identité a échouée, merci de contacter le support.",
+
          "github" : {
             "authenticating"  : "Authentification avec Github",
             "tooltipBtn"      : "Se connecter avec Github"

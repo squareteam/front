@@ -17,6 +17,12 @@ angular.module('squareteam.app')
     ApiSession.login(login, $cookies[appConfig.api.oauth.cookieNS]).then(function() {
       delete $cookies[appConfig.api.oauth.cookieNS];
       $state.go('app.home');
-    }); // FIXME : set a flash message if failure
+    }, function(reason) {
+      if (reason === 'auth.bad_login' || reason === 'auth.bad_password') {
+        $scope.oauthAuthenticatingError = 'public.login.authenticating_error';
+      } else {
+        $scope.oauthAuthenticatingError = 'api.serverBusy';
+      }
+    });
   }
 });

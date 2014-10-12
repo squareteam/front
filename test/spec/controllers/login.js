@@ -43,18 +43,19 @@ describe('Controller: LoginCtrl', function () {
   }));
 
   var LoginCtrl, ApiSession,
-      $state, $controller, $cookies, $location, $rootScope,
+      $state, $controller, $cookies, $location, $rootScope, $q,
       scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($injector) {
 
-    ApiSession  = $injector.get('ApiSession');
-    $state      = $injector.get('$state');
-    $controller = $injector.get('$controller');
-    $cookies    = $injector.get('$cookies');
-    $location   = $injector.get('$location');
-    $rootScope  = $injector.get('$rootScope');
+    ApiSession    = $injector.get('ApiSession');
+    $state        = $injector.get('$state');
+    $controller   = $injector.get('$controller');
+    $cookies      = $injector.get('$cookies');
+    $location     = $injector.get('$location');
+    $rootScope    = $injector.get('$rootScope');
+    $q            = $injector.get('$q');
 
     scope = $rootScope.$new();
   }));
@@ -90,27 +91,60 @@ describe('Controller: LoginCtrl', function () {
     expect(ApiSession.login.calls.count()).toBe(0);
   });
 
-  it('it try to login if all params and cookies are present', function() {
+  describe('if all params and cookies are present', function() {
 
-    spyOn($location, 'search').and.returnValue({
-      provider : 'github',
-      email    : 'charly'
+    beforeEach(function() {
+
+      spyOn($location, 'search').and.returnValue({
+        provider : 'github',
+        email    : 'charly'
+      });
+
+      $cookies['st.oauth'] = 'oauth_token';
+
     });
 
-    $cookies['st.oauth'] = 'oauth_token';
-    spyOn(ApiSession, 'login').and.callThrough();
-    spyOn($state, 'go');
+    it('should try to login', function() {
+      spyOn(ApiSession, 'login').and.callThrough();
+      spyOn($state, 'go');
 
-    LoginCtrl = $controller('LoginCtrl', {
-      $scope: scope
+      LoginCtrl = $controller('LoginCtrl', {
+        $scope: scope
+      });
+
+      $rootScope.$digest();
+
+      expect(ApiSession.login).toHaveBeenCalledWith('charly','oauth_token');
+      expect($state.go).toHaveBeenCalledWith('app.home');
+
+      expect($cookies['st.oauth']).toBeUndefined();
     });
 
-    $rootScope.$digest();
+    it('should display a message if login failed (API error)', function() {
+      spyOn(ApiSession, 'login').and.returnValue($q.reject('auth.bad_password'));
 
-    expect(ApiSession.login).toHaveBeenCalledWith('charly','oauth_token');
-    expect($state.go).toHaveBeenCalledWith('app.home');
+      LoginCtrl = $controller('LoginCtrl', {
+        $scope: scope
+      });
 
-    expect($cookies['st.oauth']).toBeUndefined();
+      $rootScope.$digest();
+
+      expect(scope.oauthAuthenticatingError).toBe('public.login.authenticating_error');
+    });
+
+    it('should display a message if login failed (HTTP error)', function() {
+      spyOn(ApiSession, 'login').and.returnValue($q.reject('api.not_available'));
+
+      LoginCtrl = $controller('LoginCtrl', {
+        $scope: scope
+      });
+
+      $rootScope.$digest();
+
+      expect(scope.oauthAuthenticatingError).toBe('api.serverBusy');
+    });
+
+
   });
 
 });
