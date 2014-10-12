@@ -60,7 +60,7 @@ angular
         var deferred = $q.defer();
 
         if (!CurrentSession.isAuthenticated()) {
-          CurrentSession.restore().then(angular.bind(function() {
+          CurrentSession.restore().then(angular.bind(this, function() {
             if (CurrentSession.isAuthenticated()) {
               deferred.resolve();
             } else {
@@ -69,7 +69,7 @@ angular
                 redirectToState : 'public.login'
               });
             }
-          }, this));
+          }));
         } else {
           deferred.resolve();
         }
@@ -86,7 +86,7 @@ angular
             redirectToState : 'app.home'
           });
         } else {
-          CurrentSession.restore().then(angular.bind(function() {
+          CurrentSession.restore().then(angular.bind(this, function() {
             if (!CurrentSession.isAuthenticated()) {
               deferred.resolve();
             } else {
@@ -94,7 +94,7 @@ angular
                 redirectToState : 'app.home'
               });
             }
-          }, this));
+          }));
         }
 
         return deferred.promise;
