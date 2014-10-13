@@ -174,6 +174,8 @@ describe('Controller: ManageOrganizationCtrl', function () {
 
         beforeEach(function() {
           $httpBackend.expectPOST( url('teams/1/users') ).respond(201, apiResponseAsString(null, {}));
+          $httpBackend.expectGET( url('users/1/teams') ).respond(200, apiResponseAsString(null, []));
+
           popinScope.teamUsersDiff = {
             added : [
               {

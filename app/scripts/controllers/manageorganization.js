@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .controller('ManageOrganizationCtrl', function ($scope, $state, $q, $http, OrganizationResource, TeamResource, currentOrganization, ngDialog) {
+  .controller('ManageOrganizationCtrl', function ($scope, $state, $q, $http, OrganizationResource, TeamResource, currentOrganization, ngDialog, CurrentSession) {
 
     $scope.editingUsers = [];
     $scope.team         = null;
@@ -42,7 +42,12 @@ angular.module('squareteam.app')
               updates.push(user.$destroy().$promise);
             });
 
-            $q.all(updates).then(dialog.close);
+            // TODO(charly): handle error
+            $q.all(updates).then(function() {
+              CurrentSession.$$reloadUserPermissions().then(function() {
+                dialog.close();
+              }, dialog.close);
+            }, dialog.close);
           });
         };
 
