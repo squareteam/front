@@ -3,7 +3,7 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .directive('stDropdown', function ($parse) {
+  .directive('stDropdown', function ($parse, $timeout) {
     return {
       restrict: 'AC',
       link: function postLink($scope, $element, attrs) {
@@ -13,15 +13,27 @@ angular.module('squareteam.app')
             leftPadRaw          = $parse(attrs.leftPad || '')($scope),
             topPad              = !isNaN(parseInt(topPadRaw,0))  ? parseInt(topPadRaw, 10)  : 0,
             leftPad             = !isNaN(parseInt(leftPadRaw,0)) ? parseInt(leftPadRaw, 10) : 0;
-            // timeout;
 
         function closeDropdown () {
           $dropdown.fadeOut(200);
-
           $element.removeClass('dropdown-open');
-
         }
 
+        function onClickOutsideHandler (e) {
+          if ($dropdown === e.target || $.contains($dropdown, e.target)) {
+            return;
+          }
+
+          if ($dropdown.is(':visible')) {
+            $dropdown.hide();
+            closeDropdown();
+            $(document).off('click', onClickOutsideHandler);
+          }
+        }
+
+        function setupOnClickOutside () {
+          $(document).on('click', onClickOutsideHandler);
+        }
 
         $element.on('click', function(e) {
 
@@ -44,6 +56,9 @@ angular.module('squareteam.app')
 
             $dropdown.fadeIn(200);
             $element.addClass('dropdown-open');
+            $timeout(function() {
+              setupOnClickOutside();
+            }, 300);
 
           } else {
             closeDropdown();

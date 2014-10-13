@@ -3,13 +3,28 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .service('stTooltip', function stTooltip($rootScope, $http, $q, $compile, $templateCache) {
+  .service('stTooltip', function stTooltip($rootScope, $http, $q, $compile, $templateCache, $timeout) {
 
     var $singletonTooltip = {};
 
 
     // Tooltip API
     function wrapper (tooltipElement) {
+
+      function onClickOutsideHandler (e) {
+        if (tooltipElement === e.target || $.contains(tooltipElement, e.target)) {
+          return;
+        }
+
+        if (tooltipElement.is(':visible')) {
+          tooltipElement.hide();
+          $(document).off('click', onClickOutsideHandler);
+        }
+      }
+
+      function setupOnClickOutside () {
+        $(document).on('click', onClickOutsideHandler);
+      }
 
       function setPosition (top, left) {
         tooltipElement.css('left', left + 'px').css('top', top + 'px');
@@ -38,6 +53,10 @@ angular.module('squareteam.app')
 
           tooltipElement.css('display', 'none');
           tooltipElement.fadeIn(200);
+
+          $timeout(function() {
+            setupOnClickOutside();
+          }, 300);
         },
         show : function() {
           tooltipElement.fadeIn(200);

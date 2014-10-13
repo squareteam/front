@@ -5,7 +5,7 @@
     "angular": "1.2.15",
     "json3": "~3.2.6",
     "es5-shim": "~2.1.0",
-    "jquery": "~1.11.0",
+    "jquery": "~1.8.0",
     "bootstrap-sass-official": "~3.1.0",
     "angular-resource": "1.2.15",
     "angular-cookies": "1.2.15",
@@ -28,6 +28,7 @@
     "angular-scenario": "1.2.15"
   },
   "resolutions": {
-    "angular": "1.2.15"
+    "angular": "1.2.15",
+    "jquery": ">=1.8"
   }
 }

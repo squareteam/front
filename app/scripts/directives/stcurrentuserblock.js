@@ -1,7 +1,9 @@
+/* global $ */
+
 'use strict';
 
 angular.module('squareteam.app')
-  .directive('stCurrentUserBlock', function () {
+  .directive('stCurrentUserBlock', function ($timeout) {
     return {
       restrict: 'E',
       transclude : true,
@@ -10,7 +12,19 @@ angular.module('squareteam.app')
       link: function postLink(scope, element) {
         var button        = element.find('.avatar'),
             dropdown      = element.find('.user_dropdown'),
+            $dropdown     = $(dropdown),
             buttonOffset  = button.offset();
+
+        function onClickOutsideHandler (e) {
+          if ($dropdown === e.target || $.contains($dropdown, e.target)) {
+            return;
+          }
+
+          if ($dropdown.is(':visible')) {
+            $dropdown.hide();
+            $(document).off('click', onClickOutsideHandler);
+          }
+        }
 
         dropdown.css({
           top   : buttonOffset.top + 65 + 'px',
@@ -18,7 +32,12 @@ angular.module('squareteam.app')
         });
 
         button.on('click', function() {
-          dropdown[dropdown.is(':visible') ? 'fadeOut' : 'fadeIn'](200);
+          if (!$dropdown.is(':visible')) {
+            dropdown.fadeIn(200);
+            $timeout(function() {
+              $(document).on('click', onClickOutsideHandler);
+            }, 300);
+          }
         });
 
         dropdown.on('click', function() {
@@ -34,6 +53,7 @@ angular.module('squareteam.app')
             scope.userName = currentUser.name;
           }
         });
+
       }
     };
   });
