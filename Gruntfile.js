@@ -121,6 +121,17 @@ module.exports = function (grunt) {
           ]
         }
       },
+      ci: {
+        options: {
+          port: 9991,
+          hostname: process.env.OPENSHIFT_JENKINS_IP,
+          base: [
+            '.tmp',
+            'test',
+            '<%= yeoman.app %>'
+          ]
+        }
+      },
       dist: {
         options: {
           base: '<%= yeoman.dist %>'
@@ -414,8 +425,17 @@ module.exports = function (grunt) {
 
     // Test settings
     karma: {
-      unit: {
+      options: {
         configFile: 'karma.conf.js',
+        browsers: ['Chrome', 'PhantomJS']
+      },
+      unit: {
+        singleRun: true
+      },
+      ci: {
+        browsers: ['PhantomJS'],
+        port: 9999,
+        hostname: process.env.OPENSHIFT_JENKINS_IP,
         singleRun: true
       }
     }
@@ -448,6 +468,14 @@ module.exports = function (grunt) {
     // 'autoprefixer',
     'connect:test',
     'karma'
+  ]);
+
+  grunt.registerTask('ci', [
+    'clean:server',
+    // 'concurrent:test',
+    // 'autoprefixer',
+    'connect:ci',
+    'karma:ci'
   ]);
 
   grunt.registerTask('patch', [
