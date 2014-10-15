@@ -2,7 +2,7 @@
 
    "public" : {
       "login" : {
-         "wantAnAccount_1"   : "Don't have an account?",
+         "wantAnAccount_1"   : "Still don't have an account?",
          "wantAnAccount_2"   : "Discover now",
 
          "authenticating"  : "We are checking your identity..",
@@ -26,15 +26,15 @@
       "forgotPassword" : {
          "emailInvalid"          : "No account found with this email",
          "oAuthAccountFound"     : "Please try to login with",
-         "tokenInvalid"          : "Your password change request is expired",
+         "tokenInvalid"          : "Your change password request has expired",
          "tokenInvalidClickHere" : "Please make a new request",
          "request": {
             "title" : "Forgot password?",
-            "notice"          : "Enter the email address you used when you joined and we'll send you instructions to reset your password.",
+            "notice"          : "Enter your email address and we'll send you instructions on how to reset your password.",
             "send"            : "Send reset instructions",
             "returnToSignIn"  : "Return to sign in",
 
-            "sent_1" : "Please check your emails, you will shortly receive instructions on how to reset your password.",
+            "sent_1" : "Please check your inbox, you will shortly receive instructions on how to reset your password.",
             "sent_2" : "You can now close this page"
          },
          "change" : {
