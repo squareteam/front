@@ -433,10 +433,16 @@ module.exports = function (grunt) {
         singleRun: true
       },
       ci: {
-        browsers: ['PhantomJS'],
+        browsers: ['PhantomJS_custom'],
         port: 9999,
         hostname: process.env.OPENSHIFT_JENKINS_IP,
-        singleRun: true
+        singleRun: true,
+        customLaunchers: {
+          'PhantomJS_custom': {
+            base: 'PhantomJS',
+            flags: ['--proxy=127.7.153.129:9991']
+          }
+        }
       }
     }
   });
