@@ -1,4 +1,4 @@
-## Squareteam front (AngularJS)
+## Squareteam front [![Dependency Status](https://gemnasium.com/squareteam/front.svg)](https://gemnasium.com/squareteam/front)
 
 ## Important !
 
