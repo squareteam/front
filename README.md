@@ -1,4 +1,4 @@
-## Squareteam front [![Dependency Status](https://gemnasium.com/squareteam/front.svg)](https://gemnasium.com/squareteam/front)
+## Squareteam front [![Dependency Status](https://gemnasium.com/squareteam/front.svg)](https://gemnasium.com/squareteam/front)[![Build Status](https://travis-ci.org/squareteam/front.svg?branch=master)](https://travis-ci.org/squareteam/front)
 
 ## Important !
 
