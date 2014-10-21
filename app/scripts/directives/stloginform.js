@@ -15,18 +15,19 @@ angular.module('squareteam.app')
         githubLogin   : '@'
       },
       replace : true,
-      controller: function($scope, $element, $attrs, $state, $location, ApiSession) {
+      controller: function($scope, $element, $attrs, $state, $location, ApiSession, ApiOAuth) {
 
         $scope.retries = 0;
 
-        var login     = $location.search() && $location.search().email,
-            provider  = $location.search() && $location.search().provider;
+        if (ApiOAuth.isOAuthLoginRequest()) {
+          var oAuthParams = ApiOAuth.oAuthLoginData();
 
-        if (provider && login && provider.toLowerCase() === 'squareteam') {
-          $scope.user = {
-            email : login
-          };
-          $scope.youAlreadyHaveAccount = true;
+          if (oAuthParams.provider && oAuthParams.email && oAuthParams.provider.toLowerCase() === 'squareteam') {
+            $scope.user = {
+              email : oAuthParams.email
+            };
+            $scope.youAlreadyHaveAccount = true;
+          }
         }
 
         $scope.setDirty = function() {

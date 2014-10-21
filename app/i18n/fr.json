@@ -3,20 +3,37 @@
    "public" : {
       "login" : {
          "wantAnAccount_1"   : "Pas de compte ?",
-         "wantAnAccount_2"   : "Découvrir",
+         "wantAnAccount_2"   : "Découvrir"
+      },
 
-         "authenticating"  : "Nous vérifions votre identité...",
+      "oauth" : {
 
-         "authenticating_error": "La vérification de votre identité a échouée, merci de contacter le support.",
+         "login" : {
 
-         "github" : {
-            "authenticating"  : "Authentification avec Github",
-            "tooltipBtn"      : "Se connecter avec Github"
+            "authenticating" : "Nous vérifions votre identité...",
+
+            "authenticating_error": "La vérification de votre identité a échouée, merci de contacter le support.",
+
+            "github" : {
+               "authenticating"  : "Authentification avec Github",
+               "tooltipBtn"      : "Se connecter avec Github"
+            },
+
+            "behance" : {
+               "authenticating"  : "Authentification avec Behance",
+               "tooltipBtn"      : "Se connecter avec Behance"
+            }
+
          },
-         "behance" : {
-            "authenticating"  : "Authentification avec Behance",
-            "tooltipBtn"      : "Se connecter avec Behance"
+
+         "email" : {
+
+            "wrong_provider" : "Vous ne supportons pas encore la connexion via ce service.",
+            "title" : "Confirmer votre email",
+            "confirmBtn" : "Confirmer"
+
          }
+
       },
 
       "register" : {

@@ -3,18 +3,37 @@
    "public" : {
       "login" : {
          "wantAnAccount_1"   : "Still don't have an account?",
-         "wantAnAccount_2"   : "Discover now",
+         "wantAnAccount_2"   : "Discover now"
+      },
 
-         "authenticating"  : "We are checking your identity..",
+      "oauth" : {
 
-         "authenticating_error": "Identity validation failed, please contact the support.",
+         "login" : {
 
-         "github" : {
-            "authenticating"  : "Authenticating with Github"
+            "authenticating" : "We are checking your identity...",
+
+            "authenticating_error": "Identity checking failed, please contact our support.",
+
+            "github" : {
+               "authenticating"  : "Authenticate with Github",
+               "tooltipBtn"      : "Sign in with Github"
+            },
+
+            "behance" : {
+               "authenticating"  : "Authenticate with Behance",
+               "tooltipBtn"      : "Sign in with Behance"
+            }
+
          },
-         "behance" : {
-            "authenticating"  : "Authenticating with Behance"
+
+         "email" : {
+
+            "wrong_provider" : "We do not support login with this service yet.",
+            "title" : "Confirm your email",
+            "confirmBtn" : "Confirm"
+
          }
+
       },
 
       "register" : {

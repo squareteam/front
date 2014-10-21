@@ -146,7 +146,19 @@ angular
         controller : 'LoginCtrl',
         templateUrl : 'views/public/login.html'
       })
-      
+
+      .state('public.oauth_check', {
+        url : '/oauth/check',
+        controller : 'OAuthLoginCtrl',
+        templateUrl : 'views/public/oauth/login.html'
+      })
+
+      .state('public.oauth_email', {
+        url : '/oauth/email',
+        controller : 'OAuthEmailConfirmCtrl',
+        templateUrl : 'views/public/oauth/email.html'
+      })
+
       .state('public.register', {
         url : '/register',
         templateUrl : 'views/public/register.html'
