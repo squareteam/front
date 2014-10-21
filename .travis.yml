@@ -4,3 +4,4 @@ node_js:
 before_script:
   - 'npm install -g bower grunt-cli'
   - 'bower install'
+  - cp app/scripts/config_sample.js app/scripts/config.js
