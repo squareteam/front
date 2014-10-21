@@ -18,6 +18,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-bump');
   grunt.loadNpmTasks('grunt-version');
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-karma-coveralls');
 
   // Define the configuration for all the tasks
   grunt.initConfig({
@@ -91,6 +92,16 @@ module.exports = function (grunt) {
           '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
+      }
+    },
+
+   coveralls: {
+      options: {
+        debug: false,
+        'coverage_dir': 'coverage/',
+        dryRun: false,
+        force: true,
+        recursive: true
       }
     },
 

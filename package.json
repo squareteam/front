@@ -41,7 +41,8 @@
     "grunt-bump": "0.0.13",
     "grunt-version": "~0.3.0",
     "karma-story-reporter": "~0.2.2",
-    "grunt-contrib-sass": "~0.7.3"
+    "grunt-contrib-sass": "~0.7.3",
+    "grunt-karma-coveralls": "~2.5.2"
   },
   "engines": {
     "node": ">=0.10.0"

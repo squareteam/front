@@ -26,11 +26,11 @@ module.exports = function(config) {
       stripPrefix: 'app/'
     },
 
-    // optionally, configure the reporter
     coverageReporter: {
-      type : 'html',
-      dir : 'coverage/'
+      type: 'lcovonly',
+      dir: 'coverage/'
     },
+
 
     // list of files / patterns to load in the browser
     files: [
