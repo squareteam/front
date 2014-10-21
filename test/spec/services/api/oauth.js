@@ -88,12 +88,12 @@ describe('ApiOAuth', function() {
 
     });
 
-    describe('when `?errors[email]=api.missing_attribute&email=yyy`', function() {
+    describe('when `?errors[email][]=api.missing_attribute&provider=github`', function() {
 
       beforeEach(function() {
 
         spyOn($location, 'search').and.returnValue({
-          'errors[email]' : 'api.missing_attribute',
+          'errors[email]' : ['api.missing_attribute'],
           provider        : 'github'
         });
 
