@@ -11,7 +11,7 @@ angular.module('squareteam.app')
       templateUrl: 'scripts/directives/templates/stusercreate.html',
       restrict: 'E',
       replace: true,
-      controller: function($scope, $element, $attrs, $location, UserResource, ApiErrors, CurrentSession, ApiSession, ApiCrypto, ApiAuth) {
+      controller: function($scope, $element, $attrs, $location, UserResource, ApiErrors, CurrentSession, ApiSession, ApiCrypto, ApiAuth, stPolicies) {
         
         $scope.setDirty = function() {
           // set all inputs to dirty
@@ -22,7 +22,7 @@ angular.module('squareteam.app')
         };
 
         $scope.passwordFormat = function() {
-          $scope.passwordBadPractice = !$scope.user.password || $scope.user.password.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/) === null;
+          $scope.passwordBadPractice = !stPolicies.isPasswordValid($scope.user.password);
         };
 
         $scope.register = function() {
