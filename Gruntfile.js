@@ -438,21 +438,12 @@ module.exports = function (grunt) {
     karma: {
       options: {
         configFile: 'karma.conf.js',
-        browsers: ['Chrome', 'PhantomJS']
+        browsers: ['PhantomJS']
       },
-      unit: {
-        singleRun: true
-      },
-      ci: {
-        browsers: ['PhantomJS_custom'],
-        port: 9999,
-        hostname: process.env.OPENSHIFT_JENKINS_IP,
-        singleRun: true,
-        customLaunchers: {
-          'PhantomJS_custom': {
-            base: 'PhantomJS',
-            flags: ['--proxy=127.7.153.129:9991']
-          }
+      dev: {
+        coverageReporter: {
+          type: 'html',
+          dir: 'coverage-dev/'
         }
       }
     }
