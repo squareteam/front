@@ -93,7 +93,7 @@ describe('ApiOAuth', function() {
       beforeEach(function() {
 
         spyOn($location, 'search').and.returnValue({
-          'errors[email]' : ['api.missing_attribute'],
+          'errors[email][]' : 'api.missing_attribute',
           provider        : 'github'
         });
 

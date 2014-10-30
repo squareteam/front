@@ -60,14 +60,11 @@ angular.module('squareteam.api')
       },
 
       isOAuthEmailMissingRequest : function() {
-        var params = $location.search(), emailParams = params && params['errors[email][]'], missingEmail = false;
-        console.warn(emailParams);
-        angular.forEach(emailParams, function(v) {
-          missingEmail = missingEmail || v === 'api.missing_attribute';
-        }, params);
+        var params = $location.search();
         return  params &&
-                params.provider &&
-                missingEmail;
+                params['errors[email][]'] &&
+                params['errors[email][]'] === 'api.missing_attribute' &&
+                params.provider;
       },
 
       providerConfig : function(provider) {
