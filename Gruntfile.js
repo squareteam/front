@@ -95,7 +95,7 @@ module.exports = function (grunt) {
       }
     },
 
-   coveralls: {
+    coveralls: {
       options: {
         debug: false,
         'coverage_dir': 'coverage/',
