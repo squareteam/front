@@ -475,15 +475,7 @@ module.exports = function (grunt) {
     // 'concurrent:test',
     // 'autoprefixer',
     'connect:test',
-    'karma'
-  ]);
-
-  grunt.registerTask('ci', [
-    'clean:server',
-    // 'concurrent:test',
-    // 'autoprefixer',
-    'connect:ci',
-    'karma:ci'
+    'karma:dev'
   ]);
 
   grunt.registerTask('patch', [
