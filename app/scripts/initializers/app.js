@@ -245,14 +245,26 @@ angular
 
       // PROJECTS
 
-      .state('app.projects', {
-        url : '/projects',
+      .state('app.user_projects', {
+        url : '/users/:userId/projects',
         templateUrl : 'views/app/project_list.html',
         controller : 'ProjectsListCtrl'
       })
 
-      .state('app.project_view', {
-        url : '/projects/:projectId/missions',
+      .state('app.organization_projects', {
+        url : '/organizations/:organizationId/projects',
+        templateUrl : 'views/app/project_list.html',
+        controller : 'ProjectsListCtrl'
+      })
+
+      .state('app.user_project_missions', {
+        url : '/users/:userId/projects/:projectId/missions',
+        templateUrl : 'views/app/project_view.html',
+        controller : 'ProjectViewCtrl'
+      })
+
+      .state('app.organization_project_missions', {
+        url : '/organizations/:organizationId/projects/:projectId/missions',
         templateUrl : 'views/app/project_view.html',
         controller : 'ProjectViewCtrl'
       })

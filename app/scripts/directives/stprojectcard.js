@@ -15,7 +15,7 @@ angular.module('squareteam.app')
       templateUrl: 'scripts/directives/templates/stprojectcard.html',
       restrict: 'E',
       replace : true,
-      controller : function($scope, $element, $attrs, stTooltip) {
+      controller : function($scope, $element, $attrs, $state, stTooltip) {
 
         var editProjectStatusScope  = $scope.$new(),
             $tooltip                = null;
@@ -39,6 +39,24 @@ angular.module('squareteam.app')
           } else {
             $tooltip.hide();
             $tooltip = null;
+          }
+        };
+
+        $scope.openProject = function() {
+          var parent = $scope.project.$closestParentByName(['users', 'organizations']);
+
+          // TODO(charly): handle no parent found case...
+
+          if (parent.constructor.$name() === 'users') {
+            $state.go('app.user_project_missions', {
+              userId: parent.id,
+              projectId : $scope.project.id
+            });
+          } else {
+            $state.go('app.organization_project_missions', {
+              organizationId: parent.id,
+              projectId : $scope.project.id
+            });
           }
         };
       }

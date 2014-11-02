@@ -118,6 +118,14 @@
                   Liste des missions
                </h2>
                <ul class="list">
+                  <li ng-if="!project.missions || project.missions.length == 0">
+                     <div style="text-align:center">
+                        <strong>
+                           Aucune mission
+                        </strong>
+                        <br><br>
+                     </div>
+                  </li>
                   <st-mission-item  mission="mission"
                                     ng-repeat="mission in project.missions | orderBy:sortBy | filter:statusFilter"></st-mission-item>
                </ul>

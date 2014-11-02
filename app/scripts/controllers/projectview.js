@@ -3,7 +3,7 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .controller('ProjectViewCtrl', function ($scope, $stateParams, $rootScope, ProjectResource, CurrentSession, moment, ngDialog) {
+  .controller('ProjectViewCtrl', function ($scope, $stateParams, $rootScope, $state, ProjectResource, CurrentSession, moment, ngDialog, _) {
 
     // SORT, FILTERS
 
@@ -89,21 +89,38 @@ angular.module('squareteam.app')
 
     ProjectResource.$search().$then(function(projects) {
       $scope.projects = projects;
-
-      var currentProject = $.grep($scope.projects, function(project) {
-        return +project.id === +$stateParams.projectId;
-      });
-
-      if (currentProject.length === 1) {
-        $scope.changeProject(currentProject[0]);
-      } else {
-        console.error('Project not found ! #' + $stateParams.projectId);
-      }
+      $scope.loadMissions();
     });
 
+    $scope.loadMissions = function() {
+      function missionsLoaded (missions) {
+        $scope.missions = missions;
+      }
+
+      if (!$scope.project && !!$stateParams.projectId) {
+        $scope.project = _.find($scope.projects, { id : +$stateParams.projectId});
+      }
+
+      if (!$scope.project) {
+        $scope.project = $scope.projects[0];
+      }
+
+      $scope.project.missions.$refresh().$then(missionsLoaded);
+
+    };
+
     $scope.changeProject = function(project) {
-      $scope.project = project;
-      $scope.project.missions.$refresh(); // load project missions
+      if (project.owner_type === 'users') {
+        $state.go('app.user_project_missions', {
+          userId: project.owner.id,
+          projectId : project.id
+        });
+      } else {
+        $state.go('app.organization_project_missions', {
+          organizationId: project.owner.id,
+          projectId : project.id
+        });
+      }
     };
 
     $scope.filteredProjects = function() {

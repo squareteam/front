@@ -5,5 +5,5 @@ angular.module('squareteam.resources')
     return restmod.model({
       url      : null,
       name     : 'projects',
-    }, 'AclModel', ProjectResourceConfig);
+    }, 'AclModel', 'ModelHelpers', ProjectResourceConfig);
   });

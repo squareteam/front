@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .controller('ProjectsListCtrl', function ($scope, $rootScope, ngDialog, ProjectResource, UserResource, CurrentSession, moment) {
+  .controller('ProjectsListCtrl', function ($scope, $rootScope, $location, $stateParams, ngDialog, ProjectResource, UserResource, CurrentSession, moment, _) {
 
     $scope.organizations  = [];
     $scope.sortBy         = '';
@@ -93,12 +93,16 @@ angular.module('squareteam.app')
         $scope.projects = projects;
       }
 
-      if (!$scope.currentScope) {
-        if ($scope.organizations.length) {
-          $scope.currentScope = $scope.organizations[0];
-        } else {
+      if (!$scope.currentScope && ($stateParams.organizationId || $stateParams.userId)) {
+        if (!!$stateParams.userId && $scope.currentUser.id === $stateParams.userId) {
           $scope.currentScope = $scope.currentUser;
+        } else if (!!$stateParams.organizationId) {
+          $scope.currentScope = _.find($scope.organizations, { id : +$stateParams.organizationId });
         }
+      }
+
+      if (!$scope.currentScope) {
+        $scope.currentScope = $scope.currentUser;
       }
 
       $scope.currentScope.projects.$refresh().$then(projectsLoaded);
@@ -156,11 +160,6 @@ angular.module('squareteam.app')
     $scope.clearFilters = function() {
       $scope.teamFilter     = '';
       $scope.statusFilter   = '';
-    };
-
-    $scope.changeScope = function(scope) {
-      $scope.currentScope = scope;
-      $scope.loadProjects();
     };
 
     $scope.createProjectPopin = function() {
