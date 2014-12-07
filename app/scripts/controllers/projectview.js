@@ -110,7 +110,7 @@ angular.module('squareteam.app')
     };
 
     $scope.changeProject = function(project) {
-      if (project.owner_type === 'users') {
+      if (project.ownerType === 'users') {
         $state.go('app.user_project_missions', {
           userId: project.owner.id,
           projectId : project.id
