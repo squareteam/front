@@ -63,7 +63,7 @@ angular.module('squareteam.api')
         var params = $location.search();
         return  params &&
                 params['errors[email][]'] &&
-                params['errors[email][]'] === 'api.missing_attribute' &&
+                params['errors[email][]'].indexOf('api.missing_attribute') >= 0 &&
                 params.provider;
       },
 
