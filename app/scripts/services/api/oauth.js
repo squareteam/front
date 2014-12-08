@@ -3,7 +3,7 @@
 // OAuth controller
 
 angular.module('squareteam.api')
-  .factory('ApiOAuth', function Apiauth($location, $cookies, $q, ApiSession, appConfig) {
+  .factory('ApiOAuth', function Apiauth($location, $cookies, $q, ApiSession, appConfig, u2camelFilter) {
     return {
 
       redirectIfLogin : function() {
@@ -25,7 +25,7 @@ angular.module('squareteam.api')
       // Helpers
 
       isOAuthLoginRequest : function() {
-        var provider = $location.search() && $location.search().provider;
+        var provider = $location.search() && u2camelFilter($location.search().provider);
 
         return  provider &&
                 $location.search() && $location.search().email &&
@@ -69,7 +69,7 @@ angular.module('squareteam.api')
 
       providerConfig : function(provider) {
 
-        return appConfig.api.oauth[provider];
+        return appConfig.api.oauth[u2camelFilter(provider)];
 
       }
 

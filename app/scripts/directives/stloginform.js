@@ -12,7 +12,8 @@ angular.module('squareteam.app')
       restrict: 'E',
       scope : {
         redirectPath  : '@',
-        githubLogin   : '@'
+        githubLogin   : '@',
+        googleLogin   : '@'
       },
       replace : true,
       controller: function($scope, $element, $attrs, $state, $location, ApiSession, ApiOAuth) {
