@@ -1,7 +1,11 @@
 language: node_js
+env:
+  - COVERALLS_REPO_TOKEN=EhUh7DvONjBDOXLmWScWh8esPiGjvslaD
 node_js:
-  - '0.8'
   - '0.10'
 before_script:
   - 'npm install -g bower grunt-cli'
   - 'bower install'
+  - cp app/scripts/config_sample.js app/scripts/config.js
+after_script:
+  - 'grunt coveralls'

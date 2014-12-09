@@ -1,0 +1,38 @@
+<li class="mission row no-select {{ mission.status }}">
+   <div class="col-xs-1 status">
+      <i class="icon-status {{ mission.status }}"></i>
+   </div>
+   <div class="col-xs-4 name">
+      {{ mission.title }}
+   </div>
+   <div class="col-xs-3 members">
+      <img src="http://placekitten.com/g/24/24" alt="">
+      <img src="http://placekitten.com/g/24/24" alt="">
+      <div class="more">
+         +1
+      </div>
+   </div>
+   <div class="col-xs-3 metadata">
+      <div class="col-xs-4">
+         <i class="icon icon-metadata-tasks"></i>
+         <span>
+            {{ mission.metadata.tasksCount || 0 }}
+         </span>
+      </div>
+      <div class="col-xs-4">
+         <i class="icon icon-metadata-threads"></i>
+         <span>
+            {{ mission.metadata.threadsCount || 0 }}
+         </span>
+      </div>
+      <div class="col-xs-4">
+         <i class="icon icon-metadata-documents"></i>
+         <span>
+            {{ mission.metadata.documentsCount || 0 }}
+         </span>
+      </div>
+   </div>
+   <div class="col-xs-1 deadline">
+      {{ mission.metadata.deadline ? (mission.metadata.deadline | amCalendar) : 'Aucune' }}
+   </div>
+</li>

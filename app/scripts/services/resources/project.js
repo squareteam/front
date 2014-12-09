@@ -1,26 +1,21 @@
 'use strict';
 
 angular.module('squareteam.resources')
-  .factory('ProjectResource', function(restmod) {
-    return restmod.model({
-      url      : null,
+  .factory('ProjectResource', function(restmod, ProjectResourceConfig, moment) {
+    return restmod.model('apis://projects', {
       name     : 'projects',
-    }, 'AclModel', function() {
 
-      this.attrMask('status', 'C');
-      this.attrMask('metadata', 'CU');
-      this.attrMask('progress', 'CU');
-      this.attrMask('creator', 'CU');
-      this.attrMask('users', 'CU');
-      this.attrMask('createdAt', 'CU');
-      this.attrMask('id', 'CU');
+      missions : { hasMany : 'ProjectMissionResource' },
 
-      this.attrEncoder('deadline', function(value) {
-        return value === null ? '' : value;
-      });
+      progressAsNumber  : { mask : true },
+      remainingDays     : { mask : true },
+      remainingMonths   : { mask : true },
 
-      this.attrDecoder('progress', function(value) {
-        return value + '%';
-      });
-    });
+      '~afterFeed' : function() {
+        this.progressAsNumber = parseInt(this.progress, 10);
+        this.remainingDays = moment().diff(moment(this.deadline), 'days');
+        this.remainingMonths = moment().diff(moment(this.deadline), 'months');
+      }
+
+    }, 'AclModel', ProjectResourceConfig);
   });

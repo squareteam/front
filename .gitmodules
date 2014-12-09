@@ -1,3 +1,3 @@
 [submodule "app/styles"]
 	path = app/styles
-	url = git@bitbucket.org:squareteam/front-styles.git
+	url = git://github.com/squareteam/front-styles.git

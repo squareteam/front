@@ -6,7 +6,7 @@ angular.module('squareteam.resources')
     var Organization = restmod.model('apis://organizations', {
 
       teams     : { hasMany : 'TeamResource'},
-      projects  : { hasMany : 'ProjectResource' }
+      projects  : { hasMany : 'ProjectResourceNested'}
 
     }, 'AclModel');
 

@@ -18,7 +18,7 @@ angular.module('squareteam.app')
       templateUrl: 'scripts/directives/templates/storganizationcreate.html',
       restrict: 'E',
       replace: true,
-      controller: function($scope, $element, $attrs, $location, $http, $state, OrganizationResource, ApiErrors) {
+      controller: function($scope, $element, $attrs, $location, $http, $state, OrganizationResource, CurrentSession, ApiErrors) {
 
         function onError (response) {
           if (response.error instanceof ApiErrors.Api) {
@@ -38,11 +38,13 @@ angular.module('squareteam.app')
 
 
           OrganizationResource.createWithAdmins($scope.organization, $scope.forUsers || []).then(function(response) {
-            if ($scope.redirectPath ) {
-              $location.path($scope.redirectPath);
-            } else {
-              $state.go('app.organization.manage', { organizationId : response.data.id });
-            }
+            CurrentSession.$$reloadUserPermissions().then(function() {
+              if ($scope.redirectPath ) {
+                $location.path($scope.redirectPath);
+              } else {
+                $state.go('app.organization.manage', { organizationId : response.data.id });
+              }
+            }, onError);
           }, onError);
 
         };

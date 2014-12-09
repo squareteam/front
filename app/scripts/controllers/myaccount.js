@@ -4,7 +4,7 @@
 
 angular.module('squareteam.app')
 
-  .controller('MyAccountCtrl', function ($scope, $http, $location, ApiSession, CurrentSession, UserResource, PasswordConfirmPopin, appConfig, ApiErrors, ApiSessionStorageCookies, stUtils) {
+  .controller('MyAccountCtrl', function ($scope, $http, $location, ApiSession, CurrentSession, UserResource, PasswordConfirmPopin, appConfig, ApiErrors, ApiSessionStorageCookies, stUtils, stPolicies) {
 
     // INITIALIZE
     $scope.isOAuthAccount = CurrentSession.isOAuthAccount();
@@ -34,7 +34,7 @@ angular.module('squareteam.app')
     // EXPOSE METHODS
 
     $scope.passwordFormat = function() {
-      $scope.passwordBadPractice = !$scope.user.password || $scope.user.password.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/) === null;
+      $scope.passwordBadPractice = !stPolicies.isPasswordValid($scope.user.password);
     };
 
     $scope.updateUser = function() {
@@ -79,7 +79,7 @@ angular.module('squareteam.app')
             if (errorText === 'api.already_taken.Email') {
               $scope.userForm.email.$setValidity('unique', false);
             }
-          }.bind(this));
+          }, this);
         } else {
           $scope.user.$restore();
         }

@@ -5,14 +5,14 @@
             {{ project.title }}
          </h3>
          <span class="created_at">
-            {{ 'directives.stProjectCard.created' | translate }} 
+            {{ 'directives.stProjectCard.created' | translate }}
             <time datetime="{{ project.created_at }}">
                {{ project.createdAt | amCalendar }}
             </time>
          </span>
       </div>
       <div class="col-xs-2">
-         <i class="icon icon-settings" ng-show="project.$can('manage')" ng-click="project.$can('manage') && openUpdateProjectTooltip()"></i>
+         <st-project-edit-icon project="project" ng-show="project.$can('manage')"></st-project-edit-icon>
       </div>
    </div>
 
@@ -65,8 +65,7 @@
       <img st-file-id="{{ project.thumbnail }}" alt="">
    </div>
 
-   <div class="description" ng-if="project.description">
-      {{ project.description }}
+   <div class="description" ng-if="project.description" ng-bind-html="project.descriptionMd">
    </div>
 
    <div class="metadata row">
@@ -90,7 +89,7 @@
 
    <div class="view_project">
       <div>
-         <a href="">{{ 'directives.stProjectCard.seeProject' | translate }}</a>
+         <a ng-click="openProject()">{{ 'directives.stProjectCard.seeProject' | translate }}</a>
       </div>
    </div>
 

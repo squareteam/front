@@ -1,0 +1,29 @@
+<section class="container container-fluid">
+   <div class="row" >
+      <div id="box_center" class="col-sm-10 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3" >
+         <div class='box_shadow'>
+
+            <div>
+               <h1>
+                  {{ 'public.oauth.login.github.authenticating' | translate }}
+               </h1>
+
+               <div class="alert alert-danger" ng-show="error">
+                  {{ error | translate }}
+               </div>
+
+               <article>
+                  <br>
+                  <p style="text-align:center;">
+                     <strong ng-show="authenticating">
+                        {{ 'public.oauth.login.authenticating' | translate }}
+                     </strong>
+                  </p>
+                  <br>
+               </article>
+            </div>
+
+         </div>
+      </div>
+   </div>
+</section>

@@ -19,11 +19,12 @@ angular
     'ngDialog',
     'restmod',
     'angularMoment',
-    'truncate'
+    'truncate',
+    'angular-svg-round-progress'
   ]);
 
 
-angular.module('squareteam.app').value('lodash', window._);
+angular.module('squareteam.app').value('_', window._);
 
 // DO NOT EDIT LINE BELOW
 //  open README.md for more explaination

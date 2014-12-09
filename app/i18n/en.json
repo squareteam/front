@@ -2,17 +2,38 @@
 
    "public" : {
       "login" : {
-         "wantAnAccount_1"   : "Don't have an account?",
-         "wantAnAccount_2"   : "Discover now",
+         "wantAnAccount_1"   : "Still don't have an account?",
+         "wantAnAccount_2"   : "Discover now"
+      },
 
-         "authenticating"  : "We are checking your identity..",
+      "oauth" : {
 
-         "github" : {
-            "authenticating"  : "Authenticating with Github"
+         "login" : {
+
+            "authenticating" : "We are checking your identity...",
+
+            "authenticating_error": "Identity checking failed, please contact our support.",
+
+            "github" : {
+               "authenticating"  : "Authenticate with Github",
+               "tooltipBtn"      : "Sign in with Github"
+            },
+
+            "behance" : {
+               "authenticating"  : "Authenticate with Behance",
+               "tooltipBtn"      : "Sign in with Behance"
+            }
+
          },
-         "behance" : {
-            "authenticating"  : "Authenticating with Behance"
+
+         "email" : {
+
+            "wrong_provider" : "We do not support login with this service yet.",
+            "title" : "Confirm your email",
+            "confirmBtn" : "Confirm"
+
          }
+
       },
 
       "register" : {
@@ -24,16 +45,16 @@
       "forgotPassword" : {
          "emailInvalid"          : "No account found with this email",
          "oAuthAccountFound"     : "Please try to login with",
-         "tokenInvalid"          : "Your password change request is expired",
+         "tokenInvalid"          : "Your change password request has expired",
          "tokenInvalidClickHere" : "Please make a new request",
          "request": {
             "title" : "Forgot password?",
-            "notice"          : "Enter the email address you used when you joined and we'll send you instructions to reset your password.",
+            "notice"          : "Enter your email address and we'll send you instructions on how to reset your password.",
             "send"            : "Send reset instructions",
             "returnToSignIn"  : "Return to sign in",
 
-            "sent_1" : "A e-mail containing instructions",
-            "sent_2" : "for password changing has been sent !"
+            "sent_1" : "Please check your inbox, you will shortly receive instructions on how to reset your password.",
+            "sent_2" : "You can now close this page"
          },
          "change" : {
             "title" : "Please enter a new password",
@@ -96,10 +117,10 @@
          "projects"     : "projects"
       },
 
-      "myAccount" : {
-         "profile" : {
+      "manage" : {
+         "account" : {
             "title"           : "My Account",
-            "subtitle"        : "Need to update your informations ?",
+            "subtitle"        : "Need to update your personal information?",
             "change_avatar"   : "Change my avatar",
             "name"            : "Pseudo",
             "password"        : "Password",
@@ -112,6 +133,23 @@
             "leave"           : "Leave",
             "no_organizations": "No organization.",
             "create"          : "Create"
+         },
+         "organization" : {
+            "subtitle_singular"  : "team",
+            "subtitle_plural"    : "teams",
+            "team_list_user_singular"  : "user",
+            "team_list_user_plural"    : "users",
+            "manage" : "Manage",
+            "no_team": "No team.",
+            "create_team": "Create team"
+         },
+         "team" : {
+            "edit" : "Edit",
+            "save" : "Save",
+            "remove" : "Remove",
+            "no_users" : "No users",
+            "add_member" : "Add a member",
+            "edit_team" : "Edit team"
          }
       }
 
@@ -122,6 +160,22 @@
          "title"     : "Please confirm your password",
          "subtitle"  : "For your security.",
          "continue"   : "Continue"
+      },
+      "team" : {
+         "title" : "Team",
+         "subtitle_create" : "Let's create a team",
+         "subtitle_update" : "Keep informations up to date",
+         "subtitle_workers" : "Manage workers",
+         "labels" : {
+            "name" : "Name",
+            "color" : "Pick a color",
+            "workers" : "Choose worker(s)"
+         },
+         "buttons" : {
+            "create" : "Create",
+            "update" : "Update",
+            "workers" : "Update workers"
+         }
       }
    },
 

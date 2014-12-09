@@ -14,7 +14,7 @@
 //  - `restore`    will try to restore CurrentSession from cookies
 
 angular.module('squareteam.app')
-  .service('CurrentSession', function CurrentSession($rootScope, $http, $q, appConfig, ApiAuth, ApiCrypto, ApiErrors, ApiSessionStorageCookies, UserResource, AclRoles) {
+  .service('CurrentSession', function CurrentSession($rootScope, $http, $q, _, appConfig, ApiAuth, ApiCrypto, ApiErrors, ApiSessionStorageCookies, UserResource, AclRoles) {
     this.$$user = null;
     this.$$auth = new ApiAuth();
 
@@ -31,12 +31,54 @@ angular.module('squareteam.app')
 
       this.getUser().teams.$refresh().$then(angular.bind(this, function(teams) {
 
-        angular.forEach(teams, function(team) {
-          angular.forEach(team.users, function(user) {
-            if (user.id === this.$$user.id) {
-              this.$$userPermissions[team.organizationId] = AclRoles.asBooleanMap(user.permissions);
-            }
+        var teamsByOrganizations = _.groupBy(teams, 'organizationId');
+
+        function mergePermissions (permissionsMaps) {
+          var mergedPermissions = {};
+          
+          _.each(permissionsMaps[0], function(permissionObject, key) {
+
+            mergedPermissions[key] = {};
+
+            return _.each(permissionObject, function(permissions, type) {
+
+              mergedPermissions[key][type] = !!Math.max.apply(
+                null,
+                _.map(
+                  permissionsMaps,
+                  function(permissions) {
+                    return +permissions[key][type];
+                  }
+                )
+              );
+
+            });
+
+          });
+
+
+          return mergedPermissions;
+        }
+
+        angular.forEach(teamsByOrganizations, function(teams, organizationId) {
+
+          angular.forEach(teams, function(team) {
+
+            angular.forEach(team.users, function(user) {
+              if (user.id === this.$$user.id) {
+                if (teams.length > 1 && this.$$userPermissions[organizationId]) {
+                  this.$$userPermissions[organizationId] = mergePermissions([
+                    AclRoles.asBooleanMap(user.permissions),
+                    this.$$userPermissions[organizationId]
+                  ]);
+                } else {
+                  this.$$userPermissions[organizationId] = AclRoles.asBooleanMap(user.permissions);
+                }
+              }
+            }, this);
+
           }, this);
+
         }, this);
 
         deferred.resolve();
@@ -84,11 +126,11 @@ angular.module('squareteam.app')
     // Current session management
 
     this.reloadUser = function() {
-      $http.get('apis://users/me').then(function(response) {
+      $http.get('apis://users/me').then(angular.bind(this, function(response) {
         this.$$user = response.data;
-      }.bind(this), function() {
+      }), angular.bind(this, function() {
         this.unregister();
-      }.bind(this));
+      }));
     };
 
     // API

@@ -22,7 +22,7 @@ describe('Directive: st-login-form', function () {
 
   var url,
       $httpBackend, $rootScope, $state, $location, $q,
-      element, scope, CurrentSession,
+      element, scope, CurrentSession, ApiOAuth,
       alertLoginElt, alertPasswordElt, alertServerElt;
 
   beforeEach(inject(function ($compile, $injector) {
@@ -35,6 +35,7 @@ describe('Directive: st-login-form', function () {
 
 
     CurrentSession      = $injector.get('CurrentSession');
+    ApiOAuth            = $injector.get('ApiOAuth');
 
     url = apiURL($injector);
 
@@ -58,9 +59,10 @@ describe('Directive: st-login-form', function () {
       scope = $rootScope.$new();
       element = angular.element('<st-login-form></st-login-form>');
 
-      spyOn($location, 'search').and.returnValue({
-        provider : 'squareteam',
-        email    : 'cpoly55@gmail.com'
+      spyOn(ApiOAuth, 'isOAuthLoginRequest').and.returnValue(true);
+      spyOn(ApiOAuth, 'oAuthLoginData').and.returnValue({
+        email     : 'cpoly55@gmail.com',
+        provider  : 'squareteam'
       });
 
       element = $compile(element)(scope);

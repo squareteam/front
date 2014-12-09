@@ -1,0 +1,145 @@
+<div class="project-missions">
+   <header class="top-controls">
+      <div class="container">
+         <div class="row">
+            <div class="col-xs-2 current-scope vertical-center">
+               <div class="row">
+                  <div class="col-xs-10 vertical-center avatar" style="width:450px;">
+                     <div class="name">
+                        {{ project.title || ('api.loading' | translate) }}
+                     </div>
+                     <div class="count">
+                        {{ project.mission.length }}
+                     </div>
+                  </div>
+                  <div  class="col-xs-2 vertical-center change" ng-show="projects.length > 1"
+                        st-dropdown top-pad="80" left-pad="-277" position="relative">
+                     <ul class="current-scope-dropdown vertical-center dropdown_menu no-select list-none absolute-reset">
+                        <li class="row" ng-repeat="project in filteredProjects()" ng-click="changeProject(project)">
+                           <div class="col-xs-12 vertical-center" style="width:215px;">
+                              <div class="name">
+                                 {{ project.title | characters:21:true }}
+                              </div>
+                           </div>
+                        </li>
+                     </ul>
+                     <i class="icon icon-arrow-down-active"></i>
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-xs-3 filters vertical-center">
+               <div  class="by_status" st-dropdown top-pad="80" position="relative" dropdown-classes="filters_dropdown status_filters list-none absolute-reset no-select"
+                     st-filter-dropdown="statusFilterChoices" ng-model="statusFilter" placeholder="Status">
+               </div>
+               <div class="by_assignee">
+                  <span>Assigné à</span>
+                  <i class="icon icon-arrow-down-inactive"></i>
+               </div>
+               <div class="sort" st-dropdown top-pad="80" position="relative" dropdown-classes="filters_dropdown sort_filters list-none absolute-reset no-select"
+                        st-sort-dropdown="sortChoices" ng-model="sortBy" placeholder="Sort by">
+                  <span>Trier par</span>
+                  <i class="icon icon-arrow-down-inactive"></i>
+               </div>
+            </div>
+
+            <div class="col-xs-2 vertical-center add_btn">
+               <button class="primary" ng-show="currentUserCanCreateMission()" ng-click="createMissionPopin()">
+                  Nouvelle mission
+               </button>
+            </div>
+         </div>
+      </div>
+   </header>
+
+   <div class="container content">
+      <div class="row">
+
+         <div class="col-xs-4 left-block">
+            <div class="nice-block deadline" ng-hide="!project.deadline">
+               <h2>
+                  Deadline
+               </h2>
+               <st-project-edit-icon project="project" ng-show="project.$can('manage')"></st-project-edit-icon>
+
+               <div class="clearfix"></div>
+
+               <div class="row">
+                  <div class="col-xs-3 created-at vertical-center">
+                     <div class="label">
+                        Crée le
+                     </div>
+                     <time>
+                        {{ project.createdAt | amDateFormat:'DD/MM/YY' }}
+                     </time>
+                  </div>
+                  <div class="col-xs-6 mission-progress vertical-center no-select">
+                     <div class="remaining" ng-show="project.remainingDays > -31 && project.remainingDays < 31">
+                        J{{ project.remainingDays }}
+                     </div>
+                     <div class="remaining" ng-show="project.remainingDays < -31 || project.remainingDays > 31">
+                        M{{ project.remainingMonths }}
+                     </div>
+                     <div  round-progress max="100" current="project.progressAsNumber"
+                           color="#57c0df" bgcolor="#f3f3f3" radius="50"
+                           stroke="3" semi="false">
+                     </div>
+                  </div>
+                  <div class="col-xs-3 deadline-at vertical-center">
+                     <div class="label">
+                        Deadline
+                     </div>
+                     <time>
+                        {{ project.deadline | amDateFormat:'DD/MM/YY' }}
+                     </time>
+                  </div>
+               </div>
+            </div>
+
+            <div class="nice-block project-description">
+               <h2>
+                  Description
+               </h2>
+
+               <st-project-edit-icon project="project" ng-show="!project.deadline && project.$can('manage')"></st-project-edit-icon>
+
+               <div class="clearfix"></div>
+
+               <img src="http://lorempixel.com/287/210/fashion/" height="210" width="100%" alt="">
+
+               <div class="description" ng-bind-html="project.descriptionMd">
+               </div>
+            </div>
+         </div>
+
+         <div class="col-xs-8 right-block">
+            <div class="nice-block missions">
+               <h2>
+                  Liste des missions
+               </h2>
+               <ul class="list">
+                  <li ng-if="!project.missions || project.missions.length == 0">
+                     <div style="text-align:center">
+                        <strong>
+                           Aucune mission
+                        </strong>
+                        <br><br>
+                     </div>
+                  </li>
+                  <st-mission-item  mission="mission"
+                                    ng-repeat="mission in project.missions | orderBy:sortBy | filter:statusFilter"></st-mission-item>
+               </ul>
+            </div>
+
+            <div class="nice-block missions drafts">
+               <ul class="list">
+                  <!-- thoses one are not sorted or filtered by controls -->
+                  <st-mission-item mission="mission" ng-repeat="mission in project.missions | filter:draftsOnly"></st-mission-item>
+               </ul>
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+</div>

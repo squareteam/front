@@ -1,0 +1,32 @@
+<div>
+   <header>
+     <h1>
+       New Mission
+     </h1>
+     <p>
+       Let's organize things.
+     </p>
+   </header>
+   <form action name="createMissionForm" class="minimal" ng-submit="createMission()">
+
+      <label for="title" class="required">
+        Title
+      </label>
+      <input type="text" name="title" ng-model="$parent.mission.title" required class="fluid">
+
+      <label for="description">
+        Description
+      </label>
+      <textarea name="description" ng-model="$parent.mission.description" class="fluid"></textarea>
+
+      <label for="deadline">
+        Deadline
+      </label>
+
+      <st-date-input ng-model="$parent.mission.deadline" mask="DMY"></st-date-input>
+
+      <footer>
+        <input type='submit' value="Create"/>
+      </footer>
+   </form>
+</div>

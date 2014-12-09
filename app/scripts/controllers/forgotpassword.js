@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('squareteam.app')
-  .controller('forgotPasswordCtrl', function ($scope, $stateParams, $http, $state, appConfig, ApiErrors) {
+  .controller('forgotPasswordCtrl', function ($scope, $stateParams, $http, $state, appConfig, ApiErrors, stPolicies) {
     if ($stateParams.token) {
       $scope.passwordFormat = function() {
-        $scope.passwordBadPractice = !$scope.user.password || $scope.user.password.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/) === null;
+        $scope.passwordBadPractice = !stPolicies.isPasswordValid($scope.user.password);
       };
 
       $scope.change = function() {

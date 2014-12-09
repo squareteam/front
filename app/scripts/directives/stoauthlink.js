@@ -10,13 +10,13 @@ angular.module('squareteam.app')
       templateUrl: 'scripts/directives/templates/stoauthlink.html',
       restrict: 'E',
       replace: true,
-      controller: function($scope, $element, $attrs, $log, $translate, appConfig) {
-        if (!appConfig.api.oauth[$scope.service]) {
+      controller: function($scope, $element, $attrs, $log, $translate, ApiOAuth) {
+        var config = ApiOAuth.providerConfig($scope.service);
+
+        if (!config) {
           $log.error('no configuration for oauth service : ' + $scope.service);
           return;
         }
-
-        var config = appConfig.api.oauth[$scope.service];
 
         $scope.serviceIconPath = config.iconPath;
         $scope.serviceEndpoint = config.endpoint;

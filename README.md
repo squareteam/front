@@ -1,4 +1,4 @@
-## Squareteam front (AngularJS)
+## Squareteam front [![Build Status](https://travis-ci.org/squareteam/front.svg?branch=master)](https://travis-ci.org/squareteam/front)[![Coverage Status](https://coveralls.io/repos/squareteam/front/badge.png)](https://coveralls.io/r/squareteam/front)[![Dependency Status](https://gemnasium.com/squareteam/front.svg)](https://gemnasium.com/squareteam/front)
 
 ## Important !
 

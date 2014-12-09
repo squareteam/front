@@ -26,15 +26,15 @@ module.exports = function(config) {
       stripPrefix: 'app/'
     },
 
-    // optionally, configure the reporter
     coverageReporter: {
-      type : 'html',
-      dir : 'coverage/'
+      type: 'lcovonly',
+      dir: 'coverage/'
     },
+
 
     // list of files / patterns to load in the browser
     files: [
-      'app/bower_components/jquery/dist/jquery.js',
+      'app/bower_components/jquery/jquery.js',
       'app/bower_components/angular/angular.js',
       'app/bower_components/angular-mocks/angular-mocks.js',
       'app/bower_components/angular-resource/angular-resource.js',
@@ -56,6 +56,8 @@ module.exports = function(config) {
       'app/bower_components/moment/moment.js',
       'app/bower_components/angular-moment/angular-moment.js',
       'app/bower_components/angular-truncate/src/truncate.js',
+      'app/bower_components/angular-svg-round-progressbar/roundProgress.js',
+      'app/bower_components/lodash/dist/lodash.compat.js',
       'app/scripts/initializers/modules.js',
       'app/scripts/initializers/api.js',
       'app/scripts/*.js',
@@ -93,11 +95,11 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: false
+    singleRun: true
   });
 };

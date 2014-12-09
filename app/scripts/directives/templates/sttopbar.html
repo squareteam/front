@@ -21,7 +21,7 @@
                      </span>
                   </div>
                </a>
-               <a ui-sref="app.projects" class="col-xs-2 item" ui-sref-active="active">
+               <a ui-sref="app.user_projects({ userId : currentSession.getUser().id })" class="col-xs-2 item" ui-sref-active="active">
                   <div>
                      <i class="icon icon-projects"></i>
                      <span>

@@ -4,13 +4,6 @@
 
 describe('Directive: st-organization-create', function () {
 
-
-  module(function($provide) {
-    $provide.service('$location', function() {
-      this.path = function() {};
-    });
-  });
-
   // load the directive's module
   beforeEach(module('scripts/directives/templates/storganizationcreate.html'));
   beforeEach(module('squareteam.app', function($urlRouterProvider) {
@@ -19,14 +12,14 @@ describe('Directive: st-organization-create', function () {
   }));
 
   var url, ApiAuth,
-      $httpBackend, $rootScope, $location,
+      $httpBackend, $rootScope, $state,
       element, scope;
 
   beforeEach(inject(function ($compile, $injector) {
 
     $httpBackend    = $injector.get('$httpBackend');
     $rootScope      = $injector.get('$rootScope');
-    $location       = $injector.get('$location');
+    $state          = $injector.get('$state');
 
     ApiAuth         = $injector.get('ApiAuth');
 
@@ -95,7 +88,7 @@ describe('Directive: st-organization-create', function () {
       expect($(element.find('.alert')[0]).text().trim()).toBe('directives.stOrganizationCreate.nameTaken');
 
     });
-        
+
     it('should display alert if server busy', function() {
 
       $httpBackend.expectPOST( url('organizations/with_admins') ).respond(500, '');
@@ -120,6 +113,33 @@ describe('Directive: st-organization-create', function () {
 
       expect($(element.find('.alert')[1]).hasClass('ng-hide')).toBe(false);
       // expect($(element.find('.alert')[1]).text().trim()).toBe('Nos serveurs sont momentanément indisponibles.\n\nVeuillez réessayer dans quelques instants.');
+
+    });
+
+    it('should reload permissions if succeed', function() {
+
+      spyOn($state, 'go');
+
+      $httpBackend.expectPOST( url('organizations/with_admins') ).respond(200, apiResponseAsString(null, { id : 1, name : 'FMB'}));
+      $httpBackend.expectGET( url('users/1/teams') ).respond(200, apiResponseAsString(null, []));
+
+      var directiveScope = element.isolateScope();
+      directiveScope = angular.extend(directiveScope, {
+        organization : {
+          name : 'test'
+        }
+      });
+      element.data('$isolateScope', directiveScope);
+
+      $rootScope.$digest();
+
+      element.isolateScope().create();
+
+      $rootScope.$digest();
+
+      $httpBackend.flush();
+
+      $rootScope.$digest();
 
     });
 

@@ -3,18 +3,37 @@
    "public" : {
       "login" : {
          "wantAnAccount_1"   : "Pas de compte ?",
-         "wantAnAccount_2"   : "Découvrir",
+         "wantAnAccount_2"   : "Découvrir"
+      },
 
-         "authenticating"  : "Nous vérifions votre identité...",
+      "oauth" : {
 
-         "github" : {
-            "authenticating"  : "Authentification avec Github",
-            "tooltipBtn"      : "Se connecter avec Github"
+         "login" : {
+
+            "authenticating" : "Nous vérifions votre identité...",
+
+            "authenticating_error": "La vérification de votre identité a échouée, merci de contacter le support.",
+
+            "github" : {
+               "authenticating"  : "Authentification avec Github",
+               "tooltipBtn"      : "Se connecter avec Github"
+            },
+
+            "behance" : {
+               "authenticating"  : "Authentification avec Behance",
+               "tooltipBtn"      : "Se connecter avec Behance"
+            }
+
          },
-         "behance" : {
-            "authenticating"  : "Authentification avec Behance",
-            "tooltipBtn"      : "Se connecter avec Behance"
+
+         "email" : {
+
+            "wrong_provider" : "Vous ne supportons pas encore la connexion via ce service.",
+            "title" : "Confirmer votre email",
+            "confirmBtn" : "Confirmer"
+
          }
+
       },
 
       "register" : {
@@ -34,8 +53,8 @@
             "send"            : "Envoyer les instructions",
             "returnToSignIn"  : "Se connecter",
 
-            "sent_1" : "Un e-mail contenant les instructions",
-            "sent_2" : "pour le changement de mot de passe vous a été envoyé !"
+            "sent_1" : "Merci de vérifier vos emails, vous devriez bientôt recevoir des instructions pour changer votre mot de passe.",
+            "sent_2" : "Vous pouvez maintenant fermer cette page."
          },
          "change" : {
             "title" : "Choisissez un nouveau mot de passe",
@@ -79,8 +98,8 @@
          "projects"     : "projets"
       },
 
-      "myAccount" : {
-         "profile" : {
+      "manage" : {
+         "account" : {
             "title"           : "Mon Compte",
             "subtitle"        : "Besoin de mettre à jour vos informations ?",
             "change_avatar"   : "Changer mon avatar",
@@ -95,6 +114,23 @@
             "leave"           : "Quitter",
             "no_organizations": "Aucune organisation.",
             "create"          : "Créer"
+         },
+         "organization" : {
+            "subtitle_singular"  : "équipes",
+            "subtitle_plural"    : "équipe",
+            "team_list_user_singular"  : "membre",
+            "team_list_user_plural"    : "membres",
+            "manage" : "Gérer",
+            "no_team": "Aucune équipe.",
+            "create_team": "Créer une équipe"
+         },
+         "team" : {
+            "edit" : "Editer",
+            "save" : "Sauver",
+            "remove" : "Enlever",
+            "no_users" : "Aucun membre.",
+            "add_member" : "Ajouter un membre",
+            "edit_team" : "Editer l'équipe"
          }
       }
 
@@ -117,6 +153,22 @@
          "title"     : "Merci de confirmer votre mot de passe",
          "subtitle"  : "Pour votre sécurité.",
          "continue"   : "Continuer"
+      },
+      "team" : {
+         "title" : "Equipe",
+         "subtitle_create" : "Créons une équipe!",
+         "subtitle_update" : "Des informations à mettre à jour ?",
+         "subtitle_workers" : "Gérer les workers",
+         "labels" : {
+            "name" : "Nom",
+            "color" : "Choisissez une couleur",
+            "workers" : "Choisissez des worker(s)"
+         },
+         "buttons" : {
+            "create" : "Créer",
+            "update" : "Mettre à jour",
+            "workers" : "Mettre à jour les workers"
+         }
       }
    },
 

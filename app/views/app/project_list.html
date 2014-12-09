@@ -4,7 +4,7 @@
          <div class="row">
             <div  class="col-xs-2 current-scope vertical-center">
                <div class="row">
-                  <div class="col-xs-2 vertical-center">
+                  <div class="col-xs-2 vertical-center avatar">
                      <img src="/images/app/layout/organization_logo_sample.png" alt="">
                      <!-- <img src st-file-id="currentScope.avatar" alt=""> -->
                   </div>
@@ -21,8 +21,8 @@
                   <div  class="col-xs-2 vertical-center change" ng-show="organizations.length"
                         st-dropdown top-pad="80" left-pad="-277" position="relative">
                      <ul class="current-scope-dropdown vertical-center dropdown_menu no-select list-none absolute-reset">
-                        <li class="row" ng-click="changeScope(currentUser)" ng-hide="currentScopeIsUser()">
-                           <div class="col-xs-2 vertical-center">
+                        <li class="row" ui-sref="app.user_projects({ userId: currentUser.id })" ng-hide="currentScopeIsUser()">
+                           <div class="col-xs-2 vertical-center avatar">
                               <img src="/images/user.png" alt="" class="img-circle" width="54px">
                            </div>
                            <div class="col-xs-10 vertical-center" style="width:215px;">
@@ -31,8 +31,8 @@
                               </div>
                            </div>
                         </li>
-                        <li class="row" ng-repeat="orga in filteredOrganizations()" ng-click="changeScope(orga)">
-                           <div class="col-xs-2 vertical-center">
+                        <li class="row" ng-repeat="orga in filteredOrganizations()"  ui-sref="app.organization_projects({ organizationId: orga.id })">
+                           <div class="col-xs-2 vertical-center avatar">
                               <img src="/images/app/layout/organization_logo_sample.png" alt="">
                            </div>
                            <div class="col-xs-10 vertical-center" style="width:215px;">

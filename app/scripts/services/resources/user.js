@@ -4,8 +4,8 @@ angular.module('squareteam.resources')
   .factory('UserResource', function($http, restmod) {
     var User = restmod.model('apis://users', {
       organizations : { hasMany : 'OrganizationResource' },
-      projects      : { hasMany : 'ProjectResource' },
-      teams         : { hasMany : 'TeamResource' }
+      teams         : { hasMany : 'TeamResource' },
+      projects      : { hasMany : 'ProjectResourceNested'}
     }, 'DirtyModel');
 
     User.search = function(query) {

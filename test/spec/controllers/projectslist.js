@@ -4,12 +4,12 @@
 
 describe('Controller: ProjectsListCtrl', function () {
 
-  beforeEach(module('views/app/projects/create_project_popin.html'));
+  beforeEach(module('views/app/projects/popins/create_project_popin.html'));
   beforeEach(module('squareteam.app'));
 
   var ProjectsListCtrl, scope, resolvePromise, url,
       PasswordConfirmPopin, CurrentSession, ApiSession, UserResource, OrganizationResource,
-      $httpBackend, $controller, $q, ngDialog;
+      $httpBackend, $controller, $q, $stateParams, ngDialog;
 
   resolvePromise = function() {
     var deferred = $q.defer();
@@ -22,6 +22,7 @@ describe('Controller: ProjectsListCtrl', function () {
     $httpBackend          = $injector.get('$httpBackend');
     $controller           = $injector.get('$controller');
     $q                    = $injector.get('$q');
+    $stateParams          = $injector.get('$stateParams');
     ngDialog              = $injector.get('ngDialog');
 
     PasswordConfirmPopin  = $injector.get('PasswordConfirmPopin');
@@ -41,7 +42,7 @@ describe('Controller: ProjectsListCtrl', function () {
 
   describe('should load projects', function() {
 
-    it('from User if CurrentSession.getOrganizations() is empty', function() {
+    it('from current User by default', function() {
 
       spyOn(CurrentSession, 'getOrganizations').and.callFake(function() {
         var deferred = $q.defer();
@@ -68,7 +69,9 @@ describe('Controller: ProjectsListCtrl', function () {
 
     });
 
-    it('from User first Organization if no $scope.currentScope', function() {
+    it('from given organization ( via stateParams )', function() {
+
+      $stateParams.organizationId = 1;
 
       spyOn(CurrentSession, 'getOrganizations').and.callFake(function() {
         var deferred = $q.defer();
@@ -98,57 +101,17 @@ describe('Controller: ProjectsListCtrl', function () {
 
     });
 
-  });
-
-  describe('when many organizations available', function() {
-
-    beforeEach(function() {
-      $httpBackend.expectGET( url('organizations/1/projects') ).respond(200, '{"data":[{"id":1,"name":"test","description":"test test"}]}');
-
-      spyOn(CurrentSession, 'getOrganizations').and.callFake(function() {
-        var deferred = $q.defer();
-        deferred.resolve([
-          OrganizationResource.$buildRaw({
-            id : 1,
-            name : 'FMB'
-          }),
-          OrganizationResource.$buildRaw({
-            id : 2,
-            name : 'ST'
-          })
-        ]);
-        return deferred.promise;
-      });
-
-      ProjectsListCtrl = $controller('ProjectsListCtrl', {
-        $scope: scope
-      });
-
-      $httpBackend.flush();
-
-      scope.$digest();
-
-    });
-
-    it('switching organization should trigger a data reload', function() {
-
-      spyOn(scope, 'loadProjects');
-
-      scope.changeScope(scope.organizations[1]);
-
-      scope.$digest();
-
-      expect(scope.currentScope.id).toBe(2);
-      expect(scope.loadProjects.calls.count()).toBe(1);
-
-    });
+    // FIXME(charly)
+    it('from given user ( via stateParams )');
 
   });
 
-  describe('with one organization available', function() {
+
+  describe('with projects loaded', function() {
 
     beforeEach(function() {
-      $httpBackend.expectGET( url('organizations/1/projects') ).respond(200, '{"data":[{"id":1,"name":"test","description":"test test"}]}');
+
+      $httpBackend.expectGET( url('users/1/projects') ).respond(200, '{"data":[{"id":1,"name":"test","description":"test test"}]}');
 
       spyOn(CurrentSession, 'getOrganizations').and.callFake(function() {
         var deferred = $q.defer();
@@ -162,7 +125,10 @@ describe('Controller: ProjectsListCtrl', function () {
       });
 
       ProjectsListCtrl = $controller('ProjectsListCtrl', {
-        $scope: scope
+        $scope: scope,
+        $stateParams : {
+          userId : 1
+        }
       });
 
       $httpBackend.flush();
@@ -212,7 +178,7 @@ describe('Controller: ProjectsListCtrl', function () {
 
       it('should remove it from list', function() {
 
-        $httpBackend.expectDELETE( url('organizations/1/projects/1') ).respond(200, '');
+        $httpBackend.expectDELETE( url('users/1/projects/1') ).respond(200, '');
 
         scope.$emit('project:delete', scope.projects[0]);
 

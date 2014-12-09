@@ -18,6 +18,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-bump');
   grunt.loadNpmTasks('grunt-version');
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-karma-coveralls');
 
   // Define the configuration for all the tasks
   grunt.initConfig({
@@ -76,7 +77,8 @@ module.exports = function (grunt) {
       },
       sass: {
         files: ['<%= yeoman.app %>/styles/{,**/}*.{scss,sass}'],
-        tasks: ['sass:server', 'autoprefixer']
+        tasks: ['sass:dist']
+        // tasks: ['sass:server', 'autoprefixer']
       },
       gruntfile: {
         files: ['Gruntfile.js']
@@ -90,6 +92,16 @@ module.exports = function (grunt) {
           '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
+      }
+    },
+
+    coveralls: {
+      options: {
+        debug: false,
+        'coverage_dir': 'coverage/',
+        dryRun: false,
+        force: true,
+        recursive: true
       }
     },
 
@@ -113,6 +125,17 @@ module.exports = function (grunt) {
       test: {
         options: {
           port: 9001,
+          base: [
+            '.tmp',
+            'test',
+            '<%= yeoman.app %>'
+          ]
+        }
+      },
+      ci: {
+        options: {
+          port: 9991,
+          hostname: process.env.OPENSHIFT_JENKINS_IP,
           base: [
             '.tmp',
             'test',
@@ -284,16 +307,16 @@ module.exports = function (grunt) {
       }
     },
 
-    imagemin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.{png,jpg,jpeg,gif}',
-          dest: '<%= yeoman.dist %>/images'
-        }]
-      }
-    },
+    // imagemin: {
+    //   dist: {
+    //     files: [{
+    //       expand: true,
+    //       cwd: '<%= yeoman.app %>/images',
+    //       src: '{,*/}*.{png,jpg,jpeg,gif}',
+    //       dest: '<%= yeoman.dist %>/images'
+    //     }]
+    //   }
+    // },
 
     svgmin: {
       dist: {
@@ -323,10 +346,10 @@ module.exports = function (grunt) {
       }
     },
 
-    // ngmin tries to make the code safe for minification automatically by
+    // ngAnnotate tries to make the code safe for minification automatically by
     // using the Angular long form for dependency injection. It doesn't work on
     // things like resolve or inject so those have to be done manually.
-    ngmin: {
+    ngAnnotate: {
       dist: {
         files: [{
           expand: true,
@@ -380,7 +403,7 @@ module.exports = function (grunt) {
       ],
       dist: [
         'sass',
-        'imagemin',
+        // 'imagemin',
         'svgmin'
       ]
     },
@@ -413,9 +436,15 @@ module.exports = function (grunt) {
 
     // Test settings
     karma: {
-      unit: {
+      options: {
         configFile: 'karma.conf.js',
-        singleRun: true
+        browsers: ['PhantomJS']
+      },
+      dev: {
+        coverageReporter: {
+          type: 'html',
+          dir: 'coverage-dev/'
+        }
       }
     }
   });
@@ -446,7 +475,7 @@ module.exports = function (grunt) {
     // 'concurrent:test',
     // 'autoprefixer',
     'connect:test',
-    'karma'
+    'karma:dev'
   ]);
 
   grunt.registerTask('patch', [
@@ -473,7 +502,7 @@ module.exports = function (grunt) {
     'useminPrepare',
     'concurrent:dist',
     'concat',
-    'ngmin',
+    'ngAnnotate',
     'copy:dist',
     'cssmin',
     'uglify',

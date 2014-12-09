@@ -2,29 +2,14 @@
    <div class="row" >
       <div id="box_center" class="col-sm-10 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3" >
          <div class='box_shadow'>
-            
-            <st-login-form github-login="true" ng-hide="oauthAuthenticating"></st-login-form>
 
-            <div ng-show="oauthAuthenticating">
-               <h1>
-                  {{ 'public.login.github.authenticating' | translate }}
-               </h1>
-               <article>
-                  <br>
-                  <p style="text-align:center;">
-                     <strong>
-                        {{ 'public.login.authenticating' | translate }}
-                     </strong>
-                  </p>
-                  <br>
-               </article>
-            </div>
+            <st-login-form github-login="true" google-login="true"></st-login-form>
 
          </div>
       </div>
    </div>
 </section>
-<section class="container container-fluid" ng-hide="oauthAuthenticating">
+<section class="container container-fluid">
    <div class="row">
       <div id="box_center_bottom" class="button_gradient col-sm-10 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
          

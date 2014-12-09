@@ -18,13 +18,17 @@ angular.module('squareteam.resources')
         var organizationId  = false,
             scope           = this.$scope;
 
-        do {
+        if (this.constructor.$name() === 'organizations') {
+          organizationId = this.id;
+        } else {
+          do {
 
-          if (scope.constructor && scope.constructor.$name && scope.constructor.$name() === 'organizations') {
-            organizationId = scope.id;
-          }
+            if (scope.constructor && scope.constructor.$name && scope.constructor.$name() === 'organizations') {
+              organizationId = scope.id;
+            }
 
-        } while ((scope = scope.$scope) && !organizationId);
+          } while ((scope = scope.$scope) && !organizationId);
+        }
 
         return CurrentSession.userCanDo(action, this.constructor.$name(), organizationId);
 

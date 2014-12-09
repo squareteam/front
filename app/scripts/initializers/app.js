@@ -9,7 +9,7 @@ angular
     // Moment.js //
     ///////////////
 
-    moment.lang('en', {
+    moment.locale('en', {
       calendar : {
         lastDay : '[yesterday at] LT',
         sameDay : '[today at] LT',
@@ -60,7 +60,7 @@ angular
         var deferred = $q.defer();
 
         if (!CurrentSession.isAuthenticated()) {
-          CurrentSession.restore().then(function() {
+          CurrentSession.restore().then(angular.bind(this, function() {
             if (CurrentSession.isAuthenticated()) {
               deferred.resolve();
             } else {
@@ -69,7 +69,7 @@ angular
                 redirectToState : 'public.login'
               });
             }
-          }.bind(this));
+          }));
         } else {
           deferred.resolve();
         }
@@ -86,7 +86,7 @@ angular
             redirectToState : 'app.home'
           });
         } else {
-          CurrentSession.restore().then(function() {
+          CurrentSession.restore().then(angular.bind(this, function() {
             if (!CurrentSession.isAuthenticated()) {
               deferred.resolve();
             } else {
@@ -94,7 +94,7 @@ angular
                 redirectToState : 'app.home'
               });
             }
-          }.bind(this));
+          }));
         }
 
         return deferred.promise;
@@ -146,7 +146,19 @@ angular
         controller : 'LoginCtrl',
         templateUrl : 'views/public/login.html'
       })
-      
+
+      .state('public.oauth_check', {
+        url : '/oauth/check',
+        controller : 'OAuthLoginCtrl',
+        templateUrl : 'views/public/oauth/login.html'
+      })
+
+      .state('public.oauth_email', {
+        url : '/oauth/email',
+        controller : 'OAuthEmailConfirmCtrl',
+        templateUrl : 'views/public/oauth/email.html'
+      })
+
       .state('public.register', {
         url : '/register',
         templateUrl : 'views/public/register.html'
@@ -233,56 +245,46 @@ angular
 
       // PROJECTS
 
-      .state('app.projects', {
-        url : '/projects',
-        templateUrl : 'views/app/projects/index.html',
-        resolve : {
-          organizations : ['authenticated', 'CurrentSession', function(authenticated, CurrentSession) {
-            return CurrentSession.getOrganizations();
-          }]
-        },
+      .state('app.user_projects', {
+        url : '/users/:userId/projects',
+        templateUrl : 'views/app/project_list.html',
         controller : 'ProjectsListCtrl'
+      })
+
+      .state('app.organization_projects', {
+        url : '/organizations/:organizationId/projects',
+        templateUrl : 'views/app/project_list.html',
+        controller : 'ProjectsListCtrl'
+      })
+
+      .state('app.user_project_missions', {
+        url : '/users/:userId/projects/:projectId/missions',
+        templateUrl : 'views/app/project_view.html',
+        controller : 'ProjectViewCtrl'
+      })
+
+      .state('app.organization_project_missions', {
+        url : '/organizations/:organizationId/projects/:projectId/missions',
+        templateUrl : 'views/app/project_view.html',
+        controller : 'ProjectViewCtrl'
       })
 
       // MISSIONS (TODO)
 
-      .state('app.missions', {
-        url : '/projects/:projectId/missions'
-      })
-
-      .state('app.my_missions', {
-        url : '/missions/mine'
-      })
-
-      .state('app.missions.add', {
-        url : '/add'
-      })
-
       .state('app.missions.view', {
-        url : '/:missionId'
-      })
-
-      .state('app.missions.edit', {
-        url : '/:missionId/edit'
+        url : '/:missionId'//,
+        // templateUrl : 'views/app/mission_view.html'
       })
 
       // TASKS (TODO)
 
       .state('app.tasks', {
-        url : '/missions/:missionId/tasks'//,
-        // templateUrl : 'views/app/missions/index.html'
-      })
-
-      .state('app.tasks.add', {
-        url : '/add'
+        url : '/tasks'//,
+        // templateUrl : 'views/app/tasks.html'
       })
 
       .state('app.tasks.view', {
-        url : '/:taskId'
-      })
-
-      .state('app.tasks.edit', {
-        url : '/:taskId/edit'
+        url : '/tasks/:taskId'
       })
 
       // ADMIN
@@ -311,14 +313,6 @@ angular
         url : '/manage',
         templateUrl : 'views/app/manage/organization/index.html',
         controller : 'ManageOrganizationCtrl'
-      })
-
-      .state('app.organization.team', {
-        url : '/team/:teamId',
-        templateUrl : 'views/app/manage/team.html',
-        controller : ['$scope', '$stateParams', function($scope, $stateParams) {
-          $scope.teamId = $stateParams.teamId;
-        }]
       });
 
     $urlRouterProvider
